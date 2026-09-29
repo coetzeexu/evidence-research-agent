@@ -1,6 +1,6 @@
 {
   "run_id": "3302715305fc4dac",
-  "generated_at": "2026-09-29T13:31:42.941420+00:00",
+  "generated_at": "2026-09-29T13:43:46.730437+00:00",
   "schema_version": "1.1",
   "method_version": "2026.09.3",
   "research_status": "unassessed",
@@ -23,8 +23,8 @@
   },
   "files": {
     "report.pptx": {
-      "sha256": "56daf3e1ac899ab065523b53be4676ee20db5aa8f8f529f1a388987da2bf6cfb",
-      "bytes": 189793
+      "sha256": "de8e45496bbb17e106765e6ac1c290835a4c0242346d3d4f662fa82979accd27",
+      "bytes": 192382
     },
     "report.docx": {
       "sha256": "3f313ca301f4618ea8a2ea4125f12213c6ee8d21a2e3f11ad91f39392d5c9352",

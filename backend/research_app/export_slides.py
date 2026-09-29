@@ -11,7 +11,7 @@ from pptx.chart.data import CategoryChartData
 from pptx.dml.color import RGBColor
 from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION
 from pptx.enum.shapes import MSO_CONNECTOR
-from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE, PP_ALIGN
 from pptx.oxml.xmlchemy import OxmlElement
 from pptx.util import Inches, Pt
 
@@ -22,6 +22,19 @@ from .report_content import decisions, key_points, percent
 from .security import allowed_link
 
 PPT_SKILL = PROJECT_ROOT / "skills" / "ppt-ledger"
+
+
+def _line_height(size):
+    return size * 1.4 / 72
+
+
+def _numeric(value):
+    return bool(re.fullmatch(r"[+−\-\d.,%/\s]+(?:pp)?|—", str(value)))
+
+
+def _row_height(row, widths, size, minimum=0.6):
+    lines = max(len(_wrap(str(v), widths[i] - 0.25, size)) for i, v in enumerate(row))
+    return max(minimum, lines * _line_height(size) + 0.16)
 
 
 def _text_units(value: str) -> float:
@@ -85,14 +98,18 @@ class LedgerDeck:
         url=None,
         align=PP_ALIGN.LEFT,
     ):
+        h = max(h, len(str(value).split("\n")) * _line_height(size) + 0.03)
         box = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
         box.name = "ledger-text"
         tf = box.text_frame
+        tf.auto_size = MSO_AUTO_SIZE.NONE
         tf.word_wrap = False
+        tf.vertical_anchor = MSO_ANCHOR.TOP
         tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
         for i, line in enumerate(str(value).split("\n")):
             p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-            p.space_after = Pt(2)
+            p.space_before = p.space_after = Pt(0)
+            p.line_spacing = Pt(size * 1.4)
             p.alignment = align
             run = p.add_run()
             run.text = line
@@ -165,11 +182,9 @@ class LedgerDeck:
         return s
 
     def table(self, slide, headers, rows, widths, y=2.23, size=17):
-        line_height = size / 72 * 1.4
-        heights = [0.51]
-        for row in rows:
-            max_lines = max(len(_wrap(str(v), widths[i] - 0.25, size)) for i, v in enumerate(row))
-            heights.append(max(0.6, max_lines * line_height + 0.14))
+        heights = [_row_height(headers, widths, size - 1, 0.51)]
+        heights.extend(_row_height(row, widths, size) for row in rows)
+        numeric_columns = [bool(rows) and all(_numeric(r[i]) for r in rows) for i in range(len(headers))]
         table = slide.shapes.add_table(
             len(rows) + 1, len(headers), Inches(0.667), Inches(y), Inches(sum(widths)), Inches(sum(heights))
         ).table
@@ -181,8 +196,11 @@ class LedgerDeck:
             table.rows[ri].height = Inches(heights[ri])
             for ci, value in enumerate(row):
                 cell = table.cell(ri, ci)
-                numeric = bool(re.fullmatch(r"[+−\-\d.,%/ ]+(?:pp)?|—", str(value)))
-                cell.text = str(value)
+                numeric = numeric_columns[ci]
+                point_size = size if ri else size - 1
+                cell.text = "\n".join(_wrap(str(value), widths[ci] - 0.25, point_size))
+                cell.text_frame.auto_size = MSO_AUTO_SIZE.NONE
+                cell.text_frame.word_wrap = False
                 cell.margin_left = cell.margin_right = Inches(0.12)
                 cell.margin_top = cell.margin_bottom = Inches(0.07)
                 cell.vertical_anchor = MSO_ANCHOR.MIDDLE
@@ -190,11 +208,16 @@ class LedgerDeck:
                 cell.fill.fore_color.rgb = self.color("primary" if ri == 0 else "background")
                 for p in cell.text_frame.paragraphs:
                     p.alignment = PP_ALIGN.RIGHT if numeric else PP_ALIGN.LEFT
+                    p.space_before = p.space_after = Pt(0)
+                    p.line_spacing = Pt(point_size * 1.4)
                     for r in p.runs:
-                        r.font.name = self.fonts["data" if numeric else "body"]
-                        r.font.size = Pt(size if ri else size - 1)
+                        r.font.name = self.fonts["data" if numeric and ri else "body"]
+                        r.font.size = Pt(point_size)
                         r.font.bold = ri == 0
                         r.font.color.rgb = self.color("background" if ri == 0 else "primary")
+                        ea = OxmlElement("a:ea")
+                        ea.set("typeface", self.fonts["body"])
+                        r._r.get_or_add_rPr().append(ea)
                 tcpr = cell._tc.get_or_add_tcPr()
                 for edge in ("lnL", "lnR", "lnT", "lnB"):
                     line = OxmlElement("a:" + edge)
@@ -213,14 +236,14 @@ class LedgerDeck:
     def table_pages(self, title, subtitle, headers, rows, widths, field, refs=None, size=17):
         # Measure content before pagination. No hard row cap or silent [:N] truncation.
         chunk = []
-        height = 0.51
+        header_height = _row_height(headers, widths, size - 1, 0.51)
+        height = header_height
         for row in rows:
-            lines = max(len(_wrap(str(v), widths[i] - 0.25, size)) for i, v in enumerate(row))
-            row_height = max(0.6, lines * size / 72 * 1.4 + 0.14)
+            row_height = _row_height(row, widths, size)
             if chunk and height + row_height > 4.25:
                 s = self.page(title, subtitle, refs, field)
                 self.table(s, headers, chunk, widths, size=size)
-                chunk, height = [], 0.51
+                chunk, height = [], header_height
             chunk.append(row)
             height += row_height
         if chunk:
@@ -229,17 +252,19 @@ class LedgerDeck:
 
     def prose_pages(self, title, entries, subtitle="", refs=None, field=""):
         s, y = None, 2.2
+        leading, padding, gap = _line_height(18), 0.12, 0.25
         for label, value in entries:
             lines = _wrap(str(value), 9.0, 18)
             while lines:
                 if s is None or y + 0.75 > 6.5:
                     s = self.page(title, subtitle, refs, field)
                     y = 2.2
-                capacity = max(1, math.floor((6.45 - y) / 0.34))
+                capacity = max(1, math.floor((6.45 - y - padding) / leading))
                 chosen, lines = lines[:capacity], lines[capacity:]
                 self.text(s, label, 0.667, y, 2.4, 0.55, 17, "accent", True)
-                self.text(s, "\n".join(chosen), 3.32, y, 9.0, len(chosen) * 0.34 + 0.15, 18)
-                y += len(chosen) * 0.34 + 0.38
+                height = max(0.55, len(chosen) * leading + padding)
+                self.text(s, "\n".join(chosen), 3.32, y, 9.0, height, 18)
+                y += height + gap
                 if lines:
                     s = None
                 elif y < 6.45:
@@ -299,7 +324,7 @@ def export_slides(bundle: ResearchBundle, target: Path):
         deck.text(
             s, percent(metric.get("total_return")), x, 5.27, 3.65, 0.8, 43, "accent", True, numeric=True
         )
-        deck.text(s, "最大回撤 " + percent(metric.get("max_drawdown")), x, 6.1, 3.65, 0.38, 16)
+        deck.text(s, "最大回撤 " + percent(metric.get("max_drawdown")), x, 6.18, 3.65, 0.38, 16)
     if long_title:
         deck.prose_pages("研究主题", [("主题", bundle.spec.title)])
 

@@ -91,3 +91,48 @@ def test_ppt_requires_local_method_template(bundle, tmp_path, monkeypatch):
     monkeypatch.setattr(module, "PPT_SKILL", tmp_path / "missing")
     with pytest.raises(FileNotFoundError):
         module.export_slides(bundle, tmp_path / "report.pptx")
+
+
+def test_numeric_column_headers_share_body_alignment(bundle, tmp_path):
+    target = tmp_path / "alignment.pptx"
+    export_slides(bundle, target)
+    prs = Presentation(target)
+    table = next(shape.table for slide in prs.slides for shape in slide.shapes if shape.has_table)
+    for col in range(1, len(table.columns)):
+        assert table.cell(0, col).text_frame.paragraphs[0].alignment == PP_ALIGN.RIGHT
+        assert table.cell(1, col).text_frame.paragraphs[0].alignment == PP_ALIGN.RIGHT
+        assert table.cell(0, col).margin_right == table.cell(1, col).margin_right
+
+
+def test_long_mixed_prose_has_fixed_metrics_and_nonoverlapping_rows(bundle):
+    from pptx.enum.text import MSO_AUTO_SIZE
+    from research_app.export_slides import LedgerDeck
+
+    deck = LedgerDeck(bundle)
+    paragraph = "3月2日特朗普在 Truth Social 宣布设立美国“战略加密储备”，将包含比特币、以太坊、XRP、Solana的SOL与Cardano的ADA，消息后比特币涨10%至94,343.82美元，XRP涨33%、SOL涨25%、ADA涨逾60%。"
+    deck.prose_pages(
+        "事件证据",
+        [
+            ("事件事实", paragraph * 5),
+            ("BTC-USD", "1日相对收益 +9.6%；5日相对收益 +8.2%；20日相对收益 +2.5%。反应评级：中。"),
+        ],
+    )
+    assert len(deck.prs.slides) > 1
+    bodies = []
+    for slide in deck.prs.slides:
+        rows = [
+            shape for shape in slide.shapes if shape.has_text_frame and round(shape.left / 914400, 2) == 3.32
+        ]
+        for shape in rows:
+            tf = shape.text_frame
+            assert tf.auto_size == MSO_AUTO_SIZE.NONE
+            assert tf.word_wrap is False
+            assert all(p.line_spacing is not None and p.space_after == 0 for p in tf.paragraphs)
+            assert sum(p.line_spacing for p in tf.paragraphs) <= shape.height
+            assert shape.top + shape.height < 6.78 * 914400
+            bodies.append(shape.text)
+        assert all(a.top + a.height < b.top for a, b in zip(rows, rows[1:]))
+    assert (
+        "".join(bodies).replace("\n", "")
+        == paragraph * 5 + "1日相对收益 +9.6%；5日相对收益 +8.2%；20日相对收益 +2.5%。反应评级：中。"
+    )

@@ -1,0 +1,31 @@
+{
+  "at": "2026-09-29T13:43:46.730967+00:00",
+  "scope": "PPT column alignment and text layout only; original research and other artifact formats unchanged",
+  "regressions_before_fix": "2 failed: numeric-column header alignment; inherited SHAPE_TO_FIT_TEXT",
+  "regressions_after_fix": "2 passed; full backend 308 passed",
+  "render_engine": "LibreOffice headless PDF with local regular/bold font substitution; Poppler bounding boxes",
+  "microsoft_powerpoint_checked": false,
+  "manual_visual_pages": [
+    "gold page 3: header/data right edges align",
+    "gold page 31: long mixed paragraph clears next row"
+  ],
+  "render_checks": {
+    "gold": {
+      "pages": 39,
+      "words": 1512,
+      "overlaps": [],
+      "out_of_page": [],
+      "passed": true
+    },
+    "nvda": {
+      "pages": 30,
+      "words": 1102,
+      "overlaps": [],
+      "out_of_page": [],
+      "passed": true
+    }
+  },
+  "sample_ppt_sha256": "de8e45496bbb17e106765e6ac1c290835a4c0242346d3d4f662fa82979accd27",
+  "artifact_matches_rendered_ppt_bytes": true,
+  "backend_tests_passed": 308
+}

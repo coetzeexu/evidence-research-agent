@@ -104,3 +104,5 @@ Prompt 与技能内容随代码交付，哈希写入运行记录。工具轨迹�
 ## 按需导出与报告展示
 
 本轮用户限定不改 Agent loop。Codex 主 agent 处理格式契约/HTML，授权子 agent 提取 operating-review 源文件并实现 PPT。用户修正报告与文档映射并指定源文件优先；13 个真实 planner 案例均通过。详见 [导出开发说明](export-presentation-20260929.md)。
+
+PPT 截图反馈修复：Codex 先复现表头对齐和自动增高两项失败回归，统一列对齐与明确行高，进行全页渲染文字边界检查及两页目检。没有更换研究内容或调整 Agent loop。
