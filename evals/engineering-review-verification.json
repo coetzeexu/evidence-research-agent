@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-09-29T10:28:34.556546+00:00",
+  "backend": {
+    "passed": 156,
+    "skipped": 0,
+    "command": "uv run pytest -q"
+  },
+  "frontend": {
+    "passed": 28,
+    "command": "npm test -- --run"
+  },
+  "build": "passed",
+  "ruff": "passed",
+  "prettier": "passed",
+  "samples": "Both research replay commands and verify_samples passed",
+  "numeric_failure_replay": {
+    "cases": 5,
+    "passed": 5,
+    "scope": "one frozen finding per historical partial run; not full research recertification"
+  },
+  "reports_exported": true,
+  "browser_opened": false,
+  "images_loaded": false,
+  "github_ci": {
+    "status": "success",
+    "tested_commit": "c52181907e3eb788a2d699b73f032049e1563df5",
+    "url": "https://github.com/coetzeexu/evidence-research-agent/actions/runs/36555985127",
+    "scope": "All source changes tested on GitHub Ubuntu runner; subsequent handoff commit only updates documentation and verification record"
+  }
+}
