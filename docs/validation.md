@@ -1,14 +1,20 @@
 # 验证记录与复现
 
-最新导出增量：按用户选择的格式交付，独立 HTML 连续报告，PPT 挂载 operating-review 源模板；Agent loop 未改。见 [导出与展示说明](export-presentation-20260929.md)、[当前工程验收](../evals/export-engineering-20260929.json)。
+本页汇总截至 2026-09-29 的验证证据。当前代码的计算方法为 `2026.09.4`、正文核验协议为 `1.4`。各批次独立保留当时的版本、输入和结果；后续导出或文档修复不重新授权旧结论。
 
-当前 P0 增量：正文核验协议 1.4、指标契约与发布包一致性，见 [本轮说明](p0-release-20260929.md)。下文历史检查保留其原版本与范围。
+## 最近验证概览
 
-计算方法版本 `2026.09.4`、正文核验协议 `1.3`。验证分为工程回归、真实研究、文件与浏览器交互；各记录注明实际运行版本和范围。当前完整研究及本机会话验收统一见[运行验收](final-evaluation.md)。
+| 批次         | 实际结果                                                                      | 证据与边界                                                                                                       |
+| ------------ | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| PPT 对齐修复 | 后端 308 项通过；黄金 39 页、NVDA 兼容输出 30 页未发现文字框重叠/越界         | [版面验证](../evals/ppt-layout-fix-20260929.json)；LibreOffice + Poppler，关键两页目检，未做 PowerPoint 实机验证 |
+| 按需导出     | 后端 306 / 前端 31 项；构建、类型、格式与静态检查通过；全部 16 种格式集合覆盖 | [导出工程记录](../evals/export-engineering-20260929.json)；后端数量随后增加至 308                                |
+| 格式意图     | 13/13 真实 planner 案例通过                                                   | [格式选择](../evals/output-selection-20260929.json)；仅 planner，不是完整研究                                    |
+| 正式样例     | 两套样例结构与哈希校验通过                                                    | [样例验证](../evals/sample-validation.json)；NVDA HTML，黄金 XLSX/PPTX/DOCX                                      |
+| 文档与截图   | 当前 WebUI 五张真实截图；本地文档链接、图片和版本一致性检查                   | [文档记录](../evals/docs-refresh-20260929.json)；无新模型任务，不新增研究通过数                                  |
+
+此前 [工程验收](../evals/acceptance-engineering-20260929.json) 的 251 项后端、28 项前端属于早期批次，保留其原记录。最近前端 31 项与后端 308 项来自不同批次，不描述为同一条刚执行的测试命令。
 
 ## 工程回归
-
-当前[工程验收记录](../evals/acceptance-engineering-20260929.json)包含：后端 251 项通过（含实际导出测试）、前端 28 项通过、Ruff / Ruff 格式 / TypeScript / Prettier / 生产构建通过。两套样例 `verify_samples.py` 通过，先前 replay 的迁移与导出记录保留。
 
 GitHub Actions 在 push / PR 上执行相同离线门禁，不依赖模型密钥。构建先于 pytest，确保导出资源存在；远程结果以[实际 Actions 记录](https://github.com/coetzeexu/evidence-research-agent/actions)为准。
 
@@ -30,6 +36,8 @@ GitHub Actions 在 push / PR 上执行相同离线门禁，不依赖模型密钥
 
 ## 真实研究与浏览器
 
+下述八次是冻结版本的历史验收。后续指标 P0 的两次最终研究自动检查 2/2 通过，事后正文复核 0/2 通过，仍存在推断与必答覆盖问题，见 [P0 内容复核](../evals/p0-live-validation-20260929.json)。不能将自动通过与独立内容正确合并计算。最近导出、PPT 和文档阶段均没有重跑完整研究。
+
 真实研究固定 NVDA / GLD-BTC 各三次、AMD / GLD-ETH 各一次，保存全部请求、正文、Bundle、版本、调用用量和核验结果。基础验收覆盖必答事实、有效引用、确定性数字、时间窗口、比较口径、预算和发布状态，结果见[运行验收](final-evaluation.md)。
 
 本机浏览器按实际操作验证以下路径：
@@ -43,7 +51,7 @@ GitHub Actions 在 push / PR 上执行相同离线门禁，不依赖模型密钥
 
 ## 样例与独立重算
 
-`samples/nvda/` 与 `samples/gold-bitcoin/` 已迁移至 Schema 1.1，重导出 HTML、Excel、Word、PPT；[样例校验](../evals/sample-validation.json)记录 Bundle、内嵌数据、manifest 和 Office 结构的一致性。离线 replay 不调用模型，旧 `research=null` / `unassessed` 与原计算版本保留。
+`samples/nvda/` 与 `samples/gold-bitcoin/` 已迁移至 Schema 1.1，按请求分别生成 NVDA HTML 与黄金/比特币 Excel、PPT、Word；[样例校验](../evals/sample-validation.json)记录 Bundle、内嵌数据、manifest 和 Office 结构的一致性。离线 replay 不调用模型，旧 `research=null` / `unassessed` 与原计算版本保留。
 
 [Excel 独立重算记录](../evals/excel-recalculation.json)使用 LibreOffice 对原参数和修改参数的四组情景重算，共 240 行，最大净资产差异约 `1.52e-9` 美元。重算前清除旧缓存，避免读取交付缓存而误称独立验证。Excel 公式近似与逐日下一开盘执行回测分别标明口径。
 
@@ -83,3 +91,5 @@ uv run python tools/evaluate_saved_research.py --run-dir /absolute/path/to/runs/
 # Excel 独立重算需已安装 LibreOffice
 uv run python tools/verify_recalculation.py --soffice /absolute/path/to/soffice --work-dir /absolute/path/to/qa
 ```
+
+最近配图仅操作隔离数据目录中的样例视图；记录见 [截图说明](assets/README.md)。文档改动没有重跑 308/31 项功能测试，沿用相应功能提交的已存结果，本轮单独检查文档链接、图片、CLI 参数和交付包一致性。

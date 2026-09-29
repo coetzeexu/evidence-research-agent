@@ -1,41 +1,41 @@
-# 当前工程交付
+# 当前交付状态
 
-最新导出增量：按用户选择的格式交付，独立 HTML 连续报告，PPT 挂载 operating-review 源模板；Agent loop 未改。见 [导出与展示说明](export-presentation-20260929.md)、[当前工程验收](../evals/export-engineering-20260929.json)。
+截至 2026-09-29，Evidence 已提供本地 WebUI、CLI/API、SDK 研究流程、证据与指标核验，以及按用户请求选择的 HTML / Excel / PPT / Word 导出。阅读顺序：[README](../README.md) → [WebUI 图文指南](webui.md) → [设计说明](design.md)。
 
-当前 P0 增量：正文核验协议 1.4、指标契约与发布包一致性，见 [本轮说明](p0-release-20260929.md)。下文历史检查保留其原版本与范围。
+## 已交付能力
 
-Evidence 是可本地运行的投研 Agent：自然语言发起研究，使用行情与资讯工具调查，确定性计算指标，通过独立核验发布文字，并按需生成 HTML、Excel、Word、PPT。
+| 部分       | 当前实现                                                                     |
+| ---------- | ---------------------------------------------------------------------------- |
+| 本地工作台 | 首页提问、历史会话、执行进展、核验正文、追问、报告图表、来源与下载           |
+| Agent      | LangChain / LangGraph；主管、研究与独立核验职责；受限 tools 与方法 skills    |
+| 可复核计算 | 事件窗口、行情异动、资产比较、下一开盘执行回测、敏感性、显式指标单位与格式化 |
+| 运行控制   | 持久预算、检查点、串行队列、有界补查与修复、缺口保留                         |
+| 按需导出   | 报告默认 HTML、文档默认 Word、明确格式优先；不固定生成四种文件               |
+| 独立报告   | HTML 连续章节、交互图表和来源附录；无工作台 tab 或产物信息                   |
+| PPT        | operating-review 源 skill 提取、可编辑表格/图表、列对齐与长文字分页修复      |
+| 工程交付   | 锁文件、一键脚本、CI、样例、开发记录、白名单 ZIP、逐文件 SHA-256 和凭据检查  |
 
-## 交付内容
+当前计算方法 `2026.09.4`、正文核验协议 `1.4`。原题样例：NVDA 仅 HTML，黄金/比特币仅 Excel/PPT/Word。样例原行情和历史方法不改写，正文状态仍为 `unassessed`。
 
-- LangChain / LangGraph 主管、研究与核验职责协作；问题清单驱动调查、补证和停止判断。
-- 数值引用与关系求值由程序执行；精确规范化指标前缀，分别处理带符号和绝对幅度比较，核验器通过片段 ID 定位原句。
-- 显式缺口跨补丁、恢复与完成判定保留；关闭需引用已批准结论和可定位的回答依据。
-- 独立 `question-review` 只用已核验段落核对完成度，区分必答事实缺失、研究局限与额外方法，不改写结论判定。
-- 旧问题状态重新初始化，同输入哈希的核验结果可恢复；精确补丁无效时同轮最多重试一次，保留失败原因与已核验内容。
-- API / CLI 支持只生成与查看文字；网页会话展示工具动作、来源和阶段进展，正文核验后发布。
-- NVDA / GLD-BTC 样例采用 Schema 1.1，Bundle、HTML 内嵌数据、Office 文件与 manifest 一致。
-- 行情、资讯、宏观能力通过 DataProviderInterface 注入，提供公共实现和服务端插件扩展接口。
-- GitHub 私有仓库保留关键工程提交；Actions 执行构建、pytest、Vitest、静态检查和样例校验。
+## 最近验证与已知边界
 
-## 验证入口
+| 范围                 | 最近证据                                                                                            |
+| -------------------- | --------------------------------------------------------------------------------------------------- |
+| 后端                 | [308 项回归及 PPT 检查](../evals/ppt-layout-fix-20260929.json)                                      |
+| 前端、构建与静态检查 | [31 项前端及导出工程检查](../evals/export-engineering-20260929.json)                                |
+| 格式解析             | [13 个真实 planner 案例](../evals/output-selection-20260929.json)                                   |
+| 样例及产物一致性     | [sample-validation](../evals/sample-validation.json)                                                |
+| 真实研究             | [历史八次运行](final-evaluation.md)、[P0 两次及内容复核](../evals/p0-live-validation-20260929.json) |
+| 本次文档整理         | [截图、链接与文档验证记录](../evals/docs-refresh-20260929.json)                                     |
 
-| 范围                               | 证据                                                                                         |
-| ---------------------------------- | -------------------------------------------------------------------------------------------- |
-| 固定版本八次真实研究与本机会话验收 | [运行验收](final-evaluation.md)                                                              |
-| 后端、前端、静态检查与构建         | [工程验证](validation.md)、[工程验收机器记录](../evals/acceptance-engineering-20260929.json) |
-| 数值关系与缺口闭环                 | [工程复核](engineering-review.md)、[定向重放](../evals/loop-repair-validation.json)          |
-| 两套样例重导出与结构一致性         | [样例校验](../evals/sample-validation.json)                                                  |
-| 远程自动化                         | [GitHub Actions](https://github.com/coetzeexu/evidence-research-agent/actions)               |
+工程回归不能证明全部研究结论正确。P0 的两次研究自动通过 2/2、事后正文复核 0/2；未计算属性、推断边界和必答覆盖仍有缺口。最新工作按用户范围聚焦导出、排版和文档，没有调整 Agent loop 或启动新一轮研究评估。
 
-每份记录保留当次版本、请求与范围。工程回归验证确定性行为，真实研究检查问题覆盖和证据链，浏览器验收检查用户操作及展示。
+PPT 检查采用 LibreOffice 渲染与 Poppler 字框检查，未做 Microsoft PowerPoint 实机验收。Windows / Docker 未完成实机验证。服务面向本地单用户，免费数据源会限流或缺页，GLD 为黄金代理，日线按请求刷新而非逐笔实时。
 
-正文核验协议为 `1.3`，计算方法仍为 `2026.09.4`。开发快照复验使用独立 probe 标记，不计入完整八次真实研究。
+## 如何检查交付版本
 
-## 使用与边界
+正式 ZIP 由 `tools/package_delivery.py` 生成，包含 `DELIVERY-INFO.json` 的 Git 提交、工作区状态和交付树哈希，以及 `DELIVERY-MANIFEST.json` 的逐文件 SHA-256。使用 `--verify` 可核对包内完整性及与当前源码的一致性，命令见 [工程指南](development.md#打包与发布)。
 
-[README](../README.md) 提供一键启动、环境配置、文字接口和测试命令。`./run.sh` 启动服务；`uv run research run '研究问题' --no-export` 只生成文字研究。
+版本顺序：`a713520` 指标/交付 P0 → `0c3c36d` 按需导出与报告 → `39ea1be` planner 格式规则 → `e76b82e` PPT 排版修复。本轮文档提交在这些功能提交之后，仅补充说明、架构图、截图与文档验证记录；具体文档提交以 Git 和包内记录为准。
 
-历史样例的离线 replay 不调用模型，因此 `research=null`、正文核验状态为 `unassessed`；新的正文结果单独保存在真实运行记录中。数据源扩展接口不等于已接入 Tushare、Wind 或 Bloomberg，商业服务需要适配真实口径与许可。密钥仅留在服务端，不进入仓库或前端。
-
-[GitHub 私有仓库](https://github.com/coetzeexu/evidence-research-agent) · [设计说明](design.md) · [研究验收方法](agent-research-quality.md) · [数据源扩展](data-providers.md) · [AI 开发记录](ai-development.md)
+[AI 开发过程](ai-development.md) · [Prompt / 技能源码](../prompts/) · [验证命令](validation.md) · [数据源扩展](data-providers.md) · [文档总览](README.md)

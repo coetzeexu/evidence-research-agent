@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="870" viewBox="0 0 1280 870" role="img" aria-labelledby="title desc">
+<title id="title">Evidence 系统架构</title><desc id="desc">WebUI 通过 FastAPI，CLI 直接调用研究流程；LangGraph 管理主管、调查、确定性计算与独立核验，使用受限工具和方法技能；保存统一快照并按请求导出。</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#65776f" stroke-width="1.5"/></marker></defs>
+<rect width="1280" height="870" rx="20" fill="#f5f7f5"/>
+<style>text{font-family:Arial,'PingFang SC','Microsoft YaHei',sans-serif;fill:#1e3029}.title{font-size:29px;font-weight:700}.h{font-size:21px;font-weight:700}.t{font-size:17px}.s{font-size:15px;fill:#54685f}.line{fill:none;stroke:#65776f;stroke-width:2;marker-end:url(#arrow)}</style>
+<text x="40" y="48" class="title">Evidence / 从问题到可复核交付</text>
+<text x="40" y="78" class="s">模块化单体 · 模型负责调查与解释 · 程序负责计算与发布约束</text>
+<rect x="40" y="108" width="756" height="96" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="62" y="143" class="h">WebUI · React + ECharts</text>
+<text x="62" y="172" class="t">问题输入 / 执行进展 / 图表与证据 / 下载</text>
+<rect x="836" y="108" width="404" height="96" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="858" y="143" class="h">CLI</text>
+<text x="858" y="172" class="t">run / show / replay / export</text>
+<path d="M418 204V230" class="line"/>
+<rect x="40" y="236" width="756" height="92" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="62" y="271" class="h">FastAPI · 同源 API + SSE</text>
+<text x="62" y="300" class="t">任务队列 / 会话接口 / 过程事件 / 文件下载</text>
+<path d="M418 328V359" class="line"/>
+<path d="M1038 204V347H750V359" class="line"/>
+<rect x="40" y="367" width="800" height="220" rx="14" fill="#e9f0eb" stroke="#a9beb0"/>
+<text x="62" y="403" class="h">LangGraph · 有界研究流程</text>
+<rect x="62" y="424" width="168" height="88" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="84" y="459" class="h">主管</text>
+<text x="84" y="488" class="t">拆解 / 预算</text>
+<rect x="257" y="424" width="168" height="88" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="279" y="459" class="h">研究子 Agent</text>
+<text x="279" y="488" class="t">调查 / 补证</text>
+<rect x="452" y="424" width="168" height="88" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="474" y="459" class="h">计算引擎</text>
+<text x="474" y="488" class="t">窗口 / 回测</text>
+<rect x="647" y="424" width="168" height="88" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="669" y="459" class="h">核验子 Agent</text>
+<text x="669" y="488" class="t">证据 / 正文</text>
+<path d="M230 468h22" class="line"/>
+<path d="M425 468h22" class="line"/>
+<path d="M620 468h22" class="line"/>
+<text x="62" y="549" class="t">缺证时补查；数值或措辞错误定向修复；仅发布核验通过内容</text>
+<text x="62" y="572" class="s">SQLite 检查点 + 持久预算 · complete / partial / failed</text>
+<rect x="880" y="367" width="360" height="100" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="902" y="402" class="h">受限 Tools</text>
+<text x="902" y="431" class="t">Yahoo 行情 / 网页、HN 资讯</text>
+<text x="902" y="457" class="t">FRED CPI / 读取 / 数值比较</text>
+<rect x="880" y="487" width="360" height="100" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="902" y="522" class="h">Skills + Prompts</text>
+<text x="902" y="551" class="t">事件研究 / 资产比较 / 证据审查</text>
+<text x="902" y="577" class="t">方法、输入约束与停止条件</text>
+<path d="M880 415H846" class="line"/>
+<path d="M880 539H846" class="line"/>
+<path d="M440 587V619" class="line"/>
+<rect x="40" y="625" width="1200" height="90" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="62" y="660" class="h">ResearchBundle · 统一研究快照</text>
+<text x="62" y="689" class="t">行情 + 来源 + 事件 + 指标 + 结论 + 缺口 + 核验记录 → WebUI 与导出器共同读取</text>
+<path d="M640 715V742" class="line"/>
+<rect x="40" y="752" width="276" height="85" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="62" y="787" class="h">HTML</text>
+<text x="62" y="816" class="t">连续报告 / 离线交互</text>
+<rect x="348" y="752" width="276" height="85" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="370" y="787" class="h">Excel</text>
+<text x="370" y="816" class="t">公式底稿 / 回测台账</text>
+<rect x="656" y="752" width="276" height="85" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="678" y="787" class="h">PPT</text>
+<text x="678" y="816" class="t">账页模板 / 可编辑图表</text>
+<rect x="964" y="752" width="276" height="85" rx="12" fill="#ffffff" stroke="#cdd9d1"/>
+<text x="986" y="787" class="h">Word</text>
+<text x="986" y="816" class="t">策略正文 / 方法与引用</text>
+<text x="40" y="858" class="s">ResearchSpec.outputs 控制实际生成集合；PPT 模板技能只约束导出，不改变研究 loop。</text>
+</svg>

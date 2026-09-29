@@ -1,10 +1,24 @@
 # 设计说明
 
-最新导出增量：按用户选择的格式交付，独立 HTML 连续报告，PPT 挂载 operating-review 源模板；Agent loop 未改。见 [导出与展示说明](export-presentation-20260929.md)、[当前工程验收](../evals/export-engineering-20260929.json)。
+Evidence 使用 FastAPI + React 的模块化单体，以 LangChain 调用受限工具与独立角色上下文，以 LangGraph 管理流程、补查和检查点。研究内容统一落到 `ResearchBundle`，WebUI 与按需导出器读取同一份快照。
 
-当前 P0 增量：正文核验协议 1.4、指标契约与发布包一致性，见 [本轮说明](p0-release-20260929.md)。下文历史检查保留其原版本与范围。
+当前计算方法版本 `2026.09.4`，正文核验协议 `1.4`。历史样例保留原方法 `2026.09.3` 和正文 `unassessed` 标识。最新导出及版面修复没有改变研究 loop；具体改动见 [导出说明](export-presentation-20260929.md)。
 
-计算方法版本 `2026.09.4`，正文核验协议 `1.3`；本轮改进核验与恢复流程，行情和回测计算方法未变。模块化单体使用 FastAPI、React 和 LangChain / LangGraph。研究正文层独立于 HTML / Office，可单独运行、核验和查看。验收方法见 [调研可信度方案](agent-research-quality.md)，实际运行结果见 [运行验收](final-evaluation.md)。
+## 系统边界
+
+![入口、研究流程、工具与技能、快照和导出层](assets/architecture.svg)
+
+架构图另提供 [Mermaid 源码](assets/architecture.mmd)。图中是职责概览；具体执行节点与补查路径见下一节。
+
+| 边界       | 实现                                                  | 选择理由                                           |
+| ---------- | ----------------------------------------------------- | -------------------------------------------------- |
+| 用户入口   | React 工作台经 FastAPI；CLI 直接调用同一 Pipeline     | 本地一键启动，接口与业务逻辑分开                   |
+| 执行控制   | 单进程串行队列、LangGraph SQLite checkpoint、持久预算 | 支持恢复和有界重试，避免无限自主运行               |
+| 研究与核验 | 独立上下文调用，不共享未经核验的发布结论              | 降低作者自行批准自己的风险；不承诺核验模型绝不犯错 |
+| 确定性分析 | 行情清洗、交易日对齐、收益、窗口、回测、指标格式化    | 财务数字可复算，不接受模型生成任意计算代码         |
+| 展示与导出 | 共用 Bundle 和图表配置；独立 HTML 与工作台分别构建    | 网页交互与独立报告各自保持适用的展示形式           |
+
+主管、研究子 Agent 和核验子 Agent 是 SDK 中的职责与上下文隔离，不是部署了三个独立服务。开发阶段使用的 Codex 子 Agent 则用于实现与验收，两者不是同一机制。
 
 核验器选择程序生成的片段 ID，由程序回填原句并计算数值关系；显式缺口在补丁、恢复与完成判定间保留，关闭需可定位依据。工程实现与对应回归见 [闭环复核](engineering-review.md)。
 
@@ -101,7 +115,7 @@ JSON 用唯一临时文件加原子替换，避免 SDK 并行工具争用固定�
 
 ## 工具、技能与安全
 
-工具只提供资产查询、来源发现、检索、保存原文、问题进度、数值换算等有限能力。计算引擎不接受任意模型代码。三个研究技能描述输入、调查步骤、错误边界与停止条件；Prompts 和 skill 内容哈希写入执行记录。
+工具只提供资产查询、来源发现、检索、保存原文、问题进度、数值换算等有限能力。计算引擎不接受任意模型代码。四个可加载的研究技能（event-study、asset-comparison、evidence-review、report-authoring）描述输入、调查步骤、错误边界与停止条件；Prompts 和 skill 内容哈希写入执行记录。PPT 账页技能是单独的导出契约，不在研究工具的 load_skill 白名单中。
 
 行情、新闻、宏观请求由后端执行，前端同源请求；离线报告内嵌依赖，CSP 限制脚本与连接。来源 URL 逐跳校验并固定公网解析 IP，拒绝内网、回环、云元数据。外部正文标为不可信数据，不能修改工具权限或预算。密钥仅在服务端配置，日志使用有限字段与脱敏错误。Excel 禁止将资讯文本解释为公式。
 
@@ -118,3 +132,25 @@ JSON 用唯一临时文件加原子替换，避免 SDK 并行工具争用固定�
 数据源通过 `DataProviderInterface` 组合行情、资讯、宏观 Protocol，在 Pipeline 与工具间共享。默认公共适配器保留网络安全与缓存行为；受信服务端安装的 entry point 或显式依赖注入可替换单项能力，模型不能加载任意插件。商业服务的口径转换、认证和许可属于适配器责任；见 [数据源文档](data-providers.md)。
 
 离线样例 replay 会规范化 Bundle、迁移 Schema 并重导出，然后保存一致快照与迁移记录；不改变原计算版本，不补造 research 正文。verify_samples 同时检查原始 Bundle、HTML 内嵌、JSON 与 manifest，防止只修测试断言却继续交付不同版本。GitHub Actions 在构建后运行全量 pytest、Vitest 和样例检查，避免缺少构建资源导致导出测试被跳过。
+
+## 工具、子 Agent 与 skill 如何协作
+
+| 调用方           | 实际能力                                                                              | 方法约束                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| 主管规划         | `lookup_instrument`、结构化研究规格与问题清单                                         | `prompts/planner.md`，含请求格式选择规则                                        |
+| 研究子 Agent     | `source_directory`、`search_public`、`read_public_source`、`record_question_progress` | 通过 `load_skill` 获取事件/比较研究方法；围绕明确缺口补查                       |
+| 事件核验         | `inspect_evidence`、`compare_numbers`                                                 | 证据原文与数值比较，无法读取任意本地文件                                        |
+| 正文与完成度核验 | 受结构化 Schema 约束的独立调用                                                        | `text-reviewer`、`meaning-review`、`question-review` 分工，程序掌握最终发布门禁 |
+| PPT 导出         | `export_slides.py` 原生表格、图表与分页                                               | `skills/ppt-ledger` 的 operating-review 方法、设计参数与来源许可                |
+
+行情和宏观采集由流程调用数据源适配器；不把所有 I/O 都包装成自主 Agent。Skill 提供方法，tool 执行有限动作，subagent 承担具有独立上下文的调查或核验职责。完整 Prompt 文件索引见 [AI 开发记录](ai-development.md#prompt-与技能)。
+
+## 按需产物与版面契约
+
+`ResearchSpec.outputs` 是实际生成格式集合。报告/策略报告默认 HTML，文档默认 Word，明确格式优先；Excel/PPT/Word 请求不额外补 HTML。API/CLI 的 `export_reports:false` / `--no-export` 控制是否执行导出。审计数据和 manifest 不算额外的报告格式。
+
+独立 HTML 使用连续章节、目录和来源附录，内联脚本/CSS/数据，按脚本哈希设置 CSP，禁用运行时网络请求。ECharts 配置与工作台共享，独立报告组件不复用工作台的 tab 和产物列表。
+
+PPT 模板来自用户指定的 operating-review 源文件和示例规格，保留许可与文件哈希；未搬入整套上游工具。原生元素保持可编辑，按整列统一对齐，显式行距、换行与分页共用高度估算，禁止文本框自动增高覆盖下一行。长内容续页，来源放在可追溯位置。验证采用结构回归、PDF 全页文字边界检查与关键页目检；跨 Office/字体效果仍需实机确认。
+
+这些选择让产物层可以独立改进，不需要重跑调查或调整研究 loop。当前具体格式样例、13 个 planner 案例及 PPT 69 页检查见 [导出说明](export-presentation-20260929.md) 和 [验证记录](validation.md)。

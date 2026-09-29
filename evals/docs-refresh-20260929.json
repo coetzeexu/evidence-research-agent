@@ -1,0 +1,75 @@
+{
+  "at": "2026-09-29T14:07:01.007077+00:00",
+  "scope": "Documentation and real sample UI screenshots only; no runtime code, prompts, research loop, or sample report changes",
+  "functional_baseline_commit": "e76b82e1a5c075eb42d50b83ac0c10adc49e4ea4",
+  "browser": {
+    "surface": "Codex in-app browser",
+    "local_port": 8011,
+    "isolated_data_directory": true,
+    "model_calls": 0,
+    "samples": [
+      "nvda",
+      "gold-bitcoin"
+    ],
+    "page_content_modified": false,
+    "scope": "Read-only sample navigation and screenshots; not a new end-to-end research evaluation"
+  },
+  "checks": {
+    "markdown_files": 19,
+    "local_references": 163,
+    "markdown_anchors": 8,
+    "missing_references": [],
+    "jpeg_decode_and_dimensions": true,
+    "svg_xml_valid": true,
+    "cli_help_and_replay_output_option": true
+  },
+  "screenshots": [
+    {
+      "path": "docs/assets/webui-comparison.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 61576,
+      "sha256": "6e1feb95a04f24a8e75472fa3d4552204ef0cef064eab5f49b55228e4ba2170c"
+    },
+    {
+      "path": "docs/assets/webui-evidence.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 94835,
+      "sha256": "92860d8986e565f932348b94f97aa10f4bbe744b43355a4e4a4c924cfce8b534"
+    },
+    {
+      "path": "docs/assets/webui-exports.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 49493,
+      "sha256": "eff39666860d6162479d35ca8a6e8f81b0859317e746b97d52ffaca59fe1b53e"
+    },
+    {
+      "path": "docs/assets/webui-home.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 43384,
+      "sha256": "a800045e0a06f4811c1805b3bb7b759ee9b701d2345d17e694b5082abfd5c1fe"
+    },
+    {
+      "path": "docs/assets/webui-nvda.jpg",
+      "width": 1280,
+      "height": 720,
+      "bytes": 69395,
+      "sha256": "e552128b8a3812646685e6c5ade05c1b499c2e96f0a882f78715b7aa42d68353"
+    }
+  ],
+  "architecture": {
+    "path": "docs/assets/architecture.svg",
+    "sha256": "11be9322dcf6c0622e0a8d40ec540a13768fadf793a5ef0ebdba71840b1fe08a",
+    "source": "Hand-authored from the current code; editable Mermaid companion provided",
+    "visual_inspection": true
+  },
+  "functional_tests_rerun": false,
+  "existing_functional_evidence": [
+    "evals/ppt-layout-fix-20260929.json",
+    "evals/export-engineering-20260929.json"
+  ],
+  "package_verification": "Final package verification is external to the ZIP to avoid self-referential hashes"
+}

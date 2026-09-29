@@ -1,129 +1,155 @@
 # Evidence · 可溯源投研 Agent
 
-Python / LangChain / LangGraph / React / ECharts。本地研究工作台：根据自然语言调查行情与资讯，计算事件窗口和资产配置，发布经过证据与数值核验的中文正文；保留独立 HTML、Excel、PowerPoint、Word 导出能力。
+**输入研究问题，得到有行情、有证据、有计算依据的分析，并按要求导出报告。**
 
-计算方法版本 `2026.09.4`，正文核验协议 `1.4`。研究正文通过问题清单、原文片段、确定性指标和独立核验组织；数值关系由程序计算，完成度只依据已核验段落，缺口在补查与恢复间持续保留。样例支持 Schema 迁移与离线重导出，数据源支持按行情、资讯、宏观能力扩展。见 [交付说明](docs/final-handoff.md)、[设计说明](docs/design.md) 和 [真实运行验收](docs/final-evaluation.md)。
+Evidence 是一个本地投研工作台。它把行情、行业事件与原始资讯放在同一份研究里：通过 Agent 调查和核验，通过 Python 计算指标，通过 WebUI 交互复核，最后交付可以独立打开的文件。
 
-GitHub：私有仓库 [coetzeexu/evidence-research-agent](https://github.com/coetzeexu/evidence-research-agent)。Actions 在 push / PR 时运行离线功能、构建和样例校验，不需要模型密钥。
+`Python 3.12` · `LangChain / LangGraph` · `FastAPI` · `React / TypeScript` · `ECharts`
 
-上一轮 P0 更新：显式指标单位与含义、数值发布边界、ZIP 与源码逐文件核验，见 [修复与交付说明](docs/p0-release-20260929.md)。历史真实运行结果保留原版本；该轮最终真实研究自动通过 2/2、事后正文复核通过 0/2，仍有推断越界和子问题覆盖缺口，详见 [内容复核](evals/p0-live-validation-20260929.json)。当前不能据此宣称整体达到 90 分。
+[快速启动](#快速启动) · [WebUI 怎么用](#webui-怎么用) · [产物样例](#产物样例) · [架构](#架构) · [开发与验证](#开发与验证) · [完整文档](docs/README.md)
 
-本轮导出更新：按请求选择产物；报告/策略报告默认 HTML，文档默认 Word，显式格式优先。NVDA 样例仅 HTML，黄金/比特币样例仅 Excel/PPT/Word。独立 HTML 使用连续报告，PPT 使用源文件提取的 operating-review 账页模板，见 [导出说明](docs/export-presentation-20260929.md)。PPT 后续对齐/重叠修复及 308 项回归见 [版面修复验证](evals/ppt-layout-fix-20260929.json)。
+![Evidence 工作台首页：输入问题、选择研究起点、回看历史会话](docs/assets/webui-home.jpg)
 
-## 本地一键运行
+## 可以完成什么
 
-需要 Node.js 22+、uv，Python 3.12 由 uv 安装。首次运行联网安装依赖：
+| 场景                    | 研究内容                                                                                  | 用户指定的交付                          |
+| ----------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------- |
+| NVDA 五年行情与 AI 事件 | 日线 OHLCV、ChatGPT / Blackwell / DeepSeek 等事件、行情异动、事件窗口与反应评级、原始来源 | 交互 HTML                               |
+| 黄金与比特币比较        | 收益风险、实际购买力、压力月份、相关性、配置回测和参数敏感性；黄金使用 GLD ETF 代理       | Excel 底稿、PPT 决策框架、Word 策略报告 |
+
+资产、区间、问题和格式由请求决定。**支持四种格式，不代表每次生成四份文件**：“报告 / 策略报告”默认 HTML，“文档”默认 Word；明确指定 Excel、PPT、Word 或 HTML 时按指定集合生成。也可通过 API / CLI 只研究、不导出。
+
+项目中的“实时”指按请求获取可用数据，并实时展示执行进展；行情使用日线，**不是逐笔实时行情终端**。文件记录实际数据截止时间。
+
+## 快速启动
+
+### 1. 启动工作台，无密钥也能看样例
+
+准备 **Node.js 22+** 与 **uv**，在解压后的项目根目录执行。Python 3.12 和锁定依赖由 uv 管理，首次安装需要联网。
 
 ```bash
 ./run.sh
-# Windows: ./run.ps1
 ```
 
-服务启动于 http://127.0.0.1:8000，不自动打开浏览器。启动脚本按依赖锁与源码指纹安装依赖、构建前端。旧样例离线可读；新研究需要在服务端 `.env` 配置支持工具调用的 OpenAI Chat Completions 兼容模型：
+Windows PowerShell：
+
+```powershell
+.\run.ps1
+```
+
+打开 **http://127.0.0.1:8000**。脚本会创建 `.env`、安装依赖并构建前端，不会自动打开浏览器。点击左侧研究快照，或首页“已完成的研究”，即可查看内置 NVDA、黄金/比特币样例及下载文件。
+
+### 2. 配置模型，发起新研究
+
+在自动创建的 `.env` 中填写：
 
 ```dotenv
 LLM_MODEL=你的模型或部署别名
-LLM_BASE_URL=https://你的服务/v1
+LLM_BASE_URL=https://你的兼容服务/v1
 LLM_API_KEY=你的密钥
 ```
 
-变量说明见 `.env.example`。可选 `LLM_PLATFORM` 请求头、`LLM_VLLM_THINKING` 适配部署网关。修改配置后重启服务。密钥不进入浏览器、Bundle 或交付包。Docker 可使用 `docker compose up --build`；该部署路径本机未实测。
+使用支持工具调用的 **OpenAI Chat Completions 兼容服务**，配置后重启。更多配置见 [.env.example](.env.example)。密钥只在服务端使用，不进入前端和导出文件。
 
-## 只运行和查看文字
+在首页输入框粘贴以下任一请求，点击“开始研究”：
+
+> 回顾 NVDA 近五年日线 OHLCV，梳理 ChatGPT、Blackwell（B100/B200）和 DeepSeek 的关键事件，解释主要行情变化，区分相关性与因果，最终生成交互 HTML。
+
+> 比较黄金（GLD 代理）与比特币近五年的避险、抗通胀和配置价值，包含收益风险、实际购买力、压力情景与配置回测，生成 Excel 回测底稿、PPT 决策框架、Word 策略报告。
+
+新研究会调用模型和公开数据服务。单次执行预算为 15 分钟，排队时间另计；未查清的必答问题会保留为缺口。免费数据源可能限流，不能把“文件生成了”理解为“所有问题都已解决”。
+
+## WebUI 怎么用
+
+工作台围绕 **提问 → 看过程 → 复核结果 → 下载** 组织。
+
+| 入口                    | 你可以做什么                                                               |
+| ----------------------- | -------------------------------------------------------------------------- |
+| 首页 / 新建研究         | 输入资产、时间范围、研究问题和产物格式；灵感卡片只填入示例，点击发送才开始 |
+| 左侧研究会话            | 搜索、切换和回看已保存任务；样例标记为“研究快照”                           |
+| 研究会话                | 看真实阶段、工具动作、来源进展和核验后正文；基于当前研究继续追问           |
+| 研究报告 → 行情与事件   | 缩放 K 线和成交量，筛选高/中/低反应，点击事件查看窗口收益和证据            |
+| 研究报告 → 比较与回测   | 多资产研究中切换净值、购买力、回撤、相关性与配置视图，查看敏感性           |
+| 数据与来源 / 方法与核验 | 核对原始数据、来源链接、计算口径和研究限制                                 |
+| 右上角“导出”            | 跳转到本次研究的产物下载区，只展示该请求选择的格式                         |
+
+**行情与事件：**K 线颜色表示涨跌，事件标记表示反应强度；强度、方向与证据可信度分别展示。
+
+![NVDA K 线、成交量、事件反应筛选与时间缩放](docs/assets/webui-nvda.jpg)
+
+**资产比较：**在共同月份和明确计价口径下比较 GLD 与 BTC，进一步查看压力情景和配置回测。
+
+![黄金与比特币比较：名义净值、实际购买力和回撤切换](docs/assets/webui-comparison.jpg)
+
+点击事件可打开右侧证据面板，核对 1 / 5 / 20 日窗口、时间精度和原始链接。图文步骤见 [WebUI 使用指南](docs/webui.md)。截图来自本地历史样例，展示当前界面，不代表重新采集或重新核验了这些结论。
+
+工作台用于研究、追问和重算；下载的 **HTML 是独立的连续报告**，带目录、图表和来源，不包含工作台 tab 或其他产物下载区。HTML 可离线交互，访问外部来源链接仍需联网；追问和更新数据需要启动应用。
+
+## 产物样例
+
+无需模型即可打开以下交付文件。GitHub 不直接运行 HTML；请下载后用浏览器打开。
+
+| 样例          | 文件                                                        | 可复核内容                                           |
+| ------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
+| NVDA          | [HTML 报告](samples/nvda/artifacts/report.html)             | K 线与事件联动、来源链接、数据与方法                 |
+| 黄金 / 比特币 | [Excel 底稿](samples/gold-bitcoin/artifacts/report.xlsx)    | 行情、参数、公式、执行台账与来源                     |
+| 黄金 / 比特币 | [PPT 决策框架](samples/gold-bitcoin/artifacts/report.pptx)  | operating-review 账页风格，可编辑表格/图表与来源备注 |
+| 黄金 / 比特币 | [Word 策略报告](samples/gold-bitcoin/artifacts/report.docx) | 研究结论、比较图表、方法与来源                       |
+
+每套样例附 `bundle.json` 和 `artifacts/manifest.json`，可核对研究版本、请求格式与文件哈希。历史样例保留原计算版本 `2026.09.3`，正文核验状态为 `unassessed`；它们用于演示产物，不冒充最新协议的研究质量验收。真实研究正文与结果另见 [验收记录](docs/final-evaluation.md)。
+
+## 架构
+
+![Evidence 架构：入口、LangGraph 流程、子 Agent、工具与技能、研究快照和按需导出](docs/assets/architecture.svg)
+
+| 层                          | 职责与边界                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| **主管 / LangGraph**        | 拆解问题、组织采集与分析、分配预算、决定补查和发布；保留检查点                  |
+| **研究子 Agent**            | 调用来源目录、检索与原文读取工具，围绕未回答的问题收集证据                      |
+| **核验子 Agent**            | 独立上下文核对事实、指标引用和推断边界；完成度核验只接收已核验结论              |
+| **Tools**                   | 有限的查询、读取、问题记录与数值比较；行情、事件窗口、回测由确定性代码计算      |
+| **Skills / Prompts**        | 版本化的方法、步骤、停止条件和角色协议；PPT skill 约束导出模板，不介入研究 loop |
+| **ResearchBundle / 导出器** | 统一保存行情、事件、来源、指标、结论和缺口；WebUI 与各格式读取同一快照          |
+
+关键取舍：采用模块化单体，便于本地启动；模型负责调查与解释，程序负责计算与发布约束；按公开时刻和交易日关联事件，**同期反应不直接认定为因果影响**。行情使用 Yahoo，资讯覆盖公开网页 / HN / Yahoo，宏观使用 FRED CPI，更多来源可在服务端扩展。
+
+架构细节、预算、数据契约和安全边界见 [设计说明](docs/design.md)；数据口径及插件接入见 [数据源扩展](docs/data-providers.md)。
+
+## 开发与验证
 
 ```bash
 uv sync --frozen
-uv run research run '回顾 NVDA 近五年，核实 ChatGPT、Blackwell 和 DeepSeek-R1 发布，解释行情变化和证据边界' --no-export
-uv run research show RUN_ID --format text
-uv run research show RUN_ID --format json
-```
-
-`--no-export` 持久化到任务，恢复时仍不生成文件。`show` 只读取研究快照，不调用模型。API 同样支持：
-
-```bash
-curl -X POST http://127.0.0.1:8000/api/runs \
-  -H 'Content-Type: application/json' \
-  -d '{"prompt":"比较 GLD 与 BTC-USD 近五年避险、抗通胀和配置价值","export_reports":false}'
-curl http://127.0.0.1:8000/api/runs/RUN_ID/research
-```
-
-研究记录含 `research.status`、问题清单、证据原文片段、指标、结论、逐轮核验和预算。完成状态为 `complete / partial / failed`；旧 Bundle 缺少此记录时为 `unassessed`。关闭导出的任务状态为 `researched`，与研究是否完整分开。
-
-网页会话显示真实工具动作、来源进展及核验正文。研究和追问的草稿均留在后端，核验后一次发布；聊天保留 `accepted / delta / done / error` 协议。追问使用当前快照与同一研究最近 12 条消息，换资产、更新日期或新增数据需重新研究。
-
-## Agent 如何工作
-
-```text
-主管拆解问题 → 行情/宏观采集 → 研究子 Agent 调查
-  → 确定性计算 → 结论草稿 → 独立正文核验 → 必答完成度核验 → 发布
-                        ↑          │                │
-                        └──────补查/重算/改写──────────┘
-```
-
-- **主管**：解析资产、区间、点名事件与研究问题；额外问题绑定用户原话，不能自行扩写验收条件。
-- **研究子 Agent**：调用来源目录、检索、原文读取、问题记录工具；搜索对应具体未解决问题，补查保留已有证据。
-- **核验子 Agent**：分别用独立上下文检查原文/数值及推断边界；通过的段落再交给 `question-review` 核对必答完成度。它不能重新批准被拒绝的结论，也不能将用户未要求的额外分析列为缺口。
-- **技能**：约定事件研究、资产比较、证据检查的步骤和停止条件。价格、窗口、回测与敏感性由 Python 计算，模型不能补造数值。
-
-研究局限与事实缺失分别处理：有实证依据且说明限制，可以回答无法证明因果的问题；明确要求的发布日期或计算维度缺失时仍阻断完成。程序计算带符号和绝对幅度关系，规范化指标引用只接受精确存在的 ID；旧问题状态不能充当新研究的回答依据。精确补丁定位失败最多重试一次，记录原因并保留已核验内容。
-
-事件提取复用统一的结构化调用协议，携带原文、已有事件和具体补查要求。局部格式重试耗尽时保留已有证据并披露缺口，继续核验。正文同时存在本地可修复错误与来源缺口时，先修复数值、格式或措辞，再核对必答覆盖；确实缺少事实证据时定向补查。
-
-完整运行上限 15 分钟实际执行时间，排队不计；前 12 分钟调查，最后 3 分钟预留综合核验。最多 34 次搜索、50 次原文读取、64 次模型调用，两轮检索补查和两轮正文修复。恢复继承已消耗预算，追问单独限制 180 秒。到期仅保留已核验内容与明确缺口，无可发布正文则失败。
-
-## 数据与计算口径
-
-- 行情：Yahoo 完整日线 OHLCV、复权收盘与公司行动；资讯：公开网页、HN、Yahoo 等；通胀：FRED CPI。保存来源、实际覆盖时间与快照哈希，不能把搜索摘要充当已读原文。
-- 事件区分发生、首次公开、报道、市场反应时间。精确时刻按交易日历对齐；日期精度检查当日与下一交易日。回顾报道不能冒充历史公开时刻。
-- 反应强度默认按 5 日相对基准收益除以事前波动计算，高/中/低与方向、证据可信度分开。相对收益只是标的减基准，不能解释为独立因果贡献。
-- 比较使用共同股票月末锚点，不使用在锚点之后才形成的加密资产收盘。组合与单资产均使用同一初始资本、区间、费用及下一可交易日开盘执行引擎；包含现金、持仓、费用台账。
-- GLD 是黄金 ETF 代理，不等于现货黄金。基金费用已体现在价格，不再重复扣减；交易成本另计。
-- 避险区分正收益与相对抗跌；压力样本是事后 SPY 最差六个月。实际购买力、资产月收益与 CPI 同比的关联分开讨论；当前历史版 CPI 仅支持回顾分析。
-- 成本、频率、权重和分段敏感性进入正文上下文。历史分段不是样本外验证，不能从网格选择事后最优配置。
-
-## 验证与样例
-
-常规工程回归（包括导出结构测试；不打开浏览器或加载图片）：
-
-```bash
 npm ci
-npm run build
+npm run build                   # 同时构建 WebUI 与离线报告资源
 uv run pytest -q
+npm test
 uv run ruff check backend tests tools
-npm test -- --run
+uv run ruff format --check backend tests tools
 npm run format:check
 uv run python tools/verify_samples.py
-# 真实服务评估，会消耗模型与检索额度；不导出报告
-uv run python tools/evaluate_text_research.py --case all --suite Final01
 ```
 
-真实运行验收固定日期、问题、配置与生产版本：NVDA / GLD-BTC 各连续三次、AMD / GLD-ETH 各一次，共八次。每次保存正文、Bundle、核验记录、版本、实际模型、用量和耗时，检查必答覆盖、引用、计算、时间口径和预算；本机浏览器另验会话发起、过程流式展示及产物生成。实际结果统一记录在 [运行验收](docs/final-evaluation.md)，工程检查与样例证据见 [验证记录](docs/validation.md)。
+最近功能验证：**后端 308 项、前端 31 项通过**；构建与静态检查通过。格式选择覆盖全部 16 种集合，并通过 13 个真实 planner 案例。PPT 修复后检查了 69 页 LibreOffice 渲染的文字边界，未发现重叠或越界；未做 Microsoft PowerPoint 实机验收。各项发生在不同验证批次，见 [完整验证记录](docs/validation.md)。
 
-开发定位可使用 `tools/evaluate_saved_research.py`，读取既有证据快照并重新调用正文核验流程；它不重新采集行情或资讯，结果标记为 `saved-evidence-development-probe`，不计入完整八次验收。
+工程回归通过不等于研究结论全部正确。历史八次真实研究自动检查 8/8 通过，但独立阅读仍发现表述问题；后续 P0 两次研究自动通过 2/2、事后正文复核通过 0/2，仍有推断与覆盖缺口。记录保留原版本，导出修复不重新赋予研究通过状态。
 
-当前工程检查后端 308 项、前端 31 项通过，构建 / TypeScript / Prettier / Ruff 及格式检查通过，导出测试及两个样例校验均实际执行。每份记录标注其运行版本与范围；[导出工程检查](evals/export-engineering-20260929.json) 和真实研究验收分别保存。
+本项目使用 **Codex 辅助开发**：用户确定目标、关键口径和范围，Codex 实现代码、回归、工具检查和文档；用户授权阶段使用开发子 Agent 分工。开发过程、Prompt、技能与人工判断见 [AI 开发记录](docs/ai-development.md)。
 
-`samples/nvda/` 和 `samples/gold-bitcoin/` 的历史快照已迁移至 Schema 1.1，并按题目分别重导出 NVDA HTML 和黄金/比特币 Excel / PPT / Word。离线 `research replay nvda` 和 `research replay gold-bitcoin` 只迁移结构、生成产物，不调用模型；因此旧样例 `research=null`，manifest 正文状态为 `unassessed`，保留原计算版本。真实正文样例在上述评估目录。离线 HTML 内嵌依赖；Excel 公式近似与下一开盘执行回测口径分开标记。结构、重算与界面检查的范围见 [验证记录](docs/validation.md)。
+## 代码与文档导航
 
-## 工程结构与边界
+```text
+apps/web/                 React 工作台与独立 HTML 报告
+packages/charts/          WebUI / 导出共用的图表配置
+backend/research_app/     SDK、流程、计算、数据源、API 与导出器
+prompts/ · skills/        角色提示、研究方法与 PPT 模板
+resources/               来源目录
+samples/                 两套研究快照与交付文件
+tests/ · tools/ · evals/  回归、复现工具与实际验证记录
+docs/                    设计、使用、开发、验收与截图
+```
 
-| 模块                                        | 职责                                         |
-| ------------------------------------------- | -------------------------------------------- |
-| `backend/research_app/agents.py`            | SDK 主管、研究/核验上下文与工具              |
-| `pipeline.py`、`budget.py`                  | LangGraph、持久化预算与有界修复              |
-| `research_contract.py`、`research_text.py`  | 问题/证据/结论契约、正文发布门禁             |
-| `research_metrics.py`、`research_logic.py`  | 数值引用、格式化及关系求值                   |
-| `research_semantics.py`、`tool_protocol.py` | 推断审查门禁、严格结构化输出适配             |
-| `analytics.py`、`sensitivity.py`            | 交易时序、同口径回测与敏感性                 |
-| `providers.py`、`security.py`               | 行情/资讯/宏观采集与网络边界                 |
-| `data_providers.py`                         | 按能力定义的数据源接口、服务端插件与依赖注入 |
-| `api.py`、`storage.py`                      | FastAPI、队列、SSE、原子快照、SQLite         |
-| `apps/web/`、`packages/charts/`             | React 会话及共享图表                         |
-| `prompts/`、`skills/`、`resources/`         | 可版本化提示、方法和来源目录                 |
-| `tests/`、`tools/`、`evals/`                | 自动化回归、独立评估与真实记录               |
+- **使用者**：[WebUI 图文指南](docs/webui.md) · [当前交付状态](docs/final-handoff.md)
+- **开发者**：[工程指南（CLI / API / 调试 / 打包）](docs/development.md) · [设计说明](docs/design.md) · [数据源扩展](docs/data-providers.md)
+- **评审者**：[评分维度](docs/rubric.md) · [AI 开发与 Prompt](docs/ai-development.md) · [验证记录](docs/validation.md) · [文档总览](docs/README.md)
 
-单用户本地服务，串行任务队列，无多租户认证。免费数据源可能限流或缺页；不可用不能自动标记为核验通过。网页读取逐跳校验域名/IP、拒绝私网与元数据地址；前端同源调用后端，离线文件不依赖 CDN，HTML 使用 CSP，Excel 禁止资讯字符串转公式。提示注入内容仅作为不可信证据，工具白名单不提供任意代码执行。
-
-[设计说明](docs/design.md) · [方案与验收](docs/agent-research-quality.md) · [AI 开发记录](docs/ai-development.md) · [评分框架](docs/rubric.md) · [历史界面规范](docs/youmind-reference.md)
-
-接入商业行情或专有资讯的契约、entry point 与凭据边界见 [数据源扩展](docs/data-providers.md)。未配置插件时继续使用现有公共源。
+当前面向单用户本地运行，没有多租户认证。前端同源访问后端，离线 HTML 内嵌资源并限制网络连接，密钥不入库；第三方许可见 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。Windows 与 Docker 提供入口，尚未完成实机验证。启动问题、开发端口和常见排查见 [工程指南](docs/development.md)。

@@ -1,19 +1,21 @@
-# 当前版本运行验收
+# 历史固定版本运行验收
+
+本页记录八次冻结版本的历史结果，后续指标、导出、PPT 和文档修复未改写本批数据。当前功能与最近验证见 [交付状态](final-handoff.md)、[验证记录](validation.md)；P0 后续两次内容复核见 [P0 记录](p0-release-20260929.md)。
 
 固定版本八次真实研究已完成，自动检查 **8/8 通过**，八次正文状态均为 `complete`。NVDA 与 GLD/BTC 各连续三次，AMD 与 GLD/ETH 各一次；未混用旧批次成功记录，也未手改输出。
 
 自动检查验证任务执行、必答问题状态、引用与数值计算、时间窗口、比较口径、预算及核验发布。独立阅读另外保留模型表述观察：部分输出仍有日期换算、比较关系或推断措辞错误，所以自动通过不等于“正文全部无误”。严格内容标记按原始复核结果保留于机器记录；按本轮收尾范围，不继续调模型，也不将这些观察列为新增工程待办。
 
-| 场景 | 运行正文 | 自动检查 | 耗时（秒） | 模型调用 |
-| --- | --- | --- | ---: | ---: |
-| nvda | [ab95141d29e24af5](../evals/text-research/Acceptance20260929EventsE/nvda-ab95141d29e24af5.txt) | 通过 | 346.1 | 50 |
-| nvda | [632f8c401c004cbf](../evals/text-research/Acceptance20260929EventsE/nvda-632f8c401c004cbf.txt) | 通过 | 417.2 | 50 |
-| nvda | [438cd152d4364176](../evals/text-research/Acceptance20260929EventsE/nvda-438cd152d4364176.txt) | 通过 | 378.7 | 48 |
-| amd | [1f50da840f0e4b14](../evals/text-research/Acceptance20260929EventsE/amd-1f50da840f0e4b14.txt) | 通过 | 301.3 | 52 |
-| gold-bitcoin | [69400e6337754c84](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-69400e6337754c84.txt) | 通过 | 216.3 | 23 |
-| gold-bitcoin | [00a13c2c3fe04940](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-00a13c2c3fe04940.txt) | 通过 | 207.9 | 24 |
-| gold-bitcoin | [702591e91b73439d](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-702591e91b73439d.txt) | 通过 | 261.8 | 23 |
-| gold-ethereum | [945a08d57adf4bd7](../evals/text-research/Acceptance20260929ComparisonE/gold-ethereum-945a08d57adf4bd7.txt) | 通过 | 250.2 | 23 |
+| 场景          | 运行正文                                                                                                    | 自动检查 | 耗时（秒） | 模型调用 |
+| ------------- | ----------------------------------------------------------------------------------------------------------- | -------- | ---------: | -------: |
+| nvda          | [ab95141d29e24af5](../evals/text-research/Acceptance20260929EventsE/nvda-ab95141d29e24af5.txt)              | 通过     |      346.1 |       50 |
+| nvda          | [632f8c401c004cbf](../evals/text-research/Acceptance20260929EventsE/nvda-632f8c401c004cbf.txt)              | 通过     |      417.2 |       50 |
+| nvda          | [438cd152d4364176](../evals/text-research/Acceptance20260929EventsE/nvda-438cd152d4364176.txt)              | 通过     |      378.7 |       48 |
+| amd           | [1f50da840f0e4b14](../evals/text-research/Acceptance20260929EventsE/amd-1f50da840f0e4b14.txt)               | 通过     |      301.3 |       52 |
+| gold-bitcoin  | [69400e6337754c84](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-69400e6337754c84.txt)  | 通过     |      216.3 |       23 |
+| gold-bitcoin  | [00a13c2c3fe04940](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-00a13c2c3fe04940.txt)  | 通过     |      207.9 |       24 |
+| gold-bitcoin  | [702591e91b73439d](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-702591e91b73439d.txt)  | 通过     |      261.8 |       23 |
+| gold-ethereum | [945a08d57adf4bd7](../evals/text-research/Acceptance20260929ComparisonE/gold-ethereum-945a08d57adf4bd7.txt) | 通过     |      250.2 |       23 |
 
 八次研究的生产代码、Prompt、技能和来源目录哈希均为 `e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085`。服务实际返回模型标识为 `/workspace/model`，不据代理配置推断模型身份。研究文字、Bundle、请求、用量、版本及独立复核记录全部保存。
 

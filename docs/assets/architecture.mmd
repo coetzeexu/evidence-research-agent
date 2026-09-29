@@ -1,0 +1,20 @@
+flowchart TB
+    UI[WebUI / React + ECharts] --> API[FastAPI / 同源 API + SSE]
+    CLI[CLI / run · show · replay · export] --> FLOW
+    API --> FLOW
+    subgraph FLOW[LangGraph / 预算与检查点]
+        PLAN[主管：拆解与计划] --> RESEARCH[研究子 Agent：调查与补证]
+        RESEARCH --> CALC[确定性计算：事件窗口与回测]
+        CALC --> REVIEW[独立核验：事件、正文、必答覆盖]
+        REVIEW -->|具体证据缺口| RESEARCH
+    end
+    TOOLS[受限工具 / 行情、资讯、宏观、数值比较] --> FLOW
+    METHODS[研究 Skills + Prompts / 方法与停止条件] --> FLOW
+    FLOW --> BUNDLE[ResearchBundle / 数据、来源、结论、缺口与核验记录]
+    BUNDLE --> UI
+    BUNDLE --> OUTPUTS[ResearchSpec.outputs / 按请求选择]
+    OUTPUTS --> HTML[HTML / 连续交互报告]
+    OUTPUTS --> XLSX[Excel / 公式与台账]
+    OUTPUTS --> PPT[PPT / 可编辑表格和图表]
+    OUTPUTS --> DOCX[Word / 策略正文与引用]
+    PPTSKILL[PPT 账页模板 skill / 仅约束导出] --> PPT
