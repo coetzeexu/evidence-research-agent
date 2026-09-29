@@ -1,0 +1,66 @@
+{
+  "final_code_hash": "3fc5b3a4986be1a7957654e630e76db0e0fba66cec8a0142809916ab0b000a55",
+  "automated_passes": 2,
+  "post_run_content_passes": 0,
+  "runs": [
+    {
+      "suite": "P0FinalGold20260929",
+      "run_id": "15f6d693bd2340c8",
+      "code_hash": "3fc5b3a4986be1a7957654e630e76db0e0fba66cec8a0142809916ab0b000a55",
+      "reviewer": "Codex primary agent, post-run reading independent of in-app reviewer; not an independent human audit",
+      "automated_pass": true,
+      "content_pass": false,
+      "unit_and_count_spot_check_pass": true,
+      "issues": [
+        {
+          "finding_id": "f-inflation",
+          "severity": "error",
+          "quote": "说明分组均值对少数月份敏感",
+          "reason": "分组均值与线性相关系数方向不同，不能证明少数月份驱动；没有影响点或剔除样本检验。"
+        },
+        {
+          "finding_id": "f-framework",
+          "severity": "error",
+          "reason": "正文未给出再平衡频率的实际比较结果，分段仅定性陈述，却将要求成本/权重/频率/分段敏感性的研究标为完整。"
+        },
+        {
+          "finding_id": "f-hedge",
+          "severity": "warning",
+          "quote": "BTC 保护不成立",
+          "reason": "标题超出六个事后压力月所能支持的边界，正文限制不能替代标题中的范围。"
+        }
+      ],
+      "scope": "Original run files preserved. Numeric calculations additionally checked by evaluation harness; prose review identifies remaining limits and does not certify every statement."
+    },
+    {
+      "suite": "P0FinalNVDA20260929",
+      "run_id": "7852271c08584265",
+      "code_hash": "3fc5b3a4986be1a7957654e630e76db0e0fba66cec8a0142809916ab0b000a55",
+      "reviewer": "Codex primary agent, post-run reading independent of in-app reviewer; not an independent human audit",
+      "automated_pass": true,
+      "content_pass": false,
+      "unit_and_count_spot_check_pass": true,
+      "issues": [
+        {
+          "finding_id": "f-market",
+          "severity": "error",
+          "quote": "高贝塔",
+          "reason": "指标目录没有 beta 估计；高波动不能直接证明高 beta。"
+        },
+        {
+          "finding_id": "f-blackwell",
+          "severity": "error",
+          "reason": "要求明确包含 B100/B200，最终正文只核实 B200/GB200，未说明 B100 的核实缺口，但状态为完整。"
+        },
+        {
+          "finding_id": "f-chatgpt",
+          "severity": "warning",
+          "quote": "不能视为利好催化",
+          "reason": "窗口相对收益不能独自否认事件的催化属性，宜表述无法确认。"
+        }
+      ],
+      "scope": "Original run files preserved. Numeric calculations additionally checked by evaluation harness; prose review identifies remaining limits and does not certify every statement."
+    }
+  ],
+  "claim": "P0 metric and package regression passed; 90+ overall readiness is not demonstrated. Historical 3/8 content result is unchanged."
+}

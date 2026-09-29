@@ -1,0 +1,28 @@
+{
+  "run_id": "7852271c08584265",
+  "code_hash": "3fc5b3a4986be1a7957654e630e76db0e0fba66cec8a0142809916ab0b000a55",
+  "reviewer": "Codex primary agent, post-run reading independent of in-app reviewer; not an independent human audit",
+  "automated_pass": true,
+  "content_pass": false,
+  "unit_and_count_spot_check_pass": true,
+  "issues": [
+    {
+      "finding_id": "f-market",
+      "severity": "error",
+      "quote": "高贝塔",
+      "reason": "指标目录没有 beta 估计；高波动不能直接证明高 beta。"
+    },
+    {
+      "finding_id": "f-blackwell",
+      "severity": "error",
+      "reason": "要求明确包含 B100/B200，最终正文只核实 B200/GB200，未说明 B100 的核实缺口，但状态为完整。"
+    },
+    {
+      "finding_id": "f-chatgpt",
+      "severity": "warning",
+      "quote": "不能视为利好催化",
+      "reason": "窗口相对收益不能独自否认事件的催化属性，宜表述无法确认。"
+    }
+  ],
+  "scope": "Original run files preserved. Numeric calculations additionally checked by evaluation harness; prose review identifies remaining limits and does not certify every statement."
+}

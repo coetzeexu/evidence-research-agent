@@ -24,3 +24,5 @@ jobs:
       - run: npm test -- --run
       - run: npm run format:check
       - run: uv run python tools/verify_samples.py
+      - run: uv run python tools/package_delivery.py --output /tmp/research-agent-delivery.zip
+      - run: uv run python tools/package_delivery.py --verify /tmp/research-agent-delivery.zip

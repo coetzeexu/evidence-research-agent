@@ -1,0 +1,12 @@
+{
+  "at": "2026-09-29T12:58:25.286759+00:00",
+  "backend_tests": 282,
+  "frontend_tests": 28,
+  "metric_contract_tests": 26,
+  "build_and_typescript": true,
+  "ruff": true,
+  "ruff_format": true,
+  "prettier": true,
+  "sample_manifest_check": true,
+  "scope": "Actual local regression/build; no browser or fresh Office visual audit; live research records separate."
+}

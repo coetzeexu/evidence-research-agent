@@ -2,9 +2,11 @@
 
 Python / LangChain / LangGraph / React / ECharts。本地研究工作台：根据自然语言调查行情与资讯，计算事件窗口和资产配置，发布经过证据与数值核验的中文正文；保留独立 HTML、Excel、PowerPoint、Word 导出能力。
 
-计算方法版本 `2026.09.4`，正文核验协议 `1.3`。研究正文通过问题清单、原文片段、确定性指标和独立核验组织；数值关系由程序计算，完成度只依据已核验段落，缺口在补查与恢复间持续保留。样例支持 Schema 迁移与离线重导出，数据源支持按行情、资讯、宏观能力扩展。见 [交付说明](docs/final-handoff.md)、[设计说明](docs/design.md) 和 [真实运行验收](docs/final-evaluation.md)。
+计算方法版本 `2026.09.4`，正文核验协议 `1.4`。研究正文通过问题清单、原文片段、确定性指标和独立核验组织；数值关系由程序计算，完成度只依据已核验段落，缺口在补查与恢复间持续保留。样例支持 Schema 迁移与离线重导出，数据源支持按行情、资讯、宏观能力扩展。见 [交付说明](docs/final-handoff.md)、[设计说明](docs/design.md) 和 [真实运行验收](docs/final-evaluation.md)。
 
 GitHub：私有仓库 [coetzeexu/evidence-research-agent](https://github.com/coetzeexu/evidence-research-agent)。Actions 在 push / PR 时运行离线功能、构建和样例校验，不需要模型密钥。
+
+本轮 P0 更新：显式指标单位与含义、数值发布边界、ZIP 与源码逐文件核验，见 [修复与交付说明](docs/p0-release-20260929.md)。历史真实运行结果保留原版本；本轮最终真实研究自动通过 2/2、事后正文复核通过 0/2，仍有推断越界和子问题覆盖缺口，详见 [内容复核](evals/p0-live-validation-20260929.json)。当前不能据此宣称整体达到 90 分。
 
 ## 本地一键运行
 
@@ -97,7 +99,7 @@ uv run python tools/evaluate_text_research.py --case all --suite Final01
 
 开发定位可使用 `tools/evaluate_saved_research.py`，读取既有证据快照并重新调用正文核验流程；它不重新采集行情或资讯，结果标记为 `saved-evidence-development-probe`，不计入完整八次验收。
 
-当前工程检查后端 251 项、前端 28 项通过，构建 / TypeScript / Prettier / Ruff 及格式检查通过，导出测试及两个样例校验均实际执行。每份记录标注其运行版本与范围；[工程检查](evals/acceptance-engineering-20260929.json) 和真实研究验收分别保存。
+当前工程检查后端 282 项、前端 28 项通过，构建 / TypeScript / Prettier / Ruff 及格式检查通过，导出测试及两个样例校验均实际执行。每份记录标注其运行版本与范围；[工程检查](evals/p0-engineering-20260929.json) 和真实研究验收分别保存。
 
 `samples/nvda/` 和 `samples/gold-bitcoin/` 的历史快照已迁移至 Schema 1.1，并重导出 HTML / Excel / Word / PPT。离线 `research replay nvda` 和 `research replay gold-bitcoin` 只迁移结构、生成产物，不调用模型；因此旧样例 `research=null`，manifest 正文状态为 `unassessed`，保留原计算版本。真实正文样例在上述评估目录。离线 HTML 内嵌依赖；Excel 公式近似与下一开盘执行回测口径分开标记。结构、重算与界面检查的范围见 [验证记录](docs/validation.md)。
 

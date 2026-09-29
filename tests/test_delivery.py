@@ -58,3 +58,56 @@ def test_delivery_preserves_launcher_permissions(tmp_path):
     module.package_project(root, target)
     with ZipFile(target) as archive:
         assert (archive.getinfo("research-agent/run.sh").external_attr >> 16) & 0o111 == 0o111
+
+
+@pytest.mark.parametrize("mutation", ["edit", "add", "delete"])
+def test_verify_rejects_stale_release_even_with_valid_internal_hashes(tmp_path, mutation):
+    root = tmp_path / "project"
+    (root / "backend").mkdir(parents=True)
+    path = root / "backend/app.py"
+    path.write_text("original")
+    target = tmp_path / "delivery.zip"
+    module.package_project(root, target)
+    assert module.verify_delivery(target, root)["source_matches"]
+    if mutation == "edit":
+        path.write_text("changed")
+    elif mutation == "add":
+        (root / "backend/research_text.py").write_text("new required module")
+    else:
+        path.unlink()
+    with pytest.raises(ValueError, match="Stale delivery"):
+        module.verify_delivery(target, root)
+
+
+def test_verify_rejects_tampering_and_unlisted_files(tmp_path):
+    root = tmp_path / "project"
+    root.mkdir()
+    (root / "README.md").write_text("original")
+    target = tmp_path / "delivery.zip"
+    module.package_project(root, target)
+    tampered = tmp_path / "tampered.zip"
+    with ZipFile(target) as original, ZipFile(tampered, "w") as changed:
+        for entry in original.infolist():
+            changed.writestr(
+                entry, b"modified" if entry.filename.endswith("README.md") else original.read(entry)
+            )
+    with pytest.raises(ValueError, match="hash mismatch"):
+        module.verify_delivery(tampered)
+    with ZipFile(target, "a") as archive:
+        archive.writestr("research-agent/unlisted.txt", "unexpected")
+    with pytest.raises(ValueError, match="member set"):
+        module.verify_delivery(target)
+
+
+def test_pack_failure_keeps_previous_good_zip(tmp_path):
+    root = tmp_path / "project"
+    root.mkdir()
+    path = root / "README.md"
+    path.write_text("original")
+    target = tmp_path / "delivery.zip"
+    module.package_project(root, target)
+    previous = target.read_bytes()
+    path.write_text("sensitive-do-not-ship")
+    with pytest.raises(ValueError, match="Credential"):
+        module.package_project(root, target, "sensitive-do-not-ship")
+    assert target.read_bytes() == previous

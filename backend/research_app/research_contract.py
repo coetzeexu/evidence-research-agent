@@ -2,7 +2,7 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class Record(BaseModel):
@@ -58,6 +58,8 @@ class EvidencePassage(EvidenceQuote):
 
 
 class ResearchMetric(Record):
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
+
     id: str
     label: str
     value: float
@@ -69,6 +71,13 @@ class ResearchMetric(Record):
     comparison_group: str
     dataset_ids: list[str]
     currency: str = "USD"
+    meaning: str = ""
+
+    @model_validator(mode="after")
+    def validate_count(self):
+        if self.unit == "integer" and (not self.value.is_integer() or self.value < 0):
+            raise ValueError("计数指标必须是非负整数，不能通过格式化四舍五入")
+        return self
 
 
 class ResearchFinding(Record):
@@ -154,6 +163,9 @@ def apply_narrative_patch(retained, rejected, patch, previous_gaps=()):
 
 
 NumericRelation = Literal[
+    "not_monotonic",
+    "majority",
+    "not_majority",
     "abs_gt",
     "abs_lt",
     "abs_increasing",

@@ -29,6 +29,7 @@ TOKEN = re.compile(r"\{\{([^{}\s]+)\}\}")
 FINANCIAL_NUMBER = re.compile(
     r"[+-]?\d[\d,.]*\s*(?:%|％|bps\b|亿美元|万美元|美元|亿元|万元|倍)|(?<![\w.])[-+]?\d+\.\d+(?![\w.])", re.I
 )
+SAMPLE_COUNT = re.compile(r"\d[\d,]*\s*(?:个(?:月(?:度)?(?:观测|样本)?|(?:有效)?(?:观测|样本))|条日线)")
 
 
 async def paired_reviews(*calls):
@@ -187,6 +188,12 @@ def validate_draft(draft, bundle, questions, texts, metrics):
             issues.append("指标依赖的行情或宏观来源缺失")
         plain = TOKEN.sub("", finding_text(finding))
         for field in ["title", "text", "counterevidence", "limitations", "changes_if"]:
+            field_text = getattr(finding, field)
+            for token in TOKEN.finditer(field_text):
+                metric = metrics.get(token[1])
+                suffix = field_text[token.end() :].lstrip()
+                if metric and re.match(r"[%％]|百分比|bps\b|美元", suffix, re.I):
+                    issues.append(f"{field} 指标 {metric.id} 后重复或错配单位；单位由指标契约格式化")
             plain_field = TOKEN.sub("", getattr(finding, field))
             plain_field = re.sub(r"\b[A-Za-z][\w-]*-\d+(?:\.\d+)+\b", "", plain_field)
             plain_field = re.sub(r"(?i)arxiv[:\s]*\d{4}\.\d{4,5}(?:v\d+)?", "", plain_field)
@@ -213,6 +220,11 @@ def validate_draft(draft, bundle, questions, texts, metrics):
                     else "没有对应指标时省去此数字，保留事实描述并回链原文"
                 )
                 issues.append(f"{field} 含手写数字「{match}」；{suggestion}")
+            for match in dict.fromkeys(SAMPLE_COUNT.findall(plain_field)):
+                issues.append(
+                    f"{field} 含未绑定的观测/样本数「{match}」；使用对应指标占位符，"
+                    "CPI样本数用 inflation.资产.n，估值数用 observations，收益数用 return_observations"
+                )
         if "{{" in TOKEN.sub("", finding_text(finding)) or "}}" in TOKEN.sub("", finding_text(finding)):
             issues.append("指标占位符格式错误")
         groups = {metrics[mid].comparison_group for mid in mids if mid in metrics}
@@ -306,7 +318,7 @@ def render_research(assessment, bundle):
             )
         )
         used_sources.extend(refs)
-        paragraphs = [f"**{finding.title}**", fill(finding.text)]
+        paragraphs = [f"**{fill(finding.title)}**", fill(finding.text)]
         for label, text in [
             ("竞争性解释", finding.counterevidence),
             ("局限", finding.limitations),
@@ -363,7 +375,7 @@ class NarrativeService:
         ]
         metrics = metric_catalog(bundle)
         context = {
-            "verification_version": "1.3",
+            "verification_version": "1.4",
             "verification_prompts": {
                 name: digest(body) for name, body in getattr(runtime, "prompts", {}).items()
             },

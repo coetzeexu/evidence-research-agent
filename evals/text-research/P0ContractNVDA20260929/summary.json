@@ -1,0 +1,114 @@
+{
+  "code_hash": "67189830d2c28899bc6393b697dce765dd07c8369c8e110886ae729e72d3965a",
+  "planned_cases": [
+    "nvda"
+  ],
+  "results": [
+    {
+      "case": "nvda",
+      "run_id": "2d1b4e9438fc4fcf",
+      "started_at": "2026-09-29T12:46:39.827080+00:00",
+      "code_hash": "67189830d2c28899bc6393b697dce765dd07c8369c8e110886ae729e72d3965a",
+      "mode": "live-end-to-end",
+      "prompt": "回顾 NVDA 在 2021-09-28 至 2026-09-28 的五年 OHLCV 日线及 AI 行业大事件。必须核实 ChatGPT 首次公开发布、Blackwell（B100/B200）平台发布、DeepSeek-R1 模型发布；调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期。分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限。只输出有原文和数值依据的中文调研文字，不导出报告。",
+      "manual_edits": false,
+      "independent_content_audit": "pending",
+      "runtime": {
+        "python": "3.12.13",
+        "packages": {
+          "langchain": "1.4.2",
+          "langgraph": "1.2.12",
+          "langchain-openai": "1.6.6",
+          "pydantic": "2.13.5"
+        }
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "automated_pass": true,
+      "budget": {
+        "elapsed_seconds": 493.6583540830761,
+        "model_calls": 53,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "bundle_hash": "82166aae670357f119f82ea59a69637fb9384250f439b907fcfc8918e60e9c54",
+      "spec": {
+        "intent": "event_study",
+        "title": "NVDA 2021-09-28 至 2026-09-28 五年 OHLCV 日线与 AI 行业大事件回顾",
+        "symbols": [
+          "NVDA"
+        ],
+        "start": "2021-09-28",
+        "end": "2026-09-28",
+        "topics": [
+          "AI 行业大事件",
+          "ChatGPT 首次公开发布",
+          "Blackwell（B100/B200）平台发布",
+          "DeepSeek-R1 模型发布",
+          "2025-01-27 NVDA 下跌"
+        ],
+        "required_events": [
+          "ChatGPT 首次公开发布",
+          "Blackwell（B100/B200）平台发布",
+          "DeepSeek-R1 模型发布"
+        ],
+        "event_scope": "broad",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          1.0
+        ],
+        "rebalance_months": 1,
+        "cost_bps": 10.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html",
+          "xlsx",
+          "pptx",
+          "docx"
+        ],
+        "assumptions": [
+          "用户未指定基准，默认使用 SPY 作为基准",
+          "用户未指定事件窗口，默认使用 1/5/20 交易日事件窗口",
+          "用户未指定频率，默认使用日线 OHLCV",
+          "时间区间按用户给定 2021-09-28 至 2026-09-28，截止日不超过今天 2026-09-29",
+          "用户明确要求只输出中文调研文字、不导出报告，但按流程仍生成四种文件（html/xlsx/pptx/docx）供内部留档",
+          "事件研究为单资产 NVDA，基准 SPY 仅作对比基准，不纳入 symbols",
+          "AI 行业大事件为宽泛回顾，event_scope=broad"
+        ]
+      },
+      "finished_at": "2026-09-29T12:54:53.705967+00:00",
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 53,
+        "input_tokens": 1440530,
+        "output_tokens": 42112,
+        "failed_model_calls": 0
+      },
+      "code_unchanged": true
+    }
+  ],
+  "automated_pass": true,
+  "independent_content_audit": "pending"
+}

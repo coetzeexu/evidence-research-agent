@@ -9,6 +9,14 @@ from .research_contract import NumericAssertion, NumericReview
 def relationship(relation, values):
     if not values:
         return False
+    if relation in {"majority", "not_majority"}:
+        if len(values) != 2 or not 0 <= values[0] <= values[1] or values[1] <= 0:
+            return False
+        return values[0] > values[1] / 2 if relation == "majority" else values[0] <= values[1] / 2
+    if relation == "not_monotonic":
+        return len(values) >= 3 and not (
+            all(a <= b for a, b in zip(values, values[1:])) or all(a >= b for a, b in zip(values, values[1:]))
+        )
     if relation in {"abs_gt", "abs_lt", "abs_increasing", "abs_decreasing"}:
         return relationship(relation.removeprefix("abs_"), [abs(value) for value in values])
     if relation in {"same_sign", "opposite_sign"}:
@@ -63,6 +71,7 @@ def verify_relationships(draft, review, metrics):
                     len(units) == 1
                     or assertion.relation in {"positive", "negative", "nonnegative", "nonpositive"}
                 )
+                and (assertion.relation not in {"majority", "not_majority"} or units == {"integer"})
                 and relationship(assertion.relation, values)
             )
             check = {"finding_id": finding.id, **assertion.model_dump(), "values": values, "passed": passed}
@@ -70,6 +79,26 @@ def verify_relationships(draft, review, metrics):
             check["relationship_true"] = len(values) == len(assertion.metric_ids) and relationship(
                 assertion.relation, values
             )
+            # True arithmetic cannot certify a different proposition. In particular,
+            # increasing [A,B,C] says nothing about the prose claiming B is lowest.
+            required_relations = {
+                "最低": {"lt", "le", "abs_lt"},
+                "最高": {"gt", "ge", "abs_gt"},
+                "非单调": {"not_monotonic"},
+                "不单调": {"not_monotonic"},
+                "多数": {"majority"},
+                "过半": {"majority"},
+            }
+            mismatch = [
+                word
+                for word, allowed in required_relations.items()
+                if word in assertion.quote and assertion.relation not in allowed
+            ]
+            if mismatch:
+                passed = check["passed"] = False
+                errors.setdefault(finding.id, []).append(
+                    f"原句关系与核验运算不一致：{','.join(mismatch)} 不能由 {assertion.relation} 代替；分别转录最短关系句"
+                )
             checks.append(check)
             if not passed:
                 errors.setdefault(finding.id, []).append(
@@ -80,7 +109,7 @@ def verify_relationships(draft, review, metrics):
             if re.search(r"若|如果|可能|假设", sentence):
                 continue
             for match in re.finditer(
-                r"高于|低于|少于|多于|居中|均为正|均为负|同为正|同为负|同向为正|同向为负|双双上涨|双双下跌|方向相反|同涨同跌|最高|最低",
+                r"高于|低于|少于|多于|居中|均为正|均为负|同为正|同为负|同向为正|同向为负|双双上涨|双双下跌|方向相反|方向(?:与[^，。；]{1,16})?一致|同涨同跌|多数|过半|非单调|不单调|最高|最低",
                 sentence,
             ):
                 if re.search(r"(?:可信度|置信度|证据强度|证据评级)[^，、]{0,5}$", sentence[: match.start()]):
@@ -89,6 +118,25 @@ def verify_relationships(draft, review, metrics):
                     errors.setdefault(finding.id, []).append(
                         f"数值关系尚未转成可执行断言：{match[0]}；应按收益/风险分别核对"
                     )
+        # A broad same-direction claim must survive every paired window cited in
+        # that finding. Checking just the positive 1-day pair cannot certify 20d.
+        for sentence in re.split(r"[。；;\n]", full_text):
+            if not re.search(r"方向(?:与[^，。；]{1,16})?一致", sentence):
+                continue
+            refs = set(re.findall(r"\{\{([^{}\s]+)\}\}", full_text))
+            horizons = set(re.findall(r"(?<!\d)(\d+)\s*(?:日|天|根日线)", sentence))
+            for mid in refs:
+                if not mid.startswith("next-session."):
+                    continue
+                if horizons and mid.split(".")[-2] not in horizons:
+                    continue
+                other = "event." + mid.removeprefix("next-session.")
+                if other in refs and mid in metrics and other in metrics:
+                    passed = relationship("same_sign", [metrics[mid].value, metrics[other].value])
+                    if not passed:
+                        errors.setdefault(finding.id, []).append(
+                            f"方向一致的窗口对照不成立：{other} 与 {mid}；应分别说明窗口的正负号"
+                        )
     return errors, checks
 
 

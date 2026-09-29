@@ -1,0 +1,16 @@
+{
+  "run_id": "05e996e509b9452d",
+  "code_hash": "67189830d2c28899bc6393b697dce765dd07c8369c8e110886ae729e72d3965a",
+  "reviewer": "Codex primary agent, separate post-run reading",
+  "automated_pass": true,
+  "content_pass": false,
+  "issues": [
+    {
+      "finding_id": "f6",
+      "severity": "error",
+      "observation": "正文将 119.86% < 157.30% < 161.34% 写为非单调、50%权重情景最低。旧核验将最低断言替换成 increasing 后错误放行。",
+      "evidence": "三个 sensitivity.total_return 实际单调上升，20%权重情景最低。"
+    }
+  ],
+  "scope": "Original text preserved; next repair targets relationship-to-phrase binding, not hand editing the result."
+}
