@@ -22,7 +22,7 @@ it('displays incomplete named requirements without a success claim', () => {
     },
   };
   const html = renderToStaticMarkup(<QualityPanel bundle={bundle} onSelect={() => {}} />);
-  expect(html).toContain('研究仍有缺口');
+  expect(html).toContain('有待核实事项');
   expect(html).toContain('尚未核实');
   expect(html).not.toContain('需求覆盖检查通过');
 });
@@ -92,11 +92,13 @@ it('shows verified text and its partial status without links to unexported repor
     datasets: {},
     sources: [],
     events: [],
-    warnings: [],
+    warnings: ['使用复权价格进行区间比较'],
     research: {
       status: 'partial',
       text: '已核验的有限结论。仍需核实事件公开日期。',
-      questions: [],
+      questions: [
+        { id: 'paper', question: '论文公开日期', status: 'insufficient', gaps: ['缺少日期原文'] },
+      ],
     },
   };
   const noop = () => {};
@@ -117,7 +119,12 @@ it('shows verified text and its partial status without links to unexported repor
     />,
   );
   expect(html).toContain('已核验的有限结论');
-  expect(html).toContain('研究部分完成，含证据缺口');
+  expect(html).toContain('已核验内容已就绪');
+  expect(html).toContain('待核实事项');
+  expect(html).toContain('论文公开日期');
+  expect(html).toContain('数据口径与研究说明');
+  expect(html).toContain('使用复权价格进行区间比较');
+  expect(html).not.toContain('项数据或证据提示');
   expect(html).not.toContain('/artifacts/report.');
   expect(html).not.toContain('研究报告已就绪');
 });

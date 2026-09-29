@@ -422,7 +422,6 @@ select {
   color: var(--ink-2);
   font-size: 10px;
 }
-.pipeline-warning,
 .connection-notice {
   display: flex;
   gap: 6px;
@@ -455,8 +454,39 @@ select {
   font-size: 12px;
   margin: 7px 0;
 }
-.result-card .result-warning {
-  color: #92400e;
+.research-notes,
+.research-open-questions {
+  margin-top: 12px;
+  color: var(--ink-2);
+  font-size: 12px;
+  line-height: 1.7;
+}
+.research-notes summary {
+  cursor: pointer;
+}
+.research-notes ul,
+.research-open-questions ul {
+  margin: 6px 0;
+  padding-left: 18px;
+}
+.research-open-questions strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+.quality-panel > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.quality-panel > summary strong {
+  font-weight: 500;
+}
+.quality-panel > summary .muted {
+  font-size: 12px;
+  white-space: nowrap;
 }
 .result-actions {
   display: flex;

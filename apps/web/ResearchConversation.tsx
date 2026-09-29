@@ -118,19 +118,37 @@ export default function ResearchConversation({
                     {bundle.research
                       ? bundle.research.status === 'complete'
                         ? '研究正文已核验'
-                        : '研究部分完成，含证据缺口'
+                        : '已核验内容已就绪'
                       : run.status === 'partial'
-                        ? '报告已生成，含证据缺口'
+                        ? '报告已生成 · 有待核实项'
                         : '研究报告已就绪'}
                   </strong>
                 </div>
                 <p>
                   {bundle.events.length} 个已核验事件 · {bundle.sources.length} 个来源
                 </p>
+                {bundle.research?.status === 'partial' && (
+                  <div className="research-open-questions">
+                    <strong>待核实事项</strong>
+                    <ul>
+                      {bundle.research.questions
+                        .filter((q) => q.status !== 'answered')
+                        .map((q) => (
+                          <li key={q.id}>{q.question}</li>
+                        ))}
+                    </ul>
+                    <p className="small muted">这些事项尚未形成结论，具体依据与边界见正文。</p>
+                  </div>
+                )}
                 {!!bundle.warnings?.length && (
-                  <p className="result-warning">
-                    {bundle.warnings.length} 项数据或证据提示，请结合研究局限阅读。
-                  </p>
+                  <details className="research-notes">
+                    <summary>数据口径与研究说明</summary>
+                    <ul>
+                      {[...new Set(bundle.warnings)].map((note) => (
+                        <li key={note}>{note}</li>
+                      ))}
+                    </ul>
+                  </details>
                 )}
                 <div className="result-actions">
                   {run.status !== 'researched' && (

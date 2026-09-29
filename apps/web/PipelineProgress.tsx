@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { AlertTriangle } from 'lucide-react';
 import { activityEntries, activityGroups, traceSources } from './activity';
 import ToolChips from './components/beautiful-ui/ToolChips';
 import ThinkingState from './components/beautiful-ui/ThinkingState';
@@ -45,7 +44,6 @@ export default function PipelineProgress({
       ? `${elapsed} 秒`
       : `${Math.floor(elapsed / 60)} 分 ${elapsed % 60} 秒`
     : '';
-  const failures = traces.filter((t) => t.kind === 'tool_failure').length;
   const tools = groups.reduce(
     (sum, g) =>
       sum +
@@ -149,12 +147,6 @@ export default function PipelineProgress({
             {running ? '已运行' : '历时'} {duration}
           </span>
         </div>
-      )}
-      {!!failures && (
-        <p className="pipeline-warning">
-          <AlertTriangle size={13} />
-          {failures} 次来源读取失败，已保留在对应步骤中。
-        </p>
       )}
     </div>
   );

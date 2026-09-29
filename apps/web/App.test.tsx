@@ -265,7 +265,8 @@ it('keeps the question and real pipeline history in the conversation after compl
   });
   expect(container.querySelector('main')?.textContent).toContain('研究 Blackwell 的市场反应');
   expect(container.textContent).toContain('300 根日线');
-  expect(container.textContent).toContain('1 次来源读取失败');
+  expect(container.textContent).toContain('原始来源读取失败');
+  expect(container.textContent).not.toContain('1 次来源读取失败');
   expect(container.textContent).toContain('4 条执行记录');
   await act(async () => {
     events.onerror?.();

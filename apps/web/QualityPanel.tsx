@@ -8,25 +8,30 @@ export function QualityPanel({
   onSelect: (id: string) => void;
 }) {
   const q = bundle.quality;
-  if (!q) return <p className="muted">历史快照尚未进行新版需求覆盖检查。</p>;
-  const complete = q.passed && bundle.review.passed;
+  if (!q) return <p className="muted">此历史快照未记录研究范围核对结果。</p>;
+  const complete = bundle.research
+    ? bundle.research.status === 'complete'
+    : q.passed && bundle.review.passed;
   return (
     <details className="surface quality-panel" open={!complete}>
       <summary>
-        <strong>{complete ? '需求覆盖检查通过' : '执行已结束，研究仍有缺口'}</strong>
-        <span className="muted">
-          {' '}
-          · {q.associated_changes} / {q.changes} 个变化有候选事件
-        </span>
+        <strong>研究范围与依据</strong>
+        <span className="muted">{complete ? '已核对' : '有待核实事项'}</span>
       </summary>
-      <p className="small muted">{q.note}</p>
+      <p className="small muted">这里核对研究要求与资料覆盖，结论的依据和局限请见正文。</p>
+      {q.changes > 0 && (
+        <p className="small muted">
+          {q.changes} 处主要行情波动中，{q.associated_changes}{' '}
+          处找到了同期事件线索。时间接近不代表因果关系。
+        </p>
+      )}
       {q.requirements.length > 0 && (
         <table className="compact-table">
-          <caption>用户点名要求</caption>
+          <caption>要求核实的事件</caption>
           <thead>
             <tr>
               <th>要求</th>
-              <th>证据事件</th>
+              <th>已找到的依据</th>
             </tr>
           </thead>
           <tbody>

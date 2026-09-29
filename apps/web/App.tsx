@@ -38,11 +38,11 @@ const statusText: Record<string, string> = {
   queued: '等待执行',
   running: '研究中',
   complete: '已完成',
-  partial: '部分完成',
+  partial: '已生成 · 有待核实项',
   failed: '执行失败',
   cancelled: '已取消',
   needs_input: '待补充',
-  researched: '待导出',
+  researched: '正文就绪',
 };
 const examples = [
   {
