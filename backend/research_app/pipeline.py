@@ -12,8 +12,8 @@ from .agents import AgentRuntime, ResearchResult
 from .analytics import build_bundle, detect_changes, validate_bundle
 from .budget import ExecutionBudget
 from .config import Settings
+from .data_providers import DataProviders, load_providers
 from .domain import MarketDataset, ResearchBundle, ResearchSpec, SourceRecord
-from .providers import YahooProvider, fred_series
 from .quality import assess_quality, associate_changes
 from .research_contract import ResearchQuestion
 from .research_text import NarrativeService, research_questions
@@ -35,11 +35,22 @@ class CancelledRun(Exception):
 
 
 class Pipeline:
-    def __init__(self, config: Settings, store: Store, run_id: str, export: bool | None = None):
+    def __init__(
+        self,
+        config: Settings,
+        store: Store,
+        run_id: str,
+        export: bool | None = None,
+        providers: DataProviders | None = None,
+    ):
         self.config, self.store, self.run_id = config, store, run_id
         self.export = bool(store.get(run_id).get("export_reports", True)) if export is None else export
         self.root = store.run_dir(run_id)
         self.runtime = AgentRuntime(config, store, run_id)
+        self.providers = (
+            providers or getattr(self.runtime, "providers", None) or load_providers(config)
+        ).validate()
+        self.runtime.providers = self.providers
         self.budget = getattr(self.runtime, "budget", None) or ExecutionBudget(store, run_id)
 
     def check(self):
@@ -93,6 +104,7 @@ class Pipeline:
                     },
                 )
                 self.runtime = AgentRuntime(self.config, self.store, self.run_id)
+                self.runtime.providers = self.providers
                 self.runtime.budget = self.budget
         questions = research_questions(spec, extra_questions, run["prompt"])
         self.write("questions.json", [q.model_dump() for q in questions])
@@ -132,7 +144,7 @@ class Pipeline:
 
         async def fetch(symbol):
             async with semaphore:
-                data = await YahooProvider().history(
+                data = await self.providers.market.history(
                     symbol,
                     spec.start - timedelta(days=400),
                     spec.end,
@@ -161,7 +173,9 @@ class Pipeline:
         if len(spec.symbols) > 1:
             for series_id in ["CPIAUCNS", "DGS3MO"]:
                 try:
-                    data, source = await fred_series(series_id, spec.start - timedelta(days=400), spec.end)
+                    data, source = await self.providers.macro.series(
+                        series_id, spec.start - timedelta(days=400), spec.end
+                    )
                     macro[series_id] = data
                     sources.append(source.model_dump())
                 except Exception:
@@ -359,6 +373,7 @@ class Pipeline:
                 for violation in check["violations"]
                 if violation["repair"] == "retrieve"
             )
+            retrieval.extend(g for g in reviews[-1].get("open_gaps", []) if g.get("next_action"))
             if retrieval:
                 repair = json.dumps(
                     {
@@ -373,7 +388,6 @@ class Pipeline:
 
     async def render(self, state: RunState):
         self.check()
-            retrieval.extend(g for g in reviews[-1].get("open_gaps", []) if g.get("next_action"))
         bundle = ResearchBundle.model_validate(self.read("bundle.json"))
         if bundle.research is None or not bundle.research.text:
             raise ValueError("未获得可发布的已核验正文，证据与核验记录已保存")

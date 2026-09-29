@@ -3,6 +3,7 @@ import json
 import re
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal
+from functools import cached_property
 from typing import Literal
 
 from langchain.agents import create_agent
@@ -14,9 +15,9 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .budget import BudgetMiddleware, ExecutionBudget
 from .config import PROJECT_ROOT, Settings
+from .data_providers import load_providers
 from .domain import EventRecord, ResearchBundle, ResearchSpec, SourceRecord, digest
 from .progress import SafeTrace, public_text
-from .providers import YahooProvider, hn_search, read_source, web_search
 from .research_contract import ResearchQuestion
 from .storage import Store
 from .tool_protocol import StructuredJSONMiddleware, ToolProtocolMiddleware
@@ -225,6 +226,10 @@ def has_date_evidence(event: EventRecord, sources: dict[str, SourceRecord], text
 
 
 class AgentRuntime:
+    @cached_property
+    def providers(self):
+        return load_providers(self.config)
+
     def __init__(self, config: Settings, store: Store, run_id: str):
         self.config, self.store, self.run_id = config, store, run_id
         self.model = llm(config)
@@ -239,12 +244,12 @@ class AgentRuntime:
                 "review-format",
                 "synthesis",
                 "text-reviewer",
+                "numeric-review",
                 "meaning-review",
                 "text-repair",
             ]
         }
         self.store.emit(
-                "numeric-review",
             self.run_id,
             "configuration",
             "固定本次 Prompt 版本",
@@ -355,7 +360,7 @@ class AgentRuntime:
             """Resolve an asset/company name to provider symbols and instrument types."""
             self.store.emit(self.run_id, "tool", "查询资产身份", query=query[:150])
             try:
-                return json.dumps(await YahooProvider().lookup(query), ensure_ascii=False)
+                return json.dumps(await self.providers.market.lookup(query), ensure_ascii=False)
             except Exception:
                 return "资产查询暂不可用。仅使用可明确识别的常见代码；存在歧义时请求澄清。"
 
@@ -453,11 +458,16 @@ class AgentRuntime:
             query: str,
             start: str,
             end: str,
-            provider: Literal["web", "hn"] = "web",
+            provider: str = "web",
             change_id: str = "",
             question_id: str = "",
         ) -> str:
             """Search public sources. ISO start/end dates. For a targeted move, pass its change_id. Leads are not evidence."""
+            if provider not in self.providers.news:
+                return json.dumps(
+                    {"error": "未注册的资讯数据源", "available": list(self.providers.news)},
+                    ensure_ascii=False,
+                )
             failures = sum(c.get("provider") == "web" and c.get("status") == "failed" for c in self.coverage)
             if provider == "web" and failures >= 2:
                 return "网页搜索已累计失败两次，本次停止重复请求且不扣预算。改用 hn 短关键词与指定时间窗，或读取来源目录中的官方公告。"
@@ -489,7 +499,7 @@ class AgentRuntime:
                 begin, finish = date.fromisoformat(start), date.fromisoformat(end)
                 if begin < spec.start - timedelta(days=30) or finish > spec.end + timedelta(days=30):
                     return "检索区间超出本次研究范围。"
-                items = await hn_search(query, begin, finish) if provider == "hn" else await web_search(query)
+                items = await self.providers.news[provider].search(query, begin, finish)
                 record = {
                     "query": query,
                     "provider": provider,
@@ -536,8 +546,13 @@ class AgentRuntime:
                 return "检索失败；尝试其他免费来源或记录覆盖缺口。"
 
         @tool
-        async def read_public_source(url: str) -> str:
+        async def read_public_source(url: str, provider: str = "web") -> str:
             """Read a public primary source, returning a stable source_id, publication metadata and untrusted text."""
+            if provider not in self.providers.news:
+                return json.dumps(
+                    {"error": "未注册的资讯数据源", "available": list(self.providers.news)},
+                    ensure_ascii=False,
+                )
             for source_id, source in self.sources.items():
                 if source.url == url:
                     self.store.emit(
@@ -578,7 +593,7 @@ class AgentRuntime:
             self.persist()
             self.store.emit(self.run_id, "tool", "读取与保存原始证据", url=url[:500])
             try:
-                source, text = await read_source(url)
+                source, text = await self.providers.news[provider].read(url)
                 self.sources[source.id], self.texts[source.id] = source, text
                 self.store.emit(
                     self.run_id,
@@ -644,6 +659,7 @@ class AgentRuntime:
         content = json.dumps(
             {
                 "spec": spec.model_dump(mode="json"),
+                "available_news_providers": list(self.providers.news),
                 "research_questions": json.loads((self.root / "questions.json").read_text())
                 if (self.root / "questions.json").exists()
                 else [],

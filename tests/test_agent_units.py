@@ -44,7 +44,9 @@ async def test_repair_preserves_event_context_and_stops_failed_search_provider(m
         read_attempts.append(url)
         raise ConnectionError("provider unavailable")
 
-    monkeypatch.setattr(module, "read_source", unavailable)
+    from research_app import providers as public_providers
+
+    monkeypatch.setattr(public_providers, "read_source", unavailable)
 
     class FakeAgent:
         def __init__(self, tools):

@@ -18,6 +18,7 @@ class Settings:
     port: int = 8000
     platform: str = ""
     vllm_thinking: bool | None = None
+    provider_profile: str = "public"
 
     @property
     def model_ready(self) -> bool:
@@ -40,4 +41,5 @@ def settings() -> Settings:
         port=int(os.getenv("RESEARCH_PORT", "8000")),
         platform=os.getenv("LLM_PLATFORM", ""),
         vllm_thinking=None if not thinking else thinking == "true",
+        provider_profile=os.getenv("RESEARCH_PROVIDER_PROFILE", "public"),
     )
