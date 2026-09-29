@@ -99,16 +99,21 @@ def research_questions(spec, extra=None, request=""):
             "引用已计算的敏感性结果，不推荐事后最优参数，分段不冒充样本外检验。",
             "sensitivity",
         )
-    for i, question in enumerate((extra or [])[:4]):
+    seen_requests = set()
+    for question in (extra or [])[:4]:
         item = ResearchQuestion.model_validate(question)
         if len(item.request_quote.strip()) < 4 or item.request_quote not in request:
             continue
+        key = " ".join(item.request_quote.split())
+        if key in seen_requests:
+            continue
+        seen_requests.add(key)
         # The model may propose methods, but cannot invent user acceptance criteria.
         item.question = item.request_quote
         item.priority = 1
         item.required = True
         item.acceptance = "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：" + item.request_quote
-        item.id = f"custom-{i + 1}"
+        item.id = f"custom-{len(seen_requests)}"
         item.status, item.finding_ids, item.gaps = "pending", [], []
         rows.append(item)
     return rows
@@ -467,6 +472,7 @@ class NarrativeService:
                     )
                 token_repairs = normalize_metric_tokens(draft, metrics)
                 errors, passages = validate_draft(draft, bundle, questions, runtime.texts, metrics)
+                local_repair_needed = bool(errors)
                 certificates = repair.get("certificates", {})
                 certified = {
                     f.id: ClaimVerdict.model_validate(certificates[f.id]["verdict"])
@@ -560,6 +566,11 @@ class NarrativeService:
                     runtime, draft, review, metrics, self.budget
                 )
                 relation_errors, relation_checks = verify_relationships(draft, review, metrics)
+                local_repair_needed |= (
+                    bool(relation_errors)
+                    or any(v.repair == "rewrite" for v in review.claims if v.verdict != "supported")
+                    or any(v.repair == "rewrite" for c in meaning.checks for v in c.violations)
+                )
                 for fid, problems in relation_errors.items():
                     errors.setdefault(fid, []).extend(problems)
                 eligible = accepted_findings(draft, review, errors)
@@ -575,7 +586,7 @@ class NarrativeService:
                         "available_metric_ids": list(metrics),
                     },
                     budget=self.budget,
-                    limit=1,
+                    limit=2,
                 )
                 source_question_review = [q.model_dump() for q in review.questions]
                 review.questions = coverage.questions
@@ -597,6 +608,7 @@ class NarrativeService:
                 "numeric_transcription_repairs": transcription_repairs,
                 "metric_token_repairs": token_repairs,
                 "source_question_review": source_question_review,
+                "local_repair_needed": local_repair_needed,
                 "open_gaps": [g.model_dump() for g in declared_gaps],
                 "accepted_ids": sorted(accepted_ids),
                 "accepted_hashes": {f.id: digest(f.model_dump()) for f in accepted},
@@ -620,8 +632,9 @@ class NarrativeService:
                 open_for_question = [g for g in declared_gaps if g.question_id == q.id]
                 if open_for_question:
                     is_answered = False
-                if any(q.id in f.question_ids for f in rejected):
-                    is_answered = False
+                # Coverage is assessed using accepted findings only. A rejected
+                # optional paragraph cannot veto an otherwise complete answer;
+                # missing required facts still fail coverage or keep an open gap.
                 if q.required_event and not any(q.required_event in e.satisfies for e in bundle.events):
                     is_answered = False
                 if q.kind == "inflation" and not bundle.comparison.get("macro", {}).get("CPIAUCNS"):
@@ -735,6 +748,7 @@ class NarrativeService:
                 break
             if (
                 self.allow_retrieval
+                and not local_repair_needed
                 and state["attempts"] < 3
                 and self.budget.can_investigate
                 and (

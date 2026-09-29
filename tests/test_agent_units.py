@@ -93,6 +93,84 @@ async def test_repair_preserves_event_context_and_stops_failed_search_provider(m
     assert all(x["repair_request"] == repair for x in seen)
 
 
+@pytest.mark.parametrize("used_calls,expected_limit", [(5, 4), (45, 1)])
+async def test_event_extraction_uses_shared_structured_protocol_after_retrieval(
+    monkeypatch, tmp_path, bundle, used_calls, expected_limit
+):
+    import json
+
+    from research_app import agents as module
+    from research_app import providers as public_providers
+    from research_app.config import Settings
+    from research_app.storage import Store
+
+    bundle.spec.intent = "event_study"
+    monkeypatch.setattr(module, "llm", lambda config: object())
+    source = bundle.sources[0].model_copy(update={"published_at": "2022-06-15"})
+    body = "Published June 15, 2022. The policy announcement is public. This is saved source text."
+    event = bundle.events[0].model_copy(update={"date_source_id": source.id, "date_quote": "June 15, 2022"})
+    previous = module.ResearchResult(events=[event], gaps=["须核对原文"])
+    repair = json.dumps({"critical": [{"object_id": event.id, "issue": "核对公告日期"}]}, ensure_ascii=False)
+    inventory = {"market": {"GLD": {"start": "2022-01-01", "end": "2023-12-31"}}}
+    creations, phases, structured_calls = [], [], []
+
+    async def read_source(url):
+        assert url == source.url
+        return source, body
+
+    monkeypatch.setattr(public_providers, "read_source", read_source)
+
+    class Researcher:
+        def __init__(self, tools):
+            self.tools = tools
+
+        async def ainvoke(self, payload, config):
+            context = json.loads(payload["messages"][0]["content"])
+            assert context["previous_events"] == previous.model_dump(mode="json")
+            assert context["repair_request"] == repair
+            assert context["data_inventory"] == inventory
+            assert context["remaining_budget"] == {"searches": 26, "reads": 40}
+            phases.append("researcher")
+            read = next(t for t in self.tools if t.name == "read_public_source")
+            await read.ainvoke({"url": source.url})
+            return {"messages": []}
+
+    def create(model, tools, **kwargs):
+        assert tools, "无工具提取必须走共享 structured 入口，不能另建旧 extractor"
+        assert kwargs["checkpointer"] is False
+        creations.append(kwargs)
+        return Researcher(tools)
+
+    monkeypatch.setattr(module, "create_agent", create)
+    store = Store(tmp_path)
+    rid = store.create("shared extraction")
+    store.save_json(store.run_dir(rid) / "events.json", previous.model_dump(mode="json"))
+    runtime = module.AgentRuntime(Settings(tmp_path, "model", "token", "https://example.com"), store, rid)
+    runtime.budget.model_calls = used_calls
+
+    async def structured(name, schema, context, **kwargs):
+        phases.append(name)
+        structured_calls.append(context)
+        assert name == "extractor" and schema is module.ResearchResult
+        assert kwargs["limit"] == expected_limit
+        assert kwargs.get("budget", runtime.budget) is runtime.budget
+        assert context["previous_events"] == previous.model_dump(mode="json")
+        assert context["repair_request"] == repair
+        assert context["spec"] == bundle.spec.model_dump(mode="json")
+        assert context["data_inventory"] == inventory
+        assert context["coverage"] == runtime.coverage
+        assert context["evidence"] == [{"source": source.model_dump(), "untrusted_text": body}]
+        assert runtime.texts[source.id] == body and runtime.read_count == 1
+        return module.ResearchResult(events=[event])
+
+    monkeypatch.setattr(runtime, "structured", structured)
+    result = await runtime.research(bundle.spec, [], repair, inventory)
+    assert phases == ["researcher", "extractor"]
+    assert len(creations) == len(structured_calls) == 1
+    assert result.events == [event]
+    assert (store.run_dir(rid) / "research-evidence.json").exists()
+
+
 @pytest.mark.parametrize(
     "final_severity,expected", [("warning", True), ("critical", False), ("timeout", False)]
 )

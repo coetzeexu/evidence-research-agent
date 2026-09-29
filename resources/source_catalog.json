@@ -31,6 +31,7 @@
     ],
     "urls": [
       "https://api-docs.deepseek.com/news/news250120",
+      "https://arxiv.org/abs/2501.12948",
       "https://github.com/deepseek-ai/DeepSeek-R1",
       "https://simonwillison.net/2025/Jan/20/deepseek-r1/"
     ]

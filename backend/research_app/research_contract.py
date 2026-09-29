@@ -129,8 +129,12 @@ def apply_narrative_patch(retained, rejected, patch, previous_gaps=()):
             raise ValueError("修复不能修改已核验结论或未知 ID")
         finding = failures[edit.finding_id]
         old = getattr(finding, edit.field)
-        if edit.old not in old or edit.old == edit.new:
-            raise ValueError("替换必须匹配失败结论原文且实际改变该片段")
+        if edit.old not in old:
+            raise ValueError("替换必须匹配失败结论原文")
+        # An idempotent edit changes nothing and grants no certificate. Do not
+        # discard valid sibling edits; all rejected findings are reviewed again.
+        if edit.old == edit.new:
+            continue
         setattr(finding, edit.field, old.replace(edit.old, edit.new))
     for edit in patch.evidence_edits:
         if edit.finding_id not in failures:

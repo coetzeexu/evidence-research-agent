@@ -712,46 +712,23 @@ class AgentRuntime:
             return ResearchResult()
         # Retrieval has a hard SDK model-call budget. A separate, tool-free extraction phase
         # always converges on the evidence actually obtained, including partial coverage.
-        extractor = create_agent(
-            self.model,
-            checkpointer=False,
-            tools=[],
-            system_prompt=self.prompts["extractor"],
-            response_format=ToolStrategy(ResearchResult),
-            middleware=[
-                BudgetMiddleware(self.budget),
-                ToolProtocolMiddleware(),
-                ModelCallLimitMiddleware(
-                    run_limit=min(4, max(1, 46 - self.budget.model_calls)), exit_behavior="error"
-                ),
-            ],
-        )
         evidence = [
-            {"source": s.model_dump(), "untrusted_text": self.texts.get(s.id, "")}
-            for s in self.sources.values()
+            {"source": source.model_dump(), "untrusted_text": self.texts.get(source.id, "")}
+            for source in self.sources.values()
         ]
-        result = await extractor.ainvoke(
+        output = await self.structured(
+            "extractor",
+            ResearchResult,
             {
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": json.dumps(
-                            {
-                                "spec": spec.model_dump(mode="json"),
-                                "data_inventory": data_inventory or {},
-                                "evidence": evidence,
-                                "coverage": self.coverage,
-                                "repair_request": repair,
-                                "previous_events": previous.model_dump(mode="json"),
-                            },
-                            ensure_ascii=False,
-                        ),
-                    }
-                ]
+                "spec": spec.model_dump(mode="json"),
+                "data_inventory": data_inventory or {},
+                "evidence": evidence,
+                "coverage": self.coverage,
+                "repair_request": repair,
+                "previous_events": previous.model_dump(mode="json"),
             },
-            {"recursion_limit": 32, "callbacks": [SafeTrace(self.store, self.run_id, "证据提取")]},
+            limit=min(4, max(1, 46 - self.budget.model_calls)),
         )
-        output = require_structured(result, ResearchResult, "事件提取")
         verified = []
         for event in output.events:
             if event.public_disclosure_at:

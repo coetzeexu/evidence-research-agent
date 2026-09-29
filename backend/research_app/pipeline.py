@@ -5,6 +5,7 @@ from datetime import timedelta
 from pathlib import Path
 from typing import TypedDict
 
+from langchain.agents.middleware.model_call_limit import ModelCallLimitExceededError
 from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langgraph.graph import END, START, StateGraph
 
@@ -228,13 +229,15 @@ class Pipeline:
                 result = await self.runtime.research(
                     spec, changes, state.get("repair", ""), data_inventory=inventory
                 )
-        except TimeoutError:
+        except (TimeoutError, ModelCallLimitExceededError) as exc:
             result = (
                 ResearchResult.model_validate(self.read("events.json"))
                 if (self.root / "events.json").exists()
                 else ResearchResult()
             )
-            result.gaps.append("调查时限已到，保留已提取事件和原文，进入正文核验")
+            reason = "调查时限已到" if isinstance(exc, TimeoutError) else "本轮事件提取格式未收敛"
+            result.gaps.append(f"{reason}，保留已提取事件和原文，进入正文核验")
+            self.store.emit(self.run_id, "budget", result.gaps[-1], phase="research")
         self.write("events.json", result.model_dump(mode="json"))
         return {}
 
