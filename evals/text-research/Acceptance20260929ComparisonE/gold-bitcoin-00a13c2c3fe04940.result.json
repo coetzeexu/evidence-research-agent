@@ -1,0 +1,107 @@
+{
+  "case": "gold-bitcoin",
+  "run_id": "00a13c2c3fe04940",
+  "started_at": "2026-09-29T11:49:27.151304+00:00",
+  "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+  "mode": "live-end-to-end",
+  "prompt": "比较 2021-09-28 至 2026-09-28 黄金 GLD 与比特币 BTC-USD 的避险和抗通胀表现，美元计价，GLD/BTC 权重 60/40、季度再平衡、单边交易成本 20 bps、初始资本 100000 美元、基准 SPY。分析压力期保护、实际购买力、通胀关联、同口径组合与单资产基线，以及成本/权重/频率/分段敏感性，形成有条件的决策框架。只输出有证据的中文调研文字，不导出报告。",
+  "manual_edits": false,
+  "independent_content_audit": "pending",
+  "runtime": {
+    "python": "3.12.13",
+    "packages": {
+      "langchain": "1.4.2",
+      "langgraph": "1.2.12",
+      "langchain-openai": "1.6.6",
+      "pydantic": "2.13.5"
+    }
+  },
+  "checks": {
+    "verified_text": true,
+    "complete": true,
+    "required_questions": true,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true,
+    "symbols": true,
+    "requested_dates": true,
+    "requested_execution": true,
+    "no_exports": true,
+    "bounded": true,
+    "bounded_tools": true
+  },
+  "automated_pass": true,
+  "budget": {
+    "elapsed_seconds": 207.86676274985075,
+    "model_calls": 24,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "bundle_hash": "f37529fe458f6c57fc13115b3ec3b31973e053183f12144870365c5b9b593e91",
+  "spec": {
+    "intent": "asset_comparison",
+    "title": "GLD 与 BTC-USD 避险与抗通胀比较（2021-09-28 至 2026-09-28，60/40 季度再平衡）",
+    "symbols": [
+      "GLD",
+      "BTC-USD"
+    ],
+    "start": "2021-09-28",
+    "end": "2026-09-28",
+    "topics": [
+      "黄金 ETF 代理（GLD）与比特币的避险属性比较",
+      "黄金 ETF 代理（GLD）与比特币的抗通胀表现比较",
+      "压力期保护",
+      "实际购买力",
+      "通胀关联",
+      "同口径组合与单资产基线",
+      "成本/权重/频率/分段敏感性",
+      "有条件的决策框架"
+    ],
+    "required_events": [],
+    "event_scope": "broad",
+    "benchmark": "SPY",
+    "windows": [
+      1,
+      5,
+      20
+    ],
+    "weights": [
+      0.6,
+      0.4
+    ],
+    "rebalance_months": 3,
+    "cost_bps": 20.0,
+    "initial_capital": 100000.0,
+    "outputs": [
+      "html",
+      "xlsx",
+      "pptx",
+      "docx"
+    ],
+    "assumptions": [
+      "黄金以 GLD（SPDR Gold Shares，ETF）作为黄金 ETF 代理，非现货黄金。",
+      "比特币以 BTC-USD 计价，美元计价。",
+      "用户明确要求仅输出中文调研文字、不导出报告；四种导出文件仍按默认保留为可用选项，但本次不生成。",
+      "比较资产为 GLD 与 BTC-USD 两个，权重 60/40，季度再平衡（rebalance_months=3）。",
+      "单边交易成本 20 bps，初始资金 100000 美元。",
+      "基准为 SPY，仅作基准，不纳入比较组合。",
+      "事件窗口默认 1/5/20 交易日。",
+      "未指定数据频率，采用日线。",
+      "通胀关联使用公开通胀指标（如 CPI 同比）作为参照，具体口径在正文披露。"
+    ]
+  },
+  "finished_at": "2026-09-29T11:52:55.716026+00:00",
+  "usage": {
+    "actual_models": [
+      "/workspace/model"
+    ],
+    "completed_model_calls": 24,
+    "input_tokens": 469549,
+    "output_tokens": 19067,
+    "failed_model_calls": 0
+  },
+  "code_unchanged": true
+}

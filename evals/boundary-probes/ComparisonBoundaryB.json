@@ -1,0 +1,105 @@
+{
+  "mode": "saved-evidence-development-probe",
+  "name": "ComparisonBoundaryB",
+  "run_id": "d8a19e128b9b486e",
+  "source_run": "698cfed36824437c",
+  "code_hash": "584ba7cf82fa11643a4aa5cf2418e382af85b403f6f1ea30650763a218bf419c",
+  "code_unchanged": true,
+  "checks": {
+    "verified_text": true,
+    "complete": false,
+    "required_questions": false,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true
+  },
+  "status": "partial",
+  "budget": {
+    "elapsed_seconds": 59.488,
+    "model_calls": 6,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "unanswered": [
+    {
+      "id": "market",
+      "question": "行情数据覆盖到何时、主要收益与风险表现如何？",
+      "acceptance": "说明实际起止区间、行情口径及可复核的收益/回撤；比较任务以同口径执行基线为主。",
+      "kind": "market",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [],
+      "gaps": [
+        "指标核对：GLD bars=1255、BTC bars=1827，与正文一致；执行基线组合累计1.622、年化0.2166、波动0.2486、回撤-0.3674；GLD累计1.4734、年化0.2022、波动0.1686、回撤-0.2377；BTC累计0.7728、年化0.1235、波动0.5576、回撤-0.7270。正文称GLD累计与年化均高于BTC（1.4734>0.7728，0.2022>0.1235），波动与回撤更低（0.1686<0.5576，-0.2377>-0.7270），方向正确。counterevidence 中「2024-12-05 首次触及 100000 美元」为手写数字，无对应指标，属无证据事实，需 rewrite 去掉该数字或改为定性表述。；counterevidence 含手写数字「100000 美元」；没有对应指标时省去此数字，保留事实描述并回链原文"
+      ]
+    },
+    {
+      "id": "hedge",
+      "question": "这些资产在市场压力期是否提供保护？",
+      "acceptance": "使用相同压力月份，区分正收益与相对抗跌；披露事后选样与样本量限制。",
+      "kind": "hedge",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [],
+      "gaps": [
+        "推断/事实缺陷：整体看 GLD 在压力月更常提供相对抗跌，BTC 在多数压力月与风险资产同向下跌，保护属性不稳定。；6 个事后按基准最差月份选出的样本只能描述该样本内相对表现，不能据此判定'保护属性'是否稳定；'不稳定'是对资产属性的推断，缺少事前规则、更大样本或机制证据。；修复方向 rewrite；语义核验的缺陷位置无法定位：Bitcoin's backers have always claimed the digital currency would be an \"inflation hedge,\" but in fact, it hasn't behaved that way. As shares of tech companies have plummeted, so has Bitcoin's value.；需要重新核对"
+      ]
+    },
+    {
+      "id": "inflation",
+      "question": "这些资产是否保全购买力、是否随通胀变化？",
+      "acceptance": "结合实际收益、CPI分组/相关性，区分保值结果与稳定抗通胀机制；明确宏观数据是回顾性的。",
+      "kind": "inflation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [],
+      "gaps": [
+        "text 含手写数字「3%」；可选已计算引用：{{inflation.GLD.threshold}}, {{inflation.BTC-USD.threshold}}；数值关系尚未转成可执行断言：方向相反；应按收益/风险分别核对；数值关系尚未转成可执行断言：方向相反；应按收益/风险分别核对"
+      ]
+    },
+    {
+      "id": "allocation",
+      "question": "组合相对单资产有什么收益与风险代价？",
+      "acceptance": "只比较相同执行口径的组合与单资产基线，给出条件化配置判断和可能推翻判断的证据。",
+      "kind": "allocation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [
+        "f-allocation"
+      ],
+      "gaps": [
+        "text 含手写数字「80%」；可选已计算引用：{{sensitivity.8.weight_BTC-USD}}, {{sensitivity.10.weight_GLD}}；text 含手写数字「20%」；可选已计算引用：{{sensitivity.8.weight_GLD}}, {{sensitivity.10.weight_BTC-USD}}；text 含手写数字「50 bps」；可选已计算引用：{{sensitivity.4.cost_bps}}；推断/事实缺陷：若追求收益并容忍深度回撤，偏向提高 BTC 权重（20% GLD 情景收益 {{sensitivity.8.total_return}} 最低但风险最高，反向说明 BTC 主导收益与风险）；由单一 20% GLD 情景的收益最低、风险最高，无法反推 BTC 对组合收益与风险起'主导'作用；缺少权重贡献分解或归因计算，属机制性推断缺口。；修复方向 rewrite；推断/事实缺陷：60/40 季度再平衡在样本内是收益与回撤的折中，且对 0–50 bps 成本与月/季/年频率不敏感。；成本与频率不敏感仅为该样本内的稳健性观察，在决策框架中作为较确定性质陈述，未标注其样本内、非样本外成立条件。；修复方向 rewrite"
+      ]
+    },
+    {
+      "id": "sensitivity",
+      "question": "配置判断对成本、权重、频率和样本区间是否敏感？",
+      "acceptance": "引用已计算的敏感性结果，不推荐事后最优参数，分段不冒充样本外检验。",
+      "kind": "sensitivity",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [],
+      "gaps": [
+        "text 含手写数字「0 bps」；可选已计算引用：{{sensitivity.1.cost_bps}}；text 含手写数字「10 bps」；可选已计算引用：{{sensitivity.2.cost_bps}}；text 含手写数字「20 bps」；可选已计算引用：{{config.cost_bps}}, {{sensitivity.0.cost_bps}}, {{sensitivity.5.cost_bps}}, {{sensitivity.6.cost_bps}}, {{sensitivity.7.cost_bps}}, {{sensitivity.8.cost_bps}}, {{sensitivity.9.cost_bps}}, {{sensitivity.10.cost_bps}}；text 含手写数字「25 bps」；可选已计算引用：{{sensitivity.3.cost_bps}}；text 含手写数字「50 bps」；可选已计算引用：{{sensitivity.4.cost_bps}}；changes_if 含手写数字「50 bps」；可选已计算引用：{{sensitivity.4.cost_bps}}；text 含手写数字「20%」；可选已计算引用：{{sensitivity.8.weight_GLD}}, {{sensitivity.10.weight_BTC-USD}}；text 含手写数字「50%」；可选已计算引用：{{sensitivity.9.weight_GLD}}, {{sensitivity.9.weight_BTC-USD}}；text 含手写数字「60%」；可选已计算引用：{{config.weight_GLD}}, {{sensitivity.0.weight_GLD}}, {{sensitivity.1.weight_GLD}}, {{sensitivity.2.weight_GLD}}, {{sensitivity.3.weight_GLD}}, {{sensitivity.4.weight_GLD}}, {{sensitivity.5.weight_GLD}}, {{sensitivity.6.weight_GLD}}；text 含手写数字「80%」；可选已计算引用：{{sensitivity.8.weight_BTC-USD}}, {{sensitivity.10.weight_GLD}}；counterevidence 含手写数字「80%」；可选已计算引用：{{sensitivity.8.weight_BTC-USD}}, {{sensitivity.10.weight_GLD}}；text 含手写数字「80%」；可选已计算引用：{{sensitivity.8.weight_BTC-USD}}, {{sensitivity.10.weight_GLD}}；text 含手写数字「20%」；可选已计算引用：{{sensitivity.8.weight_GLD}}, {{sensitivity.10.weight_BTC-USD}}；text 含手写数字「50 bps」；可选已计算引用：{{sensitivity.4.cost_bps}}；推断/事实缺陷：若追求收益并容忍深度回撤，偏向提高 BTC 权重（20% GLD 情景收益 {{sensitivity.8.total_return}} 最低但风险最高，反向说明 BTC 主导收益与风险）；由单一 20% GLD 情景的收益最低、风险最高，无法反推 BTC 对组合收益与风险起'主导'作用；缺少权重贡献分解或归因计算，属机制性推断缺口。；修复方向 rewrite；推断/事实缺陷：60/40 季度再平衡在样本内是收益与回撤的折中，且对 0–50 bps 成本与月/季/年频率不敏感。；成本与频率不敏感仅为该样本内的稳健性观察，在决策框架中作为较确定性质陈述，未标注其样本内、非样本外成立条件。；修复方向 rewrite"
+      ]
+    }
+  ]
+}

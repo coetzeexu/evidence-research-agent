@@ -1,0 +1,41 @@
+{
+  "run_id": "1f50da840f0e4b14",
+  "bundle_hash": "91b64b7689f435a6b1ca2b02c89fee48d6a22afd1ba1f94754b90bb9d53a2288",
+  "reviewed_at": "2026-09-29T12:16:57.341544+00:00",
+  "reviewer": "Codex independent review outside production verifier context",
+  "scope": "Read published findings with evidence excerpts, numerical references, time attribution and limitations; deterministic standard-library recalculation separate from model review. Not a causal study or predictive validation.",
+  "content_pass": false,
+  "issues": [
+    {
+      "finding_id": "f-mi300-launch",
+      "severity": "error",
+      "category": "model_generated_timezone",
+      "observation": "将 2023-12-06 20:01 UTC 写作美股收盘后，并在多个段落沿用。",
+      "evidence": "该时刻为 America/New_York 15:01 EST，早于 16:00 收盘；报道时间本身也不等于发布会开始时间。"
+    }
+  ],
+  "numeric_checks": {
+    "independent_method": "Python standard library; recompute daily adjusted-close return, calendar-day CAGR, sample volatility and maximum drawdown. No production analytics import.",
+    "check_count": 4,
+    "failures": [],
+    "checks": [
+      {
+        "metric": "daily.AMD.total_return",
+        "passed": true
+      },
+      {
+        "metric": "daily.AMD.cagr",
+        "passed": true
+      },
+      {
+        "metric": "daily.AMD.volatility",
+        "passed": true
+      },
+      {
+        "metric": "daily.AMD.max_drawdown",
+        "passed": true
+      }
+    ]
+  },
+  "disposition": "Preserve original output as model-effect observation; no new engineering backlog or further prompt iteration in this stage, per user scope."
+}

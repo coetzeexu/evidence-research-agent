@@ -1,31 +1,9 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';
-import { QualityPanel } from './QualityPanel';
 import ResearchConversation from './ResearchConversation';
 import { SensitivityPanel } from './SensitivityPanel';
 import { candleOption } from '../../packages/charts/options.mjs';
-
-it('displays incomplete named requirements without a success claim', () => {
-  const bundle: any = {
-    events: [],
-    review: { passed: true },
-    quality: {
-      passed: false,
-      changes: 2,
-      associated_changes: 0,
-      note: '关联不证明因果',
-      requirements: [{ requirement: '模型首次发布', event_ids: [], status: 'missing' }],
-      repair_actions: [],
-      data_gaps: [],
-      periods: [],
-    },
-  };
-  const html = renderToStaticMarkup(<QualityPanel bundle={bundle} onSelect={() => {}} />);
-  expect(html).toContain('有待核实事项');
-  expect(html).toContain('尚未核实');
-  expect(html).not.toContain('需求覆盖检查通过');
-});
 
 it('preserves delayed association hit targets and distinguishes them from event pins', () => {
   const bundle: any = {

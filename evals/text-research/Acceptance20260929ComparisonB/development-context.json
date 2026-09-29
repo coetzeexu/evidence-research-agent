@@ -1,0 +1,6 @@
+{
+  "suite": "Acceptance20260929ComparisonB",
+  "scope": "development candidate; not final acceptance",
+  "interrupted_run": "cf11b5a7ec0d4d17",
+  "reason": "Cancelled by evaluator operator after paired event-study candidate failed; preserve original results and start a new frozen version."
+}

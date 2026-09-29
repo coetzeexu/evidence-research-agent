@@ -1,0 +1,9 @@
+{
+  "latest_run_id": "1359d9b1848e49dd",
+  "functional_acceptance_passed": true,
+  "run_status": "complete",
+  "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+  "result": "browser-acceptance-20260929/1359d9b1848e49dd.json",
+  "capture": "browser-acceptance-20260929/1359d9b1848e49dd.capture.json",
+  "scope": "Real UI request, live DOM/SSE, completed downloads, offline file:// navigation, OOXML and cached spreadsheet structure. No screenshot/image context or Office visual audit."
+}

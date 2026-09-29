@@ -1,0 +1,27 @@
+{
+  "mode": "saved-evidence-development-probe",
+  "name": "BrowserBoundaryE",
+  "run_id": "16e414f5f1f845c3",
+  "source_run": "969e708728f14f17",
+  "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+  "code_unchanged": true,
+  "checks": {
+    "verified_text": true,
+    "complete": true,
+    "required_questions": true,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true
+  },
+  "status": "complete",
+  "budget": {
+    "elapsed_seconds": 80.984,
+    "model_calls": 9,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "unanswered": []
+}

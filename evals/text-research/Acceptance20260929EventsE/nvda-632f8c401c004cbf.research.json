@@ -1,0 +1,3879 @@
+{
+  "version": "1.0",
+  "status": "complete",
+  "questions": [
+    {
+      "id": "market",
+      "question": "行情数据覆盖到何时、主要收益与风险表现如何？",
+      "acceptance": "说明实际起止区间、行情口径及可复核的收益/回撤；比较任务以同口径执行基线为主。",
+      "kind": "market",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-market"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "required-1",
+      "question": "ChatGPT 首次公开发布",
+      "acceptance": "原文核实具体事实与日期；区分发生/公开/报道/反应时间，给出对应窗口、强度与证据局限。",
+      "kind": "event",
+      "required": true,
+      "priority": 1,
+      "required_event": "ChatGPT 首次公开发布",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-chatgpt"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "required-2",
+      "question": "Blackwell（B100/B200）平台发布",
+      "acceptance": "原文核实具体事实与日期；区分发生/公开/报道/反应时间，给出对应窗口、强度与证据局限。",
+      "kind": "event",
+      "required": true,
+      "priority": 1,
+      "required_event": "Blackwell（B100/B200）平台发布",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-blackwell"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "required-3",
+      "question": "DeepSeek-R1 模型发布",
+      "acceptance": "原文核实具体事实与日期；区分发生/公开/报道/反应时间，给出对应窗口、强度与证据局限。",
+      "kind": "event",
+      "required": true,
+      "priority": 1,
+      "required_event": "DeepSeek-R1 模型发布",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-deepseek"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "attribution",
+      "question": "主要行情变化与同期信息有什么关系，哪些解释仍无法确认？",
+      "acceptance": "讨论已调查的主要异动与时间线，区分反应强度和证据可信度；至少说明竞争性解释与因果边界。",
+      "kind": "event",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-attribution",
+        "f-capex-hf"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "custom-1",
+      "question": "调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期",
+      "acceptance": "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期",
+      "kind": "event",
+      "required": true,
+      "priority": 1,
+      "required_event": "",
+      "request_quote": "调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期",
+      "status": "answered",
+      "finding_ids": [
+        "f-deepseek"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "custom-2",
+      "question": "分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限",
+      "acceptance": "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限",
+      "kind": "market",
+      "required": true,
+      "priority": 1,
+      "required_event": "",
+      "request_quote": "分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限",
+      "status": "answered",
+      "finding_ids": [
+        "f-attribution",
+        "f-capex-hf"
+      ],
+      "gaps": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "f-market",
+      "question_ids": [
+        "market"
+      ],
+      "kind": "fact",
+      "title": "行情覆盖与五年收益风险特征",
+      "text": "行情为 NVDA 日线 OHLCV，实际覆盖 2021-09-28 至 2026-09-28，共 {{market.NVDA.bars}} 根日线，价格口径为拆股调整后的 OHLC，复权收盘另反映分红。区间累计收益 {{daily.NVDA.total_return}}，年化收益 {{daily.NVDA.cagr}}，年化波动 {{daily.NVDA.volatility}}，最大回撤 {{daily.NVDA.max_drawdown}}。最新交易日 2026-09-28 收盘 {{latest.NVDA.close}}，当日成交量 {{latest.NVDA.volume}}。收益与回撤均按复权价格回顾、不计交易费用，属单资产口径，不涉及组合配置。",
+      "evidence": [],
+      "counterevidence": "",
+      "limitations": "收益与回撤为复权价格回顾结果，未扣交易成本与税费；最大回撤为区间内单点极值，不代表投资者实际持有体验。",
+      "confidence": "high",
+      "changes_if": "若改用未复权价格或加入交易成本，收益与回撤数值会变化。"
+    },
+    {
+      "id": "f-chatgpt",
+      "question_ids": [
+        "required-1"
+      ],
+      "kind": "fact",
+      "title": "ChatGPT 公开发布日与当日反应",
+      "text": "已读来源记载 2022 年 11 月 30 日 OpenAI 向公众发布 ChatGPT，用户可免费试用预览版。以该日为事件日，1 日窗口 NVDA 收益 {{event.ev-chatgpt-public-2022-11-30.NVDA.1.return}}，相对 SPY {{event.ev-chatgpt-public-2022-11-30.NVDA.1.relative_return}}，标准化反应幅度 {{event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response}}；5 日窗口相对收益 {{event.ev-chatgpt-public-2022-11-30.NVDA.5.relative_return}}，20 日窗口相对收益 {{event.ev-chatgpt-public-2022-11-30.NVDA.20.relative_return}}。因来源只给日期、未给盘前盘后时刻，以下一交易日起算的敏感性窗口 1 日相对收益为 {{next-session.ev-chatgpt-public-2022-11-30.NVDA.1.relative_return}}，5 日为 {{next-session.ev-chatgpt-public-2022-11-30.NVDA.5.relative_return}}，20 日为 {{next-session.ev-chatgpt-public-2022-11-30.NVDA.20.relative_return}}。两种起算方式下，窗口内均未出现持续扩大的相对收益，方向随窗口切换。",
+      "evidence": [
+        {
+          "source_id": "src-0574c1fd7cebfb",
+          "quote": "On November 30, 2022, OpenAI releases the generative artificial intelligence chatbot ChatGPT to the public."
+        }
+      ],
+      "counterevidence": "同期宏观与半导体周期因素、以及 ChatGPT 与 NVDA 收入链条的间接性，都可能解释该窗口表现。",
+      "limitations": "唯一来源为 2025 年发布的事后回顾页面，无 2022 年当日一手公告或同期报道；相对收益是标的减基准，不是回归超额收益或因果效应。",
+      "confidence": "medium",
+      "changes_if": "若取得 2022-11-30 当日一手公告或同期报道，可提高日期与反应归因的可信度。"
+    },
+    {
+      "id": "f-blackwell",
+      "question_ids": [
+        "required-2"
+      ],
+      "kind": "fact",
+      "title": "Blackwell 平台发布日与反应强度",
+      "text": "英伟达官方新闻稿称 2024 年 3 月 18 日在 GTC 宣布 Blackwell 平台面世，产品为 B200/GB200，公告未使用 B100 命名，并称合作伙伴产品“later this year”推出，非当日量产。以该日为事件日，1 日窗口 NVDA 收益 {{event.ev-blackwell-2024-03-18.NVDA.1.return}}，相对 SPY {{event.ev-blackwell-2024-03-18.NVDA.1.relative_return}}，标准化反应幅度 {{event.ev-blackwell-2024-03-18.NVDA.1.standardized_response}}；5 日相对收益 {{event.ev-blackwell-2024-03-18.NVDA.5.relative_return}}，20 日相对收益 {{event.ev-blackwell-2024-03-18.NVDA.20.relative_return}}。下一交易日起算的敏感性窗口 1 日相对收益 {{next-session.ev-blackwell-2024-03-18.NVDA.1.relative_return}}，5 日 {{next-session.ev-blackwell-2024-03-18.NVDA.5.relative_return}}，20 日 {{next-session.ev-blackwell-2024-03-18.NVDA.20.relative_return}}。按标准化反应幅度衡量，该事件属低强度反应，窗口内未出现持续相对收益扩大。",
+      "evidence": [
+        {
+          "source_id": "src-2703b6b30f807b",
+          "quote": "GTC— Powering a new era of computing, NVIDIA today announced that the NVIDIA Blackwell platform has arrived"
+        }
+      ],
+      "counterevidence": "发布前市场对 GTC 新品已有预期，且同期存在财报与宏观因素，可能稀释单日反应。",
+      "limitations": "仅有官方新闻稿，缺第三方同期报道；公告未使用 B100 命名，B100 与 B200 的对应关系未获已读来源证实。",
+      "confidence": "medium",
+      "changes_if": "若取得第三方同期报道或发布前预期数据，可更准确判断反应是否被提前定价。"
+    },
+    {
+      "id": "f-deepseek",
+      "question_ids": [
+        "required-3",
+        "custom-1"
+      ],
+      "kind": "fact",
+      "title": "DeepSeek-R1 模型发布、论文公开与 2025-01-27 下跌的日期区分",
+      "text": "三个日期需分开：模型发布日以 2025 年 1 月 20 日当日报道为准，该文称 DeepSeek 当日发布 R1 及系列衍生模型；论文公开日以 arXiv 页面显示的 2025 年 1 月 22 日提交为准，属论文公开时间，不能作为模型发布日；市场反应日为 2025 年 1 月 27 日，当日 NVDA 收跌 {{move.change-NVDA-2025-01-27.return}}，1 日窗口相对 SPY {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return}}，标准化反应幅度 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.standardized_response}}，5 日相对收益 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return}}，20 日相对收益 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return}}。以模型发布日为事件日，1 日窗口相对收益 {{event.ev-deepseek-r1-2025-01-20.NVDA.1.relative_return}}，5 日 {{event.ev-deepseek-r1-2025-01-20.NVDA.5.relative_return}}，20 日 {{event.ev-deepseek-r1-2025-01-20.NVDA.20.relative_return}}；以论文提交日起算的敏感性窗口 1 日相对收益 {{next-session.ev-deepseek-r1-2025-01-20.NVDA.1.relative_return}}，5 日 {{next-session.ev-deepseek-r1-2025-01-20.NVDA.5.relative_return}}，20 日 {{next-session.ev-deepseek-r1-2025-01-20.NVDA.20.relative_return}}。可见发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日。",
+      "evidence": [
+        {
+          "source_id": "src-879406b8115183",
+          "quote": "Today they’ve released R1 itself , along with a whole family of new models derived from that base."
+        },
+        {
+          "source_id": "src-92838b9f7ab276",
+          "quote": "[Submitted on 22 Jan 2025 ( v1 ), last revised 4 Jan 2026 (this version, v2)]"
+        },
+        {
+          "source_id": "src-7520412e384f57",
+          "quote": "Nvidia and other U.S. technology firms plunged on Monday, part of a global sell-off as Chinese startup DeepSeek sparked concerns over competitiveness in artificial intelligence and America's leadership in the sector."
+        }
+      ],
+      "counterevidence": "1 月 27 日抛售同时波及美光、Arm、博通、AMD 及全球科技股，属板块性下跌，不能把全部跌幅归于单一模型事件。",
+      "limitations": "模型发布日依据第三方博客当日文章，缺 DeepSeek 官方发布公告；1 月 27 日仅有单篇当日行情报道，市值损失口径存在冲突数字，未采用。",
+      "confidence": "high",
+      "changes_if": "若取得 DeepSeek 官方发布页或更多当日一手报道，可进一步确认发布时刻与反应归因。"
+    },
+    {
+      "id": "f-attribution",
+      "question_ids": [
+        "attribution",
+        "custom-2"
+      ],
+      "kind": "analysis",
+      "title": "主要异动与事件的关联可信度及竞争性解释",
+      "text": "区间内已调查的显著异动中，2023-05-25 单日收益 {{move.change-NVDA-2023-05-25.return}}，与前一交易日盘后财报及指引超预期在时间上相邻，5 日窗口相对 SPY {{event.ev-nvda-q1fy24-2023-05-24.NVDA.5.relative_return}}，标准化反应幅度 {{event.ev-nvda-q1fy24-2023-05-24.NVDA.5.standardized_response}}，属高强度反应；2024-02-22 单日收益 {{move.change-NVDA-2024-02-22.return}}，对应前一交易日财报，5 日相对收益 {{event.ev-nvda-q4fy24-2024-02-21.NVDA.5.relative_return}}，标准化反应幅度 {{event.ev-nvda-q4fy24-2024-02-21.NVDA.5.standardized_response}}，同属高强度。相比之下，ChatGPT 发布当日 1 日窗口标准化反应幅度为 {{event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response}}，5 日与 20 日窗口分别为 {{event.ev-chatgpt-public-2022-11-30.NVDA.5.standardized_response}} 与 {{event.ev-chatgpt-public-2022-11-30.NVDA.20.standardized_response}}；Blackwell 发布 1 日窗口标准化反应幅度为 {{event.ev-blackwell-2024-03-18.NVDA.1.standardized_response}}，5 日与 20 日窗口分别为 {{event.ev-blackwell-2024-03-18.NVDA.5.standardized_response}} 与 {{event.ev-blackwell-2024-03-18.NVDA.20.standardized_response}}，除 ChatGPT 发布 1 日窗口外均低于 1。2021-11-04 单日收益 {{move.change-NVDA-2021-11-04.return}} 与 2025-04-09 单日收益 {{move.change-NVDA-2025-04-09.return}} 在已读证据中未取得可核实的对应事件正文，属重大异动但原因未证实。关联可信度上，财报类事件有公司公告与同期报道双重支持，可信度较高；产品发布与行业事件多为时间相邻的候选关联，不构成因果证明。",
+      "evidence": [
+        {
+          "source_id": "src-5d57f2e27d95e2",
+          "quote": "Nvidia reported first-quarter earnings for its fiscal 2024 on Wednesday, with a stronger-than-expected forecast that drove shares up 26% in extended trading."
+        },
+        {
+          "source_id": "src-9b28aba03660aa",
+          "quote": "NVIDIA (NASDAQ: NVDA) today reported revenue for the fourth quarter ended January 28, 2024, of $22.1 billion, up 22% from the previous quarter and up 265% from a year ago."
+        }
+      ],
+      "counterevidence": "2021-11-04 与 2025-04-09 的异动可能由未取得正文的宏观或政策因素驱动；财报日异动也可能叠加同期大盘与行业情绪。",
+      "limitations": "相对收益为标的减基准，不是回归超额收益或事件因果效应；异动强度与事件关联由时间先后与同标的构成，未做多因子剥离。",
+      "confidence": "medium",
+      "changes_if": "若取得 2021-11-04 与 2025-04-09 的当日一手报道，可判断这两次异动是否具备可核实的事件对应。"
+    },
+    {
+      "id": "f-capex-hf",
+      "question_ids": [
+        "attribution",
+        "custom-2"
+      ],
+      "kind": "fact",
+      "title": "2026 年两次事件的反应与证据边界",
+      "text": "2026-02-06 黄仁勋在 CNBC 表示 AI 基础设施资本开支合理且可持续，当日 NVDA 收涨，1 日窗口收益 {{event.ev-nvda-capex-2026-02-06.NVDA.1.return}}，相对 SPY {{event.ev-nvda-capex-2026-02-06.NVDA.1.relative_return}}，标准化反应幅度 {{event.ev-nvda-capex-2026-02-06.NVDA.1.standardized_response}}，5 日相对收益 {{event.ev-nvda-capex-2026-02-06.NVDA.5.relative_return}}，20 日相对收益 {{event.ev-nvda-capex-2026-02-06.NVDA.20.relative_return}}；以下一交易日起算的敏感性窗口 1 日相对收益 {{next-session.ev-nvda-capex-2026-02-06.NVDA.1.relative_return}}，5 日 {{next-session.ev-nvda-capex-2026-02-06.NVDA.5.relative_return}}，20 日 {{next-session.ev-nvda-capex-2026-02-06.NVDA.20.relative_return}}，方向随起算日切换。2026-09-03 英伟达宣布同意收购开源 AI 平台 Hugging Face，1 日窗口收益 {{event.ev-nvda-huggingface-2026-09-03.NVDA.1.return}}，相对 SPY {{event.ev-nvda-huggingface-2026-09-03.NVDA.1.relative_return}}，标准化反应幅度 {{event.ev-nvda-huggingface-2026-09-03.NVDA.1.standardized_response}}，5 日相对收益 {{event.ev-nvda-huggingface-2026-09-03.NVDA.5.relative_return}}；该事件 20 日窗口尚未满，无对应数值。",
+      "evidence": [
+        {
+          "source_id": "src-df62732c41d14c",
+          "quote": "The tech industry's surging capital expenditures for AI infrastructure are justified, appropriate and sustainable, Nvidia CEO Jensen Huang said Friday on CNBC's \"Halftime Report.\""
+        },
+        {
+          "source_id": "src-8553234d2bab46",
+          "quote": "Nvidia has officially agreed to buy open-source artificial intelligence platform Hugging Face for $12.9 billion"
+        }
+      ],
+      "counterevidence": "2026-02-06 的上涨与超大规模客户资本开支预期、以及同期财报季情绪相关，不能单独归于一次访谈。",
+      "limitations": "两事件均为单篇报道支持；管理层评论与并购公告的当日反应可能叠加同期大盘与行业因素，且 2026-09-03 事件 20 日窗口未满。",
+      "confidence": "medium",
+      "changes_if": "若 2026-09-03 事件 20 日窗口补齐，可判断反应是否延续；若取得更多同期报道，可提高归因可信度。"
+    }
+  ],
+  "passages": [
+    {
+      "source_id": "src-0574c1fd7cebfb",
+      "quote": "On November 30, 2022, OpenAI releases the generative artificial intelligence chatbot ChatGPT to the public.",
+      "id": "passage-92e16d9502be0bde",
+      "start": 365,
+      "end": 472,
+      "content_hash": "51c71d151be465359df223ccb0a59dfd9688087af6ddeb44262f532045a729bd",
+      "origin_group": "publisher:www.history.com",
+      "published_at": "2025-11-24T22:50:13.016000+00:00"
+    },
+    {
+      "source_id": "src-2703b6b30f807b",
+      "quote": "GTC— Powering a new era of computing, NVIDIA today announced that the NVIDIA Blackwell platform has arrived",
+      "id": "passage-45f688d1fd9d4ab7",
+      "start": 448,
+      "end": 555,
+      "content_hash": "9478aba3b300065d3911668cdcd230bf3e91b9e9febcd36b215de452f655f790",
+      "origin_group": "publisher:nvidianews.nvidia.com",
+      "published_at": "2024-03-18"
+    },
+    {
+      "source_id": "src-879406b8115183",
+      "quote": "Today they’ve released R1 itself , along with a whole family of new models derived from that base.",
+      "id": "passage-b7b321d190569c83",
+      "start": 490,
+      "end": 588,
+      "content_hash": "d4cc4a8f3c3ba98bb77b40069e47ef10a6c0fb0e8da42c7f90e26dce5b013963",
+      "origin_group": "publisher:simonwillison.net",
+      "published_at": "2025-01-20"
+    },
+    {
+      "source_id": "src-92838b9f7ab276",
+      "quote": "[Submitted on 22 Jan 2025 ( v1 ), last revised 4 Jan 2026 (this version, v2)]",
+      "id": "passage-1e84ec159706cfa3",
+      "start": 66,
+      "end": 143,
+      "content_hash": "3d23c9bbfad76a7c05fe3c62c8332e885fd46c3cc02b50b227eb362e1f1b4293",
+      "origin_group": "publisher:arxiv.org",
+      "published_at": null
+    },
+    {
+      "source_id": "src-7520412e384f57",
+      "quote": "Nvidia and other U.S. technology firms plunged on Monday, part of a global sell-off as Chinese startup DeepSeek sparked concerns over competitiveness in artificial intelligence and America's leadership in the sector.",
+      "id": "passage-55c48655aecb78bf",
+      "start": 880,
+      "end": 1096,
+      "content_hash": "44da1bc19d575730a02891c2638d410ff59e6d2498982017824dfa7a68c84dcc",
+      "origin_group": "publisher:www.cnbc.com",
+      "published_at": "2025-01-27T10:17:53+00:00"
+    },
+    {
+      "source_id": "src-5d57f2e27d95e2",
+      "quote": "Nvidia reported first-quarter earnings for its fiscal 2024 on Wednesday, with a stronger-than-expected forecast that drove shares up 26% in extended trading.",
+      "id": "passage-8f3d00b444a946ee",
+      "start": 200,
+      "end": 357,
+      "content_hash": "b31d35ae75c828f2061e67eb2915796d1056ba435ae1b7f3fd091fa57e004a24",
+      "origin_group": "wire:reuters",
+      "published_at": "2023-05-24T20:28:58+00:00"
+    },
+    {
+      "source_id": "src-9b28aba03660aa",
+      "quote": "NVIDIA (NASDAQ: NVDA) today reported revenue for the fourth quarter ended January 28, 2024, of $22.1 billion, up 22% from the previous quarter and up 265% from a year ago.",
+      "id": "passage-7438cc08264d7741",
+      "start": 225,
+      "end": 396,
+      "content_hash": "9f69dcc69e96bf94357378177c836f18f05468ec199d6bcb164f8fd5887a54c7",
+      "origin_group": "publisher:nvidianews.nvidia.com",
+      "published_at": "2024-02-21"
+    },
+    {
+      "source_id": "src-df62732c41d14c",
+      "quote": "The tech industry's surging capital expenditures for AI infrastructure are justified, appropriate and sustainable, Nvidia CEO Jensen Huang said Friday on CNBC's \"Halftime Report.\"",
+      "id": "passage-7886debcc54f96fe",
+      "start": 917,
+      "end": 1096,
+      "content_hash": "bd12498e509765a8f08178be214d8b88cbb7207cfb1ce789f6159a0a378399be",
+      "origin_group": "publisher:www.cnbc.com",
+      "published_at": "2026-02-06T18:59:57+00:00"
+    },
+    {
+      "source_id": "src-8553234d2bab46",
+      "quote": "Nvidia has officially agreed to buy open-source artificial intelligence platform Hugging Face for $12.9 billion",
+      "id": "passage-a6f851f31f114110",
+      "start": 744,
+      "end": 855,
+      "content_hash": "abaa16a49caf0e4573557a86f7acaea27f01f738e8e3c27ffb754726f3963201",
+      "origin_group": "publisher:www.cnbc.com",
+      "published_at": "2026-09-03T12:04:26+00:00"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "market.NVDA.bars",
+      "label": "market.NVDA · bars",
+      "value": 1255.0,
+      "unit": "integer",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "coverage",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.NVDA.open",
+      "label": "latest.NVDA · open",
+      "value": 229.75,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.NVDA.high",
+      "label": "latest.NVDA · high",
+      "value": 233.2100067138672,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.NVDA.low",
+      "label": "latest.NVDA · low",
+      "value": 228.0399932861328,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.NVDA.close",
+      "label": "latest.NVDA · close",
+      "value": 228.86000061035156,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.NVDA.volume",
+      "label": "latest.NVDA · volume",
+      "value": 141544300.0,
+      "unit": "integer",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.NVDA.total_return",
+      "label": "daily.NVDA · 累计收益",
+      "value": 10.105275842498836,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.NVDA.cagr",
+      "label": "daily.NVDA · 年化收益",
+      "value": 0.6185812273028315,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.NVDA.volatility",
+      "label": "daily.NVDA · 年化波动",
+      "value": 0.5196918469850028,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.NVDA.max_drawdown",
+      "label": "daily.NVDA · 最大回撤",
+      "value": -0.6633509548327106,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.1.return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.1 · 收益",
+      "value": 0.0823791275993575,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-11-30",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.1.relative_return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.1 · 相对基准收益",
+      "value": 0.050878594918795095,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-11-30",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.1.benchmark_return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.1 · 基准收益",
+      "value": 0.03150053268056241,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-11-30",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.1 · 标准化反应幅度",
+      "value": 1.3381853798682772,
+      "unit": "number",
+      "start": "2022-11-29",
+      "end": "2022-11-30",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.5.return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.5 · 收益",
+      "value": 0.022513541276835136,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-12-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.5.relative_return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.5 · 相对基准收益",
+      "value": 0.026055745029183397,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-12-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.5.benchmark_return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.5 · 基准收益",
+      "value": -0.003542203752348261,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-12-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.5.standardized_response",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.5 · 标准化反应幅度",
+      "value": 0.30647825424268665,
+      "unit": "number",
+      "start": "2022-11-29",
+      "end": "2022-12-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.20.return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.20 · 收益",
+      "value": -0.10227055258446294,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-12-28",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.20.relative_return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.20 · 相对基准收益",
+      "value": -0.05966147505707664,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-12-28",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.20.benchmark_return",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.20 · 基准收益",
+      "value": -0.042609077527386297,
+      "unit": "percent",
+      "start": "2022-11-29",
+      "end": "2022-12-28",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-chatgpt-public-2022-11-30.NVDA.20.standardized_response",
+      "label": "event.ev-chatgpt-public-2022-11-30.NVDA.20 · 标准化反应幅度",
+      "value": 0.3508812490404061,
+      "unit": "number",
+      "start": "2022-11-29",
+      "end": "2022-12-28",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1.return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1 · 收益",
+      "value": 0.012527480903168353,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-01",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1.relative_return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1 · 相对基准收益",
+      "value": 0.013263310680740048,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-01",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1.benchmark_return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1 · 基准收益",
+      "value": -0.0007358297775716949,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-01",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.1 · 标准化反应幅度",
+      "value": 0.33801996124267686,
+      "unit": "number",
+      "start": "2022-11-30",
+      "end": "2022-12-01",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5.return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5 · 收益",
+      "value": -0.04745018042037741,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-07",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5.relative_return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5 · 相对基准收益",
+      "value": -0.011834063911236536,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-07",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5.benchmark_return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5 · 基准收益",
+      "value": -0.03561611650914087,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-07",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5.standardized_response",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.5 · 标准化反应幅度",
+      "value": 0.13487743962782697,
+      "unit": "number",
+      "start": "2022-11-30",
+      "end": "2022-12-07",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20.return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20 · 收益",
+      "value": -0.13709144190310052,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-29",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20.relative_return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20 · 相对基准收益",
+      "value": -0.08195198666785264,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-29",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20.benchmark_return",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20 · 基准收益",
+      "value": -0.05513945523524788,
+      "unit": "percent",
+      "start": "2022-11-30",
+      "end": "2022-12-29",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20.standardized_response",
+      "label": "next-session.ev-chatgpt-public-2022-11-30.NVDA.20 · 标准化反应幅度",
+      "value": 0.4670193695539541,
+      "unit": "number",
+      "start": "2022-11-30",
+      "end": "2022-12-29",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1.return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 收益",
+      "value": -0.004888124559574325,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-05-24",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1.relative_return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 相对基准收益",
+      "value": 0.0023565460238225144,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-05-24",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1.benchmark_return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 基准收益",
+      "value": -0.0072446705833968394,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-05-24",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1.standardized_response",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 标准化反应幅度",
+      "value": 0.08677119476826882,
+      "unit": "number",
+      "start": "2023-05-23",
+      "end": "2023-05-24",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5.return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 收益",
+      "value": 0.23285973430619467,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-05-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5.relative_return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 相对基准收益",
+      "value": 0.22377941875814789,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-05-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5.benchmark_return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 基准收益",
+      "value": 0.00908031554804678,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-05-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5.standardized_response",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 标准化反应幅度",
+      "value": 3.684977077383321,
+      "unit": "number",
+      "start": "2023-05-23",
+      "end": "2023-05-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20.return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 收益",
+      "value": 0.4021587606093402,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-06-22",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20.relative_return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 相对基准收益",
+      "value": 0.34410002289543407,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-06-22",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20.benchmark_return",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 基准收益",
+      "value": 0.05805873771390613,
+      "unit": "percent",
+      "start": "2023-05-23",
+      "end": "2023-06-22",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20.standardized_response",
+      "label": "event.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 标准化反应幅度",
+      "value": 2.83314860618875,
+      "unit": "number",
+      "start": "2023-05-23",
+      "end": "2023-06-22",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1.return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 收益",
+      "value": 0.24369651650519697,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-05-25",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1.relative_return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 相对基准收益",
+      "value": 0.23503646543638124,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-05-25",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1.benchmark_return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 基准收益",
+      "value": 0.008660051068815733,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-05-25",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1.standardized_response",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.1 · 标准化反应幅度",
+      "value": 11.126034880916865,
+      "unit": "number",
+      "start": "2023-05-24",
+      "end": "2023-05-25",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5.return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 收益",
+      "value": 0.3023119456162582,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-06-01",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5.relative_return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 相对基准收益",
+      "value": 0.2762106061240046,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-06-01",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5.benchmark_return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 基准收益",
+      "value": 0.026101339492253572,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-06-01",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5.standardized_response",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.5 · 标准化反应幅度",
+      "value": 5.847369235326935,
+      "unit": "number",
+      "start": "2023-05-24",
+      "end": "2023-06-01",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20.return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 收益",
+      "value": 0.3823229029658026,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-06-23",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20.relative_return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 相对基准收益",
+      "value": 0.3246002390601881,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-06-23",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20.benchmark_return",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 基准收益",
+      "value": 0.057722663905614535,
+      "unit": "percent",
+      "start": "2023-05-24",
+      "end": "2023-06-23",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20.standardized_response",
+      "label": "next-session.ev-nvda-q1fy24-2023-05-24.NVDA.20 · 标准化反应幅度",
+      "value": 3.4358880679769777,
+      "unit": "number",
+      "start": "2023-05-24",
+      "end": "2023-06-23",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1.return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 收益",
+      "value": -0.02850894974762319,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-02-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1.relative_return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 相对基准收益",
+      "value": -0.029414734493654837,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-02-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1.benchmark_return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 基准收益",
+      "value": 0.0009057847460316459,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-02-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1.standardized_response",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 标准化反应幅度",
+      "value": 1.378045012252843,
+      "unit": "number",
+      "start": "2024-02-20",
+      "end": "2024-02-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5.return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 收益",
+      "value": 0.1331711781902729,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-02-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5.relative_return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 相对基准收益",
+      "value": 0.11269861575333184,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-02-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5.benchmark_return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 基准收益",
+      "value": 0.020472562436941066,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-02-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5.standardized_response",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 标准化反应幅度",
+      "value": 2.361196063197777,
+      "unit": "number",
+      "start": "2024-02-20",
+      "end": "2024-02-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20.return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 收益",
+      "value": 0.28725157829145265,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-03-19",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20.relative_return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 相对基准收益",
+      "value": 0.24587890677587376,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-03-19",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20.benchmark_return",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 基准收益",
+      "value": 0.041372671515578885,
+      "unit": "percent",
+      "start": "2024-02-20",
+      "end": "2024-03-19",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20.standardized_response",
+      "label": "event.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 标准化反应幅度",
+      "value": 2.575756156461053,
+      "unit": "number",
+      "start": "2024-02-20",
+      "end": "2024-03-19",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1.return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 收益",
+      "value": 0.16400901733031636,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-02-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1.relative_return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 相对基准收益",
+      "value": 0.14331354374018423,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-02-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1.benchmark_return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 基准收益",
+      "value": 0.02069547359013213,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-02-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1.standardized_response",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.1 · 标准化反应幅度",
+      "value": 6.590572528333877,
+      "unit": "number",
+      "start": "2024-02-21",
+      "end": "2024-02-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5.return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 收益",
+      "value": 0.15104050960458637,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-02-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5.relative_return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 相对基准收益",
+      "value": 0.1328389033978079,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-02-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5.benchmark_return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 基准收益",
+      "value": 0.018201606206778465,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-02-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5.standardized_response",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.5 · 标准化反应幅度",
+      "value": 2.7319716502434974,
+      "unit": "number",
+      "start": "2024-02-21",
+      "end": "2024-02-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20.return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 收益",
+      "value": 0.33946320371062755,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-03-20",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20.relative_return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 相对基准收益",
+      "value": 0.28940964235593736,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-03-20",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20.benchmark_return",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 基准收益",
+      "value": 0.05005356135469019,
+      "unit": "percent",
+      "start": "2024-02-21",
+      "end": "2024-03-20",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20.standardized_response",
+      "label": "next-session.ev-nvda-q4fy24-2024-02-21.NVDA.20 · 标准化反应幅度",
+      "value": 2.9760067194162714,
+      "unit": "number",
+      "start": "2024-02-21",
+      "end": "2024-03-20",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.1.return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.1 · 收益",
+      "value": 0.007035656145426339,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-03-18",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.1.relative_return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.1 · 相对基准收益",
+      "value": 0.0010926566084203948,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-03-18",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.1.benchmark_return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.1 · 基准收益",
+      "value": 0.005942999537005944,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-03-18",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.1 · 标准化反应幅度",
+      "value": 0.034659027149149445,
+      "unit": "number",
+      "start": "2024-03-15",
+      "end": "2024-03-18",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.5.return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.5 · 收益",
+      "value": 0.07345423269571882,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-03-22",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.5.relative_return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.5 · 相对基准收益",
+      "value": 0.051133027242409534,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-03-22",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.5.benchmark_return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.5 · 基准收益",
+      "value": 0.02232120545330929,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-03-22",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.5.standardized_response",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.5 · 标准化反应幅度",
+      "value": 0.7253526040257583,
+      "unit": "number",
+      "start": "2024-03-15",
+      "end": "2024-03-22",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.20.return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.20 · 收益",
+      "value": -0.020902530148114495,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-04-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.20.relative_return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.20 · 相对基准收益",
+      "value": -0.01034998839838408,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-04-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.20.benchmark_return",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.20 · 基准收益",
+      "value": -0.010552541749730415,
+      "unit": "percent",
+      "start": "2024-03-15",
+      "end": "2024-04-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-blackwell-2024-03-18.NVDA.20.standardized_response",
+      "label": "event.ev-blackwell-2024-03-18.NVDA.20 · 标准化反应幅度",
+      "value": 0.0734103909085367,
+      "unit": "number",
+      "start": "2024-03-15",
+      "end": "2024-04-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.1.return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.1 · 收益",
+      "value": 0.010660921608219631,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-03-19",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.1.relative_return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.1 · 相对基准收益",
+      "value": 0.005103755552168243,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-03-19",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.1.benchmark_return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.1 · 基准收益",
+      "value": 0.005557166056051388,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-03-19",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.1.standardized_response",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.1 · 标准化反应幅度",
+      "value": 0.16190699110971035,
+      "unit": "number",
+      "start": "2024-03-18",
+      "end": "2024-03-19",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.5.return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.5 · 收益",
+      "value": 0.07401508588178474,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-03-25",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.5.relative_return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.5 · 相对基准收益",
+      "value": 0.06054144541851936,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-03-25",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.5.benchmark_return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.5 · 基准收益",
+      "value": 0.01347364046326538,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-03-25",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.5.standardized_response",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.5 · 标准化反应幅度",
+      "value": 0.8589018136915388,
+      "unit": "number",
+      "start": "2024-03-18",
+      "end": "2024-03-25",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.20.return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.20 · 收益",
+      "value": -0.011757192798413474,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-04-16",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.20.relative_return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.20 · 相对基准收益",
+      "value": 0.00643475805896776,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-04-16",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.20.benchmark_return",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.20 · 基准收益",
+      "value": -0.018191950857381234,
+      "unit": "percent",
+      "start": "2024-03-18",
+      "end": "2024-04-16",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-blackwell-2024-03-18.NVDA.20.standardized_response",
+      "label": "next-session.ev-blackwell-2024-03-18.NVDA.20 · 标准化反应幅度",
+      "value": 0.04564497369782836,
+      "unit": "number",
+      "start": "2024-03-18",
+      "end": "2024-04-16",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.1.return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.1 · 收益",
+      "value": 0.022656286539329162,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-01-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.1.relative_return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.1 · 相对基准收益",
+      "value": 0.013502883621304473,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-01-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.1.benchmark_return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.1 · 基准收益",
+      "value": 0.009153402918024689,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-01-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.1.standardized_response",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.1 · 标准化反应幅度",
+      "value": 0.5502083766658178,
+      "unit": "number",
+      "start": "2025-01-17",
+      "end": "2025-01-21",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.5.return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.5 · 收益",
+      "value": -0.14007694998717424,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-01-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.5.relative_return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.5 · 相对基准收益",
+      "value": -0.1430721243821408,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-01-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.5.benchmark_return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.5 · 基准收益",
+      "value": 0.002995174394966549,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-01-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.5.standardized_response",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.5 · 标准化反应幅度",
+      "value": 2.607178085546544,
+      "unit": "number",
+      "start": "2025-01-17",
+      "end": "2025-01-27",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.20.return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.20 · 收益",
+      "value": 0.012272159837696917,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-02-18",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.20.relative_return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.20 · 相对基准收益",
+      "value": -0.011004906707663187,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-02-18",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.20.benchmark_return",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.20 · 基准收益",
+      "value": 0.023277066545360103,
+      "unit": "percent",
+      "start": "2025-01-17",
+      "end": "2025-02-18",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-deepseek-r1-2025-01-20.NVDA.20.standardized_response",
+      "label": "event.ev-deepseek-r1-2025-01-20.NVDA.20 · 标准化反应幅度",
+      "value": 0.10027023686692779,
+      "unit": "number",
+      "start": "2025-01-17",
+      "end": "2025-02-18",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1.return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1 · 收益",
+      "value": 0.04430881105267903,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-01-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1.relative_return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1 · 相对基准收益",
+      "value": 0.03868724474579199,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-01-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1.benchmark_return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1 · 基准收益",
+      "value": 0.005621566306887038,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-01-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1.standardized_response",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.1 · 标准化反应幅度",
+      "value": 1.5676930032920182,
+      "unit": "number",
+      "start": "2025-01-21",
+      "end": "2025-01-22",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5.return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5 · 收益",
+      "value": -0.08407288354514808,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-01-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5.relative_return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5 · 相对基准收益",
+      "value": -0.08651055023754584,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-01-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5.benchmark_return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5 · 基准收益",
+      "value": 0.0024376666923977552,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-01-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5.standardized_response",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.5 · 标准化反应幅度",
+      "value": 1.5677517392199996,
+      "unit": "number",
+      "start": "2025-01-21",
+      "end": "2025-01-28",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20.return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20 · 收益",
+      "value": -0.011361194607060865,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-02-19",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20.relative_return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20 · 相对基准收益",
+      "value": -0.027744675976108857,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-02-19",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20.benchmark_return",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20 · 基准收益",
+      "value": 0.016383481369047992,
+      "unit": "percent",
+      "start": "2025-01-21",
+      "end": "2025-02-19",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20.standardized_response",
+      "label": "next-session.ev-deepseek-r1-2025-01-20.NVDA.20 · 标准化反应幅度",
+      "value": 0.25139571934407995,
+      "unit": "number",
+      "start": "2025-01-21",
+      "end": "2025-02-19",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1 · 收益",
+      "value": -0.1696817602810443,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-01-27",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1 · 相对基准收益",
+      "value": -0.15553618375122225,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-01-27",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.benchmark_return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1 · 基准收益",
+      "value": -0.014145576529822068,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-01-27",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.standardized_response",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1 · 标准化反应幅度",
+      "value": 6.204895550602281,
+      "unit": "number",
+      "start": "2025-01-24",
+      "end": "2025-01-27",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5 · 收益",
+      "value": -0.15811260542511962,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-01-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5 · 相对基准收益",
+      "value": -0.14799699656568066,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-01-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.benchmark_return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5 · 基准收益",
+      "value": -0.010115608859438963,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-01-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.standardized_response",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5 · 标准化反应幅度",
+      "value": 2.6404073692665357,
+      "unit": "number",
+      "start": "2025-01-24",
+      "end": "2025-01-31",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20 · 收益",
+      "value": -0.08652376674398965,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-02-24",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20 · 相对基准收益",
+      "value": -0.06882564816329906,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-02-24",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.benchmark_return",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20 · 基准收益",
+      "value": -0.01769811858069059,
+      "unit": "percent",
+      "start": "2025-01-24",
+      "end": "2025-02-24",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.standardized_response",
+      "label": "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20 · 标准化反应幅度",
+      "value": 0.6139575559706387,
+      "unit": "number",
+      "start": "2025-01-24",
+      "end": "2025-02-24",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.1.return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.1 · 收益",
+      "value": 0.07871770419569057,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.1.relative_return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.1 · 相对基准收益",
+      "value": 0.05953293588920627,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.1.benchmark_return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.1 · 基准收益",
+      "value": 0.0191847683064843,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.1.standardized_response",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.1 · 标准化反应幅度",
+      "value": 2.8336582821244667,
+      "unit": "number",
+      "start": "2026-02-05",
+      "end": "2026-02-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.5.return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.5 · 收益",
+      "value": 0.08761926355248528,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.5.relative_return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.5 · 相对基准收益",
+      "value": 0.08223268467503853,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.5.benchmark_return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.5 · 基准收益",
+      "value": 0.005386578877446757,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.5.standardized_response",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.5 · 标准化反应幅度",
+      "value": 1.7504497289646075,
+      "unit": "number",
+      "start": "2026-02-05",
+      "end": "2026-02-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.20.return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.20 · 收益",
+      "value": 0.03455907889914167,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-03-06",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.20.relative_return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.20 · 相对基准收益",
+      "value": 0.042292136102868305,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-03-06",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.20.benchmark_return",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.20 · 基准收益",
+      "value": -0.007733057203726634,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-03-06",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-capex-2026-02-06.NVDA.20.standardized_response",
+      "label": "event.ev-nvda-capex-2026-02-06.NVDA.20 · 标准化反应幅度",
+      "value": 0.4501267255906079,
+      "unit": "number",
+      "start": "2026-02-05",
+      "end": "2026-03-06",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.1.return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.1 · 收益",
+      "value": 0.024971658454912005,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-02-09",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.1.relative_return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.1 · 相对基准收益",
+      "value": 0.020149893462336754,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-02-09",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.1.benchmark_return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.1 · 基准收益",
+      "value": 0.00482176499257525,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-02-09",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.1.standardized_response",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.1 · 标准化反应幅度",
+      "value": 0.8667376442437164,
+      "unit": "number",
+      "start": "2026-02-06",
+      "end": "2026-02-09",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.5.return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.5 · 收益",
+      "value": -0.014023073973103095,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-02-13",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.5.relative_return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.5 · 相对基准收益",
+      "value": -0.0011795223267058175,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-02-13",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.5.benchmark_return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.5 · 基准收益",
+      "value": -0.012843551646397278,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-02-13",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.5.standardized_response",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.5 · 标准化反应幅度",
+      "value": 0.02269008217602511,
+      "unit": "number",
+      "start": "2026-02-06",
+      "end": "2026-02-13",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.20.return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.20 · 收益",
+      "value": -0.014886003182634,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-03-09",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.20.relative_return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.20 · 相对基准收益",
+      "value": 0.002996371260515218,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-03-09",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.20.benchmark_return",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.20 · 基准收益",
+      "value": -0.017882374443149218,
+      "unit": "percent",
+      "start": "2026-02-06",
+      "end": "2026-03-09",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-capex-2026-02-06.NVDA.20.standardized_response",
+      "label": "next-session.ev-nvda-capex-2026-02-06.NVDA.20 · 标准化反应幅度",
+      "value": 0.028820103100908486,
+      "unit": "number",
+      "start": "2026-02-06",
+      "end": "2026-03-09",
+      "frequency": "20 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.1.return",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.1 · 收益",
+      "value": 0.01800272774996836,
+      "unit": "percent",
+      "start": "2026-09-02",
+      "end": "2026-09-03",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.1.relative_return",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.1 · 相对基准收益",
+      "value": 0.007534309808431727,
+      "unit": "percent",
+      "start": "2026-09-02",
+      "end": "2026-09-03",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.1.benchmark_return",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.1 · 基准收益",
+      "value": 0.010468417941536634,
+      "unit": "percent",
+      "start": "2026-09-02",
+      "end": "2026-09-03",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.1.standardized_response",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.1 · 标准化反应幅度",
+      "value": 0.2799995008453748,
+      "unit": "number",
+      "start": "2026-09-02",
+      "end": "2026-09-03",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.5.return",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.5 · 收益",
+      "value": -0.025870807901925197,
+      "unit": "percent",
+      "start": "2026-09-02",
+      "end": "2026-09-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.5.relative_return",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.5 · 相对基准收益",
+      "value": -0.016291131143346793,
+      "unit": "percent",
+      "start": "2026-09-02",
+      "end": "2026-09-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.5.benchmark_return",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.5 · 基准收益",
+      "value": -0.009579676758578404,
+      "unit": "percent",
+      "start": "2026-09-02",
+      "end": "2026-09-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-nvda-huggingface-2026-09-03.NVDA.5.standardized_response",
+      "label": "event.ev-nvda-huggingface-2026-09-03.NVDA.5 · 标准化反应幅度",
+      "value": 0.2707572038535164,
+      "unit": "number",
+      "start": "2026-09-02",
+      "end": "2026-09-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1.return",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1 · 收益",
+      "value": 0.008360701613143284,
+      "unit": "percent",
+      "start": "2026-09-03",
+      "end": "2026-09-04",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1.relative_return",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1 · 相对基准收益",
+      "value": 0.012214933873232692,
+      "unit": "percent",
+      "start": "2026-09-03",
+      "end": "2026-09-04",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1.benchmark_return",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1 · 基准收益",
+      "value": -0.0038542322600894074,
+      "unit": "percent",
+      "start": "2026-09-03",
+      "end": "2026-09-04",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1.standardized_response",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.1 · 标准化反应幅度",
+      "value": 0.45419506669375553,
+      "unit": "number",
+      "start": "2026-09-03",
+      "end": "2026-09-04",
+      "frequency": "1 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5.return",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5 · 收益",
+      "value": -0.043404447954241254,
+      "unit": "percent",
+      "start": "2026-09-03",
+      "end": "2026-09-11",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5.relative_return",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5 · 相对基准收益",
+      "value": -0.031919226758282515,
+      "unit": "percent",
+      "start": "2026-09-03",
+      "end": "2026-09-11",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5.benchmark_return",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5 · 基准收益",
+      "value": -0.01148522119595874,
+      "unit": "percent",
+      "start": "2026-09-03",
+      "end": "2026-09-11",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5.standardized_response",
+      "label": "next-session.ev-nvda-huggingface-2026-09-03.NVDA.5 · 标准化反应幅度",
+      "value": 0.5307850137148883,
+      "unit": "number",
+      "start": "2026-09-03",
+      "end": "2026-09-11",
+      "frequency": "5 根完整日线",
+      "method": "日期不明盘前盘后时，下一交易日起算的敏感性窗口",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb",
+        "prices-SPY-8df4ceb30e72"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-NVDA-2023-05-25.return",
+      "label": "move.change-NVDA-2023-05-25 · 收益",
+      "value": 0.24369651650519697,
+      "unit": "percent",
+      "start": "2023-05-25",
+      "end": "2023-05-25",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-NVDA-2024-02-22.return",
+      "label": "move.change-NVDA-2024-02-22 · 收益",
+      "value": 0.16400901733031636,
+      "unit": "percent",
+      "start": "2024-02-22",
+      "end": "2024-02-22",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-NVDA-2025-01-27.return",
+      "label": "move.change-NVDA-2025-01-27 · 收益",
+      "value": -0.1696817602810443,
+      "unit": "percent",
+      "start": "2025-01-27",
+      "end": "2025-01-27",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-NVDA-2021-11-04.return",
+      "label": "move.change-NVDA-2021-11-04 · 收益",
+      "value": 0.12042256260146678,
+      "unit": "percent",
+      "start": "2021-11-04",
+      "end": "2021-11-04",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-NVDA-2025-04-09.return",
+      "label": "move.change-NVDA-2025-04-09 · 收益",
+      "value": 0.18722730392688702,
+      "unit": "percent",
+      "start": "2025-04-09",
+      "end": "2025-04-09",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-NVDA-a530f29790bb"
+      ],
+      "currency": "USD"
+    }
+  ],
+  "reviews": [
+    {
+      "attempt": 1,
+      "draft_hash": "7763fb867c4593852edb067cb1972189ed1367fe0353ce7888a96fd1616ee43b",
+      "deterministic": {
+        "f-capex-hf": [
+          "text 含手写数字「8%」；没有对应指标时省去此数字，保留事实描述并回链原文",
+          "text 含手写数字「129 亿美元」；没有对应指标时省去此数字，保留事实描述并回链原文"
+        ],
+        "f-limits": [
+          "结论缺少原文证据或计算依据"
+        ],
+        "f-attribution": [
+          "数值关系未成立或绑定错误：ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1；lt ['event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response', 'event.ev-blackwell-2024-03-18.NVDA.1.standardized_response'] = [1.3381853798682772, 0.034659027149149445]"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [],
+            "reason": "行情覆盖 2021-09-28 至 2026-09-28、1255 根日线、拆股调整 OHLC 口径与 metric_catalog 的 market.NVDA.bars（1255，日线，同起止）一致；累计收益 10.1053、年化 0.6186、年化波动 0.5197、最大回撤 -0.6634 与 daily.NVDA.* 指标逐一对应；最新收盘 228.86、成交量 141544300 与 latest.NVDA.close/volume 一致。方法说明（复权价格回顾、无交易费用、单资产）与指标 method 一致。纯指标列举，无额外数值关系句。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-chatgpt",
+            "numeric_assertions": [],
+            "reason": "日期 2022-11-30 与 src-0574c1fd7cebfb 原文“On November 30, 2022, OpenAI releases the generative artificial intelligence chatbot ChatGPT to the public.”一致，且已明确标注为事后回顾来源、无当日一手公告。事件窗口数值逐项核对：1 日收益 0.08238、相对 0.05088、标准化 1.3382；5 日相对 0.02606；20 日相对 -0.05966；next-session 1/5/20 日相对 0.01326/-0.01183/-0.08195，均与 metric_catalog 对应指标一致。末句“两种起算方式下，窗口内均未出现持续扩大的相对收益，方向随窗口切换”与数值相符（1 日正、5 日正负不一、20 日负），属对有限窗口的观察性描述，未主张因果。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-blackwell",
+            "numeric_assertions": [],
+            "reason": "2024-03-18 与官方新闻稿原文“GTC— Powering a new era of computing, NVIDIA today announced that the NVIDIA Blackwell platform has arrived”一致；B200/GB200 命名、未使用 B100、合作伙伴产品“later this year”均可在原文核对。窗口数值：1 日收益 0.00704、相对 0.00109、标准化 0.03466；5 日相对 0.05113；20 日相对 -0.01035；next-session 1/5/20 日相对 0.00510/0.06054/0.00643，均与指标一致。“标准化反应幅度均低于 1，属低强度反应”与 0.0347/0.7254/0.0734 相符。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-deepseek",
+            "numeric_assertions": [],
+            "reason": "三个日期区分正确：模型发布日 2025-01-20 依据 src-879406b8115183 当日文章“Today they’ve released R1 itself…”，论文提交日 2025-01-22 依据 arXiv 页面“[Submitted on 22 Jan 2025 ( v1 )…]”，市场反应日 2025-01-27 依据 CNBC 当日报道。数值核对：move.change-NVDA-2025-01-27.return = -0.16968（收跌 16.97%）；selloff 1 日相对 -0.15554、标准化 6.2049、5 日相对 -0.14800、20 日相对 -0.06883；模型发布日 1/5/20 日相对 0.01350/-0.14307/-0.01100；next-session 1/5/20 日相对 0.03869/-0.08651/-0.02774，全部与指标一致。“发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日”与数值相符。反证已说明板块性下跌，未把全部跌幅归于单一事件。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-attribution",
+            "numeric_assertions": [
+              {
+                "quote": "ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1",
+                "relation": "lt",
+                "metric_ids": [
+                  "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+                  "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response"
+                ]
+              }
+            ],
+            "reason": "2023-05-25 单日 0.24370、2024-02-22 单日 0.16401、2021-11-04 单日 0.12042、2025-04-09 单日 0.18723 均与 move.change-NVDA-* 指标一致；财报事件 5 日相对 0.22378/0.11270、标准化 3.6850/2.3612 与指标一致，且均大于 1，与“高强度”表述相符；ChatGPT 与 Blackwell 标准化 1.3382/0.0347/0.7254/0.0734 中除 ChatGPT 1 日 1.3382 外均低于 1——正文写“ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1”，而 ChatGPT 1 日标准化为 1.3382，高于 1，该概括与自身引用的指标不符。2021-11-04 与 2025-04-09 未取得事件正文的披露与 open_gaps 一致。",
+            "verdict": "unsupported",
+            "repair": "rewrite"
+          },
+          {
+            "finding_id": "f-capex-hf",
+            "numeric_assertions": [],
+            "reason": "2026-02-06 事件：1 日收益 0.07872、相对 0.05953、标准化 2.8337、5 日相对 0.08223、20 日相对 0.04229；next-session 1/5/20 日相对 0.02015/-0.00118/0.00300，均与指标一致，“方向随起算日切换”与数值相符。2026-09-03 事件：1 日收益 0.01800、相对 0.00753、标准化 0.2800、5 日相对 -0.01629，与指标一致；20 日窗口未满、无对应指标，正文已如实说明。手写数字“近 8%”与指标 0.07872 一致，“129 亿美元”与原文“$12.9 billion”一致，属可核对事实而非无据数字。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-limits",
+            "numeric_assertions": [],
+            "reason": "该条为方法论与证据边界说明：相对收益非因果效应、标准化反应幅度只刻画强度、未做多因子剥离、2021-09-28 至 2022-11 事件缺失、2021-11-04 检索命中未取得正文，均与 coverage.warnings、open_gaps 及指标 method 说明一致，未引入新的无证据事实断言。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 给出实际起止区间 2021-09-28 至 2026-09-28、日线 OHLCV 与拆股调整口径、累计/年化收益、年化波动、最大回撤及最新交易日数据，并说明单资产、未扣费用等口径限制，满足 acceptance。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-1",
+            "reason": "f-chatgpt 已核实 2022-11-30 公开发布事实与日期，给出 1/5/20 日窗口及下一交易日起算的敏感性窗口相对收益与标准化反应，并说明来源为事后回顾、缺当日一手公告的局限。gap-c1ab04238156c0c9 要求的当日一手公告属更高来源标准，acceptance 只要求原文核实事实与日期并给出窗口、强度与证据局限，已实质回答。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-c1ab04238156c0c9",
+                "finding_id": "f-chatgpt",
+                "quote": "已读来源记载 2022 年 11 月 30 日 OpenAI 向公众发布 ChatGPT，用户可免费试用预览版。",
+                "reason": "该 finding 以已读来源原文核实了公开发布事实与日期，并给出事件窗口反应与来源局限；缺当日一手公告只降低可信度，不构成未回答。"
+              }
+            ]
+          },
+          {
+            "question_id": "required-2",
+            "reason": "f-blackwell 以英伟达官方新闻稿核实 2024-03-18 GTC 宣布 Blackwell 平台面世、产品为 B200/GB200、公告未用 B100 命名且非当日量产，并给出 1/5/20 日及下一交易日起算窗口的相对收益与标准化反应，判定为低强度反应，同时说明缺第三方同期报道的局限，满足 acceptance。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-3",
+            "reason": "f-deepseek 区分了模型发布日 2025-01-20、论文提交公开日 2025-01-22 与市场反应日 2025-01-27，给出各事件日窗口相对收益与标准化反应，并说明发布日依据第三方博客、缺官方公告的局限。gap-2ab64ac288c2a0c4 要求的官方发布页属更高来源标准，acceptance 只要求原文核实事实与日期并给出窗口、强度与证据局限，已实质回答。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-2ab64ac288c2a0c4",
+                "finding_id": "f-deepseek",
+                "quote": "模型发布日以 2025 年 1 月 20 日当日报道为准，该文称 DeepSeek 当日发布 R1 及系列衍生模型；论文公开日以 arXiv 页面显示的 2025 年 1 月 22 日提交为准",
+                "reason": "该 finding 以已读来源原文核实了模型发布日与论文公开日并给出窗口反应；缺官方发布页只降低来源等级，不构成未回答。"
+              }
+            ]
+          },
+          {
+            "question_id": "attribution",
+            "reason": "f-chatgpt、f-blackwell、f-deepseek 分别给出各主要异动的窗口反应强度、相对收益方向、竞争性解释（宏观与半导体周期、GTC 预期、板块性抛售）与因果边界，满足 acceptance。gap-99c5266b777695f0 涉及 2021-11-04 与 2025-04-09 两次异动的事件归因，但用户只要求调查 2025-01-27 下跌并分析主要行情变化与对应事件，未要求对全部显著异动逐一归因；已调查的主要异动与时间线、反应强度、可信度及竞争性解释均已提供，该额外归因不妨碍回答。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-99c5266b777695f0",
+                "finding_id": "f-deepseek",
+                "quote": "1 月 27 日抛售同时波及美光、Arm、博通、AMD 及全球科技股，属板块性下跌，不能把全部跌幅归于单一模型事件。",
+                "reason": "该 finding 已就用户指定的 2025-01-27 异动给出板块性竞争性解释与因果边界；2021-11-04 与 2025-04-09 的额外事件归因非用户必答要求，不影响主要异动关联分析的完成。"
+              }
+            ]
+          },
+          {
+            "question_id": "custom-1",
+            "reason": "f-deepseek 明确区分模型发布日 2025-01-20、论文公开日 2025-01-22 与市场反应日 2025-01-27，给出 2025-01-27 当日跌幅、1/5/20 日相对收益与标准化反应，并说明发布日与论文日附近反应方向不一致、负向反应集中在 1 月 27 日，满足 acceptance。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-2",
+            "reason": "f-market 提供五年收益与回撤等主要行情变化，f-chatgpt、f-blackwell、f-deepseek 提供对应事件、1/5/20 日窗口反应强度与标准化反应、相对收益方向，并分别给出竞争性解释与因果边界及来源局限，满足 acceptance。",
+            "answered": true,
+            "resolved_gaps": []
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为纯行情与风险统计：覆盖区间、bar 数、复权口径、累计/年化收益、波动、最大回撤、最新收盘与成交量，全部由 metric_catalog 与 datasets 的 Yahoo 复权行情直接支持，属单资产回顾口径，未外推为组合表现或未来收益。limitations 已声明未扣成本、最大回撤为区间单点极值，未出现属性或因果跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-chatgpt",
+            "inference_audit": "日期事实由 HISTORY 页面支持（2022-11-30 公开发布、免费预览），事件窗口收益/相对收益/标准化反应幅度由 metric_catalog 支持。结论仅陈述“窗口内未出现持续扩大的相对收益，方向随窗口切换”，属对样本窗口数值的描述，未声称提前定价或因果效应；counterevidence 与 limitations 明确列出宏观/半导体周期与相对收益非因果效应。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-blackwell",
+            "inference_audit": "官方新闻稿支持 2024-03-18 GTC 宣布 Blackwell 平台、B200/GB200 命名、合作伙伴产品“later this year”推出；事件窗口数值由 metric_catalog 支持。结论“按标准化反应幅度衡量属低强度反应，窗口内未出现持续相对收益扩大”是对已计算指标的描述，未由价格平淡推出提前定价，也未否认事件影响。limitations 已声明 B100 与 B200 对应关系未获已读来源证实。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-deepseek",
+            "inference_audit": "三个日期区分有据：模型发布日由 Simon Willison 当日文章支持，论文提交日由 arXiv 页面支持，市场反应日由 CNBC 当日报道支持；各窗口数值由 metric_catalog 支持。结论“发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日”是对窗口数值方向的描述，counterevidence 已指出 1 月 27 日为板块性下跌、不能归于单一模型事件。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-attribution",
+            "inference_audit": "财报类事件有公司公告与 CNBC 同期报道双重支持，单日异动与 5 日窗口数值由 metric_catalog 支持；结论将财报类列为可信度较高、产品发布与行业事件列为时间相邻的候选关联，并明确不构成因果证明，2021-11-04 与 2025-04-09 标注为原因未证实。未出现由时间相邻直接断言因果的跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-capex-hf",
+            "inference_audit": "2026-02-06 黄仁勋 CNBC 评论与当日收涨近 8% 由 CNBC 报道支持，2026-09-03 收购 Hugging Face 及 129 亿美元由 CNBC 报道支持；各窗口数值由 metric_catalog 支持，20 日窗口未满的说明与数据一致。结论仅陈述反应数值与方向随起算日切换，counterevidence 已指出上涨不能单独归于一次访谈。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-limits",
+            "inference_audit": "该条为整体因果边界声明：相对收益为标的减基准、非回归超额收益或因果效应，标准化反应幅度只刻画强度，宏观/利率/出口管制/板块轮动无法在已读证据中剥离，2021-2022 阶段不做事件归因。与各条 limitations 及 methods 一致，未引入未经支持的事实。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-attribution",
+          "quote": "ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1",
+          "relation": "lt",
+          "metric_ids": [
+            "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+            "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response"
+          ],
+          "values": [
+            1.3381853798682772,
+            0.034659027149149445
+          ],
+          "passed": false,
+          "quote_found": true,
+          "relationship_true": false
+        }
+      ],
+      "numeric_transcription_repairs": [
+        {
+          "before": {
+            "claims": [
+              {
+                "finding_id": "f-market",
+                "numeric_assertions": [],
+                "reason": "行情覆盖 2021-09-28 至 2026-09-28、1255 根日线、拆股调整 OHLC 口径与 metric_catalog 的 market.NVDA.bars（1255，日线，同起止）一致；累计收益 10.1053、年化 0.6186、年化波动 0.5197、最大回撤 -0.6634 与 daily.NVDA.* 指标逐一对应；最新收盘 228.86、成交量 141544300 与 latest.NVDA.close/volume 一致。方法说明（复权价格回顾、无交易费用、单资产）与指标 method 一致。纯指标列举，无额外数值关系句。",
+                "verdict": "supported",
+                "repair": "none"
+              },
+              {
+                "finding_id": "f-chatgpt",
+                "numeric_assertions": [],
+                "reason": "日期 2022-11-30 与 src-0574c1fd7cebfb 原文“On November 30, 2022, OpenAI releases the generative artificial intelligence chatbot ChatGPT to the public.”一致，且已明确标注为事后回顾来源、无当日一手公告。事件窗口数值逐项核对：1 日收益 0.08238、相对 0.05088、标准化 1.3382；5 日相对 0.02606；20 日相对 -0.05966；next-session 1/5/20 日相对 0.01326/-0.01183/-0.08195，均与 metric_catalog 对应指标一致。末句“两种起算方式下，窗口内均未出现持续扩大的相对收益，方向随窗口切换”与数值相符（1 日正、5 日正负不一、20 日负），属对有限窗口的观察性描述，未主张因果。",
+                "verdict": "supported",
+                "repair": "none"
+              },
+              {
+                "finding_id": "f-blackwell",
+                "numeric_assertions": [],
+                "reason": "2024-03-18 与官方新闻稿原文“GTC— Powering a new era of computing, NVIDIA today announced that the NVIDIA Blackwell platform has arrived”一致；B200/GB200 命名、未使用 B100、合作伙伴产品“later this year”均可在原文核对。窗口数值：1 日收益 0.00704、相对 0.00109、标准化 0.03466；5 日相对 0.05113；20 日相对 -0.01035；next-session 1/5/20 日相对 0.00510/0.06054/0.00643，均与指标一致。“标准化反应幅度均低于 1，属低强度反应”与 0.0347/0.7254/0.0734 相符。",
+                "verdict": "supported",
+                "repair": "none"
+              },
+              {
+                "finding_id": "f-deepseek",
+                "numeric_assertions": [],
+                "reason": "三个日期区分正确：模型发布日 2025-01-20 依据 src-879406b8115183 当日文章“Today they’ve released R1 itself…”，论文提交日 2025-01-22 依据 arXiv 页面“[Submitted on 22 Jan 2025 ( v1 )…]”，市场反应日 2025-01-27 依据 CNBC 当日报道。数值核对：move.change-NVDA-2025-01-27.return = -0.16968（收跌 16.97%）；selloff 1 日相对 -0.15554、标准化 6.2049、5 日相对 -0.14800、20 日相对 -0.06883；模型发布日 1/5/20 日相对 0.01350/-0.14307/-0.01100；next-session 1/5/20 日相对 0.03869/-0.08651/-0.02774，全部与指标一致。“发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日”与数值相符。反证已说明板块性下跌，未把全部跌幅归于单一事件。",
+                "verdict": "supported",
+                "repair": "none"
+              },
+              {
+                "finding_id": "f-attribution",
+                "numeric_assertions": [
+                  {
+                    "quote": "ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+                      "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response"
+                    ]
+                  }
+                ],
+                "reason": "2023-05-25 单日 0.24370、2024-02-22 单日 0.16401、2021-11-04 单日 0.12042、2025-04-09 单日 0.18723 均与 move.change-NVDA-* 指标一致；财报事件 5 日相对 0.22378/0.11270、标准化 3.6850/2.3612 与指标一致，且均大于 1，与“高强度”表述相符；ChatGPT 与 Blackwell 标准化 1.3382/0.0347/0.7254/0.0734 中除 ChatGPT 1 日 1.3382 外均低于 1——正文写“ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1”，而 ChatGPT 1 日标准化为 1.3382，高于 1，该概括与自身引用的指标不符。2021-11-04 与 2025-04-09 未取得事件正文的披露与 open_gaps 一致。",
+                "verdict": "unsupported",
+                "repair": "rewrite"
+              },
+              {
+                "finding_id": "f-capex-hf",
+                "numeric_assertions": [],
+                "reason": "2026-02-06 事件：1 日收益 0.07872、相对 0.05953、标准化 2.8337、5 日相对 0.08223、20 日相对 0.04229；next-session 1/5/20 日相对 0.02015/-0.00118/0.00300，均与指标一致，“方向随起算日切换”与数值相符。2026-09-03 事件：1 日收益 0.01800、相对 0.00753、标准化 0.2800、5 日相对 -0.01629，与指标一致；20 日窗口未满、无对应指标，正文已如实说明。手写数字“近 8%”与指标 0.07872 一致，“129 亿美元”与原文“$12.9 billion”一致，属可核对事实而非无据数字。",
+                "verdict": "supported",
+                "repair": "none"
+              },
+              {
+                "finding_id": "f-limits",
+                "numeric_assertions": [],
+                "reason": "该条为方法论与证据边界说明：相对收益非因果效应、标准化反应幅度只刻画强度、未做多因子剥离、2021-09-28 至 2022-11 事件缺失、2021-11-04 检索命中未取得正文，均与 coverage.warnings、open_gaps 及指标 method 说明一致，未引入新的无证据事实断言。",
+                "verdict": "supported",
+                "repair": "none"
+              }
+            ],
+            "questions": []
+          },
+          "errors": {
+            "f-attribution": [
+              "数值关系未成立或绑定错误：ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1；lt ['event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response', 'event.ev-blackwell-2024-03-18.NVDA.1.standardized_response'] = [1.3381853798682772, 0.034659027149149445]"
+            ]
+          },
+          "checks": [
+            {
+              "finding_id": "f-attribution",
+              "quote": "ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1",
+              "relation": "lt",
+              "metric_ids": [
+                "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+                "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response"
+              ],
+              "values": [
+                1.3381853798682772,
+                0.034659027149149445
+              ],
+              "passed": false,
+              "quote_found": true,
+              "relationship_true": false
+            }
+          ],
+          "after": {
+            "claims": [
+              {
+                "finding_id": "f-attribution",
+                "numeric_assertions": [
+                  {
+                    "span_id": "f-attribution:text:12",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+                      "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "remaining_errors": {
+            "f-attribution": [
+              "数值关系未成立或绑定错误：ChatGPT 发布与 Blackwell 发布的标准化反应幅度均低于 1；lt ['event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response', 'event.ev-blackwell-2024-03-18.NVDA.1.standardized_response'] = [1.3381853798682772, 0.034659027149149445]"
+            ]
+          }
+        }
+      ],
+      "metric_token_repairs": [],
+      "source_question_review": [],
+      "local_repair_needed": true,
+      "open_gaps": [
+        {
+          "question_id": "attribution",
+          "reason": "2021-11-04 与 2025-04-09 两次显著异动在已读证据中未取得可核实的对应事件正文，无法给出事件归因。",
+          "next_action": "检索并取得这两日的当日一手报道或公司公告正文，再判断是否存在可核实的事件对应。"
+        }
+      ],
+      "accepted_ids": [
+        "f-blackwell",
+        "f-chatgpt",
+        "f-deepseek",
+        "f-market"
+      ],
+      "accepted_hashes": {
+        "f-market": "7140a647ecea86181df9002913255d2663f9b96021033d08a7a8dad68a6b217b",
+        "f-chatgpt": "d1916f6ba06a4a3e50c59e8e3944ad0fea22ea4c06a7a6cc4eeaefa07274b76c",
+        "f-blackwell": "dfe95ae845f121f6519e1d69dfcd1e923aa63dba0e15bd1f1395680443b22077",
+        "f-deepseek": "dc88eccc8cd0b8a1af80effdfb94269ef30411d604f1d1b810031a85e5a6f7f6"
+      },
+      "reused_certificates": []
+    },
+    {
+      "attempt": 2,
+      "draft_hash": "1a119e8a028644f54a99c7867f8fc05c34cb2b8bd67e0beadd67cd25c37943f2",
+      "deterministic": {
+        "f-limits": [
+          "结论缺少原文证据或计算依据"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-attribution",
+            "numeric_assertions": [
+              {
+                "quote": "除 ChatGPT 发布 1 日窗口外均低于 1",
+                "relation": "gt",
+                "metric_ids": [
+                  "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+                  "event.ev-chatgpt-public-2022-11-30.NVDA.5.standardized_response",
+                  "event.ev-chatgpt-public-2022-11-30.NVDA.20.standardized_response",
+                  "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response",
+                  "event.ev-blackwell-2024-03-18.NVDA.5.standardized_response",
+                  "event.ev-blackwell-2024-03-18.NVDA.20.standardized_response"
+                ]
+              }
+            ],
+            "reason": "逐项核对：2023-05-25 单日收益 24.37%（move.change-NVDA-2023-05-25.return）与前一交易日盘后财报相邻，5 日相对收益 22.38%、标准化反应 3.68，属高强度，与 CNBC 报道一致。2024-02-22 单日 16.40%，对应 2024-02-21 财报，5 日相对收益 11.27%、标准化反应 2.36，同属高强度，与官方新闻稿一致。ChatGPT 1 日标准化反应 1.338、5 日 0.306、20 日 0.351；Blackwell 1 日 0.0347、5 日 0.725、20 日 0.0734。原文“除 ChatGPT 发布 1 日窗口外均低于 1”与数值一致（ChatGPT 1 日 1.338>1，其余均<1），上一轮 previous_numeric_check 把该句误绑为“ChatGPT 与 Blackwell 均低于 1”的 lt 断言，属绑定错误，本轮按原句语义重新转录为“ChatGPT 1 日高于其余各窗口”的 gt 断言。2021-11-04（12.04%）与 2025-04-09（18.72%）异动确无已读事件正文，属如实披露缺口。财报类事件有公告+同期报道双重支持、产品/行业事件仅为时间相邻候选关联的表述与证据相符。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-capex-hf",
+            "numeric_assertions": [],
+            "reason": "2026-02-06 事件窗口：1 日收益 7.87%、相对 SPY 5.95%、标准化反应 2.83，5 日相对 8.22%，20 日相对 4.23%；下一交易日起算 1 日相对 2.01%、5 日 -0.12%、20 日 0.30%，确为方向随起算日切换，与 CNBC 报道“收涨近 8%”一致。2026-09-03 收购 Hugging Face：1 日收益 1.80%、相对 0.75%、标准化反应 0.28，5 日相对 -1.63%；20 日窗口在 2026-09-28 数据末端确实未满，无对应指标，表述正确。两事件均单篇报道支持、可能叠加同期因素的限制说明恰当。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-limits",
+            "numeric_assertions": [],
+            "reason": "该条为方法论与证据边界陈述：相对收益为标的减基准、非回归超额收益或因果效应，与 metric_catalog 中 method 字段“相对收益为标的减基准，非因果效应”一致；标准化反应幅度只刻画强度，与证据可信度独立，属合理界定。2021-09-28 至 2022-11 事件缺失、2021-11-04 窄窗检索未取得正文，与 warnings 中披露一致，属如实说明而非无据事实。deterministic_findings 提示“结论缺少原文证据或计算依据”，但该条本身即局限说明，未引入新的可证伪事实主张，不构成事实错误。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [],
+            "reason": "行情覆盖 2021-09-28 至 2026-09-28、1255 根日线、拆股调整 OHLC 口径与 metric_catalog 的 market.NVDA.bars（1255，日线，同起止）一致；累计收益 10.1053、年化 0.6186、年化波动 0.5197、最大回撤 -0.6634 与 daily.NVDA.* 指标逐一对应；最新收盘 228.86、成交量 141544300 与 latest.NVDA.close/volume 一致。方法说明（复权价格回顾、无交易费用、单资产）与指标 method 一致。纯指标列举，无额外数值关系句。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-chatgpt",
+            "numeric_assertions": [],
+            "reason": "日期 2022-11-30 与 src-0574c1fd7cebfb 原文“On November 30, 2022, OpenAI releases the generative artificial intelligence chatbot ChatGPT to the public.”一致，且已明确标注为事后回顾来源、无当日一手公告。事件窗口数值逐项核对：1 日收益 0.08238、相对 0.05088、标准化 1.3382；5 日相对 0.02606；20 日相对 -0.05966；next-session 1/5/20 日相对 0.01326/-0.01183/-0.08195，均与 metric_catalog 对应指标一致。末句“两种起算方式下，窗口内均未出现持续扩大的相对收益，方向随窗口切换”与数值相符（1 日正、5 日正负不一、20 日负），属对有限窗口的观察性描述，未主张因果。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-blackwell",
+            "numeric_assertions": [],
+            "reason": "2024-03-18 与官方新闻稿原文“GTC— Powering a new era of computing, NVIDIA today announced that the NVIDIA Blackwell platform has arrived”一致；B200/GB200 命名、未使用 B100、合作伙伴产品“later this year”均可在原文核对。窗口数值：1 日收益 0.00704、相对 0.00109、标准化 0.03466；5 日相对 0.05113；20 日相对 -0.01035；next-session 1/5/20 日相对 0.00510/0.06054/0.00643，均与指标一致。“标准化反应幅度均低于 1，属低强度反应”与 0.0347/0.7254/0.0734 相符。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-deepseek",
+            "numeric_assertions": [],
+            "reason": "三个日期区分正确：模型发布日 2025-01-20 依据 src-879406b8115183 当日文章“Today they’ve released R1 itself…”，论文提交日 2025-01-22 依据 arXiv 页面“[Submitted on 22 Jan 2025 ( v1 )…]”，市场反应日 2025-01-27 依据 CNBC 当日报道。数值核对：move.change-NVDA-2025-01-27.return = -0.16968（收跌 16.97%）；selloff 1 日相对 -0.15554、标准化 6.2049、5 日相对 -0.14800、20 日相对 -0.06883；模型发布日 1/5/20 日相对 0.01350/-0.14307/-0.01100；next-session 1/5/20 日相对 0.03869/-0.08651/-0.02774，全部与指标一致。“发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日”与数值相符。反证已说明板块性下跌，未把全部跌幅归于单一事件。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 给出实际起止区间 2021-09-28 至 2026-09-28、日线 OHLCV 口径、拆股调整与复权说明，以及累计收益、年化收益、年化波动、最大回撤和最新交易日收盘/成交量，并说明单资产口径与不计费用限制，满足 acceptance。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-1",
+            "reason": "f-chatgpt 以原文核实 2022-11-30 OpenAI 向公众发布 ChatGPT，给出事件日、1/5/20 日窗口收益与相对 SPY、标准化反应幅度，并因来源缺盘前盘后时刻提供下一交易日起算的敏感性窗口，同时说明来源为事后回顾、无当日一手公告及因果边界，满足区分发生/公开/反应时间与证据局限的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-2",
+            "reason": "f-blackwell 以英伟达官方新闻稿核实 2024-03-18 GTC 宣布 Blackwell 平台面世（B200/GB200，未用 B100 命名，非当日量产），给出 1/5/20 日窗口收益、相对 SPY、标准化反应幅度及下一交易日起算敏感性窗口，并说明缺第三方同期报道与 B100 对应关系未证实的局限，满足要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-3",
+            "reason": "f-deepseek 明确区分模型发布日 2025-01-20（当日报道）、论文公开日 2025-01-22（arXiv 提交）、市场反应日 2025-01-27，给出各事件日 1/5/20 日窗口相对收益与标准化反应幅度，并说明发布日与论文日附近反应方向不一致、负向反应集中在 1 月 27 日，附来源与局限，满足要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "attribution",
+            "reason": "f-attribution 与 f-capex-hf 讨论已调查的主要异动（2023-05-25、2024-02-22 财报类高强度反应；ChatGPT、Blackwell 低强度反应；2026-02-06、2026-09-03 事件），区分反应强度与关联可信度，说明财报类有双重支持、产品与行业事件仅为时间相邻候选关联，并给出竞争性解释与因果边界。open_gaps 中 2021-11-04 与 2025-04-09 两次异动未取得可核实事件正文，但 f-attribution 已明确将其列为重大异动且原因未证实，属已报告的未确认边界，acceptance 要求的“哪些解释仍无法确认”已实质回答。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-99c5266b777695f0",
+                "finding_id": "f-attribution",
+                "quote": "2021-11-04 单日收益 {{move.change-NVDA-2021-11-04.return}} 与 2025-04-09 单日收益 {{move.change-NVDA-2025-04-09.return}} 在已读证据中未取得可核实的对应事件正文，属重大异动但原因未证实。",
+                "reason": "该 finding 直接绑定 attribution 问题，已把两次异动列为重大异动并明确原因未证实，同时给出竞争性解释（可能由未取得正文的宏观或政策因素驱动），acceptance 要求的“哪些解释仍无法确认”与因果边界已实质回答，故该缺口不构成未答。"
+              }
+            ]
+          },
+          {
+            "question_id": "custom-1",
+            "reason": "f-deepseek 逐项回答：模型发布日 2025-01-20、论文公开日 2025-01-22、市场反应日 2025-01-27，给出 2025-01-27 当日跌幅、1/5/20 日相对 SPY 与标准化反应幅度，并说明发布日与论文日附近反应方向不一致、负向反应集中在 1 月 27 日，附来源、反证与局限，满足要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-2",
+            "reason": "f-attribution 与 f-capex-hf 覆盖主要行情变化（2023-05-25、2024-02-22、2021-11-04、2025-04-09、2026-02-06、2026-09-03 等）、对应事件、标准化反应强度、关联可信度分级、竞争性解释（板块性下跌、宏观与行业情绪、预期提前定价）及局限（相对收益非回归超额、未做多因子剥离），满足 acceptance。",
+            "answered": true,
+            "resolved_gaps": []
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-attribution",
+            "inference_audit": "该条把财报类事件（2023-05-25、2024-02-22）与产品/行业事件（ChatGPT 发布、Blackwell 发布）分层处理：财报类有公司公告与同期报道双重支持，产品类明确标注为时间相邻的候选关联、不构成因果证明，2021-11-04 与 2025-04-09 明确标注原因未证实。标准化反应幅度只用于刻画反应强度，未据此推断因果。相对收益口径在 limitations 中已声明为标的减基准、非回归超额收益。整体未出现由价格方向否认事件影响、或由价格平淡推出提前定价的表述。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-capex-hf",
+            "inference_audit": "2026-02-06 事件：来源为 CNBC 报道黄仁勋在 CNBC 表示 AI 资本开支合理可持续，且报道称当日 NVDA 收涨近 8%，与草稿“当日 NVDA 收涨”一致；草稿未把上涨单独归于访谈，counterevidence 明确列出超大规模客户资本开支预期与财报季情绪，limitations 也声明可能叠加同期大盘与行业因素，属合格的候选关联。2026-09-03 事件：来源为 CNBC 报道英伟达同意以 129 亿美元收购 Hugging Face，与草稿“宣布同意收购开源 AI 平台 Hugging Face”一致；草稿仅陈述 1 日与 5 日窗口数值，并说明 20 日窗口未满无对应数值，未做因果断言。两事件均未出现由价格方向否认事件影响或由平淡价格推出提前定价的跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-limits",
+            "inference_audit": "该条为整体边界声明：明确相对收益非回归超额收益、非因果效应，标准化反应幅度只刻画强度且与证据可信度独立，并指出同期宏观、利率、出口管制与板块轮动无法在已读证据中剥离；对 2021-09-28 至 2022-11 阶段明确不做事件归因。counterevidence 以“若引入板块指数与因子回归”的假设形式提出，属可验证假设而非已发生事实，符合规范。未出现属性推断、机制断言或决策边界越界。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为纯行情与风险统计：覆盖区间、bar 数、复权口径、累计/年化收益、波动、最大回撤、最新收盘与成交量，全部由 metric_catalog 与 datasets 的 Yahoo 复权行情直接支持，属单资产回顾口径，未外推为组合表现或未来收益。limitations 已声明未扣成本、最大回撤为区间单点极值，未出现属性或因果跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-chatgpt",
+            "inference_audit": "日期事实由 HISTORY 页面支持（2022-11-30 公开发布、免费预览），事件窗口收益/相对收益/标准化反应幅度由 metric_catalog 支持。结论仅陈述“窗口内未出现持续扩大的相对收益，方向随窗口切换”，属对样本窗口数值的描述，未声称提前定价或因果效应；counterevidence 与 limitations 明确列出宏观/半导体周期与相对收益非因果效应。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-blackwell",
+            "inference_audit": "官方新闻稿支持 2024-03-18 GTC 宣布 Blackwell 平台、B200/GB200 命名、合作伙伴产品“later this year”推出；事件窗口数值由 metric_catalog 支持。结论“按标准化反应幅度衡量属低强度反应，窗口内未出现持续相对收益扩大”是对已计算指标的描述，未由价格平淡推出提前定价，也未否认事件影响。limitations 已声明 B100 与 B200 对应关系未获已读来源证实。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-deepseek",
+            "inference_audit": "三个日期区分有据：模型发布日由 Simon Willison 当日文章支持，论文提交日由 arXiv 页面支持，市场反应日由 CNBC 当日报道支持；各窗口数值由 metric_catalog 支持。结论“发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日”是对窗口数值方向的描述，counterevidence 已指出 1 月 27 日为板块性下跌、不能归于单一模型事件。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-attribution",
+          "quote": "除 ChatGPT 发布 1 日窗口外均低于 1",
+          "relation": "gt",
+          "metric_ids": [
+            "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+            "event.ev-chatgpt-public-2022-11-30.NVDA.5.standardized_response",
+            "event.ev-chatgpt-public-2022-11-30.NVDA.20.standardized_response",
+            "event.ev-blackwell-2024-03-18.NVDA.1.standardized_response",
+            "event.ev-blackwell-2024-03-18.NVDA.5.standardized_response",
+            "event.ev-blackwell-2024-03-18.NVDA.20.standardized_response"
+          ],
+          "values": [
+            1.3381853798682772,
+            0.30647825424268665,
+            0.3508812490404061,
+            0.034659027149149445,
+            0.7253526040257583,
+            0.0734103909085367
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "numeric_transcription_repairs": [],
+      "metric_token_repairs": [],
+      "source_question_review": [],
+      "local_repair_needed": true,
+      "open_gaps": [],
+      "accepted_ids": [
+        "f-attribution",
+        "f-blackwell",
+        "f-capex-hf",
+        "f-chatgpt",
+        "f-deepseek",
+        "f-market"
+      ],
+      "accepted_hashes": {
+        "f-market": "7140a647ecea86181df9002913255d2663f9b96021033d08a7a8dad68a6b217b",
+        "f-chatgpt": "d1916f6ba06a4a3e50c59e8e3944ad0fea22ea4c06a7a6cc4eeaefa07274b76c",
+        "f-blackwell": "dfe95ae845f121f6519e1d69dfcd1e923aa63dba0e15bd1f1395680443b22077",
+        "f-deepseek": "dc88eccc8cd0b8a1af80effdfb94269ef30411d604f1d1b810031a85e5a6f7f6",
+        "f-attribution": "a8d899b5e50352bdc58533e895d8f1141497560b30bead388a2e7976e0a25e83",
+        "f-capex-hf": "71452ce60aed5b22bf38d78ac731438d2f57c7335c7485dc7324653772037052"
+      },
+      "reused_certificates": [
+        "f-blackwell",
+        "f-chatgpt",
+        "f-deepseek",
+        "f-market"
+      ]
+    }
+  ],
+  "gaps": [],
+  "text": "NVDA 2021-09-28 至 2026-09-28 五年 OHLCV 日线与 AI 行业大事件回顾\n\n研究状态：完整。请求区间：2021-09-28 至 2026-09-28；实际数值区间见各指标口径。\n\n**行情覆盖与五年收益风险特征**\n\n行情为 NVDA 日线 OHLCV，实际覆盖 2021-09-28 至 2026-09-28，共 1,255 根日线，价格口径为拆股调整后的 OHLC，复权收盘另反映分红。区间累计收益 1010.53%，年化收益 61.86%，年化波动 51.97%，最大回撤 -66.34%。最新交易日 2026-09-28 收盘 228.86 美元，当日成交量 141,544,300。收益与回撤均按复权价格回顾、不计交易费用，属单资产口径，不涉及组合配置。\n\n局限：收益与回撤为复权价格回顾结果，未扣交易成本与税费；最大回撤为区间内单点极值，不代表投资者实际持有体验。\n\n改变判断的条件：若改用未复权价格或加入交易成本，收益与回撤数值会变化。\n\n依据：[prices-NVDA-a530f29790bb]\n\n**ChatGPT 公开发布日与当日反应**\n\n已读来源记载 2022 年 11 月 30 日 OpenAI 向公众发布 ChatGPT，用户可免费试用预览版。以该日为事件日，1 日窗口 NVDA 收益 8.24%，相对 SPY 5.09%，标准化反应幅度 1.338；5 日窗口相对收益 2.61%，20 日窗口相对收益 -5.97%。因来源只给日期、未给盘前盘后时刻，以下一交易日起算的敏感性窗口 1 日相对收益为 1.33%，5 日为 -1.18%，20 日为 -8.20%。两种起算方式下，窗口内均未出现持续扩大的相对收益，方向随窗口切换。\n\n竞争性解释：同期宏观与半导体周期因素、以及 ChatGPT 与 NVDA 收入链条的间接性，都可能解释该窗口表现。\n\n局限：唯一来源为 2025 年发布的事后回顾页面，无 2022 年当日一手公告或同期报道；相对收益是标的减基准，不是回归超额收益或因果效应。\n\n改变判断的条件：若取得 2022-11-30 当日一手公告或同期报道，可提高日期与反应归因的可信度。\n\n依据：[src-0574c1fd7cebfb] [prices-NVDA-a530f29790bb] [prices-SPY-8df4ceb30e72]\n\n**Blackwell 平台发布日与反应强度**\n\n英伟达官方新闻稿称 2024 年 3 月 18 日在 GTC 宣布 Blackwell 平台面世，产品为 B200/GB200，公告未使用 B100 命名，并称合作伙伴产品“later this year”推出，非当日量产。以该日为事件日，1 日窗口 NVDA 收益 0.70%，相对 SPY 0.11%，标准化反应幅度 0.035；5 日相对收益 5.11%，20 日相对收益 -1.03%。下一交易日起算的敏感性窗口 1 日相对收益 0.51%，5 日 6.05%，20 日 0.64%。按标准化反应幅度衡量，该事件属低强度反应，窗口内未出现持续相对收益扩大。\n\n竞争性解释：发布前市场对 GTC 新品已有预期，且同期存在财报与宏观因素，可能稀释单日反应。\n\n局限：仅有官方新闻稿，缺第三方同期报道；公告未使用 B100 命名，B100 与 B200 的对应关系未获已读来源证实。\n\n改变判断的条件：若取得第三方同期报道或发布前预期数据，可更准确判断反应是否被提前定价。\n\n依据：[src-2703b6b30f807b] [prices-NVDA-a530f29790bb] [prices-SPY-8df4ceb30e72]\n\n**DeepSeek-R1 模型发布、论文公开与 2025-01-27 下跌的日期区分**\n\n三个日期需分开：模型发布日以 2025 年 1 月 20 日当日报道为准，该文称 DeepSeek 当日发布 R1 及系列衍生模型；论文公开日以 arXiv 页面显示的 2025 年 1 月 22 日提交为准，属论文公开时间，不能作为模型发布日；市场反应日为 2025 年 1 月 27 日，当日 NVDA 收跌 -16.97%，1 日窗口相对 SPY -15.55%，标准化反应幅度 6.205，5 日相对收益 -14.80%，20 日相对收益 -6.88%。以模型发布日为事件日，1 日窗口相对收益 1.35%，5 日 -14.31%，20 日 -1.10%；以论文提交日起算的敏感性窗口 1 日相对收益 3.87%，5 日 -8.65%，20 日 -2.77%。可见发布日与论文日附近反应方向不一致，负向反应集中在 1 月 27 日。\n\n竞争性解释：1 月 27 日抛售同时波及美光、Arm、博通、AMD 及全球科技股，属板块性下跌，不能把全部跌幅归于单一模型事件。\n\n局限：模型发布日依据第三方博客当日文章，缺 DeepSeek 官方发布公告；1 月 27 日仅有单篇当日行情报道，市值损失口径存在冲突数字，未采用。\n\n改变判断的条件：若取得 DeepSeek 官方发布页或更多当日一手报道，可进一步确认发布时刻与反应归因。\n\n依据：[src-879406b8115183] [src-92838b9f7ab276] [src-7520412e384f57] [prices-NVDA-a530f29790bb] [prices-SPY-8df4ceb30e72]\n\n**主要异动与事件的关联可信度及竞争性解释**\n\n区间内已调查的显著异动中，2023-05-25 单日收益 24.37%，与前一交易日盘后财报及指引超预期在时间上相邻，5 日窗口相对 SPY 22.38%，标准化反应幅度 3.685，属高强度反应；2024-02-22 单日收益 16.40%，对应前一交易日财报，5 日相对收益 11.27%，标准化反应幅度 2.361，同属高强度。相比之下，ChatGPT 发布当日 1 日窗口标准化反应幅度为 1.338，5 日与 20 日窗口分别为 0.306 与 0.351；Blackwell 发布 1 日窗口标准化反应幅度为 0.035，5 日与 20 日窗口分别为 0.725 与 0.073，除 ChatGPT 发布 1 日窗口外均低于 1。2021-11-04 单日收益 12.04% 与 2025-04-09 单日收益 18.72% 在已读证据中未取得可核实的对应事件正文，属重大异动但原因未证实。关联可信度上，财报类事件有公司公告与同期报道双重支持，可信度较高；产品发布与行业事件多为时间相邻的候选关联，不构成因果证明。\n\n竞争性解释：2021-11-04 与 2025-04-09 的异动可能由未取得正文的宏观或政策因素驱动；财报日异动也可能叠加同期大盘与行业情绪。\n\n局限：相对收益为标的减基准，不是回归超额收益或事件因果效应；异动强度与事件关联由时间先后与同标的构成，未做多因子剥离。\n\n改变判断的条件：若取得 2021-11-04 与 2025-04-09 的当日一手报道，可判断这两次异动是否具备可核实的事件对应。\n\n依据：[src-5d57f2e27d95e2] [src-9b28aba03660aa] [prices-NVDA-a530f29790bb] [prices-SPY-8df4ceb30e72]\n\n**2026 年两次事件的反应与证据边界**\n\n2026-02-06 黄仁勋在 CNBC 表示 AI 基础设施资本开支合理且可持续，当日 NVDA 收涨，1 日窗口收益 7.87%，相对 SPY 5.95%，标准化反应幅度 2.834，5 日相对收益 8.22%，20 日相对收益 4.23%；以下一交易日起算的敏感性窗口 1 日相对收益 2.01%，5 日 -0.12%，20 日 0.30%，方向随起算日切换。2026-09-03 英伟达宣布同意收购开源 AI 平台 Hugging Face，1 日窗口收益 1.80%，相对 SPY 0.75%，标准化反应幅度 0.28，5 日相对收益 -1.63%；该事件 20 日窗口尚未满，无对应数值。\n\n竞争性解释：2026-02-06 的上涨与超大规模客户资本开支预期、以及同期财报季情绪相关，不能单独归于一次访谈。\n\n局限：两事件均为单篇报道支持；管理层评论与并购公告的当日反应可能叠加同期大盘与行业因素，且 2026-09-03 事件 20 日窗口未满。\n\n改变判断的条件：若 2026-09-03 事件 20 日窗口补齐，可判断反应是否延续；若取得更多同期报道，可提高归因可信度。\n\n依据：[src-df62732c41d14c] [src-8553234d2bab46] [prices-NVDA-a530f29790bb] [prices-SPY-8df4ceb30e72]\n\n**计算口径**\n\n- 2021-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。\n- 2021-09-28 至 2026-09-28；日线；复权价格回顾，无交易费用。\n- 2026-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。\n- 2022-11-29 至 2022-11-30；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2022-11-29 至 2022-12-06；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2022-11-29 至 2022-12-28；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2022-11-30 至 2022-12-01；1 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2022-11-30 至 2022-12-07；5 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2022-11-30 至 2022-12-29；20 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2024-03-15 至 2024-03-18；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2024-03-15 至 2024-03-22；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2024-03-15 至 2024-04-15；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2024-03-18 至 2024-03-19；1 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2024-03-18 至 2024-03-25；5 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2024-03-18 至 2024-04-16；20 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2025-01-27 至 2025-01-27；一日；复权收盘到收盘。\n- 2025-01-24 至 2025-01-27；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-01-24 至 2025-01-31；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-01-24 至 2025-02-24；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-01-17 至 2025-01-21；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-01-17 至 2025-01-27；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-01-17 至 2025-02-18；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-01-21 至 2025-01-22；1 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2025-01-21 至 2025-01-28；5 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2025-01-21 至 2025-02-19；20 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2023-05-25 至 2023-05-25；一日；复权收盘到收盘。\n- 2023-05-23 至 2023-05-31；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2024-02-22 至 2024-02-22；一日；复权收盘到收盘。\n- 2024-02-20 至 2024-02-27；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2021-11-04 至 2021-11-04；一日；复权收盘到收盘。\n- 2025-04-09 至 2025-04-09；一日；复权收盘到收盘。\n- 2026-02-05 至 2026-02-06；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2026-02-05 至 2026-02-12；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2026-02-05 至 2026-03-06；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2026-02-06 至 2026-02-09；1 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2026-02-06 至 2026-02-13；5 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2026-02-06 至 2026-03-09；20 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。\n- 2026-09-02 至 2026-09-03；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2026-09-02 至 2026-09-10；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n\n**来源**\n\n- [prices-NVDA-a530f29790bb] NVDA 行情：https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [src-0574c1fd7cebfb] ChatGPT is released to the public | HISTORY：https://www.history.com/this-day-in-history/november-30/chatgpt-released-openai\n- [prices-SPY-8df4ceb30e72] SPY 行情：https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [src-2703b6b30f807b] NVIDIA Blackwell Platform Arrives to Power a New Era of Computing | NVIDIA Newsroom：https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing\n- [src-879406b8115183] DeepSeek-R1 and exploring DeepSeek-R1-Distill-Llama-8B：https://simonwillison.net/2025/Jan/20/deepseek-r1/\n- [src-92838b9f7ab276] [2501.12948] DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning：https://arxiv.org/abs/2501.12948\n- [src-7520412e384f57] Nvidia drops nearly 17% as China's cheaper AI model DeepSeek sparks global tech sell-off：https://www.cnbc.com/2025/01/27/nvidia-falls-10percent-in-premarket-trading-as-chinas-deepseek-triggers-global-tech-sell-off.html\n- [src-5d57f2e27d95e2] Nvidia (NVDA) earnings report Q1 2024：https://www.cnbc.com/2023/05/24/nvidia-nvda-earnings-report-q1-2024.html\n- [src-9b28aba03660aa] NVIDIA Announces Financial Results for Fourth Quarter and Fiscal 2024 | NVIDIA Newsroom：https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024\n- [src-df62732c41d14c] Nvidia's Jensen Huang says $660 billion capex buildout is sustainable：https://www.cnbc.com/2026/02/06/nvidia-rises-7percent-as-ceo-says-660-billion-capex-buildout-is-sustainable.html\n- [src-8553234d2bab46] Nvidia agrees to buy Hugging Face for almost $13 billion, AI expansion：https://www.cnbc.com/2026/09/03/nvidia-agrees-to-buy-hugging-face-for-almost-13-billion-ai-expansion.html",
+  "assessed_at": "2026-09-29T11:58:33.534858+00:00",
+  "input_hash": "9c76e47b075092ef6b217af07d5f09cb3a8eaed8da2ad49629d735c20cb8a564",
+  "budget": {
+    "elapsed_seconds": 417.099,
+    "model_calls": 50,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  }
+}

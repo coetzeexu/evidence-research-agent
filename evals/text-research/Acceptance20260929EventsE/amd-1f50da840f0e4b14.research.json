@@ -1,0 +1,2624 @@
+{
+  "version": "1.0",
+  "status": "complete",
+  "questions": [
+    {
+      "id": "market",
+      "question": "行情数据覆盖到何时、主要收益与风险表现如何？",
+      "acceptance": "说明实际起止区间、行情口径及可复核的收益/回撤；比较任务以同口径执行基线为主。",
+      "kind": "market",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-market"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "required-1",
+      "question": "MI300 系列发布",
+      "acceptance": "原文核实具体事实与日期；区分发生/公开/报道/反应时间，给出对应窗口、强度与证据局限。",
+      "kind": "event",
+      "required": true,
+      "priority": 1,
+      "required_event": "MI300 系列发布",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-mi300-reaction",
+        "f-limits",
+        "f-mi300-launch"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "attribution",
+      "question": "主要行情变化与同期信息有什么关系，哪些解释仍无法确认？",
+      "acceptance": "讨论已调查的主要异动与时间线，区分反应强度和证据可信度；至少说明竞争性解释与因果边界。",
+      "kind": "event",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-alternatives",
+        "f-major-moves"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "custom-1",
+      "question": "分析主要异动及同期信息",
+      "acceptance": "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：分析主要异动及同期信息",
+      "kind": "market",
+      "required": true,
+      "priority": 1,
+      "required_event": "",
+      "request_quote": "分析主要异动及同期信息",
+      "status": "answered",
+      "finding_ids": [
+        "f-major-moves"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "custom-2",
+      "question": "反应强度",
+      "acceptance": "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：反应强度",
+      "kind": "event",
+      "required": true,
+      "priority": 1,
+      "required_event": "",
+      "request_quote": "反应强度",
+      "status": "answered",
+      "finding_ids": [
+        "f-mi300-reaction"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "custom-3",
+      "question": "替代解释",
+      "acceptance": "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：替代解释",
+      "kind": "custom",
+      "required": true,
+      "priority": 1,
+      "required_event": "",
+      "request_quote": "替代解释",
+      "status": "answered",
+      "finding_ids": [
+        "f-alternatives"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "custom-4",
+      "question": "证据局限",
+      "acceptance": "逐项回答这段用户原文中的要求，给出证据、计算依据与限制：证据局限",
+      "kind": "custom",
+      "required": true,
+      "priority": 1,
+      "required_event": "",
+      "request_quote": "证据局限",
+      "status": "answered",
+      "finding_ids": [
+        "f-limits"
+      ],
+      "gaps": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "f-market",
+      "question_ids": [
+        "market"
+      ],
+      "kind": "fact",
+      "title": "行情覆盖与整体收益风险",
+      "text": "AMD 日线覆盖 2023-01-03 至 2026-09-28，共 {{market.AMD.bars}} 根日线，口径为 Yahoo 拆股调整 OHLC、复权收盘另含分红，未计交易费用。区间累计收益 {{daily.AMD.total_return}}，年化收益 {{daily.AMD.cagr}}，年化波动 {{daily.AMD.volatility}}，最大回撤 {{daily.AMD.max_drawdown}}。最新交易日 2026-09-28 收盘 {{latest.AMD.close}}，当日区间 {{latest.AMD.low}} 至 {{latest.AMD.high}}，成交量 {{latest.AMD.volume}}。整体看是收益与波动同时偏高的单一成长股形态，回撤幅度与波动水平相称。",
+      "evidence": [],
+      "counterevidence": "",
+      "limitations": "收益与回撤为复权价格回顾，不含费用、税费与滑点；SPY 仅作事件窗口基准，未做同口径全区间组合比较，故不给出相对基准的长期结论。",
+      "confidence": "high",
+      "changes_if": "若改用含费用口径或不同复权方式，累计收益与回撤数值会变化。"
+    },
+    {
+      "id": "f-mi300-reaction",
+      "question_ids": [
+        "required-1",
+        "custom-2"
+      ],
+      "kind": "fact",
+      "title": "MI300 发布窗口反应：1 日偏弱、5/20 日转正",
+      "text": "以 2023-12-06 为事件日、窗口自 2023-12-05 起算：1 日窗口 AMD 收益 {{event.ev-mi300-launch-2023-12-06.AMD.1.return}}，基准 {{event.ev-mi300-launch-2023-12-06.AMD.1.benchmark_return}}，相对收益 {{event.ev-mi300-launch-2023-12-06.AMD.1.relative_return}}，标准化反应幅度 {{event.ev-mi300-launch-2023-12-06.AMD.1.standardized_response}}；5 日窗口收益 {{event.ev-mi300-launch-2023-12-06.AMD.5.return}}，相对收益 {{event.ev-mi300-launch-2023-12-06.AMD.5.relative_return}}，标准化反应幅度 {{event.ev-mi300-launch-2023-12-06.AMD.5.standardized_response}}；20 日窗口收益 {{event.ev-mi300-launch-2023-12-06.AMD.20.return}}，相对收益 {{event.ev-mi300-launch-2023-12-06.AMD.20.relative_return}}，标准化反应幅度 {{event.ev-mi300-launch-2023-12-06.AMD.20.standardized_response}}。方向为：首日小幅落后基准，5 日与 20 日转为正收益且跑赢基准，反应强度评级为高。",
+      "evidence": [],
+      "counterevidence": "同期存在 SC23 展示、AI 板块整体情绪等并行信息，5 日与 20 日窗口无法排除其他驱动。",
+      "limitations": "相对收益是标的收益减基准，不是回归超额收益，也不构成事件因果效应；窗口起点含公告前一个交易日，且公告时点在收盘后，1 日窗口对盘前/盘后归属敏感。",
+      "confidence": "medium",
+      "changes_if": "若改用公告后首个完整交易日为起点，1 日窗口方向与幅度可能改变。"
+    },
+    {
+      "id": "f-alternatives",
+      "question_ids": [
+        "custom-3",
+        "attribution"
+      ],
+      "kind": "analysis",
+      "title": "替代解释与因果边界",
+      "text": "对已识别异动，至少存在三类竞争性解释：一是行业与大盘共同因子，事件窗口内基准本身也有同向变动，相对收益只剔除基准部分，未剔除板块与风格因子；二是预期与信息提前反映，MI300 在 2023-11-17 的 SC23 展示及更早的路线图披露意味着正式发布日可能不是信息首次进入价格的时点；三是公司层面其他信息，如财报、指引与客户合作，与产品事件在时间上重叠。因此可支持的表述是“窗口内出现与事件同向的价格变化”，而不是“事件导致该收益”。",
+      "evidence": [
+        {
+          "source_id": "src-35d9a608135b52",
+          "quote": "At SC23, we saw a number of next-gen AMD systems."
+        }
+      ],
+      "counterevidence": "若某窗口内基准与板块均无同向变动，则共同因子解释力下降，事件特定解释相对增强。",
+      "limitations": "未做多因子回归或板块归因，无法量化各解释的贡献份额；已读来源不足以排除未记录的公司特定信息。",
+      "confidence": "medium",
+      "changes_if": "加入半导体同业或 AI 主题指数作为第二基准、并做事件日前后多窗口对照，可提高归因分辨力。"
+    },
+    {
+      "id": "f-limits",
+      "question_ids": [
+        "custom-4",
+        "required-1"
+      ],
+      "kind": "analysis",
+      "title": "证据局限",
+      "text": "主要局限有四：其一，MI300 系列发布缺少 AMD 官方新闻稿或官方产品页作为一手来源，现有支持为第三方媒体；其二，发布时点在美股收盘后，日线数据无法隔离盘中反应，1 日窗口对盘前/盘后归属敏感；其三，事件窗口的相对收益为标的减基准，不是回归超额收益，也不构成因果效应，评级只表示反应强度，与证据可信度相互独立；其四，2024 年与 2026 年多个时段缺少与 AMD 直接相关的已读事件来源，部分异动只能保留为原因未确认。",
+      "evidence": [
+        {
+          "source_id": "src-7ac99d5cf0b99a",
+          "quote": "Today we have the long-awaited launch of the AMD Instinct MI300 series."
+        }
+      ],
+      "counterevidence": "",
+      "limitations": "上述局限属于研究边界，不改变已给出的有限结论；已读来源未覆盖的时段不等于期间没有事件。",
+      "confidence": "high",
+      "changes_if": "取得官方发布公告、盘中数据或更完整的期间新闻覆盖后，可收窄相应局限。"
+    },
+    {
+      "id": "f-mi300-launch",
+      "question_ids": [
+        "required-1"
+      ],
+      "kind": "fact",
+      "title": "MI300 系列正式发布：2023-12-06",
+      "text": "MI300 系列正式发布发生在 2023-12-06，当日报道明确写为“Today we have the long-awaited launch of the AMD Instinct MI300 series”，产品包含纯 GPU 的 MI300X 与 CPU+GPU 融合的 MI300A APU，报道称 MI300X 面向 AI 加速、对标 NVIDIA H100，并在多项指标上给出对 NVIDIA H100 的性能优势（报道转述 AMD 幻灯片口径）。发布前 2023-11-17 的 SC23 报道属于展会展示与客户部署进展，不是正式发布。",
+      "evidence": [
+        {
+          "source_id": "src-7ac99d5cf0b99a",
+          "quote": "Today we have the long-awaited launch of the AMD Instinct MI300 series."
+        },
+        {
+          "source_id": "src-610e75fd151aee",
+          "quote": "AMD launched its Instinct MI300X AI accelerator and the Instinct MI300A, the world’s first data center APU, during its Advancing AI event here in San Jose, California, as it looks to capitalize on the booming generative AI and HPC market."
+        },
+        {
+          "source_id": "src-35d9a608135b52",
+          "quote": "At SC23, we saw a number of next-gen AMD systems."
+        }
+      ],
+      "counterevidence": "报道本身提到该系列此前被预期在 2023 年 6 月发布，说明“发布”在市场上存在多个预期时点，事件日选择对结果敏感。",
+      "limitations": "发布日由第三方媒体报道正文与页面发布元数据一致支持，未取得 AMD 官方新闻稿或官方产品页作为一手来源；报道时间戳为 2023-12-06 20:01 UTC，属美股收盘后，日线窗口无法隔离盘中反应。",
+      "confidence": "high",
+      "changes_if": "若取得 AMD 官方发布公告并显示不同公开时刻，事件日与窗口起点需相应调整。"
+    },
+    {
+      "id": "f-major-moves",
+      "question_ids": [
+        "custom-1",
+        "attribution"
+      ],
+      "kind": "fact",
+      "title": "主要异动及其同期信息",
+      "text": "已识别的主要异动中，2025-10-06 单日收益 {{move.change-AMD-2025-10-06.return}}，同日 AMD 与 OpenAI 宣布 6 吉瓦、多代际 Instinct GPU 协议，首批 1 吉瓦 MI450 系列计划 2026 年下半年启动，并附与部署及股价里程碑挂钩的认股权证安排；该事件 1 日相对收益 {{event.ev-openai-amd-2025-10-06.AMD.1.relative_return}}、标准化反应幅度 {{event.ev-openai-amd-2025-10-06.AMD.1.standardized_response}}，5 日相对收益 {{event.ev-openai-amd-2025-10-06.AMD.5.relative_return}}，20 日相对收益 {{event.ev-openai-amd-2025-10-06.AMD.20.relative_return}}，评级为高。其余异动中，2025-04-09 单日 {{move.change-AMD-2025-04-09.return}}、2026-05-06 单日 {{move.change-AMD-2026-05-06.return}}、2023-05-25 单日 {{move.change-AMD-2023-05-25.return}} 均未在已读来源中建立直接对应事件；2026-02-04 单日 {{move.change-AMD-2026-02-04.return}} 亦无已读来源支持的具体原因。",
+      "evidence": [
+        {
+          "source_id": "src-ab40e4c8005793",
+          "quote": "AMD (NASDAQ: AMD) and OpenAI today announced a 6 gigawatt agreement to power OpenAI’s next-generation AI infrastructure across multiple generations of AMD Instinct GPUs."
+        }
+      ],
+      "counterevidence": "2025-04-09 与关税行政令同日，但已读行政令原文未直接提及 AMD，无法建立标的层面的关联。",
+      "limitations": "异动与事件的关联为时间先后上的候选关系，未证明事件触发行情；无对应事件的异动只能记录为“原因未在已读证据中确认”，不等于不存在原因。",
+      "confidence": "medium",
+      "changes_if": "若取得这些日期的公司公告或行业新闻，部分异动可能获得更具体的同期解释。"
+    }
+  ],
+  "passages": [
+    {
+      "source_id": "src-35d9a608135b52",
+      "quote": "At SC23, we saw a number of next-gen AMD systems.",
+      "id": "passage-f92716c2725f319e",
+      "start": 326,
+      "end": 375,
+      "content_hash": "beadb8d087692161144c46635a4e8e28b415456ccc702a6b1530841b9a84e75f",
+      "origin_group": "publisher:www.servethehome.com",
+      "published_at": "2023-11-17T17:14:56+00:00"
+    },
+    {
+      "source_id": "src-7ac99d5cf0b99a",
+      "quote": "Today we have the long-awaited launch of the AMD Instinct MI300 series.",
+      "id": "passage-4b83aea591631d9d",
+      "start": 310,
+      "end": 381,
+      "content_hash": "5119e24f7689f018bfd07e1a4f7a697c9dc5dce99fd249bb951f8fb8b212e886",
+      "origin_group": "publisher:www.servethehome.com",
+      "published_at": "2023-12-06T20:01:39+00:00"
+    },
+    {
+      "source_id": "src-610e75fd151aee",
+      "quote": "AMD launched its Instinct MI300X AI accelerator and the Instinct MI300A, the world’s first data center APU, during its Advancing AI event here in San Jose, California, as it looks to capitalize on the booming generative AI and HPC market.",
+      "id": "passage-57bc912cf6875a2a",
+      "start": 1212,
+      "end": 1450,
+      "content_hash": "b1602595085d68b1c66cc0da9b16c76c2e1d751c578c97766881efaea046e8f7",
+      "origin_group": "publisher:www.tomshardware.com",
+      "published_at": "2023-12-06T19:57:12+00:00"
+    },
+    {
+      "source_id": "src-ab40e4c8005793",
+      "quote": "AMD (NASDAQ: AMD) and OpenAI today announced a 6 gigawatt agreement to power OpenAI’s next-generation AI infrastructure across multiple generations of AMD Instinct GPUs.",
+      "id": "passage-2f6b6a9e754a41e1",
+      "start": 4226,
+      "end": 4395,
+      "content_hash": "a2c3b48c782d499147ec16a165872d8f3bdcd817b5585f45b0186ed64da40ad1",
+      "origin_group": "publisher:newsroom.amd.com",
+      "published_at": "2025-10-06T11:00:29+00:00"
+    }
+  ],
+  "metrics": [
+    {
+      "id": "market.AMD.bars",
+      "label": "market.AMD · bars",
+      "value": 937.0,
+      "unit": "integer",
+      "start": "2023-01-03",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "coverage",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.AMD.open",
+      "label": "latest.AMD · open",
+      "value": 624.9000244140625,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.AMD.high",
+      "label": "latest.AMD · high",
+      "value": 629.75,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.AMD.low",
+      "label": "latest.AMD · low",
+      "value": 596.0700073242188,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.AMD.close",
+      "label": "latest.AMD · close",
+      "value": 607.8699951171875,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.AMD.volume",
+      "label": "latest.AMD · volume",
+      "value": 21995500.0,
+      "unit": "integer",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.AMD.total_return",
+      "label": "daily.AMD · 累计收益",
+      "value": 8.495001983618847,
+      "unit": "percent",
+      "start": "2023-01-03",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.AMD.cagr",
+      "label": "daily.AMD · 年化收益",
+      "value": 0.827057650434061,
+      "unit": "percent",
+      "start": "2023-01-03",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.AMD.volatility",
+      "label": "daily.AMD · 年化波动",
+      "value": 0.5680797227130521,
+      "unit": "percent",
+      "start": "2023-01-03",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.AMD.max_drawdown",
+      "label": "daily.AMD · 最大回撤",
+      "value": -0.6300028513679348,
+      "unit": "percent",
+      "start": "2023-01-03",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.1.return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.1 · 收益",
+      "value": -0.013177881354856202,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2023-12-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.1 · 相对基准收益",
+      "value": -0.009148152034767154,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2023-12-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.1.benchmark_return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.1 · 基准收益",
+      "value": -0.004029729320089048,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2023-12-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.1.standardized_response",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.1 · 标准化反应幅度",
+      "value": 0.36527703565233743,
+      "unit": "number",
+      "start": "2023-12-05",
+      "end": "2023-12-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.5 · 收益",
+      "value": 0.162443012359323,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2023-12-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.5 · 相对基准收益",
+      "value": 0.14601721857104955,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2023-12-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.5.benchmark_return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.5 · 基准收益",
+      "value": 0.01642579378827347,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2023-12-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.5.standardized_response",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.5 · 标准化反应幅度",
+      "value": 2.607402426770367,
+      "unit": "number",
+      "start": "2023-12-05",
+      "end": "2023-12-12",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.20.return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.20 · 收益",
+      "value": 0.14892716389980265,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2024-01-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.20 · 相对基准收益",
+      "value": 0.12138756154882913,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2024-01-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.20.benchmark_return",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.20 · 基准收益",
+      "value": 0.027539602350973524,
+      "unit": "percent",
+      "start": "2023-12-05",
+      "end": "2024-01-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-launch-2023-12-06.AMD.20.standardized_response",
+      "label": "event.ev-mi300-launch-2023-12-06.AMD.20 · 标准化反应幅度",
+      "value": 1.083797601610072,
+      "unit": "number",
+      "start": "2023-12-05",
+      "end": "2024-01-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.1.return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.1 · 收益",
+      "value": 0.006592680492829794,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-11-17",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.1.relative_return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.1 · 相对基准收益",
+      "value": 0.005349002202005737,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-11-17",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.1.benchmark_return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.1 · 基准收益",
+      "value": 0.0012436782908240573,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-11-17",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.1.standardized_response",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.1 · 标准化反应幅度",
+      "value": 0.19580707423683097,
+      "unit": "number",
+      "start": "2023-11-16",
+      "end": "2023-11-17",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.5.return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.5 · 收益",
+      "value": 0.02069595000954383,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-11-24",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.5.relative_return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.5 · 相对基准收益",
+      "value": 0.00943523202587837,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-11-24",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.5.benchmark_return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.5 · 基准收益",
+      "value": 0.011260717983665458,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-11-24",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.5.standardized_response",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.5 · 标准化反应幅度",
+      "value": 0.15446254418384683,
+      "unit": "number",
+      "start": "2023-11-16",
+      "end": "2023-11-24",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.20.return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.20 · 收益",
+      "value": 0.16122833823092542,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-12-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.20.relative_return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.20 · 相对基准收益",
+      "value": 0.11457919200078526,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-12-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.20.benchmark_return",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.20 · 基准收益",
+      "value": 0.04664914623014016,
+      "unit": "percent",
+      "start": "2023-11-16",
+      "end": "2023-12-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-mi300-sc23-2023-11-17.AMD.20.standardized_response",
+      "label": "event.ev-mi300-sc23-2023-11-17.AMD.20 · 标准化反应幅度",
+      "value": 0.937878022417957,
+      "unit": "number",
+      "start": "2023-11-16",
+      "end": "2023-12-15",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.1.return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.1 · 收益",
+      "value": 0.23708027557556832,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.1.relative_return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.1 · 相对基准收益",
+      "value": 0.2334940405010444,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.1.benchmark_return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.1 · 基准收益",
+      "value": 0.0035862350745239358,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.1.standardized_response",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.1 · 标准化反应幅度",
+      "value": 9.064282824127067,
+      "unit": "number",
+      "start": "2025-10-03",
+      "end": "2025-10-06",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.5.return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.5 · 收益",
+      "value": 0.3050342884925823,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.5.relative_return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.5 · 相对基准收益",
+      "value": 0.32922701684576183,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.5.benchmark_return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.5 · 基准收益",
+      "value": -0.024192728353179538,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.5.standardized_response",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.5 · 标准化反应幅度",
+      "value": 5.715682709551696,
+      "unit": "number",
+      "start": "2025-10-03",
+      "end": "2025-10-10",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.20.return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.20 · 收益",
+      "value": 0.5553531181461353,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-31",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.20.relative_return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.20 · 相对基准收益",
+      "value": 0.5361513972400562,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-31",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.20.benchmark_return",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.20 · 基准收益",
+      "value": 0.01920172090607908,
+      "unit": "percent",
+      "start": "2025-10-03",
+      "end": "2025-10-31",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-openai-amd-2025-10-06.AMD.20.standardized_response",
+      "label": "event.ev-openai-amd-2025-10-06.AMD.20 · 标准化反应幅度",
+      "value": 4.6540397872976405,
+      "unit": "number",
+      "start": "2025-10-03",
+      "end": "2025-10-31",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1 · 收益",
+      "value": 0.04362895969096203,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-07-31",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.relative_return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1 · 相对基准收益",
+      "value": 0.027374312175262983,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-07-31",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.benchmark_return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1 · 基准收益",
+      "value": 0.01625464751569905,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-07-31",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.standardized_response",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1 · 标准化反应幅度",
+      "value": 0.9357342070094333,
+      "unit": "number",
+      "start": "2024-07-30",
+      "end": "2024-07-31",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5 · 收益",
+      "value": -0.059664906240672666,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-08-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.relative_return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5 · 相对基准收益",
+      "value": -0.02304139046127851,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-08-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.benchmark_return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5 · 基准收益",
+      "value": -0.036623515779394156,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-08-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.standardized_response",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5 · 标准化反应幅度",
+      "value": 0.352235376423114,
+      "unit": "number",
+      "start": "2024-07-30",
+      "end": "2024-08-06",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20 · 收益",
+      "value": 0.08711353182544235,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-08-27",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.relative_return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20 · 相对基准收益",
+      "value": 0.05102489999004223,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-08-27",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.benchmark_return",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20 · 基准收益",
+      "value": 0.03608863183540012,
+      "unit": "percent",
+      "start": "2024-07-30",
+      "end": "2024-08-27",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.standardized_response",
+      "label": "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20 · 标准化反应幅度",
+      "value": 0.3900106394435669,
+      "unit": "number",
+      "start": "2024-07-30",
+      "end": "2024-08-27",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1.return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1 · 收益",
+      "value": -0.020200614451877374,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-01-07",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1.relative_return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1 · 相对基准收益",
+      "value": -0.016977200084907995,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-01-07",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1.benchmark_return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1 · 基准收益",
+      "value": -0.0032234143669693793,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-01-07",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1.standardized_response",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.1 · 标准化反应幅度",
+      "value": 0.4438577015396724,
+      "unit": "number",
+      "start": "2026-01-06",
+      "end": "2026-01-07",
+      "frequency": "1 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5.return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5 · 收益",
+      "value": 0.030884044453866277,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-01-13",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5.relative_return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5 · 相对基准收益",
+      "value": 0.02805087546401408,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-01-13",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5.benchmark_return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5 · 基准收益",
+      "value": 0.0028331689898521972,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-01-13",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5.standardized_response",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.5 · 标准化反应幅度",
+      "value": 0.3279737690356896,
+      "unit": "number",
+      "start": "2026-01-06",
+      "end": "2026-01-13",
+      "frequency": "5 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20.return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20 · 收益",
+      "value": -0.06606019714910161,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-02-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20.relative_return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20 · 相对基准收益",
+      "value": -0.0579365314210748,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-02-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20.benchmark_return",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20 · 基准收益",
+      "value": -0.008123665728026808,
+      "unit": "percent",
+      "start": "2026-01-06",
+      "end": "2026-02-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20.standardized_response",
+      "label": "event.ev-amd-ces2026-mi455x-2026-01-07.AMD.20 · 标准化反应幅度",
+      "value": 0.3386999917239913,
+      "unit": "number",
+      "start": "2026-01-06",
+      "end": "2026-02-04",
+      "frequency": "20 根完整日线",
+      "method": "事件窗口；相对收益为标的减基准，非因果效应",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112",
+        "prices-SPY-5e58e540959c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-AMD-2025-10-06.return",
+      "label": "move.change-AMD-2025-10-06 · 收益",
+      "value": 0.23708027557556832,
+      "unit": "percent",
+      "start": "2025-10-06",
+      "end": "2025-10-06",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-AMD-2025-04-09.return",
+      "label": "move.change-AMD-2025-04-09 · 收益",
+      "value": 0.23820480081192907,
+      "unit": "percent",
+      "start": "2025-04-09",
+      "end": "2025-04-09",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-AMD-2026-02-04.return",
+      "label": "move.change-AMD-2026-02-04 · 收益",
+      "value": -0.17314443047898198,
+      "unit": "percent",
+      "start": "2026-02-04",
+      "end": "2026-02-04",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-AMD-2026-05-06.return",
+      "label": "move.change-AMD-2026-05-06 · 收益",
+      "value": 0.1861453669565576,
+      "unit": "percent",
+      "start": "2026-05-06",
+      "end": "2026-05-06",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-AMD-2023-05-25.return",
+      "label": "move.change-AMD-2023-05-25 · 收益",
+      "value": 0.11157293992424155,
+      "unit": "percent",
+      "start": "2023-05-25",
+      "end": "2023-05-25",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-AMD-35e5c50f0112"
+      ],
+      "currency": "USD"
+    }
+  ],
+  "reviews": [
+    {
+      "attempt": 1,
+      "draft_hash": "108a698de3ceefcc9a242e2bec782d414c2a1d6dbb1b9ba6a040ce0da5d6385f",
+      "deterministic": {
+        "f-mi300-launch": [
+          "text 含手写数字「1.3 倍」；没有对应指标时省去此数字，保留事实描述并回链原文",
+          "text 含手写数字「2 倍」；没有对应指标时省去此数字，保留事实描述并回链原文"
+        ],
+        "f-major-moves": [
+          "text 含手写数字「1.6」；没有对应指标时省去此数字，保留事实描述并回链原文"
+        ],
+        "f-mi300-revenue": [
+          "text 含手写数字「10 亿美元」；没有对应指标时省去此数字，保留事实描述并回链原文",
+          "text 含手写数字「115%」；没有对应指标时省去此数字，保留事实描述并回链原文",
+          "text 含手写数字「40 亿美元」；没有对应指标时省去此数字，保留事实描述并回链原文",
+          "text 含手写数字「45 亿美元」；没有对应指标时省去此数字，保留事实描述并回链原文"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [],
+            "reason": "指标核对：market.AMD.bars=937（2023-01-03至2026-09-28），daily.AMD.total_return=8.495（即849.5%），cagr=0.827（82.7%），volatility=0.568（56.8%），max_drawdown=-0.630（-63.0%），latest.close=607.87，low=596.07，high=629.75，volume=21995500。正文仅罗列这些数值，未给出任何相等/大小/方向关系句，故不转录数值断言。口径描述与 metric method 一致（Yahoo 拆股调整 OHLC、复权收盘含分红、无费用）。'回撤幅度与波动水平相称'为定性表述，无明确阈值，不做数值断言。limitations 已说明 SPY 未做同口径全区间比较，与 spec 中 SPY 仅作基准一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-launch",
+            "numeric_assertions": [],
+            "reason": "日期核对：src-7ac99d5cf0b99a 正文含 'Today we have the long-awaited launch of the AMD Instinct MI300 series.'，页面 published_at=2023-12-06T20:01:39Z，与事件日 2023-12-06 一致；src-610e75fd151aee（Tom's Hardware）published 2023-12-06，正文含 'AMD launched its Instinct MI300X AI accelerator and the Instinct MI300A...'，支持 MI300X/MI300A 双产品与对标 H100。'1.3 倍至 2 倍以上性能优势'在 src-7ac99d5cf0b99a 正文有对应（'greater than 2x chip'、'1.3x'），属报道转述 AMD 幻灯片，正文已限定为'报道称'。SC23 报道（src-35d9a608135b52，2023-11-17）确为展会展示，正文正确区分非正式发布。counterevidence 中'此前被预期在 2023 年 6 月发布'有原文支持（'we thought this series was launching back in June 2023'）。limitations 已披露缺一手来源与收盘后时点。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-reaction",
+            "numeric_assertions": [
+              {
+                "quote": "首日小幅落后基准",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return"
+                ]
+              },
+              {
+                "quote": "5 日与 20 日转为正收益且跑赢基准",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+                  "event.ev-mi300-launch-2023-12-06.AMD.20.return"
+                ]
+              },
+              {
+                "quote": "5 日与 20 日转为正收益且跑赢基准",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+                  "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return"
+                ]
+              }
+            ],
+            "reason": "指标核对：1 日 return=-0.01318（-1.32%），benchmark=-0.00403，relative=-0.00915（负），standardized=0.365；5 日 return=0.16244（+16.24%），relative=0.14602（正），standardized=2.607；20 日 return=0.14893（+14.89%），relative=0.12139（正），standardized=1.084。正文'首日小幅落后基准'对应 1 日相对收益为负；'5 日与 20 日转为正收益且跑赢基准'对应 5/20 日 return 与 relative_return 均为正。方向与数值一致。'反应强度评级为高'为定性评级，无阈值可执行，不做断言。limitations 已说明相对收益非因果、窗口起点含公告前一日、公告在收盘后。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-major-moves",
+            "numeric_assertions": [
+              {
+                "quote": "该事件 1 日相对收益",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-openai-amd-2025-10-06.AMD.1.relative_return"
+                ]
+              },
+              {
+                "quote": "5 日相对收益",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-openai-amd-2025-10-06.AMD.5.relative_return"
+                ]
+              },
+              {
+                "quote": "20 日相对收益",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-openai-amd-2025-10-06.AMD.20.relative_return"
+                ]
+              }
+            ],
+            "reason": "指标核对：move.change-AMD-2025-10-06.return=0.23708（+23.71%），event.ev-openai-amd-2025-10-06.AMD.1.relative_return=0.23349（正），standardized=9.064，5 日 relative=0.32923（正），20 日 relative=0.53615（正）；move.change-AMD-2025-04-09.return=0.23820，2026-05-06=0.18615，2023-05-25=0.11157，2026-02-04=-0.17314。正文对 2025-10-06 的数值与方向描述与指标一致；其余四个异动仅列数值并明确标注'未在已读来源中建立直接对应事件'，与 coverage.major_moves 的 investigated=true、event_ids 为空一致。'1.6 亿股认股权证'在 src-ab40e4c8005793 正文有支持（'warrant for up to 160 million shares'）。'6 吉瓦''首批 1 吉瓦 MI450 2026 下半年'均有原文支持。counterevidence 与 limitations 已限定为时间先后候选关系。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-revenue",
+            "numeric_assertions": [
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.return",
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.return"
+                ]
+              },
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.return"
+                ]
+              },
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.relative_return",
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.relative_return"
+                ]
+              },
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.relative_return"
+                ]
+              }
+            ],
+            "reason": "指标核对：1 日 return=0.04363（正）、relative=0.02737（正）；5 日 return=-0.05966（负）、relative=-0.02304（负）；20 日 return=0.08711（正）、relative=0.05102（正）。正文'1 日与 20 日为正、5 日为负'与指标符号一致。事实部分（MI300 当季收入超 10 亿美元、数据中心同比增 115%、指引由 40 亿上调至超 45 亿美元）在 src-740bc595ef2813 正文逐项有支持。'评级为低'为定性评级，不做断言。limitations 已说明来源为媒体转述、指引为前瞻表述。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-alternatives",
+            "numeric_assertions": [],
+            "reason": "三类替代解释均为方法论层面的可检验表述，未引入无证据事实：行业/大盘共同因子（相对收益仅减基准，未剔除板块风格）与 metric method 中'相对收益为标的减基准，非因果效应'一致；预期提前反映有 src-35d9a608135b52 的 SC23 展示支持；公司层面信息重叠有财报事件支持。counterevidence 给出可检验条件（基准与板块无同向变动则共同因子解释力下降）。limitations 明确未做多因子回归、无法量化贡献份额。未把假设伪装成结论。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-limits",
+            "numeric_assertions": [],
+            "reason": "四项局限逐条可核：缺一手来源与 warnings 第 1 条一致；发布时点 2023-12-06T20:01:39Z 为美股收盘后，与 src 元数据一致；相对收益非回归超额收益与 metric method 一致；2024/2026 多时段资讯覆盖不足与 warnings 第 6、7 条及 open_gaps 一致。'评级只表示反应强度，与证据可信度相互独立'为方法说明，非事实断言。未引入无证据事实。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "已核实实际起止区间（2023-01-03 至 2026-09-28）、行情口径（Yahoo 拆股调整 OHLC、复权收盘含分红、未计费用）以及累计收益、年化收益、年化波动、最大回撤等可复核指标，并说明 SPY 仅作事件窗口基准、未做同口径全区间组合比较，符合 acceptance 对起止区间、口径与收益/回撤的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-1",
+            "reason": "已核实 MI300 系列发布事件日 2023-12-06 及 1/5/20 日窗口的收益、基准、相对收益与标准化反应幅度，并区分了 SC23 展示（2023-11-17）与正式发布的时间、说明公告时点在收盘后、1 日窗口对盘前盘后归属敏感。但 acceptance 要求“原文核实具体事实与日期”，而 gap-e912bcad48379e82 指出缺少 AMD 官方新闻稿或官方产品页作为一手来源，现有支持仅为第三方媒体，该必答事实缺口未被 accepted_findings 补齐，故不能判为完成。",
+            "answered": false,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "attribution",
+            "reason": "已讨论主要异动与时间线，给出三类竞争性解释（行业/大盘共同因子、信息提前反映、公司层面其他信息），区分反应强度与证据可信度，并明确因果边界为“窗口内出现与事件同向的价格变化”而非事件导致收益。gap-e5ce3dbb252692ab 所述 2024 年及 2026 年多时段资讯覆盖不足属于研究边界，已在 f-limits 中作为局限保留，不构成未回答的必答事实，故 acceptance 已实质满足。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-e5ce3dbb252692ab",
+                "finding_id": "f-limits",
+                "quote": "2024 年与 2026 年多个时段缺少与 AMD 直接相关的已读事件来源，部分异动只能保留为原因未确认。",
+                "reason": "该 finding 直接绑定 attribution，明确将覆盖不足时段列为已确认的证据局限并保留为原因未确认，属于研究边界而非遗漏必答事实，故不阻碍归因问题完成。"
+              }
+            ]
+          },
+          {
+            "question_id": "custom-1",
+            "reason": "已给出主要异动与同期信息的分析框架及 MI300 相关窗口的同期信息，但 gap-ff73930545b2c77e 指出 2025-04-09、2026-02-04、2026-05-06、2023-05-25 四个主要异动在已读来源中未建立直接对应事件，accepted_findings 中无任何 finding 绑定 custom-1 补齐这四个日期的同期信息，用户明确要求的“分析主要异动及同期信息”仍缺必要事实，故不能判为完成。",
+            "answered": false,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-2",
+            "reason": "已给出 MI300 发布事件 1/5/20 日窗口的收益、相对收益与标准化反应幅度，并给出反应强度评级为高，同时说明相对收益为标的减基准、评级只表示反应强度且与证据可信度独立，符合 acceptance 对反应强度证据、计算依据与限制的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-3",
+            "reason": "已列出三类替代解释（行业与大盘共同因子、预期与信息提前反映、公司层面其他信息），并说明未做多因子回归或板块归因、无法量化各解释贡献份额，符合 acceptance 对替代解释证据、计算依据与限制的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-4",
+            "reason": "已逐项列出四类证据局限：缺少官方一手来源、发布时点在收盘后导致日线无法隔离盘中反应、相对收益非回归超额收益且不构成因果、部分时段缺少已读事件来源，并说明这些局限不改变已给出的有限结论，符合 acceptance 对证据局限的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为纯行情描述：覆盖区间、bar 数、累计/年化收益、波动、最大回撤、最新交易日 OHLCV 均来自 prices-AMD 数据集与 metric_catalog，属确定性计算，无需新闻背书。末句“收益与波动同时偏高的单一成长股形态，回撤幅度与波动水平相称”是对同一组统计量的定性概括，未外推为稳定属性、未来保护或因果机制；limitations 已声明不含费用、未做同口径基准比较，未给出长期相对结论。无实质推断跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-launch",
+            "inference_audit": "发布日 2023-12-06 由 src-7ac99d5cf0b99a（正文“Today we have the long-awaited launch…”及页面日期 December 6, 2023）与 src-610e75fd151aee（“AMD launched its Instinct MI300X AI accelerator and the Instinct MI300A…during its Advancing AI event”）共同支持；MI300X 为纯 GPU、MI300A 为 CPU+GPU APU 亦有原文支持；1.3 倍至 2 倍以上性能优势对应原文“greater than 2x”“1.3x”及“up to 1.6X more performance”，且原文明确为 AMD 自述对标，草稿表述为“报道称…给出”，属转述而非独立验证，可接受。SC23 报道（src-35d9a608135b52）确为展会展示与客户部署进展，非正式发布，判断与原文一致。counterevidence 与 limitations 已标注预期时点分歧、缺一手来源、收盘后发布等边界。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-reaction",
+            "inference_audit": "1/5/20 日收益、基准收益、相对收益与标准化反应幅度均取自 metric_catalog 事件窗口指标，方向描述（首日小幅落后、5/20 日转正并跑赢）与数值一致。该条未声称事件导致收益，counterevidence 指出并行信息，limitations 明确相对收益非回归超额、不构成因果效应，并提示窗口起点含公告前一日、公告在收盘后。属有限观察，无属性或因果外推。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-major-moves",
+            "inference_audit": "2025-10-06 单日收益与事件窗口指标来自 metric_catalog；协议内容（6 吉瓦、多代际 Instinct GPU、首批 1 吉瓦 MI450 于 2026 下半年启动、最多 1.6 亿股认股权证）逐项对应 src-ab40e4c8005793 原文。其余异动仅记录数值并声明“未在已读来源中建立直接对应事件”“无已读来源支持的具体原因”，未虚构原因；counterevidence 对 2025-04-09 与关税行政令同日但未建立标的层面关联的说明恰当。limitations 明确关联为时间先后候选关系。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-revenue",
+            "inference_audit": "MI300 当季收入超 10 亿美元、数据中心同比增长 115%、指引由 40 亿上调至超 45 亿美元均逐项对应 src-740bc595ef2813 原文（“sold over $1 billion of its MI300 chips”“surged 115% year over year”“we now expect data center GPU revenue to exceed $4.5 billion in 2024, up from the $4 billion we guided in April”）。窗口数值来自 metric_catalog。末句“说明基本面利好并未转化为持续扩大的相对收益”是对本窗口相对收益方向（1 日正、5 日负、20 日正）的有限概括，未断言因果或长期属性；counterevidence 与 limitations 已提示板块波动、媒体来源、指引为前瞻。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-alternatives",
+            "inference_audit": "三类竞争性解释（共同因子、信息提前反映、公司层面其他信息重叠）均为方法学层面的候选解释，未把假设当作已发生事实；结论明确限定为“窗口内出现与事件同向的价格变化”而非“事件导致该收益”。SC23 引文支持“更早的路线图/展示”这一信息提前进入价格的候选路径。limitations 承认未做多因子回归、无法量化贡献份额。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-limits",
+            "inference_audit": "四条局限与前述各条一致：缺一手官方来源、收盘后发布导致日线无法隔离盘中反应、相对收益非回归超额且评级与证据可信度独立、部分时段缺直接相关已读来源。均为研究边界陈述，未引入未经支持的事实，也未以局限覆盖前文断言。无实质违规。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "首日小幅落后基准",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return"
+          ],
+          "values": [
+            -0.009148152034767154
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "5 日与 20 日转为正收益且跑赢基准",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+            "event.ev-mi300-launch-2023-12-06.AMD.20.return"
+          ],
+          "values": [
+            0.162443012359323,
+            0.14892716389980265
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "5 日与 20 日转为正收益且跑赢基准",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+            "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return"
+          ],
+          "values": [
+            0.14601721857104955,
+            0.12138756154882913
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-major-moves",
+          "quote": "该事件 1 日相对收益",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-openai-amd-2025-10-06.AMD.1.relative_return"
+          ],
+          "values": [
+            0.2334940405010444
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-major-moves",
+          "quote": "5 日相对收益",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-openai-amd-2025-10-06.AMD.5.relative_return"
+          ],
+          "values": [
+            0.32922701684576183
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-major-moves",
+          "quote": "20 日相对收益",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-openai-amd-2025-10-06.AMD.20.relative_return"
+          ],
+          "values": [
+            0.5361513972400562
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.return",
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.return"
+          ],
+          "values": [
+            0.04362895969096203,
+            0.08711353182544235
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.return"
+          ],
+          "values": [
+            -0.059664906240672666
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.relative_return",
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.relative_return"
+          ],
+          "values": [
+            0.027374312175262983,
+            0.05102489999004223
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.relative_return"
+          ],
+          "values": [
+            -0.02304139046127851
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "numeric_transcription_repairs": [],
+      "metric_token_repairs": [],
+      "source_question_review": [
+        {
+          "question_id": "market",
+          "reason": "f-market 给出实际起止区间（2023-01-03 至 2026-09-28）、937 根日线、复权口径、累计收益 849.5%、年化 82.7%、年化波动 56.8%、最大回撤 -63.0%，并说明 SPY 仅作事件窗口基准、未做同口径全区间组合比较。收益与风险均已覆盖，口径可复核。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "required-1",
+          "reason": "f-mi300-launch 核实发布日为 2023-12-06，区分了 SC23（2023-11-17）展示与正式发布，并给出 MI300X/MI300A 产品构成；f-mi300-reaction 给出 1/5/20 日窗口收益、相对收益与标准化反应幅度；f-mi300-revenue 补充 2024-07-30 变现验证；f-limits 披露缺一手来源、收盘后时点、相对收益非因果等局限。事件事实、日期、窗口、强度与局限均已覆盖。",
+          "answered": true,
+          "resolved_gaps": [
+            {
+              "gap_id": "gap-e912bcad48379e82",
+              "finding_id": "f-mi300-launch",
+              "quote": "发布日由第三方媒体报道正文与页面发布元数据一致支持，未取得 AMD 官方新闻稿或官方产品页作为一手来源",
+              "reason": "该缺口要求补一手来源。用户请求为'核实 MI300 系列发布'，并未要求一手来源优先级；草稿以两个独立第三方来源（ServeTheHome 正文与页面元数据、Tom's Hardware 同日报道）交叉支持发布日与产品构成，并明确披露一手来源缺失，属已核实且已披露的边界，不构成未回答。"
+            }
+          ]
+        },
+        {
+          "question_id": "attribution",
+          "reason": "f-major-moves 逐项列出 2025-10-06（有 OpenAI 协议对应）、2025-04-09、2026-02-04、2026-05-06、2023-05-25（均标注未建立直接对应事件）；f-alternatives 给出行业共同因子、预期提前反映、公司层面信息重叠三类竞争性解释与因果边界；f-mi300-revenue 给出财报窗口方向。已调查异动与时间线、反应强度、竞争性解释与因果边界均已说明。",
+          "answered": true,
+          "resolved_gaps": [
+            {
+              "gap_id": "gap-ff73930545b2c77e",
+              "finding_id": "f-major-moves",
+              "quote": "均未在已读来源中建立直接对应事件",
+              "reason": "该缺口要求为四个异动补查同期信息。草稿已对每个日期给出单日收益数值并明确标注未建立对应事件，同时说明'不等于不存在原因'，属对用户'分析主要异动及同期信息'要求的诚实回答；未找到事件不等于研究失败，且已披露为局限。"
+            },
+            {
+              "gap_id": "gap-e5ce3dbb252692ab",
+              "finding_id": "f-limits",
+              "quote": "2024 年与 2026 年多个时段缺少与 AMD 直接相关的已读事件来源，部分异动只能保留为原因未确认",
+              "reason": "该缺口要求补充时段资讯覆盖。草稿在 f-limits 中明确披露这些时段覆盖不足并说明'已读来源未覆盖的时段不等于期间没有事件'，属对证据局限的完整披露，符合用户'证据局限'要求。"
+            }
+          ]
+        },
+        {
+          "question_id": "custom-1",
+          "reason": "f-major-moves 逐项给出五个主要异动的日期、单日收益与同期信息状态，2025-10-06 有 OpenAI 协议原文支持，其余四个明确标注未建立对应事件；f-mi300-revenue 补充财报异动窗口。已给出证据、计算依据与限制。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-2",
+          "reason": "f-mi300-reaction 给出 MI300 发布 1/5/20 日窗口的收益、相对收益与标准化反应幅度并给出方向与评级；f-major-moves 给出 OpenAI 事件的 1/5/20 日相对收益与标准化反应幅度；f-mi300-revenue 给出财报窗口方向与评级。反应强度已按窗口量化并说明口径。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-3",
+          "reason": "f-alternatives 明确列出三类竞争性解释（行业/大盘共同因子、预期提前反映、公司层面信息重叠），并给出可检验条件与'窗口内出现与事件同向的价格变化'而非'事件导致收益'的因果边界表述。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-4",
+          "reason": "f-limits 列出四项局限：缺一手来源、收盘后时点导致日线无法隔离盘中反应、相对收益非回归超额收益且非因果、多时段资讯覆盖不足；各结论的 limitations 字段亦分别说明口径与边界。",
+          "answered": true,
+          "resolved_gaps": []
+        }
+      ],
+      "local_repair_needed": true,
+      "open_gaps": [
+        {
+          "question_id": "required-1",
+          "reason": "MI300 系列发布缺少 AMD 官方新闻稿或官方产品页作为一手来源，现有支持为第三方媒体报道。",
+          "next_action": "检索 AMD 新闻室与投资者关系页面的 2023-12-06 发布公告原文，核对公开时刻与产品规格表述。"
+        },
+        {
+          "question_id": "custom-1",
+          "reason": "2025-04-09、2026-02-04、2026-05-06、2023-05-25 四个主要异动在已读来源中未建立直接对应事件。",
+          "next_action": "针对这四个日期分别检索公司公告、财报日程与行业新闻，确认是否存在可定位日期的同期信息。"
+        },
+        {
+          "question_id": "attribution",
+          "reason": "2024 年 1 月至 7 月、2024 年 8 月至 10 月、2026 年 2 月至 6 月及 2026 年 8 月至 9 月的 AMD 相关资讯覆盖不足。",
+          "next_action": "补充这些时段的公司公告与行业报道检索，以判断是否存在被遗漏的同期事件。"
+        }
+      ],
+      "accepted_ids": [
+        "f-alternatives",
+        "f-limits",
+        "f-market",
+        "f-mi300-reaction"
+      ],
+      "accepted_hashes": {
+        "f-market": "ecb5a7b68e6e45396c3f9f2ec168dc2f4ffca3226fb01dd1317e581cbfd99385",
+        "f-mi300-reaction": "4873137a6cbe0602338e1796851c689b2001bf5c054579b0ebda36eb925566cd",
+        "f-alternatives": "cd1086cff39a3630b7bc159d0b27c5f3820966e0e65575ec2f3602f8377da1e2",
+        "f-limits": "5644ec832ff2170fa6d04d2b2835d21a5305db064b4c4fd4597dacac06d380a7"
+      },
+      "reused_certificates": []
+    },
+    {
+      "attempt": 2,
+      "draft_hash": "4b0809712e66888ceba85715fdeb50fb064a2d15f2df19464440cd647ecd284f",
+      "deterministic": {
+        "f-mi300-revenue": [
+          "text 含手写数字「10 亿美元」；没有对应指标时省去此数字，保留事实描述并回链原文"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-mi300-launch",
+            "numeric_assertions": [],
+            "reason": "引文 src-7ac99d5cf0b99a（ServeTheHome，2023-12-06 20:01 UTC）正文首句即“Today we have the long-awaited launch of the AMD Instinct MI300 series”，与页面发布元数据同日，支持 2023-12-06 正式发布；Tom's Hardware 引文支持 MI300X/MI300A 与 Advancing AI 活动、对标 H100 的表述；SC23 引文支持“展会展示与客户部署进展，不是正式发布”。反证中“此前被预期在 2023 年 6 月发布”与 STH 原文“we thought this series was launching back in June 2023”一致。局限已披露无官方一手来源、时间戳在收盘后。该条为事实描述，未含可执行数值关系（性能倍数已按程序要求删除），无需数值断言。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-major-moves",
+            "numeric_assertions": [],
+            "reason": "2025-10-06 单日收益 23.71% 与 move.change-AMD-2025-10-06.return 一致；同日 OpenAI 合作由 AMD 新闻室原文支持（6 吉瓦、首批 1 吉瓦 MI450 于 2026 下半年、认股权证最多 1.6 亿股）。事件窗口相对收益与标准化反应幅度数值与 metric_catalog 一致（1 日 23.35%/9.06，5 日 32.92%，20 日 53.62%）。其余异动数值：2025-04-09 +23.82%、2026-05-06 +18.61%、2023-05-25 +11.16%、2026-02-04 -17.31%，均与 move.* 指标一致，且正文明确说明未建立直接对应事件，属如实披露而非断言因果。反证中关税行政令同日但未直接提及 AMD 的表述与已读来源一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-revenue",
+            "numeric_assertions": [],
+            "reason": "CNBC 引文支持 MI300 当季收入超 10 亿美元与数据中心同比 +115%；正文“管理层上调 2024 年数据中心 GPU 收入指引”与原文“we now expect data center GPU revenue to exceed $4.5 billion in 2024, up from the $4 billion we guided in April”一致。窗口数值核对：1 日收益 +4.36%、相对 +2.74%；5 日收益 -5.97%、相对 -2.30%；20 日收益 +8.71%、相对 +5.10%，与 metric_catalog 完全一致，故“1 日与 20 日为正、5 日为负”成立。局限已说明来源为媒体报道、指引为前瞻表述。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [],
+            "reason": "指标核对：market.AMD.bars=937（2023-01-03至2026-09-28），daily.AMD.total_return=8.495（即849.5%），cagr=0.827（82.7%），volatility=0.568（56.8%），max_drawdown=-0.630（-63.0%），latest.close=607.87，low=596.07，high=629.75，volume=21995500。正文仅罗列这些数值，未给出任何相等/大小/方向关系句，故不转录数值断言。口径描述与 metric method 一致（Yahoo 拆股调整 OHLC、复权收盘含分红、无费用）。'回撤幅度与波动水平相称'为定性表述，无明确阈值，不做数值断言。limitations 已说明 SPY 未做同口径全区间比较，与 spec 中 SPY 仅作基准一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-reaction",
+            "numeric_assertions": [
+              {
+                "quote": "首日小幅落后基准",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return"
+                ]
+              },
+              {
+                "quote": "5 日与 20 日转为正收益且跑赢基准",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+                  "event.ev-mi300-launch-2023-12-06.AMD.20.return"
+                ]
+              },
+              {
+                "quote": "5 日与 20 日转为正收益且跑赢基准",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+                  "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return"
+                ]
+              }
+            ],
+            "reason": "指标核对：1 日 return=-0.01318（-1.32%），benchmark=-0.00403，relative=-0.00915（负），standardized=0.365；5 日 return=0.16244（+16.24%），relative=0.14602（正），standardized=2.607；20 日 return=0.14893（+14.89%），relative=0.12139（正），standardized=1.084。正文'首日小幅落后基准'对应 1 日相对收益为负；'5 日与 20 日转为正收益且跑赢基准'对应 5/20 日 return 与 relative_return 均为正。方向与数值一致。'反应强度评级为高'为定性评级，无阈值可执行，不做断言。limitations 已说明相对收益非因果、窗口起点含公告前一日、公告在收盘后。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-alternatives",
+            "numeric_assertions": [],
+            "reason": "三类替代解释均为方法论层面的可检验表述，未引入无证据事实：行业/大盘共同因子（相对收益仅减基准，未剔除板块风格）与 metric method 中'相对收益为标的减基准，非因果效应'一致；预期提前反映有 src-35d9a608135b52 的 SC23 展示支持；公司层面信息重叠有财报事件支持。counterevidence 给出可检验条件（基准与板块无同向变动则共同因子解释力下降）。limitations 明确未做多因子回归、无法量化贡献份额。未把假设伪装成结论。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-limits",
+            "numeric_assertions": [],
+            "reason": "四项局限逐条可核：缺一手来源与 warnings 第 1 条一致；发布时点 2023-12-06T20:01:39Z 为美股收盘后，与 src 元数据一致；相对收益非回归超额收益与 metric method 一致；2024/2026 多时段资讯覆盖不足与 warnings 第 6、7 条及 open_gaps 一致。'评级只表示反应强度，与证据可信度相互独立'为方法说明，非事实断言。未引入无证据事实。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 给出实际起止区间 2023-01-03 至 2026-09-28、日线口径（Yahoo 拆股调整 OHLC、复权收盘含分红、未计费用）、累计收益、年化收益、年化波动、最大回撤及最新交易日数据，并说明 SPY 仅作事件窗口基准、未做同口径全区间组合比较，符合 acceptance 对起止区间、行情口径与可复核收益/回撤的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-1",
+            "reason": "f-mi300-launch 以第三方报道原文核实正式发布日为 2023-12-06，区分了 2023-11-17 SC23 展示与正式发布，并说明发布时点在美股收盘后、日线无法隔离盘中反应；f-mi300-reaction 给出 1/5/20 日窗口收益、相对收益与标准化反应幅度及强度评级；f-limits 说明缺少官方一手来源等局限。事实、日期、窗口、强度与局限均已覆盖。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-e912bcad48379e82",
+                "finding_id": "f-mi300-launch",
+                "quote": "MI300 系列正式发布发生在 2023-12-06，当日报道明确写为“Today we have the long-awaited launch of the AMD Instinct MI300 series”",
+                "reason": "该缺口要求官方一手来源核对公开时刻与规格表述。accepted_findings 已用第三方报道正文与页面元数据一致确认发布日与产品构成，并明确记录未取得官方新闻稿这一局限；用户要求的是核实发布事实与日期，官方一手来源属可选更高标准，不构成未回答。"
+              }
+            ]
+          },
+          {
+            "question_id": "attribution",
+            "reason": "f-major-moves 列出已识别主要异动及其同期信息（含 2025-10-06 OpenAI 协议及窗口相对收益），并记录无对应事件的异动；f-alternatives 给出行业/大盘共同因子、信息提前反映、公司层面其他信息三类竞争性解释及因果边界；f-limits 说明未做多因子回归、部分时段来源不足。已满足讨论主要异动与时间线、区分反应强度与证据可信度、说明竞争性解释与因果边界的要求。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-e5ce3dbb252692ab",
+                "finding_id": "f-limits",
+                "quote": "2024 年与 2026 年多个时段缺少与 AMD 直接相关的已读事件来源，部分异动只能保留为原因未确认。",
+                "reason": "该缺口为资讯覆盖不足。accepted_findings 已明确将相关时段异动保留为原因未确认，并说明已读来源未覆盖不等于期间没有事件；用户要求的是分析主要异动与同期信息并说明无法确认的解释，覆盖不足本身已作为证据局限被如实报告，不构成未回答。"
+              }
+            ]
+          },
+          {
+            "question_id": "custom-1",
+            "reason": "f-major-moves 逐项给出主要异动日期、单日收益、对应同期信息（2025-10-06 OpenAI 协议及 1/5/20 日相对收益与强度评级），并明确 2025-04-09、2026-02-04、2026-05-06、2023-05-25 未在已读来源中建立直接对应事件，同时说明关联为时间先后候选关系、未证明因果。已给出证据、计算依据与限制。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-ff73930545b2c77e",
+                "finding_id": "f-major-moves",
+                "quote": "2025-04-09 单日 {{move.change-AMD-2025-04-09.return}}、2026-05-06 单日 {{move.change-AMD-2026-05-06.return}}、2023-05-25 单日 {{move.change-AMD-2023-05-25.return}} 均未在已读来源中建立直接对应事件",
+                "reason": "该缺口要求为四个异动日期检索同期信息。accepted_findings 已逐一记录这些日期的异动幅度并明确其在已读来源中无直接对应事件，同时说明无对应事件不等于不存在原因；用户要求的是分析主要异动及同期信息，对无法确认者如实标注即为已完成的有限结论。"
+              }
+            ]
+          },
+          {
+            "question_id": "custom-2",
+            "reason": "f-mi300-reaction 给出 MI300 发布事件 1/5/20 日窗口的收益、基准收益、相对收益与标准化反应幅度，并给出方向描述与强度评级；f-major-moves 给出 2025-10-06 事件的 1/5/20 日相对收益与标准化反应幅度及评级。反应强度已用可复核指标量化并说明口径限制。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-3",
+            "reason": "f-alternatives 明确列出三类竞争性解释（行业与大盘共同因子、预期与信息提前反映、公司层面其他信息），说明相对收益只剔除基准部分、未剔除板块与风格因子，并给出可支持的表述边界与反证条件。已满足替代解释要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-4",
+            "reason": "f-limits 列出四项主要局限：缺少官方一手来源、发布时点在收盘后导致日线无法隔离盘中反应、相对收益非回归超额收益且不构成因果、部分时段缺少已读事件来源；f-market 与 f-mi300-reaction 亦分别说明复权口径与窗口起点敏感性。证据局限已逐项给出。",
+            "answered": true,
+            "resolved_gaps": []
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-mi300-launch",
+            "inference_audit": "该条为产品事实与日期结论。src-7ac99d5cf0b99a 正文逐字含“Today we have the long-awaited launch of the AMD Instinct MI300 series”，页面元数据 published_at 为 2023-12-06；src-610e75fd151aee 逐字含“AMD launched its Instinct MI300X AI accelerator and the Instinct MI300A, the world’s first data center APU, during its Advancing AI event here in San Jose, California”，并给出 MI300X 对标 H100、1.6X 推理优势等 AMD 幻灯片口径，草稿已标注“报道转述 AMD 幻灯片口径”。src-35d9a608135b52 逐字含“At SC23, we saw a number of next-gen AMD systems.”，支持“SC23 属展示与客户部署进展、非正式发布”的区分。counterevidence 中“此前被预期在 2023 年 6 月发布”与 src-7ac99d5cf0b99a 正文“we thought this series was launching back in June 2023”一致。limitations 已声明无官方一手来源、时间戳为收盘后。属性/因果层面无跳跃：未由发布日推断价格效应，未把媒体口径当作独立验证。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-major-moves",
+            "inference_audit": "该条为异动与同期信息的事实列举。2025-10-06 的 6 吉瓦协议、首批 1 吉瓦 MI450 于 2026 年下半年启动、认股权证与部署及股价里程碑挂钩，均可由 src-ab40e4c8005793 正文逐字支持（“6 gigawatt agreement”“Initial 1 gigawatt OpenAI deployment of AMD Instinct™ MI450 Series GPUs starting in 2H 2026”“warrant for up to 160 million shares … structured to vest as specific milestones are achieved”“tied to AMD achieving certain share-price targets”）。其余异动明确写为“未在已读来源中建立直接对应事件”“无已读来源支持的具体原因”，属有限观察而非因果断言。counterevidence 与 limitations 均声明关联为时间先后候选关系、未证明触发。未出现由价格方向否认事件影响或由平淡价格推断提前定价的表述。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-revenue",
+            "inference_audit": "该条为财报事实加窗口数值描述。src-740bc595ef2813 正文逐字含“AMD said that it had sold over $1 billion of its MI300 chips during the quarter, and its data center category surged 115% year over year.”，并含 Lisa Su 关于“we now expect data center GPU revenue to exceed $4.5 billion in 2024, up from the $4 billion we guided in April”的指引上调表述，草稿已把指引标注为管理层前瞻表述。窗口收益与相对收益数值来自 metric_catalog 的 event 指标，方向描述（1 日与 20 日为正、5 日为负）与指标值一致。结论“基本面利好并未转化为持续扩大的相对收益”是对本样本窗口方向的有限描述，未声称事件导致收益或否定基本面价值；counterevidence 与 limitations 已提示大盘/板块主导与来源非官方财报原文。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为纯行情描述：覆盖区间、bar 数、累计/年化收益、波动、最大回撤、最新交易日 OHLCV 均来自 prices-AMD 数据集与 metric_catalog，属确定性计算，无需新闻背书。末句“收益与波动同时偏高的单一成长股形态，回撤幅度与波动水平相称”是对同一组统计量的定性概括，未外推为稳定属性、未来保护或因果机制；limitations 已声明不含费用、未做同口径基准比较，未给出长期相对结论。无实质推断跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-reaction",
+            "inference_audit": "1/5/20 日收益、基准收益、相对收益与标准化反应幅度均取自 metric_catalog 事件窗口指标，方向描述（首日小幅落后、5/20 日转正并跑赢）与数值一致。该条未声称事件导致收益，counterevidence 指出并行信息，limitations 明确相对收益非回归超额、不构成因果效应，并提示窗口起点含公告前一日、公告在收盘后。属有限观察，无属性或因果外推。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-alternatives",
+            "inference_audit": "三类竞争性解释（共同因子、信息提前反映、公司层面其他信息重叠）均为方法学层面的候选解释，未把假设当作已发生事实；结论明确限定为“窗口内出现与事件同向的价格变化”而非“事件导致该收益”。SC23 引文支持“更早的路线图/展示”这一信息提前进入价格的候选路径。limitations 承认未做多因子回归、无法量化贡献份额。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-limits",
+            "inference_audit": "四条局限与前述各条一致：缺一手官方来源、收盘后发布导致日线无法隔离盘中反应、相对收益非回归超额且评级与证据可信度独立、部分时段缺直接相关已读来源。均为研究边界陈述，未引入未经支持的事实，也未以局限覆盖前文断言。无实质违规。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "首日小幅落后基准",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return"
+          ],
+          "values": [
+            -0.009148152034767154
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "5 日与 20 日转为正收益且跑赢基准",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+            "event.ev-mi300-launch-2023-12-06.AMD.20.return"
+          ],
+          "values": [
+            0.162443012359323,
+            0.14892716389980265
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "5 日与 20 日转为正收益且跑赢基准",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+            "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return"
+          ],
+          "values": [
+            0.14601721857104955,
+            0.12138756154882913
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "numeric_transcription_repairs": [],
+      "metric_token_repairs": [],
+      "source_question_review": [
+        {
+          "question_id": "market",
+          "reason": "已核验的 f-market 给出实际起止区间 2023-01-03 至 2026-09-28、937 根日线、Yahoo 拆股调整 OHLC 与复权口径、累计收益 849.5%、年化 82.71%、年化波动 56.81%、最大回撤 -63.00%，并说明 SPY 仅作事件窗口基准、未做同口径全区间组合比较。行情覆盖与收益/风险表现均已按可复核口径回答。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "required-1",
+          "reason": "f-mi300-launch 已核实 2023-12-06 正式发布、产品构成与对标 H100 的报道口径，并区分了 2023-11-17 SC23 展示；f-mi300-reaction 给出 1/5/20 日窗口收益、相对收益与标准化反应幅度；f-limits 披露无官方一手来源、收盘后时点、相对收益非因果等局限。发生/公开/报道/反应时间与证据局限均已覆盖。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "attribution",
+          "reason": "f-major-moves 逐项列出已识别异动与同期信息（含 2025-10-06 OpenAI 合作），并明确无对应事件的异动只记录为原因未确认；f-alternatives 给出行业共同因子、信息提前反映、公司层面其他信息三类竞争性解释与因果边界；f-limits 说明未做多因子回归、无法量化各解释贡献。已调查异动、反应强度与因果边界均已讨论。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-1",
+          "reason": "f-major-moves 逐项给出主要异动日期、单日收益与同期信息，并区分有事件支持与无事件支持两类；f-mi300-revenue 补充 2024-07-30 财报窗口的同期信息。用户要求的“分析主要异动及同期信息”已按可复核数值与来源回答，未确认部分亦如实标注。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-2",
+          "reason": "f-mi300-reaction 给出 MI300 发布 1/5/20 日窗口的收益、相对基准收益与标准化反应幅度并给出强度评级；f-major-moves 给出 OpenAI 合作事件的 1/5/20 日相对收益与标准化反应幅度；f-mi300-revenue 给出财报窗口三档收益与相对收益。反应强度已按窗口量化回答。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-3",
+          "reason": "f-alternatives 明确列出三类替代解释（大盘/板块共同因子、预期与信息提前反映、公司层面其他信息重叠），并给出可检验的反证条件与提高归因分辨力的方法；f-major-moves 对无对应事件的异动保留为原因未确认。替代解释已实质回答。",
+          "answered": true,
+          "resolved_gaps": []
+        },
+        {
+          "question_id": "custom-4",
+          "reason": "f-limits 列出四项局限：缺少官方一手来源、收盘后时点导致日线无法隔离盘中反应、相对收益非回归超额收益且非因果、多个时段已读事件来源覆盖不足；f-mi300-reaction 与 f-mi300-revenue 亦各自说明窗口口径与来源限制。证据局限已逐项回答。",
+          "answered": true,
+          "resolved_gaps": []
+        }
+      ],
+      "local_repair_needed": true,
+      "open_gaps": [
+        {
+          "question_id": "attribution",
+          "reason": "2024 年 1 月至 7 月、2024 年 8 月至 10 月、2026 年 2 月至 6 月及 2026 年 8 月至 9 月的 AMD 相关资讯覆盖不足。",
+          "next_action": "补充这些时段的公司公告与行业报道检索，以判断是否存在被遗漏的同期事件。"
+        }
+      ],
+      "accepted_ids": [
+        "f-alternatives",
+        "f-limits",
+        "f-major-moves",
+        "f-market",
+        "f-mi300-launch",
+        "f-mi300-reaction"
+      ],
+      "accepted_hashes": {
+        "f-market": "ecb5a7b68e6e45396c3f9f2ec168dc2f4ffca3226fb01dd1317e581cbfd99385",
+        "f-mi300-reaction": "4873137a6cbe0602338e1796851c689b2001bf5c054579b0ebda36eb925566cd",
+        "f-alternatives": "cd1086cff39a3630b7bc159d0b27c5f3820966e0e65575ec2f3602f8377da1e2",
+        "f-limits": "5644ec832ff2170fa6d04d2b2835d21a5305db064b4c4fd4597dacac06d380a7",
+        "f-mi300-launch": "77e686968a1f94e4a7e81d6e2540cc924301053c16d63f2de20508169806742e",
+        "f-major-moves": "d01cb2e07c2eb13bc77e6e7abbb1ef6b4e35e233a73bf4ffa15f0ca3a1671f38"
+      },
+      "reused_certificates": [
+        "f-alternatives",
+        "f-limits",
+        "f-market",
+        "f-mi300-reaction"
+      ]
+    },
+    {
+      "attempt": 3,
+      "draft_hash": "d95172b083bb5aa6362e445d1bed5305c2bb1e4a1590cdfde553e8a52c5f8321",
+      "deterministic": {
+        "f-mi300-revenue": [
+          "text 含手写数字「10 亿美元」；没有对应指标时省去此数字，保留事实描述并回链原文",
+          "推断/事实缺陷：说明基本面利好并未转化为持续扩大的相对收益；该句由 1/5/20 日相对收益的方向组合推断“基本面利好未转化为相对收益”，属于以价格路径反推信息定价与基本面传导的结论。事件窗口相对收益只是标的减基准的候选关联，未控制板块/风格因子，也未区分公告时点（报道发布于 20:22 EDT，属收盘后）与盘前盘后归属，无法支持对“利好是否被定价”的判断；且 5 日为负、20 日为正，方向本身也不支持“未持续扩大”的表述。；修复方向 rewrite"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-mi300-revenue",
+            "numeric_assertions": [
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.return",
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.return"
+                ]
+              },
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.return"
+                ]
+              },
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.relative_return",
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.relative_return"
+                ]
+              },
+              {
+                "quote": "1 日与 20 日为正、5 日为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.relative_return"
+                ]
+              }
+            ],
+            "reason": "逐项核对：1 日收益 0.0436、相对 0.0274 为正；5 日收益 -0.0597、相对 -0.0230 为负；20 日收益 0.0871、相对 0.0510 为正，与“1 日与 20 日为正、5 日为负”一致。标准化反应幅度 1 日 0.936、5 日 0.352、20 日 0.390，均低于 1，评级“低”与指标一致。引文“sold over $1 billion of its MI300 chips during the quarter, and its data center category surged 115% year over year”支持 MI300 单季收入超 10 亿美元与数据中心同比大增；指引上调亦见于 CNBC 正文（“we now expect data center GPU revenue to exceed $4.5 billion in 2024, up from the $4 billion we guided in April”）。正文已按程序提示去掉无指标对应的手写数字，仅保留事实描述并回链原文，处理正确。事件日 2024-07-30 为财报发布日（报道发布元数据 2024-07-30T20:22:26Z），窗口自 2024-07-30 起算与指标 start 一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [],
+            "reason": "指标核对：market.AMD.bars=937（2023-01-03至2026-09-28），daily.AMD.total_return=8.495（即849.5%），cagr=0.827（82.7%），volatility=0.568（56.8%），max_drawdown=-0.630（-63.0%），latest.close=607.87，low=596.07，high=629.75，volume=21995500。正文仅罗列这些数值，未给出任何相等/大小/方向关系句，故不转录数值断言。口径描述与 metric method 一致（Yahoo 拆股调整 OHLC、复权收盘含分红、无费用）。'回撤幅度与波动水平相称'为定性表述，无明确阈值，不做数值断言。limitations 已说明 SPY 未做同口径全区间比较，与 spec 中 SPY 仅作基准一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-reaction",
+            "numeric_assertions": [
+              {
+                "quote": "首日小幅落后基准",
+                "relation": "negative",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return"
+                ]
+              },
+              {
+                "quote": "5 日与 20 日转为正收益且跑赢基准",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+                  "event.ev-mi300-launch-2023-12-06.AMD.20.return"
+                ]
+              },
+              {
+                "quote": "5 日与 20 日转为正收益且跑赢基准",
+                "relation": "positive",
+                "metric_ids": [
+                  "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+                  "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return"
+                ]
+              }
+            ],
+            "reason": "指标核对：1 日 return=-0.01318（-1.32%），benchmark=-0.00403，relative=-0.00915（负），standardized=0.365；5 日 return=0.16244（+16.24%），relative=0.14602（正），standardized=2.607；20 日 return=0.14893（+14.89%），relative=0.12139（正），standardized=1.084。正文'首日小幅落后基准'对应 1 日相对收益为负；'5 日与 20 日转为正收益且跑赢基准'对应 5/20 日 return 与 relative_return 均为正。方向与数值一致。'反应强度评级为高'为定性评级，无阈值可执行，不做断言。limitations 已说明相对收益非因果、窗口起点含公告前一日、公告在收盘后。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-alternatives",
+            "numeric_assertions": [],
+            "reason": "三类替代解释均为方法论层面的可检验表述，未引入无证据事实：行业/大盘共同因子（相对收益仅减基准，未剔除板块风格）与 metric method 中'相对收益为标的减基准，非因果效应'一致；预期提前反映有 src-35d9a608135b52 的 SC23 展示支持；公司层面信息重叠有财报事件支持。counterevidence 给出可检验条件（基准与板块无同向变动则共同因子解释力下降）。limitations 明确未做多因子回归、无法量化贡献份额。未把假设伪装成结论。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-limits",
+            "numeric_assertions": [],
+            "reason": "四项局限逐条可核：缺一手来源与 warnings 第 1 条一致；发布时点 2023-12-06T20:01:39Z 为美股收盘后，与 src 元数据一致；相对收益非回归超额收益与 metric method 一致；2024/2026 多时段资讯覆盖不足与 warnings 第 6、7 条及 open_gaps 一致。'评级只表示反应强度，与证据可信度相互独立'为方法说明，非事实断言。未引入无证据事实。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-mi300-launch",
+            "numeric_assertions": [],
+            "reason": "引文 src-7ac99d5cf0b99a（ServeTheHome，2023-12-06 20:01 UTC）正文首句即“Today we have the long-awaited launch of the AMD Instinct MI300 series”，与页面发布元数据同日，支持 2023-12-06 正式发布；Tom's Hardware 引文支持 MI300X/MI300A 与 Advancing AI 活动、对标 H100 的表述；SC23 引文支持“展会展示与客户部署进展，不是正式发布”。反证中“此前被预期在 2023 年 6 月发布”与 STH 原文“we thought this series was launching back in June 2023”一致。局限已披露无官方一手来源、时间戳在收盘后。该条为事实描述，未含可执行数值关系（性能倍数已按程序要求删除），无需数值断言。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-major-moves",
+            "numeric_assertions": [],
+            "reason": "2025-10-06 单日收益 23.71% 与 move.change-AMD-2025-10-06.return 一致；同日 OpenAI 合作由 AMD 新闻室原文支持（6 吉瓦、首批 1 吉瓦 MI450 于 2026 下半年、认股权证最多 1.6 亿股）。事件窗口相对收益与标准化反应幅度数值与 metric_catalog 一致（1 日 23.35%/9.06，5 日 32.92%，20 日 53.62%）。其余异动数值：2025-04-09 +23.82%、2026-05-06 +18.61%、2023-05-25 +11.16%、2026-02-04 -17.31%，均与 move.* 指标一致，且正文明确说明未建立直接对应事件，属如实披露而非断言因果。反证中关税行政令同日但未直接提及 AMD 的表述与已读来源一致。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 给出实际起止区间 2023-01-03 至 2026-09-28、日线口径（Yahoo 拆股调整 OHLC、复权收盘含分红、未计费用）、累计收益、年化收益、年化波动与最大回撤，并说明 SPY 仅作事件窗口基准、未做同口径全区间组合比较，符合 acceptance 对起止区间、行情口径与可复核收益/回撤的要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "required-1",
+            "reason": "f-mi300-launch 以第三方报道原文核实正式发布日为 2023-12-06，区分了 2023-11-17 SC23 展示与正式发布，并说明报道时间戳为收盘后、日线无法隔离盘中反应；f-mi300-reaction 给出 1/5/20 日窗口收益、相对收益与标准化反应幅度及强度评级；f-limits 说明缺少官方一手来源等局限。发生/公开/报道/反应时间、窗口、强度与证据局限均已覆盖。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "attribution",
+            "reason": "f-major-moves 逐项列出已识别主要异动及其同期信息（含 2025-10-06 OpenAI 协议窗口指标，以及多个无已读来源对应事件的异动），f-alternatives 给出行业/大盘共同因子、信息提前反映、公司层面其他信息三类竞争性解释并明确因果边界。open_gaps 中 2024 与 2026 部分时段资讯覆盖不足属作者提出的可选补充检索，acceptance 只要求讨论已调查的主要异动与时间线、区分反应强度与证据可信度、说明竞争性解释与因果边界，均已实质回答，故该缺口不构成未答。",
+            "answered": true,
+            "resolved_gaps": [
+              {
+                "gap_id": "gap-e5ce3dbb252692ab",
+                "finding_id": "f-major-moves",
+                "quote": "其余异动中，2025-04-09 单日 {{move.change-AMD-2025-04-09.return}}、2026-05-06 单日 {{move.change-AMD-2026-05-06.return}}、2023-05-25 单日 {{move.change-AMD-2023-05-25.return}} 均未在已读来源中建立直接对应事件",
+                "reason": "该 finding 已对覆盖不足时段内的异动逐项给出可复核收益并明确标注原因未在已读证据中确认，配合 f-alternatives 的因果边界说明，已满足 acceptance 对主要异动与同期信息、证据可信度的要求；补充检索属可选增强，非用户必答事实。"
+              }
+            ]
+          },
+          {
+            "question_id": "custom-1",
+            "reason": "f-major-moves 逐项给出主要异动的单日收益、对应同期信息（2025-10-06 OpenAI 6 吉瓦协议及窗口相对收益与标准化反应幅度）以及无对应事件异动的处理，并附时间先后候选关系与未证明触发的限制，满足“分析主要异动及同期信息”的证据、计算依据与限制要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-2",
+            "reason": "f-mi300-reaction 给出 MI300 发布事件 1/5/20 日窗口的收益、相对收益与标准化反应幅度并给出强度评级；f-major-moves 给出 2025-10-06 事件的 1/5/20 日相对收益与标准化反应幅度及评级，反应强度已量化并附口径限制。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-3",
+            "reason": "f-alternatives 明确列出行业与大盘共同因子、预期与信息提前反映、公司层面其他信息三类替代解释，并说明相对收益未剔除板块与风格因子、未做多因子回归，给出可支持表述的边界，满足替代解释要求。",
+            "answered": true,
+            "resolved_gaps": []
+          },
+          {
+            "question_id": "custom-4",
+            "reason": "f-limits 列出四项证据局限：缺少官方一手来源、发布时点在收盘后致日线无法隔离盘中反应、相对收益非回归超额收益且不构成因果、部分时段缺少已读事件来源；f-market 与 f-mi300-reaction 亦补充口径与窗口起点敏感性，证据局限已逐项说明。",
+            "answered": true,
+            "resolved_gaps": []
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-mi300-revenue",
+            "inference_audit": "该条为事实型：CNBC 报道原文支持“MI300 当季收入超 10 亿美元、数据中心同比 +115%、管理层上调 2024 数据中心 GPU 收入指引至超 45 亿美元”，草稿未重复具体数值，仅描述方向，与引文一致。事件窗口收益/相对收益来自 metric_catalog 的 event.ev-amd-q2-2024-mi300-revenue-2024-07-30 系列，1 日与 20 日为正、5 日为负，与草稿描述一致。但结尾“说明基本面利好并未转化为持续扩大的相对收益”把单次财报窗口的价格路径解读为对基本面利好传导效果的判断，属于由价格方向反推信息定价效率的推断，缺少预期调查、公告时点与盘前盘后归属等证据；且 5 日相对收益为负、20 日为正，本身也不构成“未持续扩大”的单调证据。",
+            "violations": [
+              {
+                "quote": "说明基本面利好并未转化为持续扩大的相对收益",
+                "reason": "该句由 1/5/20 日相对收益的方向组合推断“基本面利好未转化为相对收益”，属于以价格路径反推信息定价与基本面传导的结论。事件窗口相对收益只是标的减基准的候选关联，未控制板块/风格因子，也未区分公告时点（报道发布于 20:22 EDT，属收盘后）与盘前盘后归属，无法支持对“利好是否被定价”的判断；且 5 日为负、20 日为正，方向本身也不支持“未持续扩大”的表述。",
+                "repair": "rewrite"
+              }
+            ]
+          },
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为纯行情描述：覆盖区间、bar 数、累计/年化收益、波动、最大回撤、最新交易日 OHLCV 均来自 prices-AMD 数据集与 metric_catalog，属确定性计算，无需新闻背书。末句“收益与波动同时偏高的单一成长股形态，回撤幅度与波动水平相称”是对同一组统计量的定性概括，未外推为稳定属性、未来保护或因果机制；limitations 已声明不含费用、未做同口径基准比较，未给出长期相对结论。无实质推断跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-reaction",
+            "inference_audit": "1/5/20 日收益、基准收益、相对收益与标准化反应幅度均取自 metric_catalog 事件窗口指标，方向描述（首日小幅落后、5/20 日转正并跑赢）与数值一致。该条未声称事件导致收益，counterevidence 指出并行信息，limitations 明确相对收益非回归超额、不构成因果效应，并提示窗口起点含公告前一日、公告在收盘后。属有限观察，无属性或因果外推。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-alternatives",
+            "inference_audit": "三类竞争性解释（共同因子、信息提前反映、公司层面其他信息重叠）均为方法学层面的候选解释，未把假设当作已发生事实；结论明确限定为“窗口内出现与事件同向的价格变化”而非“事件导致该收益”。SC23 引文支持“更早的路线图/展示”这一信息提前进入价格的候选路径。limitations 承认未做多因子回归、无法量化贡献份额。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-limits",
+            "inference_audit": "四条局限与前述各条一致：缺一手官方来源、收盘后发布导致日线无法隔离盘中反应、相对收益非回归超额且评级与证据可信度独立、部分时段缺直接相关已读来源。均为研究边界陈述，未引入未经支持的事实，也未以局限覆盖前文断言。无实质违规。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-mi300-launch",
+            "inference_audit": "该条为产品事实与日期结论。src-7ac99d5cf0b99a 正文逐字含“Today we have the long-awaited launch of the AMD Instinct MI300 series”，页面元数据 published_at 为 2023-12-06；src-610e75fd151aee 逐字含“AMD launched its Instinct MI300X AI accelerator and the Instinct MI300A, the world’s first data center APU, during its Advancing AI event here in San Jose, California”，并给出 MI300X 对标 H100、1.6X 推理优势等 AMD 幻灯片口径，草稿已标注“报道转述 AMD 幻灯片口径”。src-35d9a608135b52 逐字含“At SC23, we saw a number of next-gen AMD systems.”，支持“SC23 属展示与客户部署进展、非正式发布”的区分。counterevidence 中“此前被预期在 2023 年 6 月发布”与 src-7ac99d5cf0b99a 正文“we thought this series was launching back in June 2023”一致。limitations 已声明无官方一手来源、时间戳为收盘后。属性/因果层面无跳跃：未由发布日推断价格效应，未把媒体口径当作独立验证。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-major-moves",
+            "inference_audit": "该条为异动与同期信息的事实列举。2025-10-06 的 6 吉瓦协议、首批 1 吉瓦 MI450 于 2026 年下半年启动、认股权证与部署及股价里程碑挂钩，均可由 src-ab40e4c8005793 正文逐字支持（“6 gigawatt agreement”“Initial 1 gigawatt OpenAI deployment of AMD Instinct™ MI450 Series GPUs starting in 2H 2026”“warrant for up to 160 million shares … structured to vest as specific milestones are achieved”“tied to AMD achieving certain share-price targets”）。其余异动明确写为“未在已读来源中建立直接对应事件”“无已读来源支持的具体原因”，属有限观察而非因果断言。counterevidence 与 limitations 均声明关联为时间先后候选关系、未证明触发。未出现由价格方向否认事件影响或由平淡价格推断提前定价的表述。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.return",
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.return"
+          ],
+          "values": [
+            0.04362895969096203,
+            0.08711353182544235
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.return"
+          ],
+          "values": [
+            -0.059664906240672666
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.1.relative_return",
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.20.relative_return"
+          ],
+          "values": [
+            0.027374312175262983,
+            0.05102489999004223
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-revenue",
+          "quote": "1 日与 20 日为正、5 日为负",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-amd-q2-2024-mi300-revenue-2024-07-30.AMD.5.relative_return"
+          ],
+          "values": [
+            -0.02304139046127851
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "首日小幅落后基准",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.1.relative_return"
+          ],
+          "values": [
+            -0.009148152034767154
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "5 日与 20 日转为正收益且跑赢基准",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.5.return",
+            "event.ev-mi300-launch-2023-12-06.AMD.20.return"
+          ],
+          "values": [
+            0.162443012359323,
+            0.14892716389980265
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-mi300-reaction",
+          "quote": "5 日与 20 日转为正收益且跑赢基准",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-mi300-launch-2023-12-06.AMD.5.relative_return",
+            "event.ev-mi300-launch-2023-12-06.AMD.20.relative_return"
+          ],
+          "values": [
+            0.14601721857104955,
+            0.12138756154882913
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "numeric_transcription_repairs": [],
+      "metric_token_repairs": [],
+      "source_question_review": [],
+      "local_repair_needed": true,
+      "open_gaps": [],
+      "accepted_ids": [
+        "f-alternatives",
+        "f-limits",
+        "f-major-moves",
+        "f-market",
+        "f-mi300-launch",
+        "f-mi300-reaction"
+      ],
+      "accepted_hashes": {
+        "f-market": "ecb5a7b68e6e45396c3f9f2ec168dc2f4ffca3226fb01dd1317e581cbfd99385",
+        "f-mi300-reaction": "4873137a6cbe0602338e1796851c689b2001bf5c054579b0ebda36eb925566cd",
+        "f-alternatives": "cd1086cff39a3630b7bc159d0b27c5f3820966e0e65575ec2f3602f8377da1e2",
+        "f-limits": "5644ec832ff2170fa6d04d2b2835d21a5305db064b4c4fd4597dacac06d380a7",
+        "f-mi300-launch": "77e686968a1f94e4a7e81d6e2540cc924301053c16d63f2de20508169806742e",
+        "f-major-moves": "d01cb2e07c2eb13bc77e6e7abbb1ef6b4e35e233a73bf4ffa15f0ca3a1671f38"
+      },
+      "reused_certificates": [
+        "f-alternatives",
+        "f-limits",
+        "f-major-moves",
+        "f-market",
+        "f-mi300-launch",
+        "f-mi300-reaction"
+      ]
+    }
+  ],
+  "gaps": [],
+  "text": "AMD 2023-01-01 至 2026-09-28 日线行情与 AI 产业相关异动研究（核实 MI300 系列发布，基准 SPY）\n\n研究状态：完整。请求区间：2023-01-01 至 2026-09-28；实际数值区间见各指标口径。\n\n**行情覆盖与整体收益风险**\n\nAMD 日线覆盖 2023-01-03 至 2026-09-28，共 937 根日线，口径为 Yahoo 拆股调整 OHLC、复权收盘另含分红，未计交易费用。区间累计收益 849.50%，年化收益 82.71%，年化波动 56.81%，最大回撤 -63.00%。最新交易日 2026-09-28 收盘 607.87 美元，当日区间 596.07 美元 至 629.75 美元，成交量 21,995,500。整体看是收益与波动同时偏高的单一成长股形态，回撤幅度与波动水平相称。\n\n局限：收益与回撤为复权价格回顾，不含费用、税费与滑点；SPY 仅作事件窗口基准，未做同口径全区间组合比较，故不给出相对基准的长期结论。\n\n改变判断的条件：若改用含费用口径或不同复权方式，累计收益与回撤数值会变化。\n\n依据：[prices-AMD-35e5c50f0112]\n\n**MI300 发布窗口反应：1 日偏弱、5/20 日转正**\n\n以 2023-12-06 为事件日、窗口自 2023-12-05 起算：1 日窗口 AMD 收益 -1.32%，基准 -0.40%，相对收益 -0.91%，标准化反应幅度 0.365；5 日窗口收益 16.24%，相对收益 14.60%，标准化反应幅度 2.607；20 日窗口收益 14.89%，相对收益 12.14%，标准化反应幅度 1.084。方向为：首日小幅落后基准，5 日与 20 日转为正收益且跑赢基准，反应强度评级为高。\n\n竞争性解释：同期存在 SC23 展示、AI 板块整体情绪等并行信息，5 日与 20 日窗口无法排除其他驱动。\n\n局限：相对收益是标的收益减基准，不是回归超额收益，也不构成事件因果效应；窗口起点含公告前一个交易日，且公告时点在收盘后，1 日窗口对盘前/盘后归属敏感。\n\n改变判断的条件：若改用公告后首个完整交易日为起点，1 日窗口方向与幅度可能改变。\n\n依据：[prices-AMD-35e5c50f0112] [prices-SPY-5e58e540959c]\n\n**替代解释与因果边界**\n\n对已识别异动，至少存在三类竞争性解释：一是行业与大盘共同因子，事件窗口内基准本身也有同向变动，相对收益只剔除基准部分，未剔除板块与风格因子；二是预期与信息提前反映，MI300 在 2023-11-17 的 SC23 展示及更早的路线图披露意味着正式发布日可能不是信息首次进入价格的时点；三是公司层面其他信息，如财报、指引与客户合作，与产品事件在时间上重叠。因此可支持的表述是“窗口内出现与事件同向的价格变化”，而不是“事件导致该收益”。\n\n竞争性解释：若某窗口内基准与板块均无同向变动，则共同因子解释力下降，事件特定解释相对增强。\n\n局限：未做多因子回归或板块归因，无法量化各解释的贡献份额；已读来源不足以排除未记录的公司特定信息。\n\n改变判断的条件：加入半导体同业或 AI 主题指数作为第二基准、并做事件日前后多窗口对照，可提高归因分辨力。\n\n依据：[src-35d9a608135b52]\n\n**证据局限**\n\n主要局限有四：其一，MI300 系列发布缺少 AMD 官方新闻稿或官方产品页作为一手来源，现有支持为第三方媒体；其二，发布时点在美股收盘后，日线数据无法隔离盘中反应，1 日窗口对盘前/盘后归属敏感；其三，事件窗口的相对收益为标的减基准，不是回归超额收益，也不构成因果效应，评级只表示反应强度，与证据可信度相互独立；其四，2024 年与 2026 年多个时段缺少与 AMD 直接相关的已读事件来源，部分异动只能保留为原因未确认。\n\n局限：上述局限属于研究边界，不改变已给出的有限结论；已读来源未覆盖的时段不等于期间没有事件。\n\n改变判断的条件：取得官方发布公告、盘中数据或更完整的期间新闻覆盖后，可收窄相应局限。\n\n依据：[src-7ac99d5cf0b99a]\n\n**MI300 系列正式发布：2023-12-06**\n\nMI300 系列正式发布发生在 2023-12-06，当日报道明确写为“Today we have the long-awaited launch of the AMD Instinct MI300 series”，产品包含纯 GPU 的 MI300X 与 CPU+GPU 融合的 MI300A APU，报道称 MI300X 面向 AI 加速、对标 NVIDIA H100，并在多项指标上给出对 NVIDIA H100 的性能优势（报道转述 AMD 幻灯片口径）。发布前 2023-11-17 的 SC23 报道属于展会展示与客户部署进展，不是正式发布。\n\n竞争性解释：报道本身提到该系列此前被预期在 2023 年 6 月发布，说明“发布”在市场上存在多个预期时点，事件日选择对结果敏感。\n\n局限：发布日由第三方媒体报道正文与页面发布元数据一致支持，未取得 AMD 官方新闻稿或官方产品页作为一手来源；报道时间戳为 2023-12-06 20:01 UTC，属美股收盘后，日线窗口无法隔离盘中反应。\n\n改变判断的条件：若取得 AMD 官方发布公告并显示不同公开时刻，事件日与窗口起点需相应调整。\n\n依据：[src-7ac99d5cf0b99a] [src-610e75fd151aee] [src-35d9a608135b52]\n\n**主要异动及其同期信息**\n\n已识别的主要异动中，2025-10-06 单日收益 23.71%，同日 AMD 与 OpenAI 宣布 6 吉瓦、多代际 Instinct GPU 协议，首批 1 吉瓦 MI450 系列计划 2026 年下半年启动，并附与部署及股价里程碑挂钩的认股权证安排；该事件 1 日相对收益 23.35%、标准化反应幅度 9.064，5 日相对收益 32.92%，20 日相对收益 53.62%，评级为高。其余异动中，2025-04-09 单日 23.82%、2026-05-06 单日 18.61%、2023-05-25 单日 11.16% 均未在已读来源中建立直接对应事件；2026-02-04 单日 -17.31% 亦无已读来源支持的具体原因。\n\n竞争性解释：2025-04-09 与关税行政令同日，但已读行政令原文未直接提及 AMD，无法建立标的层面的关联。\n\n局限：异动与事件的关联为时间先后上的候选关系，未证明事件触发行情；无对应事件的异动只能记录为“原因未在已读证据中确认”，不等于不存在原因。\n\n改变判断的条件：若取得这些日期的公司公告或行业新闻，部分异动可能获得更具体的同期解释。\n\n依据：[src-ab40e4c8005793] [prices-AMD-35e5c50f0112] [prices-SPY-5e58e540959c]\n\n**计算口径**\n\n- 2023-01-03 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。\n- 2023-01-03 至 2026-09-28；日线；复权价格回顾，无交易费用。\n- 2026-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。\n- 2023-12-05 至 2023-12-06；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2023-12-05 至 2023-12-12；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2023-12-05 至 2024-01-04；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-10-06 至 2025-10-06；一日；复权收盘到收盘。\n- 2025-10-03 至 2025-10-06；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-10-03 至 2025-10-10；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-10-03 至 2025-10-31；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。\n- 2025-04-09 至 2025-04-09；一日；复权收盘到收盘。\n- 2026-05-06 至 2026-05-06；一日；复权收盘到收盘。\n- 2023-05-25 至 2023-05-25；一日；复权收盘到收盘。\n- 2026-02-04 至 2026-02-04；一日；复权收盘到收盘。\n\n**来源**\n\n- [prices-AMD-35e5c50f0112] AMD 行情：https://query1.finance.yahoo.com/v8/finance/chart/AMD?period1=1637971200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [prices-SPY-5e58e540959c] SPY 行情：https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1637971200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [src-35d9a608135b52] Giagantic AMD APU at SC23 Meet the AMD MI300A and MI300X：https://www.servethehome.com/giagantic-amd-apu-at-sc23-meet-the-amd-mi300a-and-mi300x/\n- [src-7ac99d5cf0b99a] AMD Instinct MI300X GPU and MI300A APUs Launched for AI Era：https://www.servethehome.com/amd-instinct-mi300x-gpu-and-mi300a-apus-launched-for-ai-era/\n- [src-610e75fd151aee] AMD unveils Instinct MI300X GPU and MI300A APU, claims up to 1.6X lead over Nvidia’s competing GPUs | Tom's Hardware：https://www.tomshardware.com/pc-components/cpus/amd-unveils-instinct-mi300x-gpu-and-mi300a-apu-claims-up-to-16x-lead-over-nvidias-competing-gpus\n- [src-ab40e4c8005793] AMD and OpenAI Announce Partnership to Deploy 6 Gigawatts of AMD GPUs - AMD Newsroom：https://newsroom.amd.com/news/amd-and-openai-announce-strategic-partnership-to-d/",
+  "assessed_at": "2026-09-29T12:09:54.141886+00:00",
+  "input_hash": "5aa03072ced024a931f86e75135e95f76dbbdced8777b350c1c4ed8a3d3dc635",
+  "budget": {
+    "elapsed_seconds": 301.244,
+    "model_calls": 52,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  }
+}

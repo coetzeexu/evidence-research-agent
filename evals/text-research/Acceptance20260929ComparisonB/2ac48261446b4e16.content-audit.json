@@ -1,0 +1,139 @@
+{
+  "run_id": "2ac48261446b4e16",
+  "bundle_hash": "83bb242265fb6bc9aed0ddc9998099982219f4e5497de1ed75aa50aaa17851b0",
+  "content_pass": true,
+  "auditor": "Codex independent review / delivery_docs subagent; separate from production review context",
+  "audited_at": "2026-09-29T11:11:49.922764+00:00",
+  "scope": "独立基础内容复核：用户必答维度、原文产品定义、指标数值/符号/区间/口径及重大无据断言。直接阅读全文、研究结构、原行情和 CPI 序列、交易/敏感性记录与保存原文，不将生产判定当作复核依据。模型对差异大小的可争议判断保留观察，不列工程剩余问题。",
+  "findings_checked": [
+    {
+      "id": "f-market",
+      "basis": [
+        "datasets.GLD/BTC-USD.bars",
+        "comparison.anchors",
+        "comparison.backtest.rows/trades",
+        "comparison.execution_baselines"
+      ],
+      "conclusion": "通过。1255/1827 日线数、60 月末锚点和实际执行区间可复核；组合及单资产收益、年化、波动、回撤由台账独立重算一致。比较同为美元、20 bps、共同锚点，日线和月度口径已区分。"
+    },
+    {
+      "id": "f-inflation",
+      "basis": [
+        "comparison.macro.CPIAUCNS",
+        "comparison.anchors",
+        "comparison.inflation_summary"
+      ],
+      "conclusion": "通过基础检查。实际购买力、3% 分组、39/19 样本数及负相关均独立重算一致；BTC 高通胀组高于低通胀组的反向证据被明确保留，正文说明水平关联和回顾性限制，未把高通胀组方向写反。"
+    },
+    {
+      "id": "f-allocation",
+      "basis": [
+        "comparison.backtest",
+        "comparison.execution_baselines",
+        "comparison.anchors"
+      ],
+      "conclusion": "通过。组合收益高于两单资产，波动和回撤位于两者之间，相关系数约0.152；决策说明纯 GLD 和组合的风险代价及样本限制。再平衡原因写为可能性，非独立因果断言。"
+    },
+    {
+      "id": "f-hedge",
+      "basis": [
+        "comparison.anchors",
+        "comparison.stress_periods"
+      ],
+      "conclusion": "通过。按 SPY 最差六个月独立排序，GLD 2 月正收益/6 月跑赢，BTC 1 月正收益/3 月跑赢。所引四个日期及符号与原行情相符，区分相对抗跌和保本。"
+    },
+    {
+      "id": "f-sensitivity-cost",
+      "basis": [
+        "comparison.sensitivity.rows[0:5]"
+      ],
+      "conclusion": "通过基础检查。0/10/20/25/50 bps 情景值与正文一致，收益单调下降且回撤深度加大，口径一致；影响程度属于该参数区间的模型判断，不是额外量化保证。"
+    },
+    {
+      "id": "f-sensitivity-weight-freq",
+      "basis": [
+        "comparison.sensitivity.rows[0,5,6,7,8,9,10]"
+      ],
+      "conclusion": "通过基础数字与覆盖检查。权重、频率、收益、波动和回撤的数值与情景一致；季度提高至月度没有提高收益、回撤略浅。反证段对频率差异程度的判断见非阻断观察。"
+    },
+    {
+      "id": "f-sensitivity-period",
+      "basis": [
+        "comparison.sensitivity.rows[11:13]",
+        "comparison.backtest.rows"
+      ],
+      "conclusion": "通过。两段日期和年化/回撤/波动与情景一致，前段包含全样本最深回撤；明确分段非样本外检验，未把两段收益相加或当成归因分解。"
+    }
+  ],
+  "issues": [
+    {
+      "severity": "non_blocking_model_judgment",
+      "quote": "买入持有与季度再平衡的收益差不大，说明再平衡收益贡献对参数不敏感",
+      "reason": "两个明确展示的累计收益为118.16%与162.20%，相差约44.04个百分点；“差不大”和“不敏感”未定义阈值，解释比数据更强。数字与情景绑定正确，正文同时提供完整频率结果及样本边界；按本轮基础验收范围记录为模型判断观察，不归类为确定性数值错误或 loop 待办。"
+    }
+  ],
+  "independent_checks": {
+    "raw_bars_and_no_lookahead_anchors": true,
+    "stress_counts": {
+      "GLD": {
+        "positive": 2,
+        "outperform": 6
+      },
+      "BTC-USD": {
+        "positive": 1,
+        "outperform": 3
+      }
+    },
+    "execution.portfolio": {
+      "total_return": 1.621958236660832,
+      "cagr": 0.2165650492193245,
+      "volatility": 0.24855432585327095,
+      "max_drawdown": -0.367414822221963
+    },
+    "execution.GLD": {
+      "total_return": 1.4733538532972315,
+      "cagr": 0.20221480964305583,
+      "volatility": 0.16863539803888533,
+      "max_drawdown": -0.23766901930987872
+    },
+    "execution.BTC-USD": {
+      "total_return": 0.7728191284250496,
+      "cagr": 0.12349342727448431,
+      "volatility": 0.5575574538417238,
+      "max_drawdown": -0.727047074945036
+    },
+    "inflation.GLD": {
+      "real": 1.0365905588718594,
+      "high_inflation_n": 39,
+      "low_inflation_n": 19,
+      "high_inflation_mean_return": 0.009027449307901931,
+      "low_inflation_mean_return": 0.03153099438546877,
+      "inflation_correlation": -0.25201116163691034
+    },
+    "inflation.BTC-USD": {
+      "real": 0.5301758702586354,
+      "high_inflation_n": 39,
+      "low_inflation_n": 19,
+      "high_inflation_mean_return": 0.033049071345092114,
+      "low_inflation_mean_return": 0.007900642290315939,
+      "inflation_correlation": -0.1822297208522548
+    },
+    "correlation": 0.151624148186661,
+    "frequency_difference_percentage_points": 44.040698179848015,
+    "independent_calculation_note": "使用 Python 标准库从保存的日线、月末锚点、交易台账和 CPI 原序列独立复算；未调用生产 metric_catalog 或核验器 verdict。CAGR 按实际日数/365.25，波动按月收益样本标准差乘 sqrt(12)。敏感性逐项核对已保存情景指标与配置，不声称独立重建所有情景交易引擎。"
+  },
+  "sources_read": [
+    {
+      "id": "src-b38ac08d0bba86",
+      "purpose": "官方 GLD 产品目标、实物黄金代理、费用和 USD 交易币种定义；本文并未将 GLD 数值冒充现货独立表现。"
+    },
+    {
+      "id": "src-cf871e4c0e616f",
+      "purpose": "CNBC 对 bitcoin digital gold 假说与风险资产相关性的报道，核对未被正文改写为已证实稳定机制。"
+    },
+    {
+      "id": "src-9b8a1823d4ea58",
+      "purpose": "ECB 关于金价及压力期的分析，核对研究使用的有限避险框架，不由来源替代本次月度实证。"
+    }
+  ]
+}

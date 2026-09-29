@@ -1,0 +1,27 @@
+{
+  "mode": "saved-evidence-development-probe",
+  "name": "ComparisonBoundaryE",
+  "run_id": "9ae02e1465344976",
+  "source_run": "fde9fa0017254bdb",
+  "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+  "code_unchanged": true,
+  "checks": {
+    "verified_text": true,
+    "complete": true,
+    "required_questions": true,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true
+  },
+  "status": "complete",
+  "budget": {
+    "elapsed_seconds": 100.68,
+    "model_calls": 9,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "unanswered": []
+}

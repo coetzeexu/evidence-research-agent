@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "run_id": "0f4c5a2c34d5404f",
+    "url": "http://127.0.0.1:8012",
+    "code_hash": "b7230bc9eb7a1610942902609842fa8f7effd307224f525f81d9688b81e7d38a",
+    "git_head": "fd37683be396344e09cc2cb2fcb497780e7cb2d8",
+    "browser": "Chrome via Playwriter extension",
+    "playwriter_session": "6",
+    "server_pid": 15204
+  },
+  "scope": "Real Chrome UI submission, DOM/SSE observation, artifact-link clicks, same-origin transfer and OOXML/Excel/HTML structure; no screenshot or Office visual audit.",
+  "research_status": "complete",
+  "research_complete": true,
+  "required_questions": [
+    {
+      "id": "market",
+      "status": "answered"
+    },
+    {
+      "id": "required-1",
+      "status": "answered"
+    },
+    {
+      "id": "attribution",
+      "status": "answered"
+    },
+    {
+      "id": "custom-1",
+      "status": "answered"
+    },
+    {
+      "id": "custom-2",
+      "status": "answered"
+    }
+  ],
+  "application_checks": {
+    "ui_submission_202": true,
+    "live_tool_progress": true,
+    "live_sources": true,
+    "live_question_progress": true,
+    "sse_ordered": true,
+    "sse_done": true,
+    "draft_text_leakage": false,
+    "final_bundle_fetched_after_done": true,
+    "all_four_artifacts_generated": true,
+    "api_research_text_matches": true,
+    "cli_research_text_matches": true,
+    "bundle_validation_passed": true
+  },
+  "stream": {
+    "message_count": 326,
+    "event_kinds": {
+      "agent": 6,
+      "complete": 1,
+      "configuration": 1,
+      "data": 2,
+      "model": 49,
+      "model_start": 49,
+      "plan": 1,
+      "quality": 2,
+      "question_progress": 10,
+      "questions": 1,
+      "search_results": 7,
+      "skill": 4,
+      "source": 9,
+      "step": 20,
+      "tool": 41,
+      "tool_end": 51,
+      "tool_error": 8,
+      "tool_failure": 5,
+      "tool_start": 59
+    },
+    "first_tool": {
+      "seq": 334,
+      "at": "2026-09-29T11:01:38.716586+00:00",
+      "label": "查询资产身份"
+    },
+    "first_source": {
+      "seq": 363,
+      "at": "2026-09-29T11:01:44.402974+00:00",
+      "label": "原始来源已读取"
+    },
+    "first_question_progress": {
+      "seq": 371,
+      "at": "2026-09-29T11:01:47.113737+00:00",
+      "label": "研究问题调查进展已记录"
+    },
+    "terminal": {
+      "seq": 655,
+      "run_id": "0f4c5a2c34d5404f",
+      "kind": "complete",
+      "label": "研究产物已生成",
+      "payload": {
+        "status": "complete",
+        "research_status": "complete",
+        "events": 1,
+        "sources": 8
+      },
+      "at": "2026-09-29T11:07:06.621225+00:00"
+    }
+  },
+  "artifacts": {
+    "report.html": {
+      "bytes": 1783949,
+      "sha256": "748b2d932d8c9a74921bd78eeb5ca071b256eeaefa0b5e80be2554c62d05b4d3",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed_observed": false,
+      "embedded_bundle_matches": true,
+      "external_script_resources": []
+    },
+    "report.xlsx": {
+      "bytes": 69604,
+      "sha256": "5766cf5346222c2cf62fc8cd24863800b9875c0b9b414a43c9143323aa318199",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed_observed": false,
+      "zip_valid": true,
+      "xml_parts": 20,
+      "external_source_links": 10,
+      "sheets": [
+        "Overview",
+        "Parameters",
+        "Daily",
+        "Monthly",
+        "MonthlyCalc",
+        "ExecutionLedger",
+        "EventWindows",
+        "Sources",
+        "Macro",
+        "Coverage",
+        "Associations"
+      ],
+      "formula_errors": []
+    },
+    "report.pptx": {
+      "bytes": 76184,
+      "sha256": "f52da58175937c74a01a39b38ea3d456ded45142bcabff5a729626782617a99e",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed_observed": false,
+      "zip_valid": true,
+      "xml_parts": 39,
+      "external_source_links": 9,
+      "native_charts": 1,
+      "slides": 8
+    },
+    "report.docx": {
+      "bytes": 73842,
+      "sha256": "ce5b07b34662146e25a239e8591797862d7ecb60e99491590c8679a38d0d1a73",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed_observed": false,
+      "zip_valid": true,
+      "xml_parts": 13,
+      "external_source_links": 10
+    }
+  },
+  "verification_scope_notes": [
+    "UI clicks emitted download start and full-byte progress. Playwriter extension did not expose final native file-save completion; HTTP byte equality and manifest hashes independently verified. Office visual rendering not assessed."
+  ],
+  "functional_acceptance_passed": true
+}

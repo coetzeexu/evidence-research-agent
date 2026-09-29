@@ -11,7 +11,6 @@ import {
   X,
 } from 'lucide-react';
 import { Chart } from './ChartLoader';
-import { QualityPanel } from './QualityPanel';
 import { SensitivityPanel } from './SensitivityPanel';
 import type { Bundle, Event, Spec } from './types';
 import { pct, safeUrl } from './types';
@@ -787,7 +786,6 @@ export function ResearchView({
         ))}
       </nav>
       <div className="study-body">
-        <QualityPanel bundle={bundle} onSelect={onSelect} />
         {tab === 'market' && (
           <>
             <section className="surface chart-surface">

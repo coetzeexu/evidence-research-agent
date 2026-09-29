@@ -1,0 +1,151 @@
+{
+  "metadata": {
+    "run_id": "250db33eda23435b",
+    "url": "http://127.0.0.1:8012",
+    "code_hash": "b24be2705bb6c0464f8b12cba02723c3a8c0860eab06bbd0d5294805437af3f0",
+    "git_head": "fd37683be396344e09cc2cb2fcb497780e7cb2d8",
+    "browser": "Chrome via Playwriter extension",
+    "playwriter_session": "6"
+  },
+  "scope": "Real Chrome UI submission, DOM/SSE observation, artifact-link clicks, same-origin transfer and OOXML/Excel/HTML structure; no screenshot or Office visual audit.",
+  "research_status": "partial",
+  "research_complete": false,
+  "application_checks": {
+    "ui_submission_202": true,
+    "live_tool_progress": true,
+    "live_sources": true,
+    "live_question_progress": true,
+    "sse_ordered": true,
+    "sse_done": true,
+    "draft_text_leakage": false,
+    "final_bundle_fetched_after_done": true,
+    "all_four_artifacts_generated": true
+  },
+  "stream": {
+    "message_count": 329,
+    "event_kinds": {
+      "agent": 8,
+      "complete": 1,
+      "configuration": 1,
+      "data": 2,
+      "model": 52,
+      "model_start": 52,
+      "plan": 1,
+      "quality": 3,
+      "question_progress": 11,
+      "questions": 1,
+      "search_results": 4,
+      "skill": 5,
+      "source": 7,
+      "step": 21,
+      "tool": 38,
+      "tool_end": 53,
+      "tool_error": 6,
+      "tool_failure": 4,
+      "tool_start": 59
+    },
+    "first_tool": {
+      "seq": 5,
+      "at": "2026-09-29T10:40:51.882363+00:00",
+      "label": "查询资产身份"
+    },
+    "first_source": {
+      "seq": 52,
+      "at": "2026-09-29T10:41:29.547204+00:00",
+      "label": "原始来源已读取"
+    },
+    "first_question_progress": {
+      "seq": 60,
+      "at": "2026-09-29T10:41:45.180004+00:00",
+      "label": "研究问题调查进展已记录"
+    },
+    "terminal": {
+      "seq": 329,
+      "run_id": "250db33eda23435b",
+      "kind": "complete",
+      "label": "研究产物已生成",
+      "payload": {
+        "status": "partial",
+        "research_status": "partial",
+        "events": 1,
+        "sources": 7
+      },
+      "at": "2026-09-29T10:46:12.003443+00:00"
+    }
+  },
+  "artifacts": {
+    "report.html": {
+      "bytes": 1791402,
+      "sha256": "990b7dd146d6ba935c48082e9c772046b6837a6e18c29aa5d3df9c86529432d6",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed": false,
+      "embedded_bundle_matches": true,
+      "external_script_resources": []
+    },
+    "report.xlsx": {
+      "bytes": 69450,
+      "sha256": "d6e489e2880084327caebd23299ce6578c8f66768882fafcf917798278acb08d",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed": false,
+      "zip_valid": true,
+      "xml_parts": 20,
+      "external_source_links": 9,
+      "sheets": [
+        "Overview",
+        "Parameters",
+        "Daily",
+        "Monthly",
+        "MonthlyCalc",
+        "ExecutionLedger",
+        "EventWindows",
+        "Sources",
+        "Macro",
+        "Coverage",
+        "Associations"
+      ],
+      "formula_errors": []
+    },
+    "report.pptx": {
+      "bytes": 65424,
+      "sha256": "86bca9248d70e36b8095a10b480221a73c55d3033e7b59660782cc6201897524",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed": false,
+      "zip_valid": true,
+      "xml_parts": 39,
+      "external_source_links": 8,
+      "native_charts": 1,
+      "slides": 8
+    },
+    "report.docx": {
+      "bytes": 73674,
+      "sha256": "1b80fa61d652e291f7e9a5f4f9990a2562c72113937bbfa99c40012f31b20a60",
+      "manifest_hash_valid": true,
+      "http_status": 200,
+      "http_download_matches": true,
+      "ui_download_started": true,
+      "browser_received_full_bytes": true,
+      "browser_file_save_completed": false,
+      "zip_valid": true,
+      "xml_parts": 13,
+      "external_source_links": 9
+    }
+  },
+  "limitations": [
+    "Playwriter extension emitted download start and full-byte progress but no final completed/saveAs event. HTTP byte equality and manifest hashes independently verified; native Save dialog / Office rendering not assessed."
+  ],
+  "investigation": [
+    "Required prose was partially rejected because metric placeholders carried metric_id: prefixes and absolute-value comparison was transcribed as signed gt; handed to main Agent for repair."
+  ]
+}

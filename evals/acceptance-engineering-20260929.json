@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-09-29T12:21:23.451861+00:00",
+  "production_hash": "308d4d9f85ff3c7f6a63b508acc4c9cb7e94926df8fab277f7453a4303a840a8",
+  "backend": {
+    "passed": 251,
+    "skipped": 0,
+    "command": "uv run pytest -q"
+  },
+  "frontend": {
+    "passed": 28,
+    "command": "npm test -- --run"
+  },
+  "build": "passed",
+  "typescript": "passed",
+  "ruff": "passed",
+  "ruff_format": "passed",
+  "prettier": "passed",
+  "sample_checks": "nvda and gold-bitcoin verify_samples passed",
+  "browser": "passed; see browser-acceptance-20260929.json",
+  "scope": "Engineering and sample checks on final transport/UI patch. Eight live model runs use the separately identified frozen hash.",
+  "ci": {
+    "commit": "026afdd002db2a325e0a935478cc15ec671345a1",
+    "conclusion": "success",
+    "url": "https://github.com/coetzeexu/evidence-research-agent/actions/runs/36567079005",
+    "scope": "backend transient-source retry patch; final documentation/UI commit runs CI separately"
+  },
+  "live_evaluation_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085"
+}

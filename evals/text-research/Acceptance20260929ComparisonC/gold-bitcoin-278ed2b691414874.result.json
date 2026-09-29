@@ -1,0 +1,38 @@
+{
+  "case": "gold-bitcoin",
+  "run_id": "278ed2b691414874",
+  "started_at": "2026-09-29T11:18:50.932442+00:00",
+  "code_hash": "33d2afc02c56b01ac46e9f724ef7e73e3b0a45ed0926520a610aea46d71f11ec",
+  "mode": "live-end-to-end",
+  "prompt": "比较 2021-09-28 至 2026-09-28 黄金 GLD 与比特币 BTC-USD 的避险和抗通胀表现，美元计价，GLD/BTC 权重 60/40、季度再平衡、单边交易成本 20 bps、初始资本 100000 美元、基准 SPY。分析压力期保护、实际购买力、通胀关联、同口径组合与单资产基线，以及成本/权重/频率/分段敏感性，形成有条件的决策框架。只输出有证据的中文调研文字，不导出报告。",
+  "manual_edits": false,
+  "independent_content_audit": "pending",
+  "runtime": {
+    "python": "3.12.13",
+    "packages": {
+      "langchain": "1.4.2",
+      "langgraph": "1.2.12",
+      "langchain-openai": "1.6.6",
+      "pydantic": "2.13.5"
+    }
+  },
+  "automated_pass": false,
+  "error": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/coetzee/Documents/Codex/2026-09-28/agent-agent-nvda-ai-chatgpt-b100-2/work/agent-text-evaluations/Acceptance20260929ComparisonC/runs/278ed2b691414874/bundle.json'",
+  "budget": {
+    "elapsed_seconds": 174.5124621251598,
+    "model_calls": 14,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "finished_at": "2026-09-29T11:21:45.455848+00:00",
+  "usage": {
+    "actual_models": [
+      "/workspace/model"
+    ],
+    "completed_model_calls": 14,
+    "input_tokens": 177335,
+    "output_tokens": 4350,
+    "failed_model_calls": 0
+  },
+  "code_unchanged": true
+}

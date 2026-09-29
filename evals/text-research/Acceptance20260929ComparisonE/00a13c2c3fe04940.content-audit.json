@@ -1,0 +1,900 @@
+{
+  "run_id": "00a13c2c3fe04940",
+  "bundle_hash": "f37529fe458f6c57fc13115b3ec3b31973e053183f12144870365c5b9b593e91",
+  "reviewed_at": "2026-09-29T12:16:57.405381+00:00",
+  "reviewer": "Codex independent review outside production verifier context",
+  "scope": "Read published findings with evidence excerpts, numerical references, time attribution and limitations; deterministic standard-library recalculation separate from model review. Not a causal study or predictive validation.",
+  "content_pass": false,
+  "issues": [
+    {
+      "finding_id": "f-hedge",
+      "severity": "error",
+      "category": "model_generated_relationship",
+      "observation": "“多数压力月既未保本也未跑赢”与 6 个压力月仅 3 个月未跑赢不一致。",
+      "evidence": "stress.BTC-USD.outperform_months = 3，stress month count = 6。"
+    },
+    {
+      "finding_id": "f-inflation",
+      "severity": "error",
+      "category": "model_generated_inference",
+      "observation": "正文将本样本中的相关性推为抗通胀机制不成立，并将 60 个价格锚点混称为 CPI 有效月份。",
+      "evidence": "CPI 有效分组样本为 39 + 19 = 58；不能从弱负相关识别机制。"
+    }
+  ],
+  "numeric_checks": {
+    "independent_method": "Python standard library; raw daily adjusted closes, stored execution NAV and cash/asset reconciliation, pressure month counts and CPI observations. No production analytics import.",
+    "check_count": 217,
+    "failures": [],
+    "checks": [
+      {
+        "metric": "daily.GLD.total_return",
+        "passed": true
+      },
+      {
+        "metric": "daily.GLD.cagr",
+        "passed": true
+      },
+      {
+        "metric": "daily.GLD.volatility",
+        "passed": true
+      },
+      {
+        "metric": "daily.GLD.max_drawdown",
+        "passed": true
+      },
+      {
+        "metric": "daily.BTC-USD.total_return",
+        "passed": true
+      },
+      {
+        "metric": "daily.BTC-USD.cagr",
+        "passed": true
+      },
+      {
+        "metric": "daily.BTC-USD.volatility",
+        "passed": true
+      },
+      {
+        "metric": "daily.BTC-USD.max_drawdown",
+        "passed": true
+      },
+      {
+        "metric": "execution.portfolio.total_return",
+        "passed": true
+      },
+      {
+        "metric": "execution.portfolio.cagr",
+        "passed": true
+      },
+      {
+        "metric": "execution.portfolio.volatility",
+        "passed": true
+      },
+      {
+        "metric": "execution.portfolio.max_drawdown",
+        "passed": true
+      },
+      {
+        "metric": "execution.portfolio.observations",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "metric": "execution.GLD.total_return",
+        "passed": true
+      },
+      {
+        "metric": "execution.GLD.cagr",
+        "passed": true
+      },
+      {
+        "metric": "execution.GLD.volatility",
+        "passed": true
+      },
+      {
+        "metric": "execution.GLD.max_drawdown",
+        "passed": true
+      },
+      {
+        "metric": "execution.GLD.observations",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "metric": "execution.BTC-USD.total_return",
+        "passed": true
+      },
+      {
+        "metric": "execution.BTC-USD.cagr",
+        "passed": true
+      },
+      {
+        "metric": "execution.BTC-USD.volatility",
+        "passed": true
+      },
+      {
+        "metric": "execution.BTC-USD.max_drawdown",
+        "passed": true
+      },
+      {
+        "metric": "execution.BTC-USD.observations",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "check": "nav-assets-cash",
+        "passed": true
+      },
+      {
+        "metric": "stress.GLD.positive_months",
+        "passed": true
+      },
+      {
+        "metric": "stress.GLD.outperform_months",
+        "passed": true
+      },
+      {
+        "metric": "inflation.GLD.high_inflation_n",
+        "passed": true
+      },
+      {
+        "metric": "inflation.GLD.high_inflation_mean_return",
+        "passed": true
+      },
+      {
+        "metric": "inflation.GLD.low_inflation_n",
+        "passed": true
+      },
+      {
+        "metric": "inflation.GLD.low_inflation_mean_return",
+        "passed": true
+      },
+      {
+        "metric": "inflation.GLD.inflation_correlation",
+        "passed": true
+      },
+      {
+        "metric": "stress.BTC-USD.positive_months",
+        "passed": true
+      },
+      {
+        "metric": "stress.BTC-USD.outperform_months",
+        "passed": true
+      },
+      {
+        "metric": "inflation.BTC-USD.high_inflation_n",
+        "passed": true
+      },
+      {
+        "metric": "inflation.BTC-USD.high_inflation_mean_return",
+        "passed": true
+      },
+      {
+        "metric": "inflation.BTC-USD.low_inflation_n",
+        "passed": true
+      },
+      {
+        "metric": "inflation.BTC-USD.low_inflation_mean_return",
+        "passed": true
+      },
+      {
+        "metric": "inflation.BTC-USD.inflation_correlation",
+        "passed": true
+      }
+    ]
+  },
+  "disposition": "Preserve original output as model-effect observation; no new engineering backlog or further prompt iteration in this stage, per user scope."
+}

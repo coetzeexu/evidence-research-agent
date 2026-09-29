@@ -1,0 +1,425 @@
+{
+  "status": "evaluation_finished",
+  "acceptance_passed": false,
+  "planned_cases": {
+    "nvda": 3,
+    "gold-bitcoin": 3,
+    "amd": 1,
+    "gold-ethereum": 1
+  },
+  "completed_runs": 8,
+  "matrix_complete": true,
+  "unique_runs": true,
+  "fixed_version": true,
+  "automated_pass_count": 8,
+  "independently_accepted_count": 3,
+  "results": [
+    {
+      "suite": "Acceptance20260929EventsE",
+      "case": "nvda",
+      "run_id": "ab95141d29e24af5",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "finding_id": "f-blackwell",
+          "severity": "error",
+          "category": "model_generated_relationship",
+          "observation": "局限称次交易日 1/5/20 日方向与事件日一致，但两个 20 日相对收益分别为负和正。",
+          "evidence": "原始 research.metrics 中事件日 20 日约 -1.03%，next-session 20 日约 +0.64%；不能称方向一致。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 346.06683616619557,
+        "model_calls": 50,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 50,
+        "input_tokens": 1663925,
+        "output_tokens": 37079,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "95b7d40306291e2cb1ce04484991476a57f1e911eca171bee2c165fa86d34770",
+      "result_file": "Acceptance20260929EventsE/nvda-ab95141d29e24af5.result.json",
+      "text_file": "Acceptance20260929EventsE/nvda-ab95141d29e24af5.txt"
+    },
+    {
+      "suite": "Acceptance20260929EventsE",
+      "case": "nvda",
+      "run_id": "632f8c401c004cbf",
+      "automated_pass": true,
+      "content_pass": true,
+      "issues": [],
+      "budget": {
+        "elapsed_seconds": 417.2156163328327,
+        "model_calls": 50,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 50,
+        "input_tokens": 1482568,
+        "output_tokens": 32276,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "de595b5f625c8e843650a8e6d4422f64fd3ce50a0069b024a1754cd68db0fdf5",
+      "result_file": "Acceptance20260929EventsE/nvda-632f8c401c004cbf.result.json",
+      "text_file": "Acceptance20260929EventsE/nvda-632f8c401c004cbf.txt"
+    },
+    {
+      "suite": "Acceptance20260929EventsE",
+      "case": "nvda",
+      "run_id": "438cd152d4364176",
+      "automated_pass": true,
+      "content_pass": true,
+      "issues": [],
+      "budget": {
+        "elapsed_seconds": 378.74938587495126,
+        "model_calls": 48,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 48,
+        "input_tokens": 1594136,
+        "output_tokens": 35070,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "004402be20003cf3d6668fa0a8e408b17ac804ea5c3835a1baeb3ca60b7a963a",
+      "result_file": "Acceptance20260929EventsE/nvda-438cd152d4364176.result.json",
+      "text_file": "Acceptance20260929EventsE/nvda-438cd152d4364176.txt"
+    },
+    {
+      "suite": "Acceptance20260929EventsE",
+      "case": "amd",
+      "run_id": "1f50da840f0e4b14",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "finding_id": "f-mi300-launch",
+          "severity": "error",
+          "category": "model_generated_timezone",
+          "observation": "将 2023-12-06 20:01 UTC 写作美股收盘后，并在多个段落沿用。",
+          "evidence": "该时刻为 America/New_York 15:01 EST，早于 16:00 收盘；报道时间本身也不等于发布会开始时间。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 301.32375333295204,
+        "model_calls": 52,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 52,
+        "input_tokens": 1204853,
+        "output_tokens": 35371,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "91b64b7689f435a6b1ca2b02c89fee48d6a22afd1ba1f94754b90bb9d53a2288",
+      "result_file": "Acceptance20260929EventsE/amd-1f50da840f0e4b14.result.json",
+      "text_file": "Acceptance20260929EventsE/amd-1f50da840f0e4b14.txt"
+    },
+    {
+      "suite": "Acceptance20260929ComparisonE",
+      "case": "gold-bitcoin",
+      "run_id": "69400e6337754c84",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "finding_id": "f-inflation",
+          "severity": "error",
+          "category": "model_generated_inference",
+          "observation": "标题将历史 CPI 相关性与分组描述推为“机制不成立”。",
+          "evidence": "相关性与分组均值不能识别机制；“受少数月份主导”没有对应影响点检验。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 216.2641838749405,
+        "model_calls": 23,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 23,
+        "input_tokens": 465032,
+        "output_tokens": 18428,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "220ccb20fae4c4838a4ecf9f17ab92647f9026b01d75c2844a0c70a408845bbb",
+      "result_file": "Acceptance20260929ComparisonE/gold-bitcoin-69400e6337754c84.result.json",
+      "text_file": "Acceptance20260929ComparisonE/gold-bitcoin-69400e6337754c84.txt"
+    },
+    {
+      "suite": "Acceptance20260929ComparisonE",
+      "case": "gold-bitcoin",
+      "run_id": "00a13c2c3fe04940",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "finding_id": "f-hedge",
+          "severity": "error",
+          "category": "model_generated_relationship",
+          "observation": "“多数压力月既未保本也未跑赢”与 6 个压力月仅 3 个月未跑赢不一致。",
+          "evidence": "stress.BTC-USD.outperform_months = 3，stress month count = 6。"
+        },
+        {
+          "finding_id": "f-inflation",
+          "severity": "error",
+          "category": "model_generated_inference",
+          "observation": "正文将本样本中的相关性推为抗通胀机制不成立，并将 60 个价格锚点混称为 CPI 有效月份。",
+          "evidence": "CPI 有效分组样本为 39 + 19 = 58；不能从弱负相关识别机制。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 207.86676274985075,
+        "model_calls": 24,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 24,
+        "input_tokens": 469549,
+        "output_tokens": 19067,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "f37529fe458f6c57fc13115b3ec3b31973e053183f12144870365c5b9b593e91",
+      "result_file": "Acceptance20260929ComparisonE/gold-bitcoin-00a13c2c3fe04940.result.json",
+      "text_file": "Acceptance20260929ComparisonE/gold-bitcoin-00a13c2c3fe04940.txt"
+    },
+    {
+      "suite": "Acceptance20260929ComparisonE",
+      "case": "gold-bitcoin",
+      "run_id": "702591e91b73439d",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "finding_id": "f-inflation",
+          "severity": "error",
+          "category": "model_generated_sample_count",
+          "observation": "局限称 CPI 相关系数基于 59 个月度观测，混入资产间相关性的样本数。",
+          "evidence": "inflation 的有效观测为高通胀 39 + 低通胀 19 = 58。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 261.7963995828759,
+        "model_calls": 23,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 23,
+        "input_tokens": 446087,
+        "output_tokens": 15540,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "6af6be5bfffbd7fea2f1add3a377e173089337a826239ab897a238ad4fb40bc1",
+      "result_file": "Acceptance20260929ComparisonE/gold-bitcoin-702591e91b73439d.result.json",
+      "text_file": "Acceptance20260929ComparisonE/gold-bitcoin-702591e91b73439d.txt"
+    },
+    {
+      "suite": "Acceptance20260929ComparisonE",
+      "case": "gold-ethereum",
+      "run_id": "945a08d57adf4bd7",
+      "automated_pass": true,
+      "content_pass": true,
+      "issues": [],
+      "budget": {
+        "elapsed_seconds": 250.16838625003584,
+        "model_calls": 23,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 23,
+        "input_tokens": 420183,
+        "output_tokens": 19503,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+      "code_unchanged": true,
+      "bundle_hash": "764c9261cab466a8d7c01d6fe5c5d759461394959c4c1f0cadcfa5046591ad51",
+      "result_file": "Acceptance20260929ComparisonE/gold-ethereum-945a08d57adf4bd7.result.json",
+      "text_file": "Acceptance20260929ComparisonE/gold-ethereum-945a08d57adf4bd7.txt"
+    }
+  ]
+}

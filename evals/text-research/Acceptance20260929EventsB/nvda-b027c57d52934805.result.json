@@ -1,0 +1,103 @@
+{
+  "case": "nvda",
+  "run_id": "b027c57d52934805",
+  "started_at": "2026-09-29T11:00:14.006157+00:00",
+  "code_hash": "b7230bc9eb7a1610942902609842fa8f7effd307224f525f81d9688b81e7d38a",
+  "mode": "live-end-to-end",
+  "prompt": "回顾 NVDA 在 2021-09-28 至 2026-09-28 的五年 OHLCV 日线及 AI 行业大事件。必须核实 ChatGPT 首次公开发布、Blackwell（B100/B200）平台发布、DeepSeek-R1 模型发布；调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期。分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限。只输出有原文和数值依据的中文调研文字，不导出报告。",
+  "manual_edits": false,
+  "independent_content_audit": "pending",
+  "runtime": {
+    "python": "3.12.13",
+    "packages": {
+      "langchain": "1.4.2",
+      "langgraph": "1.2.12",
+      "langchain-openai": "1.6.6",
+      "pydantic": "2.13.5"
+    }
+  },
+  "checks": {
+    "verified_text": true,
+    "complete": false,
+    "required_questions": false,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true,
+    "symbols": true,
+    "requested_dates": true,
+    "explicit_events_preserved": true,
+    "no_exports": true,
+    "bounded": true,
+    "bounded_tools": true
+  },
+  "automated_pass": false,
+  "budget": {
+    "elapsed_seconds": 445.51100787497126,
+    "model_calls": 52,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "bundle_hash": "2e2501b4a8baa44ec7742a9aed7ddcd0585f7aab59580950ddc8f58f7777e767",
+  "spec": {
+    "intent": "event_study",
+    "title": "NVDA 2021-09-28 至 2026-09-28 五年 OHLCV 日线与 AI 行业大事件回顾（含 ChatGPT 发布、Blackwell 发布、DeepSeek-R1 发布及 2025-01-27 下跌归因）",
+    "symbols": [
+      "NVDA"
+    ],
+    "start": "2021-09-28",
+    "end": "2026-09-28",
+    "topics": [
+      "AI 行业大事件",
+      "ChatGPT 首次公开发布",
+      "Blackwell（B100/B200）平台发布",
+      "DeepSeek-R1 模型发布",
+      "2025-01-27 NVDA 下跌"
+    ],
+    "required_events": [
+      "ChatGPT 首次公开发布",
+      "Blackwell（B100/B200）平台发布",
+      "DeepSeek-R1 模型发布"
+    ],
+    "event_scope": "broad",
+    "benchmark": "SPY",
+    "windows": [
+      1,
+      5,
+      20
+    ],
+    "weights": [
+      1.0
+    ],
+    "rebalance_months": 1,
+    "cost_bps": 10.0,
+    "initial_capital": 100000.0,
+    "outputs": [
+      "html",
+      "xlsx",
+      "pptx",
+      "docx"
+    ],
+    "assumptions": [
+      "未指定基准，默认使用 SPY 作为基准",
+      "未指定事件窗口，默认使用 1/5/20 交易日",
+      "未指定数据频率，默认日线",
+      "时间区间按用户给定 2021-09-28 至 2026-09-28",
+      "用户要求仅输出中文调研文字、不导出报告，但按规范仍生成四种文件（html/xlsx/pptx/docx）作为交付物",
+      "事件日期以公开可核实的发布/公开日期为准，市场反应以 NVDA 日线行情为准"
+    ]
+  },
+  "finished_at": "2026-09-29T11:07:39.705983+00:00",
+  "usage": {
+    "actual_models": [
+      "/workspace/model"
+    ],
+    "completed_model_calls": 52,
+    "input_tokens": 1623436,
+    "output_tokens": 36455,
+    "failed_model_calls": 0
+  },
+  "code_unchanged": true
+}

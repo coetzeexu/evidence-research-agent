@@ -1,0 +1,41 @@
+{
+  "run_id": "ab95141d29e24af5",
+  "bundle_hash": "95b7d40306291e2cb1ce04484991476a57f1e911eca171bee2c165fa86d34770",
+  "reviewed_at": "2026-09-29T12:16:57.316395+00:00",
+  "reviewer": "Codex independent review outside production verifier context",
+  "scope": "Read published findings with evidence excerpts, numerical references, time attribution and limitations; deterministic standard-library recalculation separate from model review. Not a causal study or predictive validation.",
+  "content_pass": false,
+  "issues": [
+    {
+      "finding_id": "f-blackwell",
+      "severity": "error",
+      "category": "model_generated_relationship",
+      "observation": "局限称次交易日 1/5/20 日方向与事件日一致，但两个 20 日相对收益分别为负和正。",
+      "evidence": "原始 research.metrics 中事件日 20 日约 -1.03%，next-session 20 日约 +0.64%；不能称方向一致。"
+    }
+  ],
+  "numeric_checks": {
+    "independent_method": "Python standard library; raw daily adjusted closes, stored execution NAV and cash/asset reconciliation, pressure month counts and CPI observations. No production analytics import.",
+    "check_count": 4,
+    "failures": [],
+    "checks": [
+      {
+        "metric": "daily.NVDA.total_return",
+        "passed": true
+      },
+      {
+        "metric": "daily.NVDA.cagr",
+        "passed": true
+      },
+      {
+        "metric": "daily.NVDA.volatility",
+        "passed": true
+      },
+      {
+        "metric": "daily.NVDA.max_drawdown",
+        "passed": true
+      }
+    ]
+  },
+  "disposition": "Preserve original output as model-effect observation; no new engineering backlog or further prompt iteration in this stage, per user scope."
+}

@@ -1,0 +1,43 @@
+{
+  "mode": "saved-evidence-development-probe",
+  "name": "ComparisonBoundaryC",
+  "run_id": "c40fd0874e4a4d36",
+  "source_run": "698cfed36824437c",
+  "code_hash": "b7230bc9eb7a1610942902609842fa8f7effd307224f525f81d9688b81e7d38a",
+  "code_unchanged": true,
+  "checks": {
+    "verified_text": true,
+    "complete": false,
+    "required_questions": false,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true
+  },
+  "status": "partial",
+  "budget": {
+    "elapsed_seconds": 108.499,
+    "model_calls": 15,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "unanswered": [
+    {
+      "id": "inflation",
+      "question": "这些资产是否保全购买力、是否随通胀变化？",
+      "acceptance": "结合实际收益、CPI分组/相关性，区分保值结果与稳定抗通胀机制；明确宏观数据是回顾性的。",
+      "kind": "inflation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [],
+      "gaps": [
+        "推断/事实缺陷：但弱负相关与高波动使其难以作为稳定保值工具；弱负相关与高波动只描述本样本的关联与离散程度，不能推出该资产'难以作为稳定保值工具'这一属性判断；样本内未观察到稳定上行关系不等于否定其保值属性，应改写为'本样本无法验证其稳定保值能力'。；修复方向 rewrite"
+      ]
+    }
+  ]
+}

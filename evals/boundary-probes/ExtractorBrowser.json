@@ -1,0 +1,16 @@
+{
+  "mode": "saved-evidence-extraction-protocol-probe",
+  "name": "ExtractorBrowser",
+  "run_id": "c8eef6e59edc4099",
+  "source_run": "afd40c10b7454228",
+  "code_hash": "989a2c113842aba603178691a829670833270dc1139619390a735be6fcacab4c",
+  "code_unchanged": true,
+  "schema_valid": true,
+  "event_count": 4,
+  "budget": {
+    "elapsed_seconds": 20.063,
+    "model_calls": 1,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  }
+}

@@ -1,37 +1,26 @@
-# 固定版本真实评估结果
+# 当前版本运行验收
 
-已完成 8/8 次，自动检查通过 3 次。整体内容验收：未通过。
+固定版本八次真实研究已完成，自动检查 **8/8 通过**，八次正文状态均为 `complete`。NVDA 与 GLD/BTC 各连续三次，AMD 与 GLD/ETH 各一次；未混用旧批次成功记录，也未手改输出。
 
-自动 complete 仅表示程序与生产模型核验通过；不等同独立内容验收。逐条审阅由 Codex 在生产核验器之外，对照正文、保存原文和确定性指标完成，不以单一模型评分作结论。
+自动检查验证任务执行、必答问题状态、引用与数值计算、时间窗口、比较口径、预算及核验发布。独立阅读另外保留模型表述观察：部分输出仍有日期换算、比较关系或推断措辞错误，所以自动通过不等于“正文全部无误”。严格内容标记按原始复核结果保留于机器记录；按本轮收尾范围，不继续调模型，也不将这些观察列为新增工程待办。
 
-| 场景 | 运行 ID | 自动检查 | 内容复核 | 秒 | 模型调用 |
-| --- | --- | --- | --- | ---: | ---: |
-| nvda | [a37b23dee36946f0](../evals/text-research/FinalNVDA/nvda-a37b23dee36946f0.txt) | 未通过 | 需修订 | 455.9 | 52 |
-| nvda | [8d903309177346fc](../evals/text-research/FinalNVDA/nvda-8d903309177346fc.txt) | 通过 | 需修订 | 384.4 | 55 |
-| nvda | [1a40cf5889a445ec](../evals/text-research/FinalNVDA/nvda-1a40cf5889a445ec.txt) | 未通过 | 需修订 | 387.0 | 50 |
-| gold-bitcoin | [a029870d97cd4201](../evals/text-research/FinalGoldBTC/gold-bitcoin-a029870d97cd4201.txt) | 通过 | 需修订 | 360.2 | 25 |
-| gold-bitcoin | [c3901fcf59574029](../evals/text-research/FinalGoldBTC/gold-bitcoin-c3901fcf59574029.txt) | 未通过 | 需修订 | 235.8 | 25 |
-| gold-bitcoin | [bb46e598f9bf4551](../evals/text-research/FinalGoldBTC/gold-bitcoin-bb46e598f9bf4551.txt) | 未通过 | 需修订 | 316.3 | 25 |
-| amd | [9be63ae5c7be4601](../evals/text-research/FinalAMD/amd-9be63ae5c7be4601.txt) | 通过 | 需修订 | 249.2 | 28 |
-| gold-ethereum | [c5908f8bc20a485a](../evals/text-research/FinalGoldETH/gold-ethereum-c5908f8bc20a485a.txt) | 未通过 | 需修订 | 294.8 | 26 |
+| 场景 | 运行正文 | 自动检查 | 耗时（秒） | 模型调用 |
+| --- | --- | --- | ---: | ---: |
+| nvda | [ab95141d29e24af5](../evals/text-research/Acceptance20260929EventsE/nvda-ab95141d29e24af5.txt) | 通过 | 346.1 | 50 |
+| nvda | [632f8c401c004cbf](../evals/text-research/Acceptance20260929EventsE/nvda-632f8c401c004cbf.txt) | 通过 | 417.2 | 50 |
+| nvda | [438cd152d4364176](../evals/text-research/Acceptance20260929EventsE/nvda-438cd152d4364176.txt) | 通过 | 378.7 | 48 |
+| amd | [1f50da840f0e4b14](../evals/text-research/Acceptance20260929EventsE/amd-1f50da840f0e4b14.txt) | 通过 | 301.3 | 52 |
+| gold-bitcoin | [69400e6337754c84](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-69400e6337754c84.txt) | 通过 | 216.3 | 23 |
+| gold-bitcoin | [00a13c2c3fe04940](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-00a13c2c3fe04940.txt) | 通过 | 207.9 | 24 |
+| gold-bitcoin | [702591e91b73439d](../evals/text-research/Acceptance20260929ComparisonE/gold-bitcoin-702591e91b73439d.txt) | 通过 | 261.8 | 23 |
+| gold-ethereum | [945a08d57adf4bd7](../evals/text-research/Acceptance20260929ComparisonE/gold-ethereum-945a08d57adf4bd7.txt) | 通过 | 250.2 | 23 |
 
-每次原始记录均保留，没有覆盖失败结果或手改正文。全部运行显式关闭导出；真实文件导出测试未执行。
+八次研究的生产代码、Prompt、技能和来源目录哈希均为 `e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085`。服务实际返回模型标识为 `/workspace/model`，不据代理配置推断模型身份。研究文字、Bundle、请求、用量、版本及独立复核记录全部保存。
 
-## 内容复核发现
+独立 Python 标准库重算共 884 项通过：覆盖日线收益风险、已存执行净值与现金/资产对账、压力月计数及 CPI 分组。它没有重新模拟全部交易执行引擎，也不替代文字语义复核。
 
-- **a37b23dee36946f0**：没有市场预期或定价时点证据。；Blackwell发布原文不能证明市场已提前消化预期；与已知基线缺陷相同。；资讯未给出收盘不等于行情数据不存在收盘跌幅。；用户明确要求的下跌分析未完整发布，生产返回partial准确，但正文仍存在漏检。
-- **8d903309177346fc**：请求明确区分模型发布、论文公开与市场反应日期；正文承认论文日期缺证据，却把研究标为complete，完整度门禁漏检。；2025-01-20无NVDA日线（休市）；计算使用后续交易日窗口，正文应明确首个可交易日而不是发布当日。；仅列出几个大幅异动未完成移除这些交易日的收益贡献计算，不能据此证明高度依赖。；两个1日相对窗口均为正，幅度变化不能被说成符号变化。
-- **1a40cf5889a445ec**：用户点名的必答段落未完整发布。多条数学上成立的正负关系被引文定位或断言绑定检查拒绝，partial 状态准确，但必答覆盖仍不达标。；已读来源 src-2703b6b30f807b 是 NVIDIA 官方 Blackwell 发布公告，元数据为 2024-03-18；不能将该事实混同于缺少量产日期。；两个极端交易日不足以支持全期统计敏感性结论，尚未计算剔除这些交易日后的收益和风险变化。；应区分资讯未给出的数字与行情已计算的收盘跌幅及成交量；正文已给出 2025-01-27 的 -16.97%，现有措辞可能使读者误以为缺少行情数据。
-- **a029870d97cd4201**：相关与分组统计不足以否定资产机制，末尾免责声明不能修复。；错误地把相关系数符号等同分组均值排序；BTC高通胀月3.30%实际高于低通胀月0.79%。；压力月为名义收益，没有该月CPI平减，不能直接称购买力保护。；正文没有明确黄金ETF代理与现货的区别。
-- **c3901fcf59574029**：必答问题的部分内容因引文定位/关系转录错误未获发布，不满足主场景完整性。；缺少统一决策重要性标准；历史有限网格不足以如此笼统判断。；累计收益118.16%与162.20%相差44.04个百分点；有限的频率对照不是收益来源分解。
-- **bb46e598f9bf4551**：标题仍把相关性扩展为机制否定；正文中的限定措辞不能修复标题断言。；因关系转录选错运算符或参数，必答内容未完整发布。；分段收益差异不足以证明配置结论不存在跨期稳定性，应收窄为尚未验证。
-- **9be63ae5c7be4601**：已读芯片报道未提供同期板块行情；应改为待验证假设。；强度是系统确定性方法，不应要求新闻证明算法阈值。
-- **c5908f8bc20a485a**：正文只发布通过核验的部分，缺少用户明确要求的敏感性结论；不能视为完整交付。；尚未计算该情景，不宜预判变化幅度或概率。
+本机浏览器会话 `1359d9b1848e49dd` 完成请求提交、312 条顺序过程事件、核验后正文展示，四类文件实际保存成功。HTML 以 `file://` 打开并切换视图，Office 文件结构、来源超链接和 Excel 缓存无错误。未进行 Office 逐页视觉审计。
 
-## 版本与复核入口
+收尾补丁另加来源临时错误一次重试，并移除所有 tab 共用的范围核对面板；没有修改模型、Prompt 或计算口径。八次固定版本运行先于此传输/UI 补丁，其版本不被替换为补丁后的版本。补丁由定向传输测试、完整工程回归、前端构建及样例校验验证。
 
-生产代码/Prompt/技能/来源目录是否保持同一哈希：True。
-
-实际服务返回的模型标识：`/workspace/model`。该标识不证明底层模型家族。
-
-[机器可读汇总](../evals/text-research/final-summary.json) · [工程验证](../evals/engineering-verification.json) · [API/CLI 验证](../evals/text-api-cli-verification.json)
+[机器可读汇总](../evals/text-research/acceptance-20260929-summary.json) · [浏览器证据](../evals/browser-acceptance-20260929.json) · [工程验证](validation.md)

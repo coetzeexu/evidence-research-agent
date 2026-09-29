@@ -1,0 +1,27 @@
+{
+  "mode": "saved-evidence-development-probe",
+  "name": "browserA",
+  "run_id": "c6d378ba8dc8491c",
+  "source_run": "250db33eda23435b",
+  "code_hash": "b837358159501b372a967444c36bda0b040e3b56a2060a2ac2aaf6d9fc4d204f",
+  "code_unchanged": true,
+  "checks": {
+    "verified_text": true,
+    "complete": true,
+    "required_questions": true,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true
+  },
+  "status": "complete",
+  "budget": {
+    "elapsed_seconds": 88.021,
+    "model_calls": 9,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "unanswered": []
+}

@@ -1,0 +1,155 @@
+{
+  "code_hash": "33d2afc02c56b01ac46e9f724ef7e73e3b0a45ed0926520a610aea46d71f11ec",
+  "planned_cases": [
+    "gold-bitcoin",
+    "gold-bitcoin",
+    "gold-bitcoin",
+    "gold-ethereum"
+  ],
+  "results": [
+    {
+      "case": "gold-bitcoin",
+      "run_id": "f80478099074406e",
+      "started_at": "2026-09-29T11:14:09.588034+00:00",
+      "code_hash": "33d2afc02c56b01ac46e9f724ef7e73e3b0a45ed0926520a610aea46d71f11ec",
+      "mode": "live-end-to-end",
+      "prompt": "比较 2021-09-28 至 2026-09-28 黄金 GLD 与比特币 BTC-USD 的避险和抗通胀表现，美元计价，GLD/BTC 权重 60/40、季度再平衡、单边交易成本 20 bps、初始资本 100000 美元、基准 SPY。分析压力期保护、实际购买力、通胀关联、同口径组合与单资产基线，以及成本/权重/频率/分段敏感性，形成有条件的决策框架。只输出有证据的中文调研文字，不导出报告。",
+      "manual_edits": false,
+      "independent_content_audit": "pending",
+      "runtime": {
+        "python": "3.12.13",
+        "packages": {
+          "langchain": "1.4.2",
+          "langgraph": "1.2.12",
+          "langchain-openai": "1.6.6",
+          "pydantic": "2.13.5"
+        }
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "automated_pass": true,
+      "budget": {
+        "elapsed_seconds": 280.90648529096507,
+        "model_calls": 24,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "bundle_hash": "1c70f234ea7ec69453b32291d0f9e34126b6f543be3c11cc26db5d54418d03db",
+      "spec": {
+        "intent": "asset_comparison",
+        "title": "GLD 与 BTC-USD 避险与抗通胀比较（2021-09-28 至 2026-09-28，60/40 季度再平衡）",
+        "symbols": [
+          "GLD",
+          "BTC-USD"
+        ],
+        "start": "2021-09-28",
+        "end": "2026-09-28",
+        "topics": [
+          "黄金 ETF 代理（GLD）与比特币的避险属性比较",
+          "黄金 ETF 代理（GLD）与比特币的抗通胀/实际购买力比较",
+          "压力期保护",
+          "通胀关联",
+          "同口径组合与单资产基线",
+          "成本/权重/频率/分段敏感性",
+          "有条件的决策框架"
+        ],
+        "required_events": [],
+        "event_scope": "broad",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          0.6,
+          0.4
+        ],
+        "rebalance_months": 3,
+        "cost_bps": 20.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html",
+          "xlsx",
+          "pptx",
+          "docx"
+        ],
+        "assumptions": [
+          "黄金以 GLD（SPDR Gold Shares，ETF）作为黄金 ETF 代理，非现货黄金。",
+          "比特币以 BTC-USD 计价，美元计价。",
+          "用户未指定事件窗口，采用默认 1/5/20 交易日。",
+          "用户未指定基准，采用默认 SPY。",
+          "用户明确不导出报告，但按规范保留四种文件能力（html/xlsx/pptx/docx）作为可用输出，正文仅输出中文调研文字。",
+          "比较采用非负等权以外的用户指定权重 60/40，季度再平衡，单边交易成本 20 bps，初始资金 100000 美元。",
+          "分段敏感性按用户要求进行，具体分段边界由研究方法确定。"
+        ]
+      },
+      "finished_at": "2026-09-29T11:18:50.899805+00:00",
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 24,
+        "input_tokens": 489916,
+        "output_tokens": 20840,
+        "failed_model_calls": 0
+      },
+      "code_unchanged": true
+    },
+    {
+      "case": "gold-bitcoin",
+      "run_id": "278ed2b691414874",
+      "started_at": "2026-09-29T11:18:50.932442+00:00",
+      "code_hash": "33d2afc02c56b01ac46e9f724ef7e73e3b0a45ed0926520a610aea46d71f11ec",
+      "mode": "live-end-to-end",
+      "prompt": "比较 2021-09-28 至 2026-09-28 黄金 GLD 与比特币 BTC-USD 的避险和抗通胀表现，美元计价，GLD/BTC 权重 60/40、季度再平衡、单边交易成本 20 bps、初始资本 100000 美元、基准 SPY。分析压力期保护、实际购买力、通胀关联、同口径组合与单资产基线，以及成本/权重/频率/分段敏感性，形成有条件的决策框架。只输出有证据的中文调研文字，不导出报告。",
+      "manual_edits": false,
+      "independent_content_audit": "pending",
+      "runtime": {
+        "python": "3.12.13",
+        "packages": {
+          "langchain": "1.4.2",
+          "langgraph": "1.2.12",
+          "langchain-openai": "1.6.6",
+          "pydantic": "2.13.5"
+        }
+      },
+      "automated_pass": false,
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/Users/coetzee/Documents/Codex/2026-09-28/agent-agent-nvda-ai-chatgpt-b100-2/work/agent-text-evaluations/Acceptance20260929ComparisonC/runs/278ed2b691414874/bundle.json'",
+      "budget": {
+        "elapsed_seconds": 174.5124621251598,
+        "model_calls": 14,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "finished_at": "2026-09-29T11:21:45.455848+00:00",
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 14,
+        "input_tokens": 177335,
+        "output_tokens": 4350,
+        "failed_model_calls": 0
+      },
+      "code_unchanged": true
+    }
+  ],
+  "automated_pass": false,
+  "independent_content_audit": "pending"
+}

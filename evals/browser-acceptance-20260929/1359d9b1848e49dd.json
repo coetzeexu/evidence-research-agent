@@ -1,0 +1,121 @@
+{
+  "metadata": {
+    "run_id": "1359d9b1848e49dd",
+    "url": "http://127.0.0.1:8012",
+    "code_hash": "e3c22e0b481d11f4ebf5398c91ed136710a8397d20842026e139fbc2995b5085",
+    "frontend_commit": "b23d295dd8ea1673bd6e1a362e27fecb266a24cd",
+    "browser": "Chrome for Testing via Playwriter headless session 9",
+    "server_pid": 91134
+  },
+  "scope": "Real UI request, live DOM/SSE, completed downloads, offline file:// navigation, OOXML and cached spreadsheet structure. No screenshot/image context or Office visual audit.",
+  "research_status": "complete",
+  "application_checks": {
+    "ui_submission_202": true,
+    "live_tools": true,
+    "live_sources": true,
+    "live_questions": true,
+    "sse_ordered": true,
+    "sse_done": true,
+    "verified_final_text_visible": true,
+    "four_artifacts_downloaded": true,
+    "offline_html_interactive": true
+  },
+  "stream": {
+    "message_count": 312,
+    "event_kinds": {
+      "configuration": 1,
+      "step": 12,
+      "model_start": 43,
+      "model": 43,
+      "tool_start": 61,
+      "tool": 44,
+      "tool_end": 57,
+      "questions": 1,
+      "plan": 1,
+      "data": 2,
+      "agent": 6,
+      "skill": 4,
+      "source": 8,
+      "tool_error": 4,
+      "question_progress": 9,
+      "search_results": 11,
+      "review_adjudication": 1,
+      "quality": 2,
+      "tool_failure": 1,
+      "complete": 1
+    },
+    "terminal": {
+      "seq": 1439,
+      "run_id": "1359d9b1848e49dd",
+      "kind": "complete",
+      "label": "研究产物已生成",
+      "payload": {
+        "status": "complete",
+        "research_status": "complete",
+        "events": 1,
+        "sources": 8
+      },
+      "at": "2026-09-29T12:04:41.806291+00:00"
+    }
+  },
+  "artifacts": {
+    "report.html": {
+      "bytes": 1261330,
+      "sha256": "50f6d82be75326d9714db23b7bd2c33425ddb51d0beb8c8893f95fccffedf597",
+      "manifest_hash_valid": true,
+      "ui_download_saved": true,
+      "server_bytes_match": true,
+      "external_script_resources": [],
+      "embedded_bundle_matches": true,
+      "file_url_opened": true,
+      "tab_switch_worked": true,
+      "browser_errors": []
+    },
+    "report.xlsx": {
+      "bytes": 69599,
+      "sha256": "b16ddacc7eb736798eaa7bca50f23bef6017abc0625c7f57011a0b9a548c8fdb",
+      "manifest_hash_valid": true,
+      "ui_download_saved": true,
+      "server_bytes_match": true,
+      "zip_valid": true,
+      "xml_parts": 25,
+      "external_source_links": 10,
+      "sheets": [
+        "Overview",
+        "Parameters",
+        "Daily",
+        "Monthly",
+        "MonthlyCalc",
+        "ExecutionLedger",
+        "EventWindows",
+        "Sources",
+        "Macro",
+        "Coverage",
+        "Associations"
+      ],
+      "formula_errors": []
+    },
+    "report.pptx": {
+      "bytes": 74301,
+      "sha256": "3e097b15fc23c7c5d5fa3b928284f84fdc6dcb2248207aa4a72c80571f5fba6f",
+      "manifest_hash_valid": true,
+      "ui_download_saved": true,
+      "server_bytes_match": true,
+      "zip_valid": true,
+      "xml_parts": 71,
+      "external_source_links": 9,
+      "slides": 8
+    },
+    "report.docx": {
+      "bytes": 73816,
+      "sha256": "4e39ab3b198101134e57b61cc45a0207c415d7d473b2d5d0c843c1aae12eddcb",
+      "manifest_hash_valid": true,
+      "ui_download_saved": true,
+      "server_bytes_match": true,
+      "zip_valid": true,
+      "xml_parts": 16,
+      "external_source_links": 10
+    }
+  },
+  "functional_acceptance_passed": true
+}

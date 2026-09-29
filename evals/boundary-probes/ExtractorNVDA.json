@@ -1,0 +1,16 @@
+{
+  "mode": "saved-evidence-extraction-protocol-probe",
+  "name": "ExtractorNVDA",
+  "run_id": "eb90cccbe63c4c12",
+  "source_run": "61837418694c4ca4",
+  "code_hash": "989a2c113842aba603178691a829670833270dc1139619390a735be6fcacab4c",
+  "code_unchanged": true,
+  "schema_valid": true,
+  "event_count": 10,
+  "budget": {
+    "elapsed_seconds": 24.45,
+    "model_calls": 1,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  }
+}

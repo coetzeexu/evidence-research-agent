@@ -1,0 +1,64 @@
+{
+  "mode": "saved-evidence-development-probe",
+  "name": "comparisonA",
+  "run_id": "c4062467954540b3",
+  "source_run": "698cfed36824437c",
+  "code_hash": "b837358159501b372a967444c36bda0b040e3b56a2060a2ac2aaf6d9fc4d204f",
+  "code_unchanged": true,
+  "checks": {
+    "verified_text": false,
+    "complete": false,
+    "required_questions": false,
+    "deterministic_provenance": true,
+    "recomputed_metrics": true,
+    "publication_review_hashes": true,
+    "market_calculations": true,
+    "replayed_numeric_relationships": true,
+    "inference_review": true
+  },
+  "status": "failed",
+  "budget": {
+    "elapsed_seconds": 82.685,
+    "model_calls": 6,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "unanswered": [
+    {
+      "id": "hedge",
+      "question": "这些资产在市场压力期是否提供保护？",
+      "acceptance": "使用相同压力月份，区分正收益与相对抗跌；披露事后选样与样本量限制。",
+      "kind": "hedge",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [
+        "f-hedge",
+        "f-framework"
+      ],
+      "gaps": [
+        "压力月为事后按基准最差月份选取，样本仅 6 个月，且无已核验事件支撑压力期成因，无法区分避险属性与特定宏观环境。"
+      ]
+    },
+    {
+      "id": "inflation",
+      "question": "这些资产是否保全购买力、是否随通胀变化？",
+      "acceptance": "结合实际收益、CPI分组/相关性，区分保值结果与稳定抗通胀机制；明确宏观数据是回顾性的。",
+      "kind": "inflation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [
+        "f-inflation",
+        "f-framework"
+      ],
+      "gaps": [
+        "CPI 为当前历史版本，仅作回顾；通胀关联基于水平而非变动，且样本约 60 个月，无法确认稳定抗通胀机制。"
+      ]
+    }
+  ]
+}

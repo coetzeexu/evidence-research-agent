@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "run_id": "afd40c10b7454228",
+    "url": "http://127.0.0.1:8012",
+    "code_hash": "33d2afc02c56b01ac46e9f724ef7e73e3b0a45ed0926520a610aea46d71f11ec",
+    "git_head": "fd37683be396344e09cc2cb2fcb497780e7cb2d8",
+    "browser": "Chrome via Playwriter extension",
+    "playwriter_session": "6",
+    "server_pid": 34896
+  },
+  "functional_acceptance_passed": false,
+  "run_status": "failed",
+  "error": "ModelCallLimitExceededError: Model call limits exceeded: run limit (4/4)",
+  "research_complete": false,
+  "execution_budget": {
+    "elapsed_seconds": 300.9195279169362,
+    "model_calls": 37,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "application_checks": {
+    "ui_submission_202": true,
+    "live_tool_progress": true,
+    "live_sources": true,
+    "sse_ordered": true,
+    "sse_error_before_done": true,
+    "ui_failed_state_observed": true,
+    "draft_text_leakage": false,
+    "four_artifacts_generated": false
+  },
+  "stream": {
+    "message_count": 266,
+    "last_events": [
+      {
+        "seq": 918,
+        "run_id": "afd40c10b7454228",
+        "kind": "model",
+        "label": "证据提取完成一次模型调用",
+        "payload": {
+          "role": "证据提取",
+          "call_id": "01a0ece5-51ec-76c3-b0f5-8cd0fa89f39f",
+          "usage": {
+            "input_tokens": 37161,
+            "output_tokens": 177,
+            "total_tokens": 37338,
+            "input_token_details": {},
+            "output_token_details": {
+              "reasoning": 0
+            }
+          },
+          "model": "/workspace/model"
+        },
+        "at": "2026-09-29T11:20:48.220984+00:00"
+      },
+      {
+        "seq": 919,
+        "run_id": "afd40c10b7454228",
+        "kind": "model_start",
+        "label": "证据提取正在处理",
+        "payload": {
+          "role": "证据提取",
+          "call_id": "01a0ece5-5761-7611-a081-668de74ce74a"
+        },
+        "at": "2026-09-29T11:20:48.226603+00:00"
+      },
+      {
+        "seq": 920,
+        "run_id": "afd40c10b7454228",
+        "kind": "model",
+        "label": "证据提取完成一次模型调用",
+        "payload": {
+          "role": "证据提取",
+          "call_id": "01a0ece5-5761-7611-a081-668de74ce74a",
+          "usage": {
+            "input_tokens": 37337,
+            "output_tokens": 1604,
+            "total_tokens": 38941,
+            "input_token_details": {},
+            "output_token_details": {
+              "reasoning": 0
+            }
+          },
+          "model": "/workspace/model"
+        },
+        "at": "2026-09-29T11:20:53.207675+00:00"
+      },
+      {
+        "seq": 921,
+        "run_id": "afd40c10b7454228",
+        "kind": "error",
+        "label": "ModelCallLimitExceededError: Model call limits exceeded: run limit (4/4)",
+        "payload": {
+          "error_type": "ModelCallLimitExceededError"
+        },
+        "at": "2026-09-29T11:20:53.255240+00:00"
+      }
+    ]
+  },
+  "diagnosis": "The running version used a legacy independent create_agent extractor without the shared named-output/StructuredJSONMiddleware path. Its local run limit 4 was exhausted while global budget remained 37/64 calls and 300.9/900 seconds; the exception propagated to full-run failure. A later source-code read saw the newly patched shared structured path, which was not the failing runtime."
+}
