@@ -1,3 +1,5 @@
+import json
+from copy import deepcopy
 from types import SimpleNamespace
 
 import pytest
@@ -8,21 +10,30 @@ from research_app.research_contract import (
     LocatedNumericAssertion,
     MeaningCheck,
     MeaningReview,
+    MeaningViolation,
     NarrativeDraft,
     NarrativePatch,
     NarrativeReview,
     NumericAssertion,
     NumericClaimReview,
     NumericReview,
+    QuestionCoverageReview,
     QuestionVerdict,
     ResearchFinding,
     ResearchGap,
     ResearchQuestion,
+    TextEdit,
     apply_narrative_patch,
 )
-from research_app.research_logic import repair_numeric_transcription, verify_relationships
+from research_app.research_logic import relationship, repair_numeric_transcription, verify_relationships
 from research_app.research_metrics import metric_catalog
-from research_app.research_text import NarrativeService, gap_id, unresolved_gaps
+from research_app.research_text import (
+    NarrativeService,
+    gap_id,
+    normalize_metric_tokens,
+    unresolved_gaps,
+    validate_draft,
+)
 from research_app.storage import Store
 
 
@@ -151,6 +162,15 @@ async def test_declared_missing_fact_survives_patches_and_cannot_be_complete(bun
                 ]
             )
         assert context["open_gaps"][0]["id"] == gap_id(gap)
+        if name == "question-review":
+            assert schema is QuestionCoverageReview
+            assert context["accepted_findings"][0]["id"] == finding.id
+            # Even an optimistic coverage answer must not erase a declared missing fact.
+            return QuestionCoverageReview(
+                questions=[
+                    QuestionVerdict(question_id="q", answered=True, reason="模拟覆盖误判：承认缺口即回答")
+                ]
+            )
         return NarrativeReview(
             claims=[
                 ClaimVerdict(finding_id=f["id"], verdict="supported", reason="有限表述")
@@ -188,3 +208,357 @@ def test_gap_closure_requires_located_accepted_answer():
     assert unresolved_gaps(draft, review, []) == [gap]
     verdict.resolved_gaps[0].quote = "一个无法在发布正文中定位到的日期证据"
     assert unresolved_gaps(draft, review, [f]) == [gap]
+
+
+@pytest.mark.parametrize("field", ["title", "text", "counterevidence", "limitations", "changes_if"])
+def test_metric_prefix_normalization_only_uses_existing_exact_id(bundle, field):
+    mid = "execution.portfolio.total_return"
+    draft = NarrativeDraft(findings=[draft_finding()])
+    setattr(draft.findings[0], field, "收益为 {{metric_id:" + mid + "}}。")
+    repairs = normalize_metric_tokens(draft, metric_catalog(bundle))
+    assert getattr(draft.findings[0], field) == "收益为 {{" + mid + "}}。"
+    assert repairs == [{"finding_id": "f", "field": field, "from": "metric_id:" + mid, "to": mid}]
+    assert normalize_metric_tokens(draft, metric_catalog(bundle)) == []
+
+
+@pytest.mark.parametrize(
+    "token",
+    [
+        "metric_id:execution.portfolio.missing",
+        "metric_id:execution.portfolio.total_Return",
+        "metric_id:metric_id:execution.portfolio.total_return",
+        "metric-id:execution.portfolio.total_return",
+        "metric_id: execution.portfolio.total_return",
+    ],
+)
+def test_unknown_or_approximate_metric_id_is_not_guessed(bundle, token):
+    text = "收益为 {{" + token + "}}。"
+    draft = NarrativeDraft(findings=[draft_finding().model_copy(update={"text": text})])
+    metrics = metric_catalog(bundle)
+    assert normalize_metric_tokens(draft, metrics) == []
+    assert draft.findings[0].text == text
+    q = ResearchQuestion(id="q", question="比较收益", acceptance="确定性数值", kind="market")
+    errors, _ = validate_draft(draft, bundle, [q], {}, metrics)
+    assert "f" in errors
+    assert any("数值引用不存在" in error or "占位符格式错误" in error for error in errors["f"])
+
+
+@pytest.mark.parametrize(
+    "relation, values, expected",
+    [
+        ("abs_gt", [-0.40, -0.20], True),
+        ("abs_gt", [-0.40, 0.20], True),
+        ("abs_gt", [0.40, -0.20, 0.30], True),
+        ("abs_gt", [-0.20, -0.40], False),
+        ("abs_gt", [0.40, -0.40], False),
+        ("abs_gt", [0.40, 0.20, -0.50], False),
+        ("abs_lt", [-0.20, -0.40], True),
+        ("abs_lt", [0.20, -0.40], True),
+        ("abs_lt", [-0.20, -0.40, 0.30], True),
+        ("abs_lt", [-0.40, -0.20], False),
+        ("abs_lt", [0.40, -0.40], False),
+        ("abs_lt", [0.20, 0.40, -0.10], False),
+        ("abs_increasing", [-0.20, -0.30, -0.40], True),
+        ("abs_increasing", [0.20, -0.30, 0.40], True),
+        ("abs_increasing", [-0.40, -0.30, -0.20], False),
+        ("abs_increasing", [0.20, -0.40, 0.30], False),
+        ("abs_increasing", [0.20, -0.20], False),
+        ("abs_decreasing", [-0.40, -0.30, -0.20], True),
+        ("abs_decreasing", [0.40, -0.30, 0.20], True),
+        ("abs_decreasing", [-0.20, -0.30, -0.40], False),
+        ("abs_decreasing", [0.40, -0.20, 0.30], False),
+        ("abs_decreasing", [0.20, -0.20], False),
+    ],
+)
+def test_magnitude_relations_compare_absolute_values_in_original_order(relation, values, expected):
+    assert relationship(relation, values) is expected
+
+
+@pytest.mark.parametrize("relation", ["abs_gt", "abs_lt", "abs_increasing", "abs_decreasing"])
+@pytest.mark.parametrize("values", [[], [-0.20]])
+def test_magnitude_comparisons_require_multiple_values(relation, values):
+    assert relationship(relation, values) is False
+
+
+@pytest.mark.parametrize("values, expected", [([-0.40, -0.20], True), ([-0.20, -0.40], False)])
+def test_drawdown_magnitude_assertion_is_executed_after_schema_validation(bundle, values, expected):
+    mids = ["execution.portfolio.max_drawdown", "execution.GLD.max_drawdown"]
+    metrics = metric_catalog(bundle)
+    for mid, value in zip(mids, values):
+        metrics[mid] = metrics[mid].model_copy(update={"value": value})
+    draft = NarrativeDraft(findings=[draft_finding().model_copy(update={"text": "组合回撤幅度高于黄金。"})])
+    review = NarrativeReview(
+        claims=[
+            ClaimVerdict(
+                finding_id="f",
+                verdict="supported",
+                reason="不能用核验者的通过判定替代幅度计算",
+                numeric_assertions=[
+                    NumericAssertion(quote="组合回撤幅度高于黄金", relation="abs_gt", metric_ids=mids)
+                ],
+            )
+        ],
+        questions=[],
+    )
+    errors, checks = verify_relationships(draft, review, metrics)
+    assert checks[0]["passed"] is expected
+    assert ("f" in errors) is not expected
+
+
+async def test_question_coverage_uses_only_accepted_findings_and_its_own_verdict(bundle, tmp_path):
+    bundle.quality = {"passed": True}
+    q = ResearchQuestion(id="q", question="比较收益", acceptance="确定性数值", kind="market")
+    finding = draft_finding().model_copy(
+        update={"text": "组合收益为 {{metric_id:execution.portfolio.total_return}}。"}
+    )
+    calls = []
+
+    async def structured(name, schema, context, **kwargs):
+        calls.append(name)
+        if name == "synthesis":
+            return NarrativeDraft(findings=[finding])
+        if name == "meaning-review":
+            return MeaningReview(
+                checks=[
+                    MeaningCheck(
+                        finding_id="f", inference_audit="只展示同口径回测结果，未增加推断", violations=[]
+                    )
+                ]
+            )
+        if name == "text-reviewer":
+            return NarrativeReview(
+                claims=[ClaimVerdict(finding_id="f", verdict="supported", reason="指标引用正确")],
+                questions=[
+                    QuestionVerdict(question_id="q", answered=False, reason="旧阶段误将未要求的回归列为缺口")
+                ],
+            )
+        assert name == "question-review" and schema is QuestionCoverageReview
+        assert set(context) == {
+            "request",
+            "questions",
+            "accepted_findings",
+            "open_gaps",
+            "available_metric_ids",
+        }
+        assert context["request"] == "比较收益"
+        assert context["questions"][0]["acceptance"] == "确定性数值"
+        assert len(context["accepted_findings"]) == 1
+        assert context["accepted_findings"][0]["text"] == "组合收益为 {{execution.portfolio.total_return}}。"
+        assert "execution.portfolio.total_return" in context["available_metric_ids"]
+        assert context["open_gaps"] == []
+        return QuestionCoverageReview(
+            questions=[QuestionVerdict(question_id="q", answered=True, reason="已批准结论回答请求的收益")]
+        )
+
+    result = await NarrativeService(runtime_for(tmp_path, structured)).compose(
+        bundle, [q], request="比较收益"
+    )
+    assert result.status == "complete" and len(result.findings) == 1
+    assert "{{" not in result.text and "metric_id:" not in result.text
+    assert calls.count("question-review") == 1 and "text-repair" not in calls
+    audit = result.reviews[0]
+    assert audit["source_question_review"][0]["answered"] is False
+    assert audit["review"]["questions"][0]["answered"] is True
+    assert audit["review"]["claims"][0]["reason"] == "指标引用正确"
+    assert audit["metric_token_repairs"][0]["to"] == "execution.portfolio.total_return"
+
+
+@pytest.mark.parametrize("rejection", ["unsupported", "missing_claim", "meaning_violation"])
+async def test_positive_question_coverage_cannot_approve_rejected_claims(bundle, tmp_path, rejection):
+    bundle.quality = {"passed": True}
+    q = ResearchQuestion(id="q", question="比较收益", acceptance="确定性数值", kind="market")
+    coverage_calls = []
+
+    async def structured(name, schema, context, **kwargs):
+        if name == "synthesis":
+            return NarrativeDraft(findings=[draft_finding()])
+        if name == "text-repair":
+            return NarrativePatch()
+        if name == "meaning-review":
+            return MeaningReview(
+                checks=[
+                    MeaningCheck(
+                        finding_id="f",
+                        inference_audit="测试结论证据支持边界，不以覆盖声明替代核验",
+                        violations=[MeaningViolation(quote="组合收益", reason="测试保留实质证据缺陷")]
+                        if rejection == "meaning_violation"
+                        else [],
+                    )
+                ]
+            )
+        if name == "text-reviewer":
+            return NarrativeReview(
+                claims=[]
+                if rejection == "missing_claim"
+                else [
+                    ClaimVerdict(
+                        finding_id="f",
+                        verdict="unsupported" if rejection == "unsupported" else "supported",
+                        reason="保持原事实判断",
+                    )
+                ],
+                questions=[QuestionVerdict(question_id="q", answered=True, reason="不能覆盖事实门禁")],
+            )
+        assert name == "question-review"
+        assert context["accepted_findings"] == []
+        coverage_calls.append(context)
+        return QuestionCoverageReview(
+            questions=[QuestionVerdict(question_id="q", answered=True, reason="模拟覆盖核验的乐观误判")]
+        )
+
+    result = await NarrativeService(runtime_for(tmp_path, structured)).compose(bundle, [q])
+    assert len(coverage_calls) == 3
+    assert result.status == "failed" and not result.text and not result.findings
+    assert all(not review["accepted_ids"] for review in result.reviews)
+    if rejection == "unsupported":
+        assert all(review["review"]["claims"][0]["verdict"] == "unsupported" for review in result.reviews)
+
+
+async def test_stale_answered_questions_cannot_discard_current_verified_partial(bundle, tmp_path):
+    bundle.quality = {"passed": True}
+    questions = [
+        ResearchQuestion(
+            id=qid,
+            question=title,
+            acceptance="确定性指标",
+            kind="market",
+            status="answered",
+            finding_ids=["old-" + qid],
+            gaps=["旧研究状态，不能用作本轮回答依据"],
+        )
+        for qid, title in [("q", "比较收益"), ("risk", "说明风险")]
+    ]
+    original_questions = [q.model_dump() for q in questions]
+    calls = []
+
+    async def structured(name, schema, context, **kwargs):
+        calls.append(name)
+        if name == "synthesis":
+            return NarrativeDraft(findings=[draft_finding()])
+        if name == "text-repair":
+            raise TimeoutError("本轮修复中断")
+        if name == "meaning-review":
+            return MeaningReview(
+                checks=[
+                    MeaningCheck(
+                        finding_id="f", inference_audit="只展示已计算收益，不推断未来表现", violations=[]
+                    )
+                ]
+            )
+        if name == "text-reviewer":
+            return NarrativeReview(
+                claims=[ClaimVerdict(finding_id="f", verdict="supported", reason="本轮指标引用已核验")],
+                questions=[],
+            )
+        assert name == "question-review"
+        return QuestionCoverageReview(
+            questions=[
+                QuestionVerdict(question_id="q", answered=True, reason="本轮收益结论有依据"),
+                QuestionVerdict(question_id="risk", answered=False, reason="尚缺风险分析"),
+            ]
+        )
+
+    runtime = runtime_for(tmp_path, structured)
+    assessment_path = runtime.root / "research-assessment.json"
+    assert not assessment_path.exists()
+    result = await NarrativeService(runtime).compose(bundle, questions)
+    assert result.status == "partial" and result.text
+    assert [f.id for f in result.findings] == ["f"]
+    assert result.questions[0].status == "answered" and result.questions[0].finding_ids == ["f"]
+    assert result.questions[1].status == "insufficient" and result.questions[1].finding_ids == []
+    assert "尚缺风险分析" in result.gaps[0].reason
+    assert [q.model_dump() for q in questions] == original_questions
+    saved = json.loads(assessment_path.read_text())
+    assert saved["status"] == "partial" and saved["findings"][0]["id"] == "f"
+    assert calls.count("synthesis") == 1 and calls.count("text-repair") == 1
+
+    # A matching saved assessment remains usable when the next recovery also times out.
+    resumed = await NarrativeService(runtime).compose(bundle, questions)
+    assert resumed.status == "partial" and resumed.text == result.text
+    assert resumed.findings == result.findings and resumed.gaps == result.gaps
+    assert calls.count("synthesis") == 1 and calls.count("text-repair") == 2
+
+
+@pytest.mark.parametrize("correct_second_patch", [True, False])
+async def test_invalid_exact_patch_has_one_bounded_retry_and_preserves_audit(
+    bundle, tmp_path, correct_second_patch
+):
+    bundle.quality = {"passed": True}
+    questions = [
+        ResearchQuestion(id=qid, question=title, acceptance="确定性指标", kind="market")
+        for qid, title in [("q", "比较收益"), ("risk", "说明风险")]
+    ]
+    incorrect = draft_finding().model_copy(
+        update={
+            "id": "risk-finding",
+            "question_ids": ["risk"],
+            "title": "历史风险",
+            "text": "组合没有损失。回撤为 {{execution.portfolio.max_drawdown}}。",
+        }
+    )
+    calls, patch_contexts = [], []
+
+    async def structured(name, schema, context, **kwargs):
+        kwargs["budget"].charge()
+        calls.append(name)
+        if name == "synthesis":
+            return NarrativeDraft(findings=[draft_finding(), incorrect])
+        if name == "text-repair":
+            patch_contexts.append(deepcopy(context))
+            assert len(patch_contexts) <= 2, "同一修复阶段不能无限重试补丁"
+            old = "组合没有损失" if correct_second_patch and len(patch_contexts) == 2 else "不存在的原文片段"
+            return NarrativePatch(
+                edits=[TextEdit(finding_id="risk-finding", field="text", old=old, new="组合经历过回撤")]
+            )
+        if name == "meaning-review":
+            return MeaningReview(
+                checks=[
+                    MeaningCheck(
+                        finding_id=f["id"], inference_audit="按本轮确定性指标核对有限历史表述", violations=[]
+                    )
+                    for f in context["draft"]["findings"]
+                ]
+            )
+        if name == "text-reviewer":
+            return NarrativeReview(
+                claims=[
+                    ClaimVerdict(
+                        finding_id=f["id"],
+                        verdict="unsupported" if "没有损失" in f["text"] else "supported",
+                        reason="风险表述与回撤结果矛盾" if "没有损失" in f["text"] else "指标与文字一致",
+                        repair="rewrite" if "没有损失" in f["text"] else "none",
+                    )
+                    for f in context["draft"]["findings"]
+                ],
+                questions=[],
+            )
+        assert name == "question-review"
+        ids = {f["id"] for f in context["accepted_findings"]}
+        return QuestionCoverageReview(
+            questions=[
+                QuestionVerdict(question_id="q", answered="f" in ids, reason="逐项检查已批准结论"),
+                QuestionVerdict(question_id="risk", answered="risk-finding" in ids, reason="检查风险表述"),
+            ]
+        )
+
+    runtime = runtime_for(tmp_path, structured)
+    result = await NarrativeService(runtime).compose(bundle, questions)
+    assert len(patch_contexts) == 2 and calls.count("synthesis") == 1
+    attempts = json.loads((runtime.root / "research-text-attempts.json").read_text())
+    assert attempts["attempts"] == 2
+    assert runtime.budget.model_calls == len(calls) == (9 if correct_second_patch else 6)
+    assert "没有损失" not in result.text
+    if correct_second_patch:
+        assert result.status == "complete"
+        assert {f.id for f in result.findings} == {"f", "risk-finding"}
+        assert "组合经历过回撤" in result.text
+        assert result.reviews[-1]["reused_certificates"] == ["f"]
+    else:
+        assert result.status == "partial" and [f.id for f in result.findings] == ["f"]
+        assert result.questions[1].status == "insufficient"
+
+    # The retry must receive the concrete invalid edit and validation error, not a blind rerun.
+    retry_context = json.dumps(patch_contexts[1], ensure_ascii=False)
+    assert "不存在的原文片段" in retry_context and "匹配" in retry_context
+    saved_json = "\n".join(p.read_text() for p in runtime.root.glob("research-*.json"))
+    assert "不存在的原文片段" in saved_json and "匹配" in saved_json

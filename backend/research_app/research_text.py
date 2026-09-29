@@ -14,6 +14,7 @@ from .research_contract import (
     NarrativeDraft,
     NarrativePatch,
     NarrativeReview,
+    QuestionCoverageReview,
     ResearchAssessment,
     ResearchFinding,
     ResearchGap,
@@ -121,6 +122,26 @@ def finding_text(finding):
 
 def numeric_refs(finding):
     return list(dict.fromkeys(TOKEN.findall(finding_text(finding))))
+
+
+def normalize_metric_tokens(draft, metrics):
+    """Repair a literal protocol prefix only when the exact referenced metric exists."""
+    changes = []
+    for finding in draft.findings:
+        for field in ("title", "text", "counterevidence", "limitations", "changes_if"):
+
+            def replace(match):
+                supplied = match[1]
+                canonical = supplied.removeprefix("metric_id:")
+                if supplied != canonical and canonical in metrics:
+                    changes.append(
+                        {"finding_id": finding.id, "field": field, "from": supplied, "to": canonical}
+                    )
+                    return "{{" + canonical + "}}"
+                return match[0]
+
+            setattr(finding, field, TOKEN.sub(replace, getattr(finding, field)))
+    return changes
 
 
 def origin_groups(sources, texts):
@@ -330,9 +351,14 @@ class NarrativeService:
 
     async def compose(self, bundle, questions, request="", history=None, selected=None):
         runtime = self.runtime
+        # Completion belongs to an accepted assessment, never to a carried-over question list.
+        questions = [
+            q.model_copy(update={"status": "pending", "finding_ids": [], "gaps": []}, deep=True)
+            for q in questions
+        ]
         metrics = metric_catalog(bundle)
         context = {
-            "verification_version": "1.2",
+            "verification_version": "1.3",
             "verification_prompts": {
                 name: digest(body) for name, body in getattr(runtime, "prompts", {}).items()
             },
@@ -347,6 +373,7 @@ class NarrativeService:
             "coverage": bundle.quality,
             "warnings": bundle.warnings,
             "disclosures": bundle.disclosures,
+            "datasets": [d.model_dump(exclude={"bars"}) for d in bundle.datasets.values()],
             "sensitivity_scenarios": [
                 {
                     "id": f"sensitivity.{i}",
@@ -402,22 +429,35 @@ class NarrativeService:
             )
             try:
                 if repair and "retained" in repair:
-                    patch = await runtime.structured(
-                        "text-repair",
-                        NarrativePatch,
-                        {**context, "repair": repair},
-                        budget=self.budget,
-                        limit=2,
-                    )
                     retained_ids = {f["id"] for f in repair["retained"]}
-                    draft = apply_narrative_patch(
-                        [ResearchFinding.model_validate(f) for f in repair["retained_findings"]]
-                        if "retained_findings" in repair
-                        else [f for f in best.findings if f.id in retained_ids],
-                        [ResearchFinding.model_validate(f) for f in repair["replace_only"]],
-                        patch,
-                        [ResearchGap.model_validate(g) for g in repair.get("unresolved_gaps", [])],
-                    )
+                    patch_context = {**context, "repair": repair}
+                    for patch_attempt in range(2):
+                        patch = await runtime.structured(
+                            "text-repair", NarrativePatch, patch_context, budget=self.budget, limit=2
+                        )
+                        try:
+                            draft = apply_narrative_patch(
+                                [ResearchFinding.model_validate(f) for f in repair["retained_findings"]]
+                                if "retained_findings" in repair
+                                else [f for f in best.findings if f.id in retained_ids],
+                                [ResearchFinding.model_validate(f) for f in repair["replace_only"]],
+                                patch,
+                                [ResearchGap.model_validate(g) for g in repair.get("unresolved_gaps", [])],
+                            )
+                            break
+                        except ValueError as exc:
+                            runtime.store.save_json(
+                                runtime.root
+                                / f"{self.scope}-invalid-patch-{state['attempts']}-{patch_attempt}.json",
+                                {"patch": patch.model_dump(), "error": str(exc)},
+                            )
+                            if patch_attempt:
+                                raise
+                            patch_context = {
+                                **patch_context,
+                                "rejected_patch": patch.model_dump(),
+                                "patch_validation_error": str(exc),
+                            }
                     runtime.store.save_json(
                         runtime.root / f"{self.scope}-patch-{state['attempts']}.json", patch.model_dump()
                     )
@@ -425,6 +465,7 @@ class NarrativeService:
                     draft = await runtime.structured(
                         "synthesis", NarrativeDraft, context, budget=self.budget, limit=2
                     )
+                token_repairs = normalize_metric_tokens(draft, metrics)
                 errors, passages = validate_draft(draft, bundle, questions, runtime.texts, metrics)
                 certificates = repair.get("certificates", {})
                 certified = {
@@ -487,6 +528,8 @@ class NarrativeService:
                             "verified_findings": review_context["verified_findings"],
                             "spec": context["spec"],
                             "evidence": review_context["evidence"],
+                            "metric_catalog": review_context["metric_catalog"],
+                            "datasets": context["datasets"],
                             "methods": sorted({m["method"] for m in review_context["metric_catalog"]}),
                         },
                         budget=self.budget,
@@ -519,6 +562,23 @@ class NarrativeService:
                 relation_errors, relation_checks = verify_relationships(draft, review, metrics)
                 for fid, problems in relation_errors.items():
                     errors.setdefault(fid, []).extend(problems)
+                eligible = accepted_findings(draft, review, errors)
+                runtime.store.emit(runtime.run_id, "step", "核对必答问题与研究边界", phase="text_review")
+                coverage = await runtime.structured(
+                    "question-review",
+                    QuestionCoverageReview,
+                    {
+                        "request": request,
+                        "questions": context["questions"],
+                        "accepted_findings": [f.model_dump() for f in eligible],
+                        "open_gaps": review_context["open_gaps"],
+                        "available_metric_ids": list(metrics),
+                    },
+                    budget=self.budget,
+                    limit=1,
+                )
+                source_question_review = [q.model_dump() for q in review.questions]
+                review.questions = coverage.questions
             except Exception as exc:
                 state["audits"].append({"attempt": state["attempts"], "error_type": type(exc).__name__})
                 runtime.store.save_json(counter_path, state)
@@ -535,6 +595,8 @@ class NarrativeService:
                 "meaning_review": meaning.model_dump(),
                 "numeric_relationships": relation_checks,
                 "numeric_transcription_repairs": transcription_repairs,
+                "metric_token_repairs": token_repairs,
+                "source_question_review": source_question_review,
                 "open_gaps": [g.model_dump() for g in declared_gaps],
                 "accepted_ids": sorted(accepted_ids),
                 "accepted_hashes": {f.id: digest(f.model_dump()) for f in accepted},

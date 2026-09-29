@@ -30,3 +30,7 @@ previous_program_findings 中的“数值关系尚未转成可执行断言”必
 verified_findings 是同一来源和指标快照、正文哈希未变的已核验内容，用于判断问题是否回答、检查新草稿是否矛盾；不重复输出它们的 claims。对 draft 的每条结论检查并输出一次 claims，questions 则依据两部分中确实成立的内容综合判定。若发现已核验条目有新的实质证据冲突，可明确指出对应条目与证据，证书将被撤销，不能默认保持通过。
 
 quote 只复制最短的连续比较短句，如“两个相关系数均为负”，不需要复制前面的数字串；禁止省略号或改写。反证/局限中的“观测数少于/多于”同样转为 lt/gt，不能看到交易日历不同就猜数量。对每个日期的“方向相反”使用 opposite_sign [资产A该月,资产B该月]；“同涨同跌”用 same_sign；多个月必须分别核对，不合并成一句就默认都成立。
+
+关系协议支持 abs_gt/abs_lt/abs_increasing/abs_decreasing：仅用于原文明确比较“绝对值/幅度/回撤深度”。例如回撤 -20% 的绝对幅度大于收益 +5%，用 abs_gt，不能用带符号 gt。不要更改关系去迁就计算结果。
+纯行情或计算结论的来源是 metric_catalog.dataset_ids 对应 datasets 中的行情/宏观记录；无需外部新闻重复证明。冗余且不相关的新闻引文应要求 rewrite 去掉，不应要求 retrieve 才能证明已采集的数值。
+最终问题完成度由单独 question-review 阶段对 accepted_findings 与原请求核对。这里 questions 可以为空，集中完成逐条 claims 核验，不把未承诺的额外方法作为事实拒绝理由。

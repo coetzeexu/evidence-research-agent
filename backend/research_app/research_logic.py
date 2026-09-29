@@ -9,6 +9,8 @@ from .research_contract import NumericAssertion, NumericReview
 def relationship(relation, values):
     if not values:
         return False
+    if relation in {"abs_gt", "abs_lt", "abs_increasing", "abs_decreasing"}:
+        return relationship(relation.removeprefix("abs_"), [abs(value) for value in values])
     if relation in {"same_sign", "opposite_sign"}:
         return len(values) == 2 and (
             values[0] * values[1] > 0 if relation == "same_sign" else values[0] * values[1] < 0

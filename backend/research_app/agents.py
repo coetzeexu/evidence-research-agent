@@ -244,6 +244,7 @@ class AgentRuntime:
                 "review-format",
                 "synthesis",
                 "text-reviewer",
+                "question-review",
                 "numeric-review",
                 "meaning-review",
                 "text-repair",
@@ -295,6 +296,11 @@ class AgentRuntime:
                         "stage": name,
                         "schema": schema.__name__,
                         "validation_errors": errors,
+                        "invalid_arguments": [
+                            call["args"]
+                            for call in getattr(message, "tool_calls", [])
+                            if errors and call["name"] == schema.__name__
+                        ],
                         "invalid_json_calls": len(getattr(message, "invalid_tool_calls", [])),
                         "tool_names": [c["name"] for c in getattr(message, "tool_calls", [])],
                         "public_response": public_text(getattr(message, "content", ""))[:2000],

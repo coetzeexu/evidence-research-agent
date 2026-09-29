@@ -14,6 +14,7 @@ from research_app.research_contract import (
     NarrativeDraft,
     NarrativePatch,
     NarrativeReview,
+    QuestionCoverageReview,
     QuestionVerdict,
     ResearchAssessment,
     ResearchFinding,
@@ -190,6 +191,10 @@ async def test_bad_semantics_and_source_instructions_never_publish(bundle, tmp_p
             return meaning_pass(context)
         if name == "text-repair":
             return NarrativePatch()
+        if name == "question-review":
+            return QuestionCoverageReview(
+                questions=[QuestionVerdict(question_id="market", answered=False, reason="未回答")]
+            )
         if name == "synthesis":
             return NarrativeDraft(
                 findings=[
@@ -242,6 +247,10 @@ async def test_review_failure_retains_previously_verified_partial_only(bundle, t
             return meaning_pass(context)
         if name == "text-repair":
             raise TimeoutError()
+        if name == "question-review":
+            return QuestionCoverageReview(
+                questions=[QuestionVerdict(question_id="market", answered=False, reason="未讨论风险")]
+            )
         if name == "synthesis":
             count[0] += 1
             if count[0] > 1:
@@ -497,6 +506,13 @@ async def test_verified_unchanged_findings_reuse_exact_snapshot_certificate(bund
             return NarrativeDraft(findings=[initial])
         if name == "text-repair":
             return NarrativePatch(additions=[second])
+        if name == "question-review":
+            return QuestionCoverageReview(
+                questions=[
+                    QuestionVerdict(question_id="market", answered=True, reason="已经覆盖"),
+                    QuestionVerdict(question_id="extra", answered=len(reviews) > 1, reason="检查补充结论"),
+                ]
+            )
         ids = [f["id"] for f in context["draft"]["findings"]]
         reviews.append(ids)
         return NarrativeReview(

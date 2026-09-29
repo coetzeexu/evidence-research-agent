@@ -9,6 +9,17 @@ class Record(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+def review_rows(value, identifier):
+    """Normalize only unambiguous singleton/keyed records; item validation stays strict."""
+    if not isinstance(value, dict):
+        return value
+    if identifier in value:
+        return [value]
+    if value and all(isinstance(row, dict) and row.get(identifier, key) == key for key, row in value.items()):
+        return [{identifier: key, **row} for key, row in value.items()]
+    return value
+
+
 class ResearchQuestion(Record):
     id: str
     question: str
@@ -139,6 +150,10 @@ def apply_narrative_patch(retained, rejected, patch, previous_gaps=()):
 
 
 NumericRelation = Literal[
+    "abs_gt",
+    "abs_lt",
+    "abs_increasing",
+    "abs_decreasing",
     "increasing",
     "decreasing",
     "gt",
@@ -205,6 +220,11 @@ class NumericClaimReview(Record):
 class NumericReview(Record):
     claims: list[NumericClaimReview]
 
+    @field_validator("claims", mode="before")
+    @classmethod
+    def normalize_rows(cls, value):
+        return review_rows(value, "finding_id")
+
 
 class GapResolution(Record):
     gap_id: str
@@ -224,6 +244,20 @@ class NarrativeReview(Record):
     claims: list[ClaimVerdict]
     questions: list[QuestionVerdict]
 
+    @field_validator("claims", "questions", mode="before")
+    @classmethod
+    def normalize_rows(cls, value, info):
+        return review_rows(value, "finding_id" if info.field_name == "claims" else "question_id")
+
+
+class QuestionCoverageReview(Record):
+    questions: list[QuestionVerdict]
+
+    @field_validator("questions", mode="before")
+    @classmethod
+    def normalize_rows(cls, value):
+        return review_rows(value, "question_id")
+
 
 class MeaningViolation(Record):
     quote: str = Field(min_length=2, description="逐字引用存在实质问题的标题/正文/反证/局限片段")
@@ -242,6 +276,11 @@ class MeaningCheck(Record):
 
 class MeaningReview(Record):
     checks: list[MeaningCheck]
+
+    @field_validator("checks", mode="before")
+    @classmethod
+    def normalize_rows(cls, value):
+        return review_rows(value, "finding_id")
 
 
 class ResearchAssessment(Record):
