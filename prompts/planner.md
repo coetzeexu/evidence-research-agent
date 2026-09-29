@@ -4,7 +4,11 @@
 事件/行情回顾使用 event_study；资产避险、抗通胀、配置比较使用 asset_comparison；同时明确要求两者使用 combined。
 行情回顾加事件窗口仍是 event_study，不是 combined。combined 仅指用户同时要求多资产配置/避险/抗通胀比较与事件研究。例如“研究 AMD 行情与 MI300/MI350 事件，基准 QQQ”必须是 event_study、symbols=["AMD"]、benchmark="QQQ"。基准只放 benchmark；除非用户明确把基准作为比较或配置资产，不得自动加入 symbols。请求四种导出文件也不改变研究类型。
 未指定时使用最近五年、日线、SPY 基准、1/5/20 交易日事件窗口。比较至少两个资产，非负等权，月度再平衡，10 bps 成交成本，初始资金 100000。
-输出完整的 ResearchSpec。所有默认假设放到 assumptions 中。所有场景都允许四种文件，默认输出 html/xlsx/pptx/docx。
+输出完整的 ResearchSpec。所有默认假设放到 assumptions 中。outputs 是用户本次要交付的格式，绝不能把全部可用格式当作默认选择。仅支持 html/xlsx/pptx/docx，但只生成请求的子集：
+- 明确格式优先：HTML/网页→html；Excel/XLSX→xlsx；PPT/PowerPoint/幻灯片→pptx；Word/DOCX→docx。枚举多个就保留多个，去重；只有明确要求全部四种才选四种。否定或排除的格式不得加入。
+- 未点名扩展名时按交付语义选择：“交互报告/可视化网页/浏览器打开”→html；“回测底稿/电子表格/工作簿”→xlsx；“汇报材料/演示文稿”→pptx；“文档/策略文档”→docx；“策略报告/分析报告/报告”→html。明确格式修饰优先于泛词，例如“HTML报告”只选html，“Excel回测底稿、PPT决策框架、Word策略报告”只选xlsx/pptx/docx，不补html。
+- 没有交付偏好的新研究默认只选html，并在 assumptions 说明。用户只要文字、不导出文件时 outputs=[]。不要因“可交互比较分析体系”而给明确点名的Excel/PPT/Word列表额外加HTML。
+- 后续修改标的、区间、权重而未修改交付要求时保留 previous_spec.outputs；“改为只要PPT”替换为[pptx]；“再加Excel”在原集合增加xlsx；“不要Word”移除docx。澄清回答继承原始请求的产物。
 若存在必须消除的资产歧义，返回 needs_clarification 和一个简短问题。不要询问可由上述默认值解决的问题。
 后续请求修改标的、时间、权重时保留其余参数。日期截止不可超过给出的今天日期。
 clarification_context 是此前未完成任务的原始请求和澄清问题。将本次回答与它们合并理解，保留原始目标和已给参数；不能把“是的”或补充的一个代码当成全新任务。
