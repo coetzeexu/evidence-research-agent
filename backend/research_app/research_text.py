@@ -20,7 +20,7 @@ from .research_contract import (
     ResearchQuestion,
     apply_narrative_patch,
 )
-from .research_logic import verify_relationships
+from .research_logic import repair_numeric_transcription, verify_relationships
 from .research_metrics import display_metric, metric_catalog
 from .research_semantics import verify_meaning
 
@@ -233,6 +233,32 @@ def accepted_findings(draft, review, errors):
     ]
 
 
+def gap_id(gap):
+    return "gap-" + digest([gap.question_id, gap.reason])[:16]
+
+
+def unresolved_gaps(draft, review, accepted):
+    """Disclosure is not completion; only an explicit, located resolution closes a gap."""
+    findings = {f.id: f for f in accepted}
+    unresolved = []
+    for gap in {gap_id(g): g for g in draft.gaps}.values():
+        resolutions = [
+            r
+            for q in review.questions
+            if q.question_id == gap.question_id and q.answered
+            for r in q.resolved_gaps
+            if r.gap_id == gap_id(gap)
+        ]
+        if not any(
+            r.finding_id in findings
+            and gap.question_id in findings[r.finding_id].question_ids
+            and r.quote in finding_text(findings[r.finding_id])
+            for r in resolutions
+        ):
+            unresolved.append(gap)
+    return unresolved
+
+
 def render_research(assessment, bundle):
     catalogue = {m.id: m for m in assessment.metrics}
 
@@ -306,7 +332,7 @@ class NarrativeService:
         runtime = self.runtime
         metrics = metric_catalog(bundle)
         context = {
-            "verification_version": "1.1",
+            "verification_version": "1.2",
             "verification_prompts": {
                 name: digest(body) for name, body in getattr(runtime, "prompts", {}).items()
             },
@@ -390,6 +416,7 @@ class NarrativeService:
                         else [f for f in best.findings if f.id in retained_ids],
                         [ResearchFinding.model_validate(f) for f in repair["replace_only"]],
                         patch,
+                        [ResearchGap.model_validate(g) for g in repair.get("unresolved_gaps", [])],
                     )
                     runtime.store.save_json(
                         runtime.root / f"{self.scope}-patch-{state['attempts']}.json", patch.model_dump()
@@ -439,6 +466,7 @@ class NarrativeService:
                 review_context["verified_findings"] = [
                     f.model_dump() for f in draft.findings if f.id in certified
                 ]
+                review_context["open_gaps"] = [{"id": gap_id(g), **g.model_dump()} for g in draft.gaps]
                 review, meaning = await paired_reviews(
                     runtime.structured(
                         "text-reviewer",
@@ -485,6 +513,9 @@ class NarrativeService:
                 ]
                 for fid, problems in verify_meaning(draft, meaning).items():
                     errors.setdefault(fid, []).extend(problems)
+                review, transcription_repairs = await repair_numeric_transcription(
+                    runtime, draft, review, metrics, self.budget
+                )
                 relation_errors, relation_checks = verify_relationships(draft, review, metrics)
                 for fid, problems in relation_errors.items():
                     errors.setdefault(fid, []).extend(problems)
@@ -495,6 +526,7 @@ class NarrativeService:
             accepted = accepted_findings(draft, review, errors)
             accepted_ids = {f.id for f in accepted}
             rejected = [f for f in draft.findings if f.id not in accepted_ids]
+            declared_gaps = unresolved_gaps(draft, review, accepted)
             audit = {
                 "attempt": state["attempts"],
                 "draft_hash": digest(draft.model_dump()),
@@ -502,6 +534,8 @@ class NarrativeService:
                 "review": review.model_dump(),
                 "meaning_review": meaning.model_dump(),
                 "numeric_relationships": relation_checks,
+                "numeric_transcription_repairs": transcription_repairs,
+                "open_gaps": [g.model_dump() for g in declared_gaps],
                 "accepted_ids": sorted(accepted_ids),
                 "accepted_hashes": {f.id: digest(f.model_dump()) for f in accepted},
                 "reused_certificates": sorted(set(certified) - objections),
@@ -521,6 +555,9 @@ class NarrativeService:
                 q.finding_ids = [f.id for f in accepted if q.id in f.question_ids]
                 verdict = verdicts.get(q.id)
                 is_answered = bool(q.finding_ids and verdict and verdict.answered)
+                open_for_question = [g for g in declared_gaps if g.question_id == q.id]
+                if open_for_question:
+                    is_answered = False
                 if any(q.id in f.question_ids for f in rejected):
                     is_answered = False
                 if q.required_event and not any(q.required_event in e.satisfies for e in bundle.events):
@@ -540,6 +577,7 @@ class NarrativeService:
                     if q.id in f.question_ids
                     for problem in errors.get(f.id, [])
                 )
+                blocking.extend(g.reason for g in open_for_question)
                 q.gaps = (
                     []
                     if is_answered
@@ -602,7 +640,8 @@ class NarrativeService:
                 len(candidate.findings),
             )
             best_rank = (sum(q.status == "answered" for q in best.questions), len(best.findings))
-            if candidate_rank >= best_rank or candidate.status == "complete":
+            newly_declared = {g.question_id for g in declared_gaps} - {g.question_id for g in best.gaps}
+            if candidate_rank >= best_rank or candidate.status == "complete" or newly_declared:
                 best = candidate
                 runtime.store.save_json(saved_path, best.model_dump(mode="json"))
             repair = {
@@ -622,6 +661,7 @@ class NarrativeService:
                 "unanswered_questions": [
                     q.model_dump() for q in assessed_questions if q.status != "answered"
                 ],
+                "unresolved_gaps": [g.model_dump() for g in declared_gaps],
                 "deterministic_errors": errors,
                 "review": review.model_dump(),
                 "meaning_review": meaning.model_dump(),
@@ -638,6 +678,7 @@ class NarrativeService:
                 and (
                     any(v.repair == "retrieve" for v in review.claims)
                     or any(v.repair == "retrieve" for c in meaning.checks for v in c.violations)
+                    or any(g.next_action for g in declared_gaps)
                 )
             ):
                 break

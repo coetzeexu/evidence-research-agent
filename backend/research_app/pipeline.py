@@ -373,6 +373,7 @@ class Pipeline:
 
     async def render(self, state: RunState):
         self.check()
+            retrieval.extend(g for g in reviews[-1].get("open_gaps", []) if g.get("next_action"))
         bundle = ResearchBundle.model_validate(self.read("bundle.json"))
         if bundle.research is None or not bundle.research.text:
             raise ValueError("未获得可发布的已核验正文，证据与核验记录已保存")

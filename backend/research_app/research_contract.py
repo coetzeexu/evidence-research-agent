@@ -105,9 +105,10 @@ class NarrativePatch(Record):
     evidence_edits: list[EvidenceEdit] = Field(default_factory=list)
     remove_ids: list[str] = Field(default_factory=list)
     additions: list[ResearchFinding] = Field(default_factory=list, max_length=12)
+    gaps: list[ResearchGap] = Field(default_factory=list, description="新增缺口；空列表不能关闭旧缺口")
 
 
-def apply_narrative_patch(retained, rejected, patch):
+def apply_narrative_patch(retained, rejected, patch, previous_gaps=()):
     """Edits are scoped to rejected findings. Every patched finding is reviewed again."""
     failures = {f.id: f.model_copy(deep=True) for f in rejected}
     if not set(patch.remove_ids).issubset(failures):
@@ -132,33 +133,37 @@ def apply_narrative_patch(retained, rejected, patch):
             *retained,
             *[f for fid, f in failures.items() if fid not in patch.remove_ids],
             *patch.additions,
-        ]
+        ],
+        gaps=[*previous_gaps, *patch.gaps],
     )
+
+
+NumericRelation = Literal[
+    "increasing",
+    "decreasing",
+    "gt",
+    "ge",
+    "lt",
+    "le",
+    "eq",
+    "between",
+    "not_between",
+    "positive",
+    "negative",
+    "nonnegative",
+    "nonpositive",
+    "same_sign",
+    "opposite_sign",
+]
 
 
 class NumericAssertion(Record):
     quote: str = Field(
         min_length=2,
-        max_length=300,
+        max_length=3000,
         description="逐字复制最短的连续比较短句（主语+关系即可）；不要复制整段数字，不用省略号，不合并不同维度",
     )
-    relation: Literal[
-        "increasing",
-        "decreasing",
-        "gt",
-        "ge",
-        "lt",
-        "le",
-        "eq",
-        "between",
-        "not_between",
-        "positive",
-        "negative",
-        "nonnegative",
-        "nonpositive",
-        "same_sign",
-        "opposite_sign",
-    ]
+    relation: NumericRelation
     metric_ids: list[str] = Field(
         min_length=1,
         max_length=12,
@@ -186,10 +191,33 @@ class ClaimVerdict(Record):
     repair: Literal["none", "retrieve", "recalculate", "rewrite"] = "none"
 
 
+class LocatedNumericAssertion(Record):
+    span_id: str = Field(description="只能选择程序提供的 spans.id，不重新抄写正文")
+    relation: NumericRelation
+    metric_ids: list[str] = Field(min_length=1, max_length=12)
+
+
+class NumericClaimReview(Record):
+    finding_id: str
+    numeric_assertions: list[LocatedNumericAssertion]
+
+
+class NumericReview(Record):
+    claims: list[NumericClaimReview]
+
+
+class GapResolution(Record):
+    gap_id: str
+    finding_id: str
+    quote: str = Field(min_length=12, description="逐字引用已回答缺口的结论片段；承认缺失不等于回答")
+    reason: str = Field(min_length=10, description="说明依据如何补齐原缺口，不能仅因 answered 为真而关闭")
+
+
 class QuestionVerdict(Record):
     question_id: str
     reason: str
     answered: bool
+    resolved_gaps: list[GapResolution] = Field(default_factory=list)
 
 
 class NarrativeReview(Record):

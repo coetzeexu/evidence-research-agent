@@ -244,6 +244,7 @@ class AgentRuntime:
             ]
         }
         self.store.emit(
+                "numeric-review",
             self.run_id,
             "configuration",
             "固定本次 Prompt 版本",

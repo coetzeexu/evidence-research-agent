@@ -1,0 +1,1668 @@
+{
+  "at": "2026-09-29T10:20:17.569272+00:00",
+  "scope": "One frozen failed finding per partial run; not a new full research acceptance",
+  "prompt_hash": "af42cff9a09eec33d3f38a1fc6e024e99081376e6b9434a129e24864cbacf2bc",
+  "results": [
+    {
+      "original_run_id": "a37b23dee36946f0",
+      "run_id": "72395317f9dc465b",
+      "passed": true,
+      "draft_unchanged": true,
+      "verdicts_unchanged": true,
+      "remaining_errors": {},
+      "checks": [
+        {
+          "finding_id": "f-selloff",
+          "quote": "反应强度最高",
+          "relation": "gt",
+          "metric_ids": [
+            "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.standardized_response",
+            "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+            "event.ev-blackwell-launch-2024-03-18.NVDA.1.standardized_response",
+            "event.ev-deepseek-r1-release-2025-01-20.NVDA.1.standardized_response",
+            "event.ev-deepseek-r1-paper-2025-01-22.NVDA.1.standardized_response"
+          ],
+          "values": [
+            6.204896582812403,
+            1.3381914467632963,
+            0.034660704813356015,
+            0.5502171430206824,
+            1.567696987095784
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-selloff",
+          "quote": "2025-01-27 单日收益 {{move.change-NVDA-2025-01-27.return}}",
+          "relation": "negative",
+          "metric_ids": [
+            "move.change-NVDA-2025-01-27.return"
+          ],
+          "values": [
+            -0.16968167121379163
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-selloff",
+          "quote": "事件窗口收益 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.return}}、相对基准 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return}}",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.return",
+            "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return"
+          ],
+          "values": [
+            -0.16968167121379163,
+            -0.1555362994119368
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-selloff",
+          "quote": "5 日相对收益 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return}}",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return"
+          ],
+          "values": [
+            -0.14799679898860485
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-selloff",
+          "quote": "20 日相对收益 {{event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return}}",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return"
+          ],
+          "values": [
+            -0.06882544290697334
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-selloff",
+          "quote": "SPY 当日亦下跌",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.benchmark_return"
+          ],
+          "values": [
+            -0.014145371801854822
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "audit": [
+        {
+          "before": {
+            "claims": [
+              {
+                "finding_id": "f-selloff",
+                "numeric_assertions": [],
+                "reason": "三类日期分离与已读证据一致：模型发布 2025-01-20（Simon Willison）、论文 v1 提交 2025-01-22（arXiv）、市场反应 2025-01-27（CNBC/Daring Fireball）。指标：单日收益 -0.1697、事件 1 日收益 -0.1697、相对 -0.1555、标准化 6.2049；对照 ChatGPT 1.3382、Blackwell 0.0347、R1 发布 0.5502、论文 1.5677；5 日相对 -0.1480、20 日相对 -0.0688。草稿仅罗列对照数值，未再断言“高于其余各事件”，故上一轮 gt 断言失败不再复现。上一轮程序提示“数值关系尚未转成可执行断言：最高”对应标题“反应强度最高”，本轮正文未再出现该比较句，标题中的“最高”属定性表述且与 6.20 为最大标准化反应一致，无需伪造断言。",
+                "verdict": "supported",
+                "repair": "none"
+              }
+            ],
+            "questions": []
+          },
+          "errors": {
+            "f-selloff": [
+              "数值关系尚未转成可执行断言：最高；应按收益/风险分别核对"
+            ]
+          },
+          "checks": [],
+          "after": {
+            "claims": [
+              {
+                "finding_id": "f-selloff",
+                "numeric_assertions": [
+                  {
+                    "span_id": "f-selloff:title:1",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.standardized_response",
+                      "event.ev-chatgpt-public-2022-11-30.NVDA.1.standardized_response",
+                      "event.ev-blackwell-launch-2024-03-18.NVDA.1.standardized_response",
+                      "event.ev-deepseek-r1-release-2025-01-20.NVDA.1.standardized_response",
+                      "event.ev-deepseek-r1-paper-2025-01-22.NVDA.1.standardized_response"
+                    ]
+                  },
+                  {
+                    "span_id": "f-selloff:text:7",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "move.change-NVDA-2025-01-27.return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-selloff:text:8",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.return",
+                      "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-selloff:text:15",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-selloff:text:16",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-selloff:counterevidence:1",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.benchmark_return"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "remaining_errors": {}
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 8.922,
+        "model_calls": 1,
+        "max_seconds": 120,
+        "max_model_calls": 2
+      }
+    },
+    {
+      "original_run_id": "1a40cf5889a445ec",
+      "run_id": "8ae2be06c52840c8",
+      "passed": true,
+      "draft_unchanged": true,
+      "verdicts_unchanged": true,
+      "remaining_errors": {},
+      "checks": [
+        {
+          "finding_id": "f-blackwell",
+          "quote": "即宣布当日相对基准收益为正、5 日相对基准收益为正、20 日相对基准收益为负",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.1.relative_return",
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+          ],
+          "values": [
+            0.0010927078160274384,
+            0.05113305774566945
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "即宣布当日相对基准收益为正、5 日相对基准收益为正、20 日相对基准收益为负",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+          ],
+          "values": [
+            -0.01034984083686974
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "起算日敏感性：以 2024-03-18 为起算日的 5 日相对基准收益 {{next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return}} 为正",
+          "relation": "positive",
+          "metric_ids": [
+            "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+          ],
+          "values": [
+            0.060541598390718265
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "以 2024-03-15 为起算日的 5 日相对基准收益 {{event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return}} 亦为正",
+          "relation": "positive",
+          "metric_ids": [
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+          ],
+          "values": [
+            0.05113305774566945
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "两者同向",
+          "relation": "same_sign",
+          "metric_ids": [
+            "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return",
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+          ],
+          "values": [
+            0.060541598390718265,
+            0.05113305774566945
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "以 2024-03-18 为起算日的 20 日相对基准收益 {{next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return}} 为正",
+          "relation": "positive",
+          "metric_ids": [
+            "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+          ],
+          "values": [
+            0.006434793987104226
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "以 2024-03-15 为起算日的 20 日相对基准收益 {{event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return}} 为负",
+          "relation": "negative",
+          "metric_ids": [
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+          ],
+          "values": [
+            -0.01034984083686974
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-blackwell",
+          "quote": "两者方向相反",
+          "relation": "opposite_sign",
+          "metric_ids": [
+            "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return",
+            "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+          ],
+          "values": [
+            0.006434793987104226,
+            -0.01034984083686974
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "audit": [
+        {
+          "before": {
+            "claims": [
+              {
+                "finding_id": "f-blackwell",
+                "numeric_assertions": [
+                  {
+                    "quote": "宣布当日相对基准收益为正、5 日相对基准收益为正、20 日相对基准收益为负",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.1.relative_return",
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "quote": "20 日相对基准收益为负",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+                    ]
+                  },
+                  {
+                    "quote": "以 2024-03-18 为起算日的 5 日相对基准收益为正，以 2024-03-15 为起算日的 5 日相对基准收益亦为正，两者同向",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return",
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "quote": "以 2024-03-18 为起算日的 20 日相对基准收益为正，以 2024-03-15 为起算日的 20 日相对基准收益为负，两者方向相反",
+                    "relation": "opposite_sign",
+                    "metric_ids": [
+                      "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return",
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+                    ]
+                  }
+                ],
+                "reason": "正文称“宣布当日相对基准收益为正、5 日相对基准收益为正、20 日相对基准收益为负”，对应 event 口径指标：1日 0.00109（正）、5日 0.05113（正）、20日 -0.01035（负），方向描述与数值一致。反证段称下一交易日起算 5 日相对收益 0.06054 与当日口径 0.05113 同向（均为正，成立）；下一交易日起算 20 日 0.00643 为正、当日口径 20 日 -0.01035 为负，方向相反（成立）。上一轮程序把 positive 断言绑定到两个正数却判失败，属核验绑定错误；本轮按原句重新转录。事件日期与新闻稿原文一致，量产日期缺失已在 limitations 说明。",
+                "verdict": "supported",
+                "repair": "none"
+              }
+            ],
+            "questions": []
+          },
+          "errors": {
+            "f-blackwell": [
+              "数值关系未成立或绑定错误：以 2024-03-18 为起算日的 5 日相对基准收益为正，以 2024-03-15 为起算日的 5 日相对基准收益亦为正，两者同向；positive ['next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return', 'event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return'] = [0.060541598390718265, 0.05113305774566945]",
+              "数值关系未成立或绑定错误：以 2024-03-18 为起算日的 20 日相对基准收益为正，以 2024-03-15 为起算日的 20 日相对基准收益为负，两者方向相反；opposite_sign ['next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return', 'event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return'] = [0.006434793987104226, -0.01034984083686974]",
+              "数值关系尚未转成可执行断言：方向相反；应按收益/风险分别核对"
+            ]
+          },
+          "checks": [
+            {
+              "finding_id": "f-blackwell",
+              "quote": "宣布当日相对基准收益为正、5 日相对基准收益为正、20 日相对基准收益为负",
+              "relation": "positive",
+              "metric_ids": [
+                "event.ev-blackwell-platform-announce-2024-03-18.NVDA.1.relative_return",
+                "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+              ],
+              "values": [
+                0.0010927078160274384,
+                0.05113305774566945
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-blackwell",
+              "quote": "20 日相对基准收益为负",
+              "relation": "negative",
+              "metric_ids": [
+                "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+              ],
+              "values": [
+                -0.01034984083686974
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-blackwell",
+              "quote": "以 2024-03-18 为起算日的 5 日相对基准收益为正，以 2024-03-15 为起算日的 5 日相对基准收益亦为正，两者同向",
+              "relation": "positive",
+              "metric_ids": [
+                "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return",
+                "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+              ],
+              "values": [
+                0.060541598390718265,
+                0.05113305774566945
+              ],
+              "passed": false,
+              "quote_found": false,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-blackwell",
+              "quote": "以 2024-03-18 为起算日的 20 日相对基准收益为正，以 2024-03-15 为起算日的 20 日相对基准收益为负，两者方向相反",
+              "relation": "opposite_sign",
+              "metric_ids": [
+                "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return",
+                "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+              ],
+              "values": [
+                0.006434793987104226,
+                -0.01034984083686974
+              ],
+              "passed": false,
+              "quote_found": false,
+              "relationship_true": true
+            }
+          ],
+          "after": {
+            "claims": [
+              {
+                "finding_id": "f-blackwell",
+                "numeric_assertions": [
+                  {
+                    "span_id": "f-blackwell:text:9",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.1.relative_return",
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:text:9",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:counterevidence:0",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:counterevidence:1",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:counterevidence:2",
+                    "relation": "same_sign",
+                    "metric_ids": [
+                      "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return",
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:counterevidence:3",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:counterevidence:4",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-blackwell:counterevidence:5",
+                    "relation": "opposite_sign",
+                    "metric_ids": [
+                      "next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return",
+                      "event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "remaining_errors": {}
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 8.427,
+        "model_calls": 1,
+        "max_seconds": 120,
+        "max_model_calls": 2
+      }
+    },
+    {
+      "original_run_id": "c3901fcf59574029",
+      "run_id": "a0bd5f951a404d2c",
+      "passed": true,
+      "draft_unchanged": true,
+      "verdicts_unchanged": true,
+      "remaining_errors": {},
+      "checks": [
+        {
+          "finding_id": "f-hedge",
+          "quote": "但跑赢 SPY 的月数多于为正收益的月数",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.GLD.positive_months"
+          ],
+          "values": [
+            6.0,
+            2.0
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "但跑赢 SPY 的月数多于为正收益的月数",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.BTC-USD.outperform_months",
+            "stress.BTC-USD.positive_months"
+          ],
+          "values": [
+            3.0,
+            1.0
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "而 2022-12-30 月两者均为正（GLD {{stress-month.2022-12-30.GLD}}、BTC-USD {{stress-month.2022-12-30.BTC-USD}}）",
+          "relation": "positive",
+          "metric_ids": [
+            "stress-month.2022-12-30.GLD",
+            "stress-month.2022-12-30.BTC-USD"
+          ],
+          "values": [
+            0.02930648566594085,
+            0.012001190997776634
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "audit": [
+        {
+          "before": {
+            "claims": [
+              {
+                "finding_id": "f-hedge",
+                "numeric_assertions": [
+                  {
+                    "quote": "GLD 跑赢 SPY 的月数为 6，为正收益的月数为 2",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.outperform_months",
+                      "stress.GLD.positive_months"
+                    ]
+                  },
+                  {
+                    "quote": "BTC-USD 跑赢 SPY 的月数为 3，为正收益的月数为 1",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.BTC-USD.outperform_months",
+                      "stress.BTC-USD.positive_months"
+                    ]
+                  },
+                  {
+                    "quote": "2022-12-30 月两者均为正",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "stress-month.2022-12-30.GLD",
+                      "stress-month.2022-12-30.BTC-USD"
+                    ]
+                  }
+                ],
+                "reason": "压力月数据核对：6个压力月中 GLD 正收益月为 2022-12-30(+2.93%)、2025-03-31(+9.45%)，共2个月，与 stress.GLD.positive_months=2 一致；GLD 跑赢 SPY 的月份：2022-09(-2.89%>-9.24%)、2022-04(-2.07%>-8.78%)、2022-06(-1.57%>-8.25%)、2022-12(+2.93%>-5.76%)、2025-03(+9.45%>-5.57%)、2022-01(-1.68%>-5.27%)，共6个月，与 outperform_months=6 一致。BTC 正收益月仅 2022-12(+1.20%)，共1个月；BTC 跑赢 SPY：2022-09(-1.13%>-9.24%)、2022-12(+1.20%>-5.76%)、2025-03(-2.80%>-5.57%)，共3个月，与指标一致。'跑赢月数多于为正收益月数'对两资产均成立（6>2，3>1）。例证数值与 stress-month 指标一致。反证中 2022-06 BTC -36.63%、2022-12 两者均为正，均与数据一致。上一轮程序把'跑赢月数'与'正收益月数'误绑为 gt 关系（实为并列陈述），本轮按原句语义转录为两个独立 gt 断言，方向正确。",
+                "verdict": "supported",
+                "repair": "none"
+              }
+            ],
+            "questions": []
+          },
+          "errors": {
+            "f-hedge": [
+              "数值关系未成立或绑定错误：GLD 跑赢 SPY 的月数为 6，为正收益的月数为 2；gt ['stress.GLD.outperform_months', 'stress.GLD.positive_months'] = [6.0, 2.0]",
+              "数值关系未成立或绑定错误：BTC-USD 跑赢 SPY 的月数为 3，为正收益的月数为 1；gt ['stress.BTC-USD.outperform_months', 'stress.BTC-USD.positive_months'] = [3.0, 1.0]",
+              "数值关系尚未转成可执行断言：多于；应按收益/风险分别核对"
+            ]
+          },
+          "checks": [
+            {
+              "finding_id": "f-hedge",
+              "quote": "GLD 跑赢 SPY 的月数为 6，为正收益的月数为 2",
+              "relation": "gt",
+              "metric_ids": [
+                "stress.GLD.outperform_months",
+                "stress.GLD.positive_months"
+              ],
+              "values": [
+                6.0,
+                2.0
+              ],
+              "passed": false,
+              "quote_found": false,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "BTC-USD 跑赢 SPY 的月数为 3，为正收益的月数为 1",
+              "relation": "gt",
+              "metric_ids": [
+                "stress.BTC-USD.outperform_months",
+                "stress.BTC-USD.positive_months"
+              ],
+              "values": [
+                3.0,
+                1.0
+              ],
+              "passed": false,
+              "quote_found": false,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "2022-12-30 月两者均为正",
+              "relation": "positive",
+              "metric_ids": [
+                "stress-month.2022-12-30.GLD",
+                "stress-month.2022-12-30.BTC-USD"
+              ],
+              "values": [
+                0.02930648566594085,
+                0.012001190997776634
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            }
+          ],
+          "after": {
+            "claims": [
+              {
+                "finding_id": "f-hedge",
+                "numeric_assertions": [
+                  {
+                    "span_id": "f-hedge:text:6",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.outperform_months",
+                      "stress.GLD.positive_months"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:6",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.BTC-USD.outperform_months",
+                      "stress.BTC-USD.positive_months"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:counterevidence:1",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "stress-month.2022-12-30.GLD",
+                      "stress-month.2022-12-30.BTC-USD"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "remaining_errors": {}
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 5.627,
+        "model_calls": 1,
+        "max_seconds": 120,
+        "max_model_calls": 2
+      }
+    },
+    {
+      "original_run_id": "bb46e598f9bf4551",
+      "run_id": "e4ec33c9cad64244",
+      "passed": true,
+      "draft_unchanged": true,
+      "verdicts_unchanged": true,
+      "remaining_errors": {},
+      "checks": [
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 取得正收益的月份数为 {{stress.GLD.positive_months}} 个月",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.positive_months",
+            "stress.BTC-USD.positive_months"
+          ],
+          "values": [
+            2.0,
+            1.0
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "跑赢 SPY 的月份数为 {{stress.GLD.outperform_months}} 个月",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.BTC-USD.outperform_months"
+          ],
+          "values": [
+            6.0,
+            3.0
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 均多于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.positive_months",
+            "stress.BTC-USD.positive_months"
+          ],
+          "values": [
+            2.0,
+            1.0
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 均多于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.BTC-USD.outperform_months"
+          ],
+          "values": [
+            6.0,
+            3.0
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "三者均为负",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-09-30.GLD",
+            "stress-month.2022-09-30.BTC-USD",
+            "stress-month.2022-09-30.SPY"
+          ],
+          "values": [
+            -0.028881810636775418,
+            -0.011302721417968398,
+            -0.09244575805600008
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 与 BTC-USD 的跌幅均小于 SPY",
+          "relation": "gt",
+          "metric_ids": [
+            "stress-month.2022-09-30.GLD",
+            "stress-month.2022-09-30.SPY"
+          ],
+          "values": [
+            -0.028881810636775418,
+            -0.09244575805600008
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 与 BTC-USD 的跌幅均小于 SPY",
+          "relation": "gt",
+          "metric_ids": [
+            "stress-month.2022-09-30.BTC-USD",
+            "stress-month.2022-09-30.SPY"
+          ],
+          "values": [
+            -0.011302721417968398,
+            -0.09244575805600008
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "为正",
+          "relation": "positive",
+          "metric_ids": [
+            "stress-month.2025-03-31.GLD"
+          ],
+          "values": [
+            0.09446585889998316
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "两者均为负",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2025-03-31.BTC-USD",
+            "stress-month.2025-03-31.SPY"
+          ],
+          "values": [
+            -0.027976208758030308,
+            -0.05571920548668341
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "跌幅大于同期 SPY 的 {{stress-month.2022-06-30.SPY}}",
+          "relation": "lt",
+          "metric_ids": [
+            "stress-month.2022-06-30.BTC-USD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.3663312138110574,
+            -0.08246045670472002
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "两者均为正",
+          "relation": "positive",
+          "metric_ids": [
+            "stress-month.2022-12-30.GLD",
+            "stress-month.2022-12-30.BTC-USD"
+          ],
+          "values": [
+            0.02930648566594085,
+            0.012001190997776634
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "audit": [
+        {
+          "before": {
+            "claims": [
+              {
+                "finding_id": "f-hedge",
+                "numeric_assertions": [
+                  {
+                    "quote": "GLD 取得正收益的月份数为 {{stress.GLD.positive_months}} 个月",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.positive_months",
+                      "stress.BTC-USD.positive_months"
+                    ]
+                  },
+                  {
+                    "quote": "跑赢 SPY 的月份数为 {{stress.GLD.outperform_months}} 个月",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.outperform_months",
+                      "stress.BTC-USD.outperform_months"
+                    ]
+                  },
+                  {
+                    "quote": "三者均为负",
+                    "relation": "same_sign",
+                    "metric_ids": [
+                      "stress-month.2022-09-30.GLD",
+                      "stress-month.2022-09-30.BTC-USD",
+                      "stress-month.2022-09-30.SPY"
+                    ]
+                  },
+                  {
+                    "quote": "GLD 与 BTC-USD 的跌幅均小于 SPY",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress-month.2022-09-30.GLD",
+                      "stress-month.2022-09-30.BTC-USD",
+                      "stress-month.2022-09-30.SPY"
+                    ]
+                  },
+                  {
+                    "quote": "GLD 收益为 {{stress-month.2025-03-31.GLD}}，为正",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "stress-month.2025-03-31.GLD"
+                    ]
+                  },
+                  {
+                    "quote": "同期 BTC-USD 收益为 {{stress-month.2025-03-31.BTC-USD}}、SPY 收益为 {{stress-month.2025-03-31.SPY}}，两者均为负",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "stress-month.2025-03-31.BTC-USD",
+                      "stress-month.2025-03-31.SPY"
+                    ]
+                  },
+                  {
+                    "quote": "跌幅大于同期 SPY 的 {{stress-month.2022-06-30.SPY}}",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "stress-month.2022-06-30.BTC-USD",
+                      "stress-month.2022-06-30.SPY"
+                    ]
+                  },
+                  {
+                    "quote": "两者均为正",
+                    "relation": "same_sign",
+                    "metric_ids": [
+                      "stress-month.2022-12-30.GLD",
+                      "stress-month.2022-12-30.BTC-USD"
+                    ]
+                  }
+                ],
+                "reason": "压力月逐项核对：GLD 正收益月 2 个 > BTC 1 个；GLD 跑赢月 6 个 > BTC 3 个。2022-09-30：GLD -0.0289、BTC -0.0113、SPY -0.0924，三者同号（均负），且 GLD、BTC 跌幅均小于 SPY（-0.0289 > -0.0924，-0.0113 > -0.0924）。2025-03-31：GLD +0.0945 为正，BTC -0.0280、SPY -0.0557 均为负。2022-06-30：BTC -0.3663 跌幅大于 SPY -0.0825（-0.3663 < -0.0825）。反证 2022-12-30：GLD +0.0293、BTC +0.0120 均为正。全部方向与符号正确。上一轮 same_sign/positive/negative 失败源于绑定与关系类型错配（如把三资产同号写成 same_sign 却含 SPY 顺序问题、把“均为负”写成 negative 但只绑一个指标），本轮按原句分别绑定。",
+                "verdict": "supported",
+                "repair": "none"
+              }
+            ],
+            "questions": []
+          },
+          "errors": {
+            "f-hedge": [
+              "数值关系未成立或绑定错误：三者均为负；same_sign ['stress-month.2022-09-30.GLD', 'stress-month.2022-09-30.BTC-USD', 'stress-month.2022-09-30.SPY'] = [-0.028881810636775418, -0.011302721417968398, -0.09244575805600008]",
+              "数值关系未成立或绑定错误：GLD 与 BTC-USD 的跌幅均小于 SPY；gt ['stress-month.2022-09-30.GLD', 'stress-month.2022-09-30.BTC-USD', 'stress-month.2022-09-30.SPY'] = [-0.028881810636775418, -0.011302721417968398, -0.09244575805600008]",
+              "数值关系尚未转成可执行断言：多于；应按收益/风险分别核对"
+            ]
+          },
+          "checks": [
+            {
+              "finding_id": "f-hedge",
+              "quote": "GLD 取得正收益的月份数为 {{stress.GLD.positive_months}} 个月",
+              "relation": "gt",
+              "metric_ids": [
+                "stress.GLD.positive_months",
+                "stress.BTC-USD.positive_months"
+              ],
+              "values": [
+                2.0,
+                1.0
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "跑赢 SPY 的月份数为 {{stress.GLD.outperform_months}} 个月",
+              "relation": "gt",
+              "metric_ids": [
+                "stress.GLD.outperform_months",
+                "stress.BTC-USD.outperform_months"
+              ],
+              "values": [
+                6.0,
+                3.0
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "三者均为负",
+              "relation": "same_sign",
+              "metric_ids": [
+                "stress-month.2022-09-30.GLD",
+                "stress-month.2022-09-30.BTC-USD",
+                "stress-month.2022-09-30.SPY"
+              ],
+              "values": [
+                -0.028881810636775418,
+                -0.011302721417968398,
+                -0.09244575805600008
+              ],
+              "passed": false,
+              "quote_found": true,
+              "relationship_true": false
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "GLD 与 BTC-USD 的跌幅均小于 SPY",
+              "relation": "gt",
+              "metric_ids": [
+                "stress-month.2022-09-30.GLD",
+                "stress-month.2022-09-30.BTC-USD",
+                "stress-month.2022-09-30.SPY"
+              ],
+              "values": [
+                -0.028881810636775418,
+                -0.011302721417968398,
+                -0.09244575805600008
+              ],
+              "passed": false,
+              "quote_found": true,
+              "relationship_true": false
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "GLD 收益为 {{stress-month.2025-03-31.GLD}}，为正",
+              "relation": "positive",
+              "metric_ids": [
+                "stress-month.2025-03-31.GLD"
+              ],
+              "values": [
+                0.09446585889998316
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "同期 BTC-USD 收益为 {{stress-month.2025-03-31.BTC-USD}}、SPY 收益为 {{stress-month.2025-03-31.SPY}}，两者均为负",
+              "relation": "negative",
+              "metric_ids": [
+                "stress-month.2025-03-31.BTC-USD",
+                "stress-month.2025-03-31.SPY"
+              ],
+              "values": [
+                -0.027976208758030308,
+                -0.05571920548668341
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "跌幅大于同期 SPY 的 {{stress-month.2022-06-30.SPY}}",
+              "relation": "lt",
+              "metric_ids": [
+                "stress-month.2022-06-30.BTC-USD",
+                "stress-month.2022-06-30.SPY"
+              ],
+              "values": [
+                -0.3663312138110574,
+                -0.08246045670472002
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-hedge",
+              "quote": "两者均为正",
+              "relation": "same_sign",
+              "metric_ids": [
+                "stress-month.2022-12-30.GLD",
+                "stress-month.2022-12-30.BTC-USD"
+              ],
+              "values": [
+                0.02930648566594085,
+                0.012001190997776634
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            }
+          ],
+          "after": {
+            "claims": [
+              {
+                "finding_id": "f-hedge",
+                "numeric_assertions": [
+                  {
+                    "span_id": "f-hedge:text:1",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.positive_months",
+                      "stress.BTC-USD.positive_months"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:2",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.outperform_months",
+                      "stress.BTC-USD.outperform_months"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:6",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.positive_months",
+                      "stress.BTC-USD.positive_months"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:6",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress.GLD.outperform_months",
+                      "stress.BTC-USD.outperform_months"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:8",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "stress-month.2022-09-30.GLD",
+                      "stress-month.2022-09-30.BTC-USD",
+                      "stress-month.2022-09-30.SPY"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:9",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress-month.2022-09-30.GLD",
+                      "stress-month.2022-09-30.SPY"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:9",
+                    "relation": "gt",
+                    "metric_ids": [
+                      "stress-month.2022-09-30.BTC-USD",
+                      "stress-month.2022-09-30.SPY"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:11",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "stress-month.2025-03-31.GLD"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:13",
+                    "relation": "negative",
+                    "metric_ids": [
+                      "stress-month.2025-03-31.BTC-USD",
+                      "stress-month.2025-03-31.SPY"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:text:15",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "stress-month.2022-06-30.BTC-USD",
+                      "stress-month.2022-06-30.SPY"
+                    ]
+                  },
+                  {
+                    "span_id": "f-hedge:counterevidence:1",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "stress-month.2022-12-30.GLD",
+                      "stress-month.2022-12-30.BTC-USD"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "remaining_errors": {}
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 6.435,
+        "model_calls": 1,
+        "max_seconds": 120,
+        "max_model_calls": 2
+      }
+    },
+    {
+      "original_run_id": "c5908f8bc20a485a",
+      "run_id": "869d73dd2e1240c8",
+      "passed": true,
+      "draft_unchanged": true,
+      "verdicts_unchanged": true,
+      "remaining_errors": {},
+      "checks": [
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随成本上升累计收益单调小幅下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.2.total_return",
+            "sensitivity.0.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.1584714026971463,
+            1.1518193315735226,
+            1.143777361087571,
+            1.1162073018661247
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "基线季度再平衡 {{sensitivity.0.total_return}} 居中",
+          "relation": "between",
+          "metric_ids": [
+            "sensitivity.0.total_return",
+            "sensitivity.5.total_return",
+            "sensitivity.6.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            0.7770211204973347,
+            1.259090355582885
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "累计收益上升、年化波动下降、最大回撤的亏损幅度收窄",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.total_return",
+            "sensitivity.9.total_return",
+            "sensitivity.10.total_return"
+          ],
+          "values": [
+            0.30222489471502345,
+            0.9699550138670963,
+            1.3862392920746873
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "累计收益上升、年化波动下降、最大回撤的亏损幅度收窄",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.9.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.5548813915454753,
+            0.33664090810120567,
+            0.1848700519646761
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "累计收益上升、年化波动下降、最大回撤的亏损幅度收窄",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.9.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6269002624521358,
+            -0.4157028244744696,
+            -0.22908093501090165
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "买入持有情景年化波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.volatility",
+            "sensitivity.0.volatility"
+          ],
+          "values": [
+            0.256006218907215,
+            0.27667562063712725
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "但其最大回撤 {{sensitivity.5.max_drawdown}} 的亏损幅度大于基线 {{sensitivity.0.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.max_drawdown",
+            "sensitivity.0.max_drawdown"
+          ],
+          "values": [
+            -0.39233856914593235,
+            -0.34043769309838223
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "两段均为正收益但幅度不同",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.4064161785852458,
+            0.49618717604152907
+          ],
+          "passed": true,
+          "quote_found": true,
+          "relationship_true": true
+        }
+      ],
+      "audit": [
+        {
+          "before": {
+            "claims": [
+              {
+                "finding_id": "f-sensitivity",
+                "numeric_assertions": [
+                  {
+                    "quote": "随成本上升累计收益单调小幅下降",
+                    "relation": "decreasing",
+                    "metric_ids": [
+                      "sensitivity.1.total_return",
+                      "sensitivity.2.total_return",
+                      "sensitivity.0.total_return",
+                      "sensitivity.4.total_return"
+                    ]
+                  },
+                  {
+                    "quote": "随 GLD 权重上升，累计收益上升",
+                    "relation": "increasing",
+                    "metric_ids": [
+                      "sensitivity.8.total_return",
+                      "sensitivity.9.total_return",
+                      "sensitivity.10.total_return"
+                    ]
+                  },
+                  {
+                    "quote": "年化波动下降",
+                    "relation": "decreasing",
+                    "metric_ids": [
+                      "sensitivity.8.volatility",
+                      "sensitivity.9.volatility",
+                      "sensitivity.10.volatility"
+                    ]
+                  },
+                  {
+                    "quote": "最大回撤的亏损幅度收窄",
+                    "relation": "increasing",
+                    "metric_ids": [
+                      "sensitivity.8.max_drawdown",
+                      "sensitivity.9.max_drawdown",
+                      "sensitivity.10.max_drawdown"
+                    ]
+                  },
+                  {
+                    "quote": "买入持有情景年化波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "sensitivity.5.volatility",
+                      "sensitivity.0.volatility"
+                    ]
+                  },
+                  {
+                    "quote": "其最大回撤 {{sensitivity.5.max_drawdown}} 的亏损幅度大于基线 {{sensitivity.0.max_drawdown}}",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "sensitivity.5.max_drawdown",
+                      "sensitivity.0.max_drawdown"
+                    ]
+                  },
+                  {
+                    "quote": "两段均为正收益",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "sensitivity.11.total_return",
+                      "sensitivity.12.total_return"
+                    ]
+                  }
+                ],
+                "reason": "成本维度：0bps 1.1585、10bps 1.1518、20bps 1.1438、50bps 1.1162，随成本上升累计收益单调下降，与“单调小幅下降”一致。频率维度：买入持有 0.7770、每1月 1.2591、每12月 0.7019、基线 1.1438，基线居中，与“再平衡频率影响大于成本”一致。权重维度：GLD 20%/50%/80% 累计收益 0.3022/0.9700/1.3862 依次上升；波动 0.5549/0.3366/0.1849 依次下降；回撤 -0.6269/-0.4157/-0.2291 数值依次上升（亏损收窄）。上一轮把“随 GLD 权重上升，年化波动下降”判为 decreasing 失败，但按正文顺序 0.5549→0.3366→0.1849 确为下降，属核验者方向误判；回撤 increasing 亦正确。反证：买入持有波动 0.2560 < 基线 0.2767，回撤 -0.3923 亏损大于基线 -0.3404，与“低波动不等于低回撤”一致。分段：前半 0.4064、后半 0.4962，均为正，与“两段均为正收益但幅度不同”一致。",
+                "verdict": "supported",
+                "repair": "none"
+              }
+            ],
+            "questions": []
+          },
+          "errors": {
+            "f-sensitivity": [
+              "数值关系尚未转成可执行断言：居中；应按收益/风险分别核对"
+            ]
+          },
+          "checks": [
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "随成本上升累计收益单调小幅下降",
+              "relation": "decreasing",
+              "metric_ids": [
+                "sensitivity.1.total_return",
+                "sensitivity.2.total_return",
+                "sensitivity.0.total_return",
+                "sensitivity.4.total_return"
+              ],
+              "values": [
+                1.1584714026971463,
+                1.1518193315735226,
+                1.143777361087571,
+                1.1162073018661247
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "随 GLD 权重上升，累计收益上升",
+              "relation": "increasing",
+              "metric_ids": [
+                "sensitivity.8.total_return",
+                "sensitivity.9.total_return",
+                "sensitivity.10.total_return"
+              ],
+              "values": [
+                0.30222489471502345,
+                0.9699550138670963,
+                1.3862392920746873
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "年化波动下降",
+              "relation": "decreasing",
+              "metric_ids": [
+                "sensitivity.8.volatility",
+                "sensitivity.9.volatility",
+                "sensitivity.10.volatility"
+              ],
+              "values": [
+                0.5548813915454753,
+                0.33664090810120567,
+                0.1848700519646761
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "最大回撤的亏损幅度收窄",
+              "relation": "increasing",
+              "metric_ids": [
+                "sensitivity.8.max_drawdown",
+                "sensitivity.9.max_drawdown",
+                "sensitivity.10.max_drawdown"
+              ],
+              "values": [
+                -0.6269002624521358,
+                -0.4157028244744696,
+                -0.22908093501090165
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "买入持有情景年化波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}",
+              "relation": "lt",
+              "metric_ids": [
+                "sensitivity.5.volatility",
+                "sensitivity.0.volatility"
+              ],
+              "values": [
+                0.256006218907215,
+                0.27667562063712725
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "其最大回撤 {{sensitivity.5.max_drawdown}} 的亏损幅度大于基线 {{sensitivity.0.max_drawdown}}",
+              "relation": "lt",
+              "metric_ids": [
+                "sensitivity.5.max_drawdown",
+                "sensitivity.0.max_drawdown"
+              ],
+              "values": [
+                -0.39233856914593235,
+                -0.34043769309838223
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            },
+            {
+              "finding_id": "f-sensitivity",
+              "quote": "两段均为正收益",
+              "relation": "positive",
+              "metric_ids": [
+                "sensitivity.11.total_return",
+                "sensitivity.12.total_return"
+              ],
+              "values": [
+                0.4064161785852458,
+                0.49618717604152907
+              ],
+              "passed": true,
+              "quote_found": true,
+              "relationship_true": true
+            }
+          ],
+          "after": {
+            "claims": [
+              {
+                "finding_id": "f-sensitivity",
+                "numeric_assertions": [
+                  {
+                    "span_id": "f-sensitivity:text:1",
+                    "relation": "decreasing",
+                    "metric_ids": [
+                      "sensitivity.1.total_return",
+                      "sensitivity.2.total_return",
+                      "sensitivity.0.total_return",
+                      "sensitivity.4.total_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:text:4",
+                    "relation": "between",
+                    "metric_ids": [
+                      "sensitivity.0.total_return",
+                      "sensitivity.5.total_return",
+                      "sensitivity.6.total_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:text:14",
+                    "relation": "increasing",
+                    "metric_ids": [
+                      "sensitivity.8.total_return",
+                      "sensitivity.9.total_return",
+                      "sensitivity.10.total_return"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:text:14",
+                    "relation": "decreasing",
+                    "metric_ids": [
+                      "sensitivity.8.volatility",
+                      "sensitivity.9.volatility",
+                      "sensitivity.10.volatility"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:text:14",
+                    "relation": "increasing",
+                    "metric_ids": [
+                      "sensitivity.8.max_drawdown",
+                      "sensitivity.9.max_drawdown",
+                      "sensitivity.10.max_drawdown"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:counterevidence:0",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "sensitivity.5.volatility",
+                      "sensitivity.0.volatility"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:counterevidence:1",
+                    "relation": "lt",
+                    "metric_ids": [
+                      "sensitivity.5.max_drawdown",
+                      "sensitivity.0.max_drawdown"
+                    ]
+                  },
+                  {
+                    "span_id": "f-sensitivity:text:18",
+                    "relation": "positive",
+                    "metric_ids": [
+                      "sensitivity.11.total_return",
+                      "sensitivity.12.total_return"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "remaining_errors": {}
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 6.216,
+        "model_calls": 1,
+        "max_seconds": 120,
+        "max_model_calls": 2
+      }
+    }
+  ]
+}
