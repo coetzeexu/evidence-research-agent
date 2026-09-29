@@ -1,13 +1,91 @@
 import socket
 from datetime import datetime, timezone
 
+import httpx
 import pytest
 from pydantic import ValidationError
+from research_app import providers
 from research_app.config import Settings
 from research_app.domain import Bar, ResearchSpec
 from research_app.exporters import safe_json
 from research_app.providers import ProviderError, parse_yahoo, public_target
 from research_app.security import allowed_link, safe_error
+
+
+@pytest.fixture
+def source_transport(monkeypatch):
+    client_type = httpx.AsyncClient
+    calls = []
+
+    def install(outcomes):
+        def handler(request):
+            calls.append(str(request.url))
+            outcome = outcomes[min(len(calls) - 1, len(outcomes) - 1)]
+            if isinstance(outcome, type) and issubclass(outcome, Exception):
+                raise outcome("temporary transport failure", request=request)
+            return httpx.Response(
+                outcome,
+                headers={"content-type": "text/html"},
+                text="<title>Verified source</title><article>" + "Evidence text. " * 50 + "</article>",
+            )
+
+        monkeypatch.setattr(
+            providers.httpx,
+            "AsyncClient",
+            lambda **kwargs: client_type(transport=httpx.MockTransport(handler), **kwargs),
+        )
+        monkeypatch.setattr(
+            providers, "public_target", lambda url: ("https://93.184.216.34:443/story", "example.com")
+        )
+
+        async def no_delay(seconds):
+            pass
+
+        monkeypatch.setattr(providers.asyncio, "sleep", no_delay)
+        return calls
+
+    return install
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("first", [httpx.ConnectTimeout, httpx.ReadError, 429, 503])
+async def test_source_transient_failure_recovers_with_one_retry(source_transport, first):
+    calls = source_transport([first, 200])
+    source, text = await providers.read_source("https://example.com/story")
+    assert len(calls) == 2
+    assert source.url == "https://example.com/story" and "Evidence text." in text
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("status", [403, 404])
+async def test_source_denied_or_missing_is_not_retried(source_transport, status):
+    calls = source_transport([status, 200])
+    with pytest.raises(httpx.HTTPStatusError) as error:
+        await providers.read_source("https://example.com/story")
+    assert error.value.response.status_code == status and len(calls) == 1
+
+
+@pytest.mark.asyncio
+async def test_source_retry_is_bounded(source_transport):
+    calls = source_transport([503])
+    with pytest.raises(httpx.HTTPStatusError):
+        await providers.read_source("https://example.com/story")
+    assert len(calls) == 2
+
+
+@pytest.mark.asyncio
+async def test_source_security_rejection_is_not_retried(source_transport, monkeypatch):
+    calls = source_transport([200])
+    resolutions = []
+
+    def rejected(url):
+        resolutions.append(url)
+        raise ProviderError("拒绝非公开网络地址")
+
+    monkeypatch.setattr(providers, "public_target", rejected)
+    with pytest.raises(ProviderError, match="非公开"):
+        await providers.read_source("https://example.com/story")
+    assert len(resolutions) == 1 and calls == []
 
 
 def payload():

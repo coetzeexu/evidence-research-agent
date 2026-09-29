@@ -366,6 +366,21 @@ def publication_date(soup: BeautifulSoup) -> str | None:
 
 
 async def read_source(url: str) -> tuple[SourceRecord, str]:
+    """Retry a transient read once; access denials and security failures are final."""
+    for attempt in range(2):
+        try:
+            return await _read_source_once(url)
+        except (httpx.TimeoutException, httpx.NetworkError):
+            if attempt:
+                raise
+        except httpx.HTTPStatusError as exc:
+            if attempt or exc.response.status_code not in {429, 500, 502, 503, 504}:
+                raise
+        await asyncio.sleep(1)
+    raise AssertionError("unreachable source retry state")
+
+
+async def _read_source_once(url: str) -> tuple[SourceRecord, str]:
     current = url
     async with httpx.AsyncClient(timeout=20, follow_redirects=False, trust_env=False) as client:
         for _ in range(5):
