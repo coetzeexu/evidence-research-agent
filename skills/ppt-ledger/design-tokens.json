@@ -1,0 +1,13 @@
+{
+  "template": "ppt169_apple_fy2025_review",
+  "canvas": {"width_inches": 13.333333, "height_inches": 7.5},
+  "colors": {
+    "background": "FFFFFF", "primary": "1E293B", "accent": "2B6CB0",
+    "positive": "2E7D5B", "negative": "B4342C", "muted": "64748B",
+    "divider": "D8DEE6", "grid": "E8EDF2", "surface": "F4F6F8",
+    "series": ["2B6CB0", "2E7D5B", "8A5A12", "7BA7D4", "B4342C"]
+  },
+  "fonts": {"body": "Microsoft YaHei", "data": "Consolas"},
+  "font_points": {"title": 33, "cover": 45, "body": 18, "data": 18, "hero": 43, "footnote": 11},
+  "layout": {"margin": 0.667, "header_rule_y": 1.9, "body_y": 2.2, "footer_rule_y": 6.78}
+}

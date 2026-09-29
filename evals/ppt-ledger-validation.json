@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-29",
+  "scope": "PPT exporter only; Agent loop unchanged",
+  "method": "skills/ppt-ledger/references/operating-review.md",
+  "template": "ppt169_apple_fy2025_review",
+  "template_sources": "skills/ppt-ledger/source-manifest.json",
+  "tests": {
+    "new_ppt_tests": 5,
+    "existing_native_artifact_test": 1,
+    "passed": 6
+  },
+  "rendering": {
+    "engine": "LibreOffice headless to PDF, Poppler to PNG",
+    "font_substitution": "Microsoft YaHei → local Alibaba PuHuiTi Regular/Bold; Consolas → Menlo; fonts not packaged",
+    "visual_review": "Gold full-deck thumbnail review plus full-size cover, scorecard, variance, chart, CPI, sensitivity, event and source pages; corrected long mixed-script paragraph re-rendered at full size",
+    "issues_fixed": [
+      "Inherited connector theme shadow removed",
+      "Overlong title replaced with short cover subject plus full-title page",
+      "Explicit CJK wrapping no longer auto-wraps a second time in Office",
+      "Numeric/Latin tokens remain whole across line breaks",
+      "Footer sources shortened to single-line labels; complete title and URL remain in notes",
+      "CPI page explicitly links FRED CPI source"
+    ],
+    "limitations": [
+      "Not opened in Microsoft PowerPoint",
+      "No new research execution; presentation uses stored sample data",
+      "Template font substitution varies by host"
+    ]
+  },
+  "artifacts": {
+    "gold-bitcoin": {
+      "slides": 39,
+      "sha256": "dde2aa305c1308191ad3d57917b47747345aa10f11b1c345b7199126a74d8112",
+      "out_of_bounds_slides": [],
+      "rendered_pdf": true
+    },
+    "nvda": {
+      "slides": 26,
+      "sha256": "7ab24d48e6fdf5a55dbe756204cf600eca98311cf4ee14f0167debc7d86a74e5",
+      "out_of_bounds_slides": [],
+      "rendered_pdf": true
+    }
+  }
+}

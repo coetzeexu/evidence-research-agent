@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "local_path": "references/operating-review.md",
+      "source_url": "https://raw.githubusercontent.com/hugohe3/ppt-master/680de11f1bef4628b68d5daad9dffec569fbd51f/skills/ppt-master/templates/styles/operating-review/templates/design_spec.md",
+      "sha256": "bfe7b85fa970a50d019e2235b30a687a906f9d82fa4f8c64198d97182ee14a78",
+      "bytes": 11463,
+      "modified": false
+    },
+    {
+      "local_path": "references/example-spec-lock.md",
+      "source_url": "https://raw.githubusercontent.com/hugohe3/ppt-master-examples/5f9923ad9bb1882a88aa29e5311a6a8a28cfc77a/examples/ppt169_apple_fy2025_review/spec_lock.md",
+      "sha256": "06d43b1f59498457be2726411625dfb5c5e232ace8572c81a059492b47825bc4",
+      "bytes": 3838,
+      "modified": false
+    },
+    {
+      "local_path": "references/upstream-cover.svg",
+      "source_url": "https://raw.githubusercontent.com/hugohe3/ppt-master-examples/5f9923ad9bb1882a88aa29e5311a6a8a28cfc77a/examples/ppt169_apple_fy2025_review/svg_output/01_cover.svg",
+      "sha256": "010b3d27fc5a6829d8dfb0027f287646caccfccc790f6ddf31c9e71c8944bc16",
+      "bytes": 2430,
+      "modified": false
+    },
+    {
+      "local_path": "references/upstream-scorecard.svg",
+      "source_url": "https://raw.githubusercontent.com/hugohe3/ppt-master-examples/5f9923ad9bb1882a88aa29e5311a6a8a28cfc77a/examples/ppt169_apple_fy2025_review/svg_output/02_scorecard.svg",
+      "sha256": "a31114011dbf0fe5aca8d00fcb5a22738fc77c0d504d936e22c3e19be2b9c6a1",
+      "bytes": 11096,
+      "modified": false
+    }
+  ]
+}

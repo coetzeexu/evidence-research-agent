@@ -61,7 +61,7 @@ const examples = [
     title: '黄金 × 比特币',
     description: '避险与购买力 · 压力情景 · 配置回测',
     prompt:
-      '比较黄金 GLD 与比特币 BTC-USD 近五年的避险与抗通胀表现，以 SPY 为压力基准，等权配置、月度再平衡、交易成本 10 bps，生成 HTML、Excel、PPT、Word。',
+      '比较黄金 GLD 与比特币 BTC-USD 近五年的避险与抗通胀表现，以 SPY 为压力基准，等权配置、月度再平衡、交易成本 10 bps，生成 Excel 回测底稿、PPT 决策框架、Word 策略报告。',
   },
 ];
 

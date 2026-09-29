@@ -6,7 +6,9 @@ Python / LangChain / LangGraph / React / ECharts。本地研究工作台：根�
 
 GitHub：私有仓库 [coetzeexu/evidence-research-agent](https://github.com/coetzeexu/evidence-research-agent)。Actions 在 push / PR 时运行离线功能、构建和样例校验，不需要模型密钥。
 
-本轮 P0 更新：显式指标单位与含义、数值发布边界、ZIP 与源码逐文件核验，见 [修复与交付说明](docs/p0-release-20260929.md)。历史真实运行结果保留原版本；本轮最终真实研究自动通过 2/2、事后正文复核通过 0/2，仍有推断越界和子问题覆盖缺口，详见 [内容复核](evals/p0-live-validation-20260929.json)。当前不能据此宣称整体达到 90 分。
+上一轮 P0 更新：显式指标单位与含义、数值发布边界、ZIP 与源码逐文件核验，见 [修复与交付说明](docs/p0-release-20260929.md)。历史真实运行结果保留原版本；该轮最终真实研究自动通过 2/2、事后正文复核通过 0/2，仍有推断越界和子问题覆盖缺口，详见 [内容复核](evals/p0-live-validation-20260929.json)。当前不能据此宣称整体达到 90 分。
+
+本轮导出更新：按请求选择产物；报告/策略报告默认 HTML，文档默认 Word，显式格式优先。NVDA 样例仅 HTML，黄金/比特币样例仅 Excel/PPT/Word。独立 HTML 使用连续报告，PPT 使用源文件提取的 operating-review 账页模板，见 [导出说明](docs/export-presentation-20260929.md)。
 
 ## 本地一键运行
 
@@ -99,9 +101,9 @@ uv run python tools/evaluate_text_research.py --case all --suite Final01
 
 开发定位可使用 `tools/evaluate_saved_research.py`，读取既有证据快照并重新调用正文核验流程；它不重新采集行情或资讯，结果标记为 `saved-evidence-development-probe`，不计入完整八次验收。
 
-当前工程检查后端 282 项、前端 28 项通过，构建 / TypeScript / Prettier / Ruff 及格式检查通过，导出测试及两个样例校验均实际执行。每份记录标注其运行版本与范围；[工程检查](evals/p0-engineering-20260929.json) 和真实研究验收分别保存。
+当前工程检查后端 306 项、前端 31 项通过，构建 / TypeScript / Prettier / Ruff 及格式检查通过，导出测试及两个样例校验均实际执行。每份记录标注其运行版本与范围；[导出工程检查](evals/export-engineering-20260929.json) 和真实研究验收分别保存。
 
-`samples/nvda/` 和 `samples/gold-bitcoin/` 的历史快照已迁移至 Schema 1.1，并重导出 HTML / Excel / Word / PPT。离线 `research replay nvda` 和 `research replay gold-bitcoin` 只迁移结构、生成产物，不调用模型；因此旧样例 `research=null`，manifest 正文状态为 `unassessed`，保留原计算版本。真实正文样例在上述评估目录。离线 HTML 内嵌依赖；Excel 公式近似与下一开盘执行回测口径分开标记。结构、重算与界面检查的范围见 [验证记录](docs/validation.md)。
+`samples/nvda/` 和 `samples/gold-bitcoin/` 的历史快照已迁移至 Schema 1.1，并按题目分别重导出 NVDA HTML 和黄金/比特币 Excel / PPT / Word。离线 `research replay nvda` 和 `research replay gold-bitcoin` 只迁移结构、生成产物，不调用模型；因此旧样例 `research=null`，manifest 正文状态为 `unassessed`，保留原计算版本。真实正文样例在上述评估目录。离线 HTML 内嵌依赖；Excel 公式近似与下一开盘执行回测口径分开标记。结构、重算与界面检查的范围见 [验证记录](docs/validation.md)。
 
 ## 工程结构与边界
 

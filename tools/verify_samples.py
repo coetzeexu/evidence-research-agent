@@ -36,29 +36,39 @@ def main():
             assert sha256(content).hexdigest() == entry["sha256"], name
             assert entry["bytes"] == len(content), name
             assert not secret or secret not in content, f"Credential found in {name}"
-        embedded = re.search(r'id="report-data">(.*?)</script>', (folder / "report.html").read_text(), re.S)
-        assert embedded and json.loads(embedded.group(1)) == bundle.model_dump(mode="json")
+        expected_reports = {f"report.{fmt}" for fmt in bundle.spec.outputs}
+        assert {p.name for p in folder.glob("report.*")} == expected_reports
+        assert manifest["requested_outputs"] == bundle.spec.outputs
+        if "html" in bundle.spec.outputs:
+            embedded = re.search(
+                r'id="report-data">(.*?)</script>', (folder / "report.html").read_text(), re.S
+            )
+            assert embedded and json.loads(embedded.group(1)) == bundle.model_dump(mode="json")
         assert json.loads((folder / "research-data.json").read_text()) == bundle.model_dump(mode="json")
-        book = load_workbook(folder / "report.xlsx", data_only=True)
-        errors = [
-            (sheet.title, cell.coordinate)
-            for sheet in book
-            for row in sheet
-            for cell in row
-            if cell.data_type == "e"
-        ]
-        assert not errors, errors
-        anchors = (
-            bundle.comparison.get("anchors", [])
-            if len(bundle.spec.symbols) > 1
-            else month_end_anchors(bundle.datasets, bundle.spec.symbols, bundle.spec.start, bundle.spec.end)
-        )
-        expected = monthly_formula_backtest(anchors, bundle.spec)
-        if expected["rows"]:
-            assert abs(book["Overview"]["B17"].value - expected["metrics"]["total_return"]) < 1e-10
-            assert abs(book["Overview"]["B18"].value - expected["metrics"]["max_drawdown"]) < 1e-10
+        errors = []
+        if "xlsx" in bundle.spec.outputs:
+            book = load_workbook(folder / "report.xlsx", data_only=True)
+            errors = [
+                (sheet.title, cell.coordinate)
+                for sheet in book
+                for row in sheet
+                for cell in row
+                if cell.data_type == "e"
+            ]
+            assert not errors, errors
+            anchors = (
+                bundle.comparison.get("anchors", [])
+                if len(bundle.spec.symbols) > 1
+                else month_end_anchors(
+                    bundle.datasets, bundle.spec.symbols, bundle.spec.start, bundle.spec.end
+                )
+            )
+            expected = monthly_formula_backtest(anchors, bundle.spec)
+            if expected["rows"]:
+                assert abs(book["Overview"]["B17"].value - expected["metrics"]["total_return"]) < 1e-10
+                assert abs(book["Overview"]["B18"].value - expected["metrics"]["max_drawdown"]) < 1e-10
         structures = {}
-        for name in ["report.docx", "report.pptx"]:
+        for name in [f"report.{fmt}" for fmt in bundle.spec.outputs if fmt in {"docx", "pptx"}]:
             with ZipFile(folder / name) as archive:
                 for item in archive.namelist():
                     if item.endswith((".xml", ".rels")):

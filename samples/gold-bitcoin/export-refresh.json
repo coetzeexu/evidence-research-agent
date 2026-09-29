@@ -1,0 +1,19 @@
+{
+  "at": "2026-09-29T13:26:44.575697+00:00",
+  "previous_bundle_hash": "68186f0df900df46ffbcfa2ff1040adbeaf9fbba66a6f152b0f5409a23891e6d",
+  "previous_outputs": [
+    "html",
+    "xlsx",
+    "pptx",
+    "docx"
+  ],
+  "outputs": [
+    "xlsx",
+    "pptx",
+    "docx"
+  ],
+  "method_version": "2026.09.3",
+  "model_called": false,
+  "recomputed_analysis": false,
+  "note": "Export selection and presentation only; historical market/event evidence unchanged."
+}

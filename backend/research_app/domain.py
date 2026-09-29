@@ -42,7 +42,8 @@ class ResearchSpec(Contract):
     cost_bps: float = Field(default=10, ge=0, le=100)
     initial_capital: float = Field(default=100000, gt=0, le=1e12)
     outputs: list[Literal["html", "xlsx", "pptx", "docx"]] = Field(
-        default_factory=lambda: ["html", "xlsx", "pptx", "docx"]
+        default_factory=lambda: ["html"],
+        description="本次请求的产物集合，不是可用格式列表。报告默认html；文档docx；底稿xlsx；汇报pptx；不导出为空。",
     )
     assumptions: list[str] = Field(default_factory=list)
 
@@ -80,7 +81,7 @@ class ResearchSpec(Contract):
         if not self.windows or any(w < 1 or w > 90 for w in self.windows):
             raise ValueError("事件窗口必须为 1–90 个交易日")
         self.windows = sorted(set(self.windows))
-        self.outputs = list(dict.fromkeys(["html", *self.outputs]))
+        self.outputs = list(dict.fromkeys(self.outputs))
         return self
 
 

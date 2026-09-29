@@ -1,5 +1,7 @@
 # 当前工程交付
 
+最新导出增量：按用户选择的格式交付，独立 HTML 连续报告，PPT 挂载 operating-review 源模板；Agent loop 未改。见 [导出与展示说明](export-presentation-20260929.md)、[当前工程验收](../evals/export-engineering-20260929.json)。
+
 当前 P0 增量：正文核验协议 1.4、指标契约与发布包一致性，见 [本轮说明](p0-release-20260929.md)。下文历史检查保留其原版本与范围。
 
 Evidence 是可本地运行的投研 Agent：自然语言发起研究，使用行情与资讯工具调查，确定性计算指标，通过独立核验发布文字，并按需生成 HTML、Excel、Word、PPT。

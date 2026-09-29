@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   // Library builds preserve dependency environment reads by default. The offline
   // IIFE runs in a browser with no Node `process` global, including under file://.
-  define: { 'process.env.NODE_ENV': JSON.stringify('production') },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env.DEBUG': JSON.stringify(''),
+  },
   build: {
     outDir: 'dist/report',
     emptyOutDir: true,

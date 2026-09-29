@@ -1,0 +1,178 @@
+{
+  "at": "2026-09-29T13:16:37.036281+00:00",
+  "scope": "Real model planner only; no research loop or report content evaluation",
+  "planner_prompt_sha256": "91fc15ed7d26cc3210701d744489a0d88b8153b593d4b981790a3d0d3a5abf9e",
+  "passed": true,
+  "cases": [
+    {
+      "case": "nvda-original",
+      "prompt": "回顾英伟达（NVDA）近五年行情数据（开盘价、收盘价、最高价、最低价、成交量），梳理同期AI行业大事件，如ChatGPT发布、B100芯片发布、DeepSeek，在K线图上标记行情变化触发时刻的主要事件、影响评级，产物可交互、可溯源，最终生成一个HTML。",
+      "previous": null,
+      "expected": [
+        "html"
+      ],
+      "actual": [
+        "html"
+      ],
+      "passed": true
+    },
+    {
+      "case": "comparison-original",
+      "prompt": "请构建黄金与比特币作为避险/抗通胀资产的可交互比较分析体系，产物包括Excel回测底稿、PPT决策框架、Word策略报告。",
+      "previous": null,
+      "expected": [
+        "xlsx",
+        "pptx",
+        "docx"
+      ],
+      "actual": [
+        "xlsx",
+        "pptx",
+        "docx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "report",
+      "prompt": "研究NVDA近五年AI行业事件，生成报告",
+      "previous": null,
+      "expected": [
+        "html"
+      ],
+      "actual": [
+        "html"
+      ],
+      "passed": true
+    },
+    {
+      "case": "strategy-report",
+      "prompt": "比较黄金GLD与BTC-USD，生成策略报告",
+      "previous": null,
+      "expected": [
+        "html"
+      ],
+      "actual": [
+        "html"
+      ],
+      "passed": true
+    },
+    {
+      "case": "document",
+      "prompt": "研究NVDA近五年行情，生成文档",
+      "previous": null,
+      "expected": [
+        "docx"
+      ],
+      "actual": [
+        "docx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "slides",
+      "prompt": "比较黄金GLD与BTC-USD，准备汇报材料",
+      "previous": null,
+      "expected": [
+        "pptx"
+      ],
+      "actual": [
+        "pptx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "workbook",
+      "prompt": "比较黄金GLD与BTC-USD，提供回测底稿",
+      "previous": null,
+      "expected": [
+        "xlsx"
+      ],
+      "actual": [
+        "xlsx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "all",
+      "prompt": "研究NVDA近五年行情，生成HTML、Excel、PPT和Word四种产物",
+      "previous": null,
+      "expected": [
+        "html",
+        "xlsx",
+        "pptx",
+        "docx"
+      ],
+      "actual": [
+        "html",
+        "xlsx",
+        "pptx",
+        "docx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "text-only",
+      "prompt": "研究NVDA近五年行情，只给文字，不导出文件",
+      "previous": null,
+      "expected": [],
+      "actual": [],
+      "passed": true
+    },
+    {
+      "case": "replace",
+      "prompt": "改为只要PPT",
+      "previous": "comparison-original",
+      "expected": [
+        "pptx"
+      ],
+      "actual": [
+        "pptx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "inherit",
+      "prompt": "区间改为2023-01-01至2025-12-31",
+      "previous": "comparison-original",
+      "expected": [
+        "xlsx",
+        "pptx",
+        "docx"
+      ],
+      "actual": [
+        "xlsx",
+        "pptx",
+        "docx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "add",
+      "prompt": "再加Excel底稿",
+      "previous": "report",
+      "expected": [
+        "html",
+        "xlsx"
+      ],
+      "actual": [
+        "html",
+        "xlsx"
+      ],
+      "passed": true
+    },
+    {
+      "case": "remove",
+      "prompt": "不要Word，其余保留",
+      "previous": "comparison-original",
+      "expected": [
+        "xlsx",
+        "pptx"
+      ],
+      "actual": [
+        "xlsx",
+        "pptx"
+      ],
+      "passed": true
+    }
+  ]
+}

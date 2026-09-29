@@ -329,6 +329,10 @@ def artifact(run_id: str, filename: str):
     run = require_run(run_id)
     if not run["bundle_path"]:
         raise HTTPException(409, "文件尚未生成")
+    if filename.startswith("report."):
+        bundle = ResearchBundle.model_validate_json(Path(run["bundle_path"]).read_text())
+        if filename.removeprefix("report.") not in bundle.spec.outputs:
+            raise HTTPException(404, "该格式未请求")
     path = Path(run["bundle_path"]).parent / "artifacts" / filename
     if not path.is_file():
         raise HTTPException(404, "该格式未生成")

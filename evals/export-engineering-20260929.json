@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-29T13:28:27.813192+00:00",
+  "scope": "Export selection, standalone HTML and operating-review PPT only; research loop unchanged",
+  "backend_tests": 306,
+  "frontend_tests": 31,
+  "live_planner_cases": 13,
+  "live_planner_passed": 13,
+  "all_output_subsets_checked": 16,
+  "build_and_typescript": true,
+  "ruff": true,
+  "ruff_format": true,
+  "prettier": true,
+  "browser_opened_for_local_app": false,
+  "full_research_rerun": false,
+  "sample_outputs": {
+    "nvda": ["html"],
+    "gold-bitcoin": ["xlsx", "pptx", "docx"]
+  },
+  "presentation_visual_check": "evals/ppt-ledger-validation.json",
+  "ppt_sample_sha256": "56daf3e1ac899ab065523b53be4676ee20db5aa8f8f529f1a388987da2bf6cfb",
+  "ppt_xml_and_embedded_workbook_match_visual_review": true,
+  "ppt_match_note": "ZIP metadata and OOXML created/modified timestamps excluded; every slide/chart/source XML and embedded workbook data entry matches rendered review deck."
+}

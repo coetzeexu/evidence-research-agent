@@ -35,7 +35,6 @@
     "cost_bps": 20.0,
     "initial_capital": 100000.0,
     "outputs": [
-      "html",
       "xlsx",
       "pptx",
       "docx"
@@ -50,8 +49,7 @@
       "权重为 GLD 60% / BTC-USD 40%，非负、等权以外的固定权重",
       "季度再平衡（每 3 个月）",
       "单边成交成本 20 bps",
-      "初始资金 100000 美元",
-      "输出四种文件：html、xlsx、pptx、docx"
+      "初始资金 100000 美元"
     ]
   },
   "datasets": {

@@ -66,10 +66,12 @@ export function EvidencePanel({
   bundle,
   eventId,
   onClose,
+  sourceLabel = '数据页',
 }: {
   bundle: Bundle;
   eventId: string;
   onClose: () => void;
+  sourceLabel?: string;
 }) {
   const event = bundle.events.find((e) => e.id === eventId);
   if (!event) return null;
@@ -170,7 +172,7 @@ export function EvidencePanel({
         ))}
         <div className="provenance-note">
           <Check size={13} />
-          <span>原文与引用均保留稳定 ID，可在数据页复核。关联等级不代表因果概率。</span>
+          <span>原文与引用均保留稳定 ID，可在{sourceLabel}复核。关联等级不代表因果概率。</span>
         </div>
       </div>
     </div>
@@ -302,7 +304,7 @@ function EventsTable({
   );
 }
 
-function DataView({ bundle }: { bundle: Bundle }) {
+export function DataView({ bundle }: { bundle: Bundle }) {
   const [symbol, setSymbol] = useState(bundle.spec.symbols[0]);
   const [page, setPage] = useState(0);
   const ds = bundle.datasets[symbol];

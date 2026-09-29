@@ -80,7 +80,11 @@ def check_delivery(archive, work, output):
                     bundle = client.get(f"/api/runs/{rid}/bundle")
                     assert bundle.status_code == 200
                     details = client.get(f"/api/runs/{rid}/artifacts/manifest.json").json()
-                    for name in ("report.html", "report.xlsx", "report.pptx", "report.docx"):
+                    formats = bundle.json()["spec"]["outputs"]
+                    assert details["requested_outputs"] == formats
+                    for omitted in {"html", "xlsx", "pptx", "docx"} - set(formats):
+                        assert client.get(f"/api/runs/{rid}/artifacts/report.{omitted}").status_code == 404
+                    for name in (f"report.{fmt}" for fmt in formats):
                         result = client.get(f"/api/runs/{rid}/artifacts/{name}")
                         assert result.status_code == 200
                         digest = sha256(result.content).hexdigest()
@@ -91,7 +95,12 @@ def check_delivery(archive, work, output):
                 refused = client.post("/api/runs", json={"prompt": "No model credentials in delivery check"})
                 assert refused.status_code == 409
                 record.update(
-                    passed=True, health=health, downloads=downloads, samples=2, no_key_request_rejected=True
+                    passed=True,
+                    health=health,
+                    downloads=downloads,
+                    samples=2,
+                    no_key_request_rejected=True,
+                    unrequested_formats_rejected=True,
                 )
             # Re-run the regression suite from the extracted checkout and its own venv.
             for name, command in (

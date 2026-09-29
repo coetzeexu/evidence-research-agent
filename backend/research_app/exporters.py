@@ -47,13 +47,14 @@ def export_all(bundle: ResearchBundle, directory: Path):
     directory.mkdir(parents=True, exist_ok=True)
     payload = directory / "research-data.json"
     payload.write_text(bundle.model_dump_json(indent=2))
-    export_html(bundle, directory / "report.html")
     formats = set(bundle.spec.outputs)
+    if "html" in formats:
+        export_html(bundle, directory / "report.html")
     if "xlsx" in formats:
         from .export_workbook import export_workbook
 
         export_workbook(bundle, directory / "report.xlsx")
-    if formats.intersection({"docx", "pptx"}):
+    if "docx" in formats:
         node = shutil.which("node")
         if not node:
             raise RuntimeError("Word/PPT 图表导出需要 Node.js 22+")
@@ -74,12 +75,19 @@ def export_all(bundle: ResearchBundle, directory: Path):
         from .export_slides import export_slides
 
         export_slides(bundle, directory / "report.pptx")
+    # Re-exporting a narrower selection must not expose stale reports from a
+    # previous export. Only remove our known generated files, after success.
+    for extension in {"html", "xlsx", "pptx", "docx"} - formats:
+        (directory / f"report.{extension}").unlink(missing_ok=True)
+    if "docx" not in formats and (directory / "charts").is_dir():
+        shutil.rmtree(directory / "charts")
     manifest = {
         "run_id": bundle.id,
         "generated_at": now_iso(),
         "schema_version": bundle.schema_version,
         "method_version": bundle.method_version,
         "research_status": bundle.research.status if bundle.research else "unassessed",
+        "requested_outputs": bundle.spec.outputs,
         "validation": validation,
         "data_snapshots": {s: d.content_hash for s, d in bundle.datasets.items()},
         "files": {

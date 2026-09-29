@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-29T12:50:34.076503+00:00",
+  "checked_at": "2026-09-29T13:31:45.486441+00:00",
   "checks": [
     {
       "sample": "gold-bitcoin",
@@ -9,16 +9,16 @@
       "research_status": "unassessed",
       "events": 10,
       "sources": 15,
-      "manifest_files": 5,
+      "manifest_files": 4,
       "workbook_errors": [],
       "structures": {
-        "report.docx": {
-          "zip_valid": true
-        },
         "report.pptx": {
           "zip_valid": true,
           "native_charts": 1,
-          "slides": 16
+          "slides": 39
+        },
+        "report.docx": {
+          "zip_valid": true
         }
       }
     },
@@ -30,18 +30,9 @@
       "research_status": "unassessed",
       "events": 7,
       "sources": 17,
-      "manifest_files": 5,
+      "manifest_files": 2,
       "workbook_errors": [],
-      "structures": {
-        "report.docx": {
-          "zip_valid": true
-        },
-        "report.pptx": {
-          "zip_valid": true,
-          "native_charts": 1,
-          "slides": 10
-        }
-      }
+      "structures": {}
     }
   ],
   "scope": "Snapshot/HTML equality, manifest hashes, cached Excel formulas, OOXML structure. Not browser or Office visual acceptance."
