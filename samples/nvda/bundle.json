@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "method_version": "2026.09.3",
   "id": "15412514d7234a05",
   "created_at": "2026-09-29T06:30:07.091478+00:00",
@@ -34199,6 +34199,11 @@
       "title": "OpenAI 向公众发布 ChatGPT",
       "date": "2022-11-30",
       "published_at": null,
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "date",
       "timing_basis": "retrospective",
       "symbols": [
@@ -34222,6 +34227,11 @@
       "title": "英伟达 FY2024 一季度业绩与超预期指引，盘后股价大涨 26%",
       "date": "2023-05-24",
       "published_at": "2023-05-24T20:28:58+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -34244,6 +34254,11 @@
       "title": "英伟达在 GTC 发布 Blackwell 平台与 B200 GPU",
       "date": "2024-03-18",
       "published_at": "2024-03-18T20:39:02+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -34268,6 +34283,11 @@
       "title": "DeepSeek-R1 技术论文提交至 arXiv（v1）",
       "date": "2025-01-22",
       "published_at": null,
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "date",
       "timing_basis": "announcement",
       "symbols": [
@@ -34291,6 +34311,11 @@
       "title": "DeepSeek 冲击引发英伟达股价 1 月 27 日重挫，公司回应称其为“出色的 AI 进步”",
       "date": "2025-01-27",
       "published_at": null,
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "date",
       "timing_basis": "retrospective",
       "symbols": [
@@ -34314,6 +34339,11 @@
       "title": "白宫暂缓对英伟达 H20 芯片加码出口限制（报道日）",
       "date": "2025-04-09",
       "published_at": null,
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "date",
       "timing_basis": "retrospective",
       "symbols": [
@@ -34335,6 +34365,11 @@
       "title": "英伟达 FY2027 二季度业绩超预期，指引强劲并披露 AWS 200 万 GPU 协议",
       "date": "2026-08-26",
       "published_at": "2026-08-26T16:00:01+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -36282,5 +36317,6 @@
     "changes": 23,
     "associated_changes": 4,
     "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
-  }
+  },
+  "research": null
 }

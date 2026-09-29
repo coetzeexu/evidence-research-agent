@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "method_version": "2026.09.3",
   "id": "3302715305fc4dac",
   "created_at": "2026-09-29T02:53:37.779375+00:00",
@@ -58574,6 +58574,11 @@
       "title": "美联储加息75个基点，为1994年以来最大单次加息",
       "date": "2022-06-15",
       "published_at": "2022-06-15T18:00:10+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58598,6 +58603,11 @@
       "title": "比特币跌破2.3万美元，Celsius暂停提款加剧加密市场抛售",
       "date": "2022-06-13",
       "published_at": "2022-06-13T07:55:16+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58619,6 +58629,11 @@
       "title": "Terra的LUNA跌至0美元、UST脱锚，比特币反弹至3万美元上方",
       "date": "2022-05-13",
       "published_at": "2022-05-13T08:12:37+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58640,6 +58655,11 @@
       "title": "美联储9月加息75个基点至3%–3.25%",
       "date": "2022-09-21",
       "published_at": null,
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "date",
       "timing_basis": "announcement",
       "symbols": [
@@ -58663,6 +58683,11 @@
       "title": "比特币升破3.1万美元，现货ETF乐观情绪升温",
       "date": "2023-10-23",
       "published_at": null,
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "date",
       "timing_basis": "announcement",
       "symbols": [
@@ -58684,6 +58709,11 @@
       "title": "SEC批准比特币现货ETF相关规则变更",
       "date": "2024-01-10",
       "published_at": "2024-01-10T21:34:37+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58705,6 +58735,11 @@
       "title": "黄金重挫、白银期货暴跌31.4%，沃什获提名缓解美联储独立性担忧",
       "date": "2026-01-30",
       "published_at": "2026-01-30T10:31:28+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58726,6 +58761,11 @@
       "title": "比特币跌破8万美元，为2025年4月以来首次",
       "date": "2026-02-02",
       "published_at": "2026-02-02T10:48:08+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58747,6 +58787,11 @@
       "title": "比特币一度跌破6.1万美元，单周跌近30%，表现远逊黄金",
       "date": "2026-02-05",
       "published_at": "2026-02-05T11:43:42+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -58769,6 +58814,11 @@
       "title": "特朗普宣布美国“战略加密储备”将纳入比特币等五种资产",
       "date": "2025-03-02",
       "published_at": "2025-03-02T17:19:58+00:00",
+      "occurred_at": null,
+      "public_disclosure_at": null,
+      "disclosure_source_id": "",
+      "disclosure_quote": "",
+      "reported_at": null,
       "time_precision": "timestamp",
       "timing_basis": "announcement",
       "symbols": [
@@ -73385,5 +73435,6 @@
     "changes": 43,
     "associated_changes": 5,
     "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
-  }
+  },
+  "research": null
 }

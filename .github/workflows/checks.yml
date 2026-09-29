@@ -1,0 +1,26 @@
+name: Checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: npm ci
+      # Build before pytest so artifact tests execute instead of skipping missing assets.
+      - run: npm run build
+      - run: uv run pytest -q
+      - run: uv run ruff check backend tests tools
+      - run: npm test -- --run
+      - run: npm run format:check
+      - run: uv run python tools/verify_samples.py

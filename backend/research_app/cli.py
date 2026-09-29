@@ -63,12 +63,10 @@ def main():
         print(bundle.research.text if args.format == "text" else bundle.research.model_dump_json(indent=2))
     elif args.command == "replay":
         from .config import PROJECT_ROOT
-        from .exporters import export_all
+        from .samples import replay_sample
 
         root = PROJECT_ROOT / "samples" / args.sample
-        bundle = ResearchBundle.model_validate_json((root / "bundle.json").read_text())
-        target = args.output or root / "artifacts"
-        export_all(bundle, target)
+        target = replay_sample(root, store, args.output)
         print(f"Artifacts regenerated: {target}")
     elif args.command == "export":
         from .exporters import export_all

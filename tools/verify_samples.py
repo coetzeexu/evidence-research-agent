@@ -18,11 +18,18 @@ def main():
         path = root / "bundle.json"
         if not path.is_file():
             continue
-        bundle = ResearchBundle.model_validate_json(path.read_text())
+        raw_bundle = json.loads(path.read_text())
+        bundle = ResearchBundle.model_validate(raw_bundle)
+        assert raw_bundle == bundle.model_dump(mode="json"), (
+            f"{root.name}: run research replay to synchronize schema"
+        )
+        assert bundle.schema_version == ResearchBundle.model_fields["schema_version"].default
         folder = root / "artifacts"
         manifest = json.loads((folder / "manifest.json").read_text())
         assert validate_bundle(bundle)["passed"], root.name
         assert manifest["method_version"] == bundle.method_version
+        assert manifest["schema_version"] == bundle.schema_version
+        assert manifest["research_status"] == (bundle.research.status if bundle.research else "unassessed")
         assert manifest["data_snapshots"] == {s: d.content_hash for s, d in bundle.datasets.items()}
         for name, entry in manifest["files"].items():
             content = (folder / name).read_bytes()
@@ -70,6 +77,8 @@ def main():
                 "sample": root.name,
                 "passed": True,
                 "method_version": bundle.method_version,
+                "schema_version": bundle.schema_version,
+                "research_status": manifest["research_status"],
                 "events": len(bundle.events),
                 "sources": len(bundle.sources),
                 "manifest_files": len(manifest["files"]),

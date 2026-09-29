@@ -79,6 +79,7 @@ def export_all(bundle: ResearchBundle, directory: Path):
         "generated_at": now_iso(),
         "schema_version": bundle.schema_version,
         "method_version": bundle.method_version,
+        "research_status": bundle.research.status if bundle.research else "unassessed",
         "validation": validation,
         "data_snapshots": {s: d.content_hash for s, d in bundle.datasets.items()},
         "files": {
