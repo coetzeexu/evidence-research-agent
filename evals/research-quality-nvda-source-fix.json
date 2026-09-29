@@ -1,0 +1,9 @@
+{
+  "case": "nvda",
+  "run_id": "15412514d7234a05",
+  "started_at": "2026-09-29T03:38:53.227058+00:00",
+  "manual_edits": false,
+  "passed": false,
+  "error": "APIStatusError: Error code: 402 - {'error': {'message': 'Insufficient Balance (request_id: ea6c57f7-a24b-49bd-8f93-5bd46b4a08d2)', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}",
+  "finished_at": "2026-09-29T03:40:16.014989+00:00"
+}

@@ -1,0 +1,29 @@
+{
+  "run_id": "1a40cf5889a445ec",
+  "content_pass": false,
+  "auditor": "Codex independent reading, separate from production reviewer",
+  "audited_at": "2026-09-29T10:01:12.450222+00:00",
+  "method": "Compared published prose with saved original passages, source metadata, deterministic metric definitions and rejected numeric assertions; no LLM score used",
+  "issues": [
+    {
+      "severity": "incomplete",
+      "quote": "Blackwell（B100/B200）平台发布；DeepSeek-R1 模型发布；2025-01-27 NVDA 下跌",
+      "reason": "用户点名的必答段落未完整发布。多条数学上成立的正负关系被引文定位或断言绑定检查拒绝，partial 状态准确，但必答覆盖仍不达标。"
+    },
+    {
+      "severity": "warning",
+      "quote": "均未取得公司级当日原始公告",
+      "reason": "已读来源 src-2703b6b30f807b 是 NVIDIA 官方 Blackwell 发布公告，元数据为 2024-03-18；不能将该事实混同于缺少量产日期。"
+    },
+    {
+      "severity": "warning",
+      "quote": "说明全期统计对少数交易日高度敏感",
+      "reason": "两个极端交易日不足以支持全期统计敏感性结论，尚未计算剔除这些交易日后的收益和风险变化。"
+    },
+    {
+      "severity": "warning",
+      "quote": "未取得当日收盘精确跌幅、成交量或市值变动的原文数值",
+      "reason": "应区分资讯未给出的数字与行情已计算的收盘跌幅及成交量；正文已给出 2025-01-27 的 -16.97%，现有措辞可能使读者误以为缺少行情数据。"
+    }
+  ]
+}

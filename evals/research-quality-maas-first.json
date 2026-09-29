@@ -1,0 +1,10 @@
+{
+  "case": "nvda",
+  "run_id": "15412514d7234a05",
+  "started_at": "2026-09-29T06:20:38.375594+00:00",
+  "manual_edits": false,
+  "resumed_from_checkpoint": true,
+  "passed": false,
+  "error": "AttributeError: 'NoneType' object has no attribute 'model_dump'",
+  "finished_at": "2026-09-29T06:22:04.582461+00:00"
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "keywords": [
+      "NVDA",
+      "NVIDIA",
+      "英伟达",
+      "Blackwell",
+      "B100"
+    ],
+    "urls": [
+      "https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing",
+      "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2024",
+      "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-fourth-quarter-and-fiscal-2024"
+    ]
+  },
+  {
+    "keywords": [
+      "ChatGPT",
+      "OpenAI"
+    ],
+    "urls": [
+      "https://openai.com/index/chatgpt/",
+      "https://www.techradar.com/news/chatgpt-explained",
+      "https://www.history.com/this-day-in-history/november-30/chatgpt-released-openai"
+    ]
+  },
+  {
+    "keywords": [
+      "DeepSeek",
+      "深度求索"
+    ],
+    "urls": [
+      "https://api-docs.deepseek.com/news/news250120",
+      "https://github.com/deepseek-ai/DeepSeek-R1",
+      "https://simonwillison.net/2025/Jan/20/deepseek-r1/"
+    ]
+  },
+  {
+    "keywords": [
+      "GLD",
+      "黄金",
+      "gold"
+    ],
+    "urls": [
+      "https://www.spdrgoldshares.com/usa/gld/"
+    ]
+  },
+  {
+    "keywords": [
+      "通胀",
+      "紧缩",
+      "加息",
+      "Federal Reserve",
+      "inflation"
+    ],
+    "urls": [
+      "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220615a.htm",
+      "https://www.federalreserve.gov/newsevents/pressreleases/monetary20220921a.htm"
+    ]
+  },
+  {
+    "keywords": [
+      "Bitcoin",
+      "BTC",
+      "比特币",
+      "ETF"
+    ],
+    "urls": [
+      "https://www.sec.gov/newsroom/speeches-statements/gensler-statement-spot-bitcoin-011023"
+    ]
+  }
+]

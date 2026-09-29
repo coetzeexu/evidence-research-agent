@@ -1,0 +1,1204 @@
+{
+  "model_requested": "deepseek-v4-flash",
+  "total": 22,
+  "passed": 22,
+  "cases": [
+    {
+      "prompt": "回顾英伟达近五年走势和 AI 大事件",
+      "expected": {
+        "symbols": [
+          "NVDA"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "英伟达（NVDA）近五年行情回顾与 AI 重大事件研究",
+          "symbols": [
+            "NVDA"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "AI 大事件",
+            "英伟达行情回顾"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "资产身份：英伟达 = NVDA（NASDAQ 普通股），已通过 lookup_instrument 确认",
+            "时间范围：最近五年，2021-09-28 至 2026-09-28（截止日不超过今天 2026-09-28）",
+            "数据频率：日线",
+            "基准：SPY（仅作为基准，不纳入 symbols）",
+            "事件窗口：1/5/20 交易日",
+            "事件主题：AI 相关重大事件（如 GTC 大会、AI 芯片发布、财报指引、出口管制等）",
+            "研究类型为 event_study（行情回顾 + 事件窗口），非 combined",
+            "输出文件：html/xlsx/pptx/docx 四种"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "研究 AMD 最近三年，关注 AI 芯片竞争",
+      "expected": {
+        "symbols": [
+          "AMD"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "AMD 最近三年行情回顾与 AI 芯片竞争事件研究",
+          "symbols": [
+            "AMD"
+          ],
+          "start": "2023-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "AI 芯片竞争",
+            "AI 加速器产品发布与竞争格局",
+            "数据中心 GPU 竞争"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户指定最近三年，故区间为 2023-09-28 至 2026-09-28（不超过今天 2026-09-28）",
+            "日线数据",
+            "基准为 SPY，仅作为 benchmark，不纳入 symbols",
+            "事件窗口为 1/5/20 交易日",
+            "事件主题围绕 AI 芯片竞争（如 AI 加速器产品发布、竞争格局变化）",
+            "输出四种文件：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "回顾微软最近三年的云业务和 AI 商业化与股价",
+      "expected": {
+        "symbols": [
+          "MSFT"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "微软（MSFT）近三年云业务与 AI 商业化事件及股价行情回顾",
+          "symbols": [
+            "MSFT"
+          ],
+          "start": "2023-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "Azure 云业务增长与财报表现",
+            "AI 商业化进展（Copilot、Azure OpenAI、AI 资本开支）",
+            "云与 AI 相关事件窗口股价反应"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户要求“最近三年”，故区间取 2023-09-28 至 2026-09-28（截止不超过今天 2026-09-28）",
+            "资产身份经 lookup_instrument 确认为 MSFT（Microsoft Corporation，NASDAQ 普通股）",
+            "基准为 SPY，仅作为 benchmark，不纳入 symbols",
+            "事件窗口采用默认 1/5/20 交易日",
+            "日线数据；未指定权重与再平衡参数，因属事件研究不适用",
+            "云业务与 AI 商业化以财报/产品发布等事件为研究对象，行情回顾与事件窗口统一按 event_study 处理",
+            "默认输出四种文件 html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "梳理特斯拉近两年价格变化与电动车行业事件",
+      "expected": {
+        "symbols": [
+          "TSLA"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "特斯拉（TSLA）近两年价格走势与电动车行业事件回顾",
+          "symbols": [
+            "TSLA"
+          ],
+          "start": "2024-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "电动车行业事件",
+            "特斯拉价格走势",
+            "交付与产能",
+            "价格调整与需求",
+            "行业竞争与政策"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户要求“近两年”，故区间取 2024-09-28 至 2026-09-28（今天）。",
+            "特斯拉标的解析为美股 TSLA（Tesla, Inc., NASDAQ）。",
+            "未指定基准，默认 SPY。",
+            "未指定事件窗口，默认 1/5/20 交易日。",
+            "未指定频率，默认日线。",
+            "事件研究聚焦特斯拉自身行情与电动车行业事件，不涉及多资产配置比较，故 intent 为 event_study。",
+            "输出四种文件：html/xlsx/pptx/docx。"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "分析 AAPL 从 2023-01-01 至 2024-12-31 的日线与新品发布",
+      "expected": {
+        "symbols": [
+          "AAPL"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "AAPL 2023-01-01 至 2024-12-31 日线行情与新品发布事件研究",
+          "symbols": [
+            "AAPL"
+          ],
+          "start": "2023-01-01",
+          "end": "2024-12-31",
+          "topics": [
+            "新品发布",
+            "产品发布事件"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "未指定基准，默认使用 SPY 作为基准",
+            "未指定事件窗口，默认使用 1/5/20 交易日",
+            "未指定数据频率，默认使用日线",
+            "事件类型为 AAPL 新品发布（如 iPhone、Mac、可穿戴等产品发布）",
+            "所有默认输出格式：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "比较黄金和比特币的避险和抗通胀表现",
+      "expected": {
+        "symbols": [
+          "GLD",
+          "BTC-USD"
+        ],
+        "intent": "asset_comparison"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "黄金 ETF 代理 (GLD) 与比特币 (BTC-USD) 避险与抗通胀表现比较",
+          "symbols": [
+            "GLD",
+            "BTC-USD"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "避险属性 (与股票市场相关性、下行期表现)",
+            "抗通胀表现 (与通胀指标/实际收益率的联动)",
+            "风险收益特征 (波动率、最大回撤、夏普比率)",
+            "组合配置贡献 (等权组合表现)"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.5,
+            0.5
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "黄金以 GLD (SPDR Gold Shares ETF) 作为黄金 ETF 代理，非现货黄金",
+            "比特币使用 BTC-USD 现货价格",
+            "未指定时间范围，采用最近五年：2021-09-28 至 2026-09-28",
+            "日线数据",
+            "基准为 SPY",
+            "比较采用非负等权 (各 50%)，月度再平衡",
+            "成交成本 10 bps，初始资金 100,000 美元",
+            "避险与抗通胀评估基于与 SPY 的相关性、下行市场表现及与通胀/实际收益率指标的联动"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "比较 GLD 与以太坊近三年配置效果",
+      "expected": {
+        "symbols": [
+          "GLD",
+          "ETH-USD"
+        ],
+        "intent": "asset_comparison"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "GLD（黄金 ETF 代理）与以太坊近三年配置效果比较",
+          "symbols": [
+            "GLD",
+            "ETH-USD"
+          ],
+          "start": "2023-09-28",
+          "end": "2026-09-28",
+          "topics": [],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.5,
+            0.5
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户要求“近三年”，故区间取 2023-09-28 至 2026-09-28（今天）。",
+            "黄金以 GLD（SPDR Gold Shares）作为黄金 ETF 代理；用户未要求现货黄金，故不使用现货。",
+            "以太坊使用 ETH-USD 现货加密货币价格序列。",
+            "比较资产为 GLD 与 ETH-USD 两个资产，采用非负等权（各 50%）。",
+            "月度再平衡，单边成交成本 10 bps，初始资金 100,000 美元。",
+            "基准为 SPY，仅作为业绩参照，不纳入配置组合。",
+            "事件窗口默认 1/5/20 交易日（本任务为配置比较，窗口仅作辅助统计）。",
+            "默认输出 html/xlsx/pptx/docx 四种文件。"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "比较白银 ETF SLV 和黄金 ETF GLD，权重分别 30% 和 70%",
+      "expected": {
+        "symbols": [
+          "SLV",
+          "GLD"
+        ],
+        "intent": "asset_comparison",
+        "weights": [
+          0.3,
+          0.7
+        ]
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "SLV 白银 ETF 与 GLD 黄金 ETF 配置比较（30/70）",
+          "symbols": [
+            "SLV",
+            "GLD"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "白银与黄金 ETF 配置比较",
+            "避险与抗通胀属性",
+            "风险收益特征"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.3,
+            0.7
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "SLV 为 iShares Silver Trust（白银 ETF 代理），GLD 为 SPDR Gold Shares（黄金 ETF 代理）",
+            "用户指定权重 SLV 30%、GLD 70%，非等权",
+            "未指定时间区间，采用最近五年：2021-09-28 至 2026-09-28，日线数据",
+            "基准为 SPY，仅作为基准不纳入配置组合",
+            "月度再平衡，单边成交成本 10 bps，初始资金 100000 美元",
+            "默认输出 html/xlsx/pptx/docx 四种文件"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "比较 BTC-USD、ETH-USD 与 GLD，等权持有不再平衡",
+      "expected": {
+        "symbols": [
+          "BTC-USD",
+          "ETH-USD",
+          "GLD"
+        ],
+        "intent": "asset_comparison",
+        "rebalance_months": 0
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "BTC-USD、ETH-USD 与黄金 ETF 代理 (GLD) 等权买入持有比较",
+          "symbols": [
+            "BTC-USD",
+            "ETH-USD",
+            "GLD"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "rebalance_months": 0,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户要求等权持有且不再平衡，故 rebalance_months=0（买入持有，无定期再平衡）。",
+            "GLD 作为黄金 ETF 代理（SPDR Gold Shares），非现货黄金。",
+            "未指定时间范围，采用默认最近五年：2021-09-28 至 2026-09-28，日线数据。",
+            "未指定基准，采用默认 SPY 作为业绩基准（仅作基准，不纳入比较组合）。",
+            "等权权重按 1/3 均分，初始资金 100000 美元，成交成本 10 bps。",
+            "事件窗口默认 1/5/20 交易日（本任务为配置比较，窗口仅作参考）。",
+            "输出四种文件：html、xlsx、pptx、docx。"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "NVDA 2022-01-01 到 2025-12-31，按 QQQ 基准比较事件反应",
+      "expected": {
+        "symbols": [
+          "NVDA"
+        ],
+        "intent": "event_study",
+        "benchmark": "QQQ"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "NVDA 事件反应研究（2022-01-01 至 2025-12-31，基准 QQQ）",
+          "symbols": [
+            "NVDA"
+          ],
+          "start": "2022-01-01",
+          "end": "2025-12-31",
+          "topics": [
+            "NVDA 事件窗口异常收益",
+            "相对 QQQ 的事件反应"
+          ],
+          "benchmark": "QQQ",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "事件窗口为事件日前后 1/5/20 个交易日",
+            "日线数据",
+            "基准为 QQQ，仅作为基准不纳入 symbols",
+            "事件类型由数据源自动识别（如财报、产品发布等）",
+            "默认输出四种文件：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "黄金 GLD 70%，比特币 30%，季度再平衡，每笔成本 20 bps，比较配置表现",
+      "expected": {
+        "symbols": [
+          "GLD",
+          "BTC-USD"
+        ],
+        "intent": "asset_comparison",
+        "weights": [
+          0.7,
+          0.3
+        ],
+        "rebalance_months": 3,
+        "cost_bps": 20
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "黄金ETF(GLD)70% / 比特币(BTC-USD)30% 配置比较（季度再平衡）",
+          "symbols": [
+            "GLD",
+            "BTC-USD"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.7,
+            0.3
+          ],
+          "rebalance_months": 3,
+          "cost_bps": 20.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "黄金以 GLD（SPDR Gold Shares，黄金 ETF 代理）代表，非现货黄金。",
+            "比特币以 BTC-USD 现货价格代表。",
+            "时间区间默认最近五年：2021-09-28 至 2026-09-28，日线数据。",
+            "基准为 SPY，仅作对比基准，不纳入配置组合。",
+            "权重按用户指定：GLD 70%、BTC-USD 30%，非负、合计 100%。",
+            "再平衡频率为季度（每 3 个月），每笔成交成本 20 bps。",
+            "初始资金 100,000 美元。",
+            "输出四种文件：html、xlsx、pptx、docx。"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "QQQ 和 SPY 近五年风险收益比较，年度再平衡",
+      "expected": {
+        "symbols": [
+          "QQQ",
+          "SPY"
+        ],
+        "intent": "asset_comparison",
+        "rebalance_months": 12
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "QQQ 与 SPY 近五年风险收益比较（年度再平衡）",
+          "symbols": [
+            "QQQ",
+            "SPY"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.5,
+            0.5
+          ],
+          "rebalance_months": 12,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "使用最近五年日线数据，区间为 2021-09-28 至 2026-09-28",
+            "比较资产为 QQQ 与 SPY，非负等权（各 50%）",
+            "再平衡频率按用户要求设为年度（12 个月）",
+            "成交成本 10 bps，初始资金 100000 美元",
+            "基准为 SPY（同时作为比较资产之一）",
+            "默认输出四种文件：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "回顾亚马逊的近三年股票走势及 AWS 重大进展",
+      "expected": {
+        "symbols": [
+          "AMZN"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "亚马逊（AMZN）近三年股价走势与 AWS 重大进展事件研究",
+          "symbols": [
+            "AMZN"
+          ],
+          "start": "2023-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "AWS 重大进展",
+            "AWS re:Invent 大会",
+            "AWS 生成式 AI 服务（Bedrock/Trainium）",
+            "AWS 资本开支与数据中心扩张",
+            "AWS 营收与利润率变化",
+            "AWS 管理层变动与战略调整"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户要求“近三年”，故区间取 2023-09-28 至 2026-09-28（今天）。",
+            "日线数据；基准为 SPY，仅作为基准不纳入 symbols。",
+            "事件窗口为 1/5/20 交易日。",
+            "AWS 重大进展事件由研究流程自动识别并纳入事件窗口分析。",
+            "默认输出四种文件：html/xlsx/pptx/docx。"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "回顾 Meta 近五年价格与 AI 产品进展",
+      "expected": {
+        "symbols": [
+          "META"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "Meta (META) 近五年价格行情回顾与 AI 产品进展事件研究",
+          "symbols": [
+            "META"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "Meta AI 产品进展",
+            "Llama 系列模型发布",
+            "Meta AI 助手与 Ray-Ban 智能眼镜",
+            "AI 基础设施与资本开支",
+            "广告业务 AI 推荐系统"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "资产身份：Meta Platforms, Inc. 普通股，代码 META（纳斯达克），已通过 lookup_instrument 确认",
+            "研究类型为 event_study（行情回顾 + 事件窗口），非 combined",
+            "时间范围：最近五年，2021-09-28 至 2026-09-28，日线数据",
+            "基准为 SPY，仅作为 benchmark，不纳入 symbols",
+            "事件窗口为 1/5/20 交易日",
+            "事件日期依据公开披露的 AI 产品发布/进展节点确定",
+            "默认输出四种文件：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "比较 GLD 与 BTC-USD，10 万美元初始资金、零交易成本",
+      "expected": {
+        "symbols": [
+          "GLD",
+          "BTC-USD"
+        ],
+        "intent": "asset_comparison",
+        "cost_bps": 0
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "GLD（黄金 ETF 代理）与 BTC-USD 配置比较：10 万美元初始资金、零交易成本",
+          "symbols": [
+            "GLD",
+            "BTC-USD"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "黄金 ETF 代理与比特币的避险属性比较",
+            "抗通胀表现比较",
+            "多资产配置组合表现",
+            "风险收益特征与回撤"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.5,
+            0.5
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 0.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "GLD 作为黄金 ETF 代理（SPDR Gold Shares），非现货黄金",
+            "BTC-USD 为比特币美元现货价格",
+            "未指定时间范围，采用最近五年：2021-09-28 至 2026-09-28",
+            "日线数据",
+            "基准为 SPY，仅作基准不纳入比较组合",
+            "两资产非负等权（各 50%），月度再平衡",
+            "成交成本按用户指定为 0 bps",
+            "初始资金 100000 美元",
+            "事件窗口 1/5/20 交易日（默认保留）",
+            "输出四种文件：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "研究 NVDA 与 AMD 的各自事件时间线，同时比较资产配置",
+      "expected": {
+        "symbols": [
+          "NVDA",
+          "AMD"
+        ],
+        "intent": "combined"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "combined",
+          "title": "NVDA 与 AMD 事件时间线与资产配置比较研究",
+          "symbols": [
+            "NVDA",
+            "AMD"
+          ],
+          "start": "2021-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "NVDA 事件时间线",
+            "AMD 事件时间线",
+            "NVDA 与 AMD 资产配置比较"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.5,
+            0.5
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "未指定时间范围，采用最近五年：2021-09-28 至 2026-09-28",
+            "日线数据",
+            "基准为 SPY，仅作为基准不纳入比较组合",
+            "事件窗口为 1/5/20 交易日",
+            "比较组合为 NVDA 与 AMD 非负等权（各 50%），月度再平衡",
+            "成交成本 10 bps，初始资金 100000 美元",
+            "同时包含事件研究与多资产配置比较，故研究类型为 combined",
+            "输出四种文件：html/xlsx/pptx/docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "分析比特币最近一年日线与监管事件",
+      "expected": {
+        "symbols": [
+          "BTC-USD"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "比特币最近一年日线行情与监管事件研究",
+          "symbols": [
+            "BTC-USD"
+          ],
+          "start": "2025-09-28",
+          "end": "2026-09-28",
+          "topics": [
+            "比特币监管事件",
+            "加密资产监管政策",
+            "SEC 加密监管",
+            "比特币现货 ETF 监管"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "资产身份：比特币采用 BTC-USD（Bitcoin USD，CCC 加密资产）",
+            "时间范围：用户指定“最近一年”，即 2025-09-28 至 2026-09-28（截止不超过今天 2026-09-28）",
+            "频率：日线",
+            "基准：SPY（用户未指定）",
+            "事件窗口：1/5/20 交易日（用户未指定）",
+            "研究类型：行情回顾 + 事件窗口，属于 event_study，非 combined",
+            "输出文件：html/xlsx/pptx/docx 四种",
+            "监管事件主题由研究流程自动识别并纳入事件窗口分析"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "回顾 SPY 在 2020-01-01 到 2021-12-31 的疫情事件与价格反应",
+      "expected": {
+        "symbols": [
+          "SPY"
+        ],
+        "intent": "event_study"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "SPY 2020-01-01 至 2021-12-31 疫情事件与价格反应回顾",
+          "symbols": [
+            "SPY"
+          ],
+          "start": "2020-01-01",
+          "end": "2021-12-31",
+          "topics": [
+            "COVID-19 pandemic",
+            "market reaction",
+            "price action"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户指定 SPY 为研究对象，基准默认 SPY（自身）",
+            "事件窗口默认 1/5/20 交易日",
+            "日线数据",
+            "事件为新冠疫情相关事件（2020-2021）",
+            "四种导出文件默认全部生成"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "比较可口可乐 KO 和百事 PEP 的三年配置表现",
+      "expected": {
+        "symbols": [
+          "KO",
+          "PEP"
+        ],
+        "intent": "asset_comparison"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "asset_comparison",
+          "title": "可口可乐 (KO) 与百事 (PEP) 三年配置表现比较",
+          "symbols": [
+            "KO",
+            "PEP"
+          ],
+          "start": "2023-09-28",
+          "end": "2026-09-28",
+          "topics": [],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            0.5,
+            0.5
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "用户要求三年配置表现，故回看区间为 2023-09-28 至 2026-09-28（截止日不超过今天 2026-09-28）",
+            "KO 与 PEP 为常见美股代码，分别对应可口可乐与百事公司",
+            "比较采用非负等权（各 50%），月度再平衡，单边成交成本 10 bps，初始资金 100,000 美元",
+            "基准为 SPY，仅作为业绩参照，不纳入配置组合",
+            "日线数据；未指定其他参数时沿用默认设置",
+            "输出四种文件：html、xlsx、pptx、docx"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "分析股票代码含糊的 ABC 公司，不能确定公司名称",
+      "expected": {
+        "clarification": true
+      },
+      "actual": {
+        "needs_clarification": true,
+        "question": "“ABC 公司”无法唯一确定标的：您指的是哪一家？例如 AbCellera Biologics（ABCL，纳斯达克）、Ameris Bancorp（ABCB，纽交所），还是其他公司（请给出公司全名或交易所代码）？",
+        "spec": null
+      },
+      "passed": true
+    },
+    {
+      "prompt": "研究 AMD 2024-01-01 至 2025-12-31 的行情与 MI300/MI350 AI 加速器行业事件，基准 QQQ，标注原始证据及事件窗口，生成四种文件。",
+      "expected": {
+        "symbols": [
+          "AMD"
+        ],
+        "intent": "event_study",
+        "benchmark": "QQQ"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "AMD 2024-01-01 至 2025-12-31 行情回顾与 MI300/MI350 AI 加速器行业事件研究（基准 QQQ）",
+          "symbols": [
+            "AMD"
+          ],
+          "start": "2024-01-01",
+          "end": "2025-12-31",
+          "topics": [
+            "MI300 AI 加速器发布与出货进展",
+            "MI350 AI 加速器发布与量产",
+            "AI 加速器行业竞争与需求（数据中心 GPU）",
+            "AMD 数据中心业务指引与财报事件"
+          ],
+          "benchmark": "QQQ",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx",
+            "docx"
+          ],
+          "assumptions": [
+            "研究类型为事件研究（event_study）：行情回顾叠加事件窗口仍属 event_study，非 combined。",
+            "基准为 QQQ，仅作为 benchmark，不纳入 symbols。",
+            "事件窗口采用默认 1/5/20 交易日。",
+            "日线数据；未指定频率时使用日线。",
+            "时间范围由用户明确指定为 2024-01-01 至 2025-12-31，未超过今天 2026-09-28。",
+            "事件日期以公开披露的官方公告/财报日期为准，并标注原始证据来源。",
+            "输出四种文件：html、xlsx、pptx、docx。",
+            "未涉及多资产配置比较，故不设置权重、再平衡与成本参数。"
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "prompt": "回顾 MSFT 2023-01-01 至 2025-12-31 云计算行情和事件，以 SPY 为基准，导出 Excel 和 PPT。",
+      "expected": {
+        "symbols": [
+          "MSFT"
+        ],
+        "intent": "event_study",
+        "benchmark": "SPY"
+      },
+      "actual": {
+        "needs_clarification": false,
+        "question": "",
+        "spec": {
+          "intent": "event_study",
+          "title": "MSFT 云计算行情与事件回顾（2023-01-01 至 2025-12-31，基准 SPY）",
+          "symbols": [
+            "MSFT"
+          ],
+          "start": "2023-01-01",
+          "end": "2025-12-31",
+          "topics": [
+            "云计算",
+            "Azure",
+            "云业务增长",
+            "AI 云基础设施"
+          ],
+          "benchmark": "SPY",
+          "windows": [
+            1,
+            5,
+            20
+          ],
+          "weights": [
+            1.0
+          ],
+          "rebalance_months": 1,
+          "cost_bps": 10.0,
+          "initial_capital": 100000.0,
+          "outputs": [
+            "html",
+            "xlsx",
+            "pptx"
+          ],
+          "assumptions": [
+            "事件窗口采用默认 1/5/20 交易日",
+            "日线数据",
+            "基准为 SPY，仅作为 benchmark 不纳入 symbols",
+            "事件主题聚焦 MSFT 云计算/Azure 相关事件",
+            "默认输出四种文件，但用户明确要求 Excel 和 PPT，故仅输出 xlsx/pptx"
+          ]
+        }
+      },
+      "passed": true
+    }
+  ]
+}

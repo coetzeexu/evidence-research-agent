@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-28",
+  "run_id": "4c83b29b36854665",
+  "status": "complete",
+  "duration_seconds": 99,
+  "event_counts": {
+    "step": 6,
+    "model_start": 21,
+    "model": 21,
+    "tool_start": 41,
+    "tool": 37,
+    "tool_end": 37,
+    "plan": 1,
+    "data": 2,
+    "agent": 3,
+    "model_delta": 179,
+    "skill": 2,
+    "tool_error": 4,
+    "source": 8,
+    "search_results": 13,
+    "complete": 1
+  },
+  "tool_calls_started": 41,
+  "tool_calls_ended": 41,
+  "all_tool_calls_paired": true,
+  "public_deltas_before_model_end": 179,
+  "steps": [
+    "理解任务与解析资产",
+    "获取完整日线与宏观数据",
+    "事件发现与原文核实",
+    "计算行情反应与研究指标",
+    "复核引用、时间与计算",
+    "生成交互报告与研究文件"
+  ],
+  "sources": 6,
+  "research_events": 4,
+  "warnings": 5,
+  "artifact_http_status": 200,
+  "automated_checks": {
+    "backend_tests": 65,
+    "frontend_tests": 24,
+    "ruff": "passed",
+    "prettier": "passed",
+    "build": "web and offline passed; existing chunk-size warning"
+  },
+  "browser_verified": [
+    "real loading state",
+    "public text visible before model completion",
+    "tool states and source chips",
+    "dynamic stages and auto-collapse",
+    "chat delta visible before final answer",
+    "history retained"
+  ],
+  "scope_note": "The existing research prompt also retrieved market changes outside the requested single event; this run validates streaming delivery, not single-event scope control."
+}

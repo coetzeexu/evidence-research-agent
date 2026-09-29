@@ -1,0 +1,179 @@
+[
+  {
+    "prompt": "回顾英伟达近五年走势和 AI 大事件",
+    "symbols": [
+      "NVDA"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "研究 AMD 最近三年，关注 AI 芯片竞争",
+    "symbols": [
+      "AMD"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "回顾微软最近三年的云业务和 AI 商业化与股价",
+    "symbols": [
+      "MSFT"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "梳理特斯拉近两年价格变化与电动车行业事件",
+    "symbols": [
+      "TSLA"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "分析 AAPL 从 2023-01-01 至 2024-12-31 的日线与新品发布",
+    "symbols": [
+      "AAPL"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "比较黄金和比特币的避险和抗通胀表现",
+    "symbols": [
+      "GLD",
+      "BTC-USD"
+    ],
+    "intent": "asset_comparison"
+  },
+  {
+    "prompt": "比较 GLD 与以太坊近三年配置效果",
+    "symbols": [
+      "GLD",
+      "ETH-USD"
+    ],
+    "intent": "asset_comparison"
+  },
+  {
+    "prompt": "比较白银 ETF SLV 和黄金 ETF GLD，权重分别 30% 和 70%",
+    "symbols": [
+      "SLV",
+      "GLD"
+    ],
+    "intent": "asset_comparison",
+    "weights": [
+      0.3,
+      0.7
+    ]
+  },
+  {
+    "prompt": "比较 BTC-USD、ETH-USD 与 GLD，等权持有不再平衡",
+    "symbols": [
+      "BTC-USD",
+      "ETH-USD",
+      "GLD"
+    ],
+    "intent": "asset_comparison",
+    "rebalance_months": 0
+  },
+  {
+    "prompt": "NVDA 2022-01-01 到 2025-12-31，按 QQQ 基准比较事件反应",
+    "symbols": [
+      "NVDA"
+    ],
+    "intent": "event_study",
+    "benchmark": "QQQ"
+  },
+  {
+    "prompt": "黄金 GLD 70%，比特币 30%，季度再平衡，每笔成本 20 bps，比较配置表现",
+    "symbols": [
+      "GLD",
+      "BTC-USD"
+    ],
+    "intent": "asset_comparison",
+    "weights": [
+      0.7,
+      0.3
+    ],
+    "rebalance_months": 3,
+    "cost_bps": 20
+  },
+  {
+    "prompt": "QQQ 和 SPY 近五年风险收益比较，年度再平衡",
+    "symbols": [
+      "QQQ",
+      "SPY"
+    ],
+    "intent": "asset_comparison",
+    "rebalance_months": 12
+  },
+  {
+    "prompt": "回顾亚马逊的近三年股票走势及 AWS 重大进展",
+    "symbols": [
+      "AMZN"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "回顾 Meta 近五年价格与 AI 产品进展",
+    "symbols": [
+      "META"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "比较 GLD 与 BTC-USD，10 万美元初始资金、零交易成本",
+    "symbols": [
+      "GLD",
+      "BTC-USD"
+    ],
+    "intent": "asset_comparison",
+    "cost_bps": 0
+  },
+  {
+    "prompt": "研究 NVDA 与 AMD 的各自事件时间线，同时比较资产配置",
+    "symbols": [
+      "NVDA",
+      "AMD"
+    ],
+    "intent": "combined"
+  },
+  {
+    "prompt": "分析比特币最近一年日线与监管事件",
+    "symbols": [
+      "BTC-USD"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "回顾 SPY 在 2020-01-01 到 2021-12-31 的疫情事件与价格反应",
+    "symbols": [
+      "SPY"
+    ],
+    "intent": "event_study"
+  },
+  {
+    "prompt": "比较可口可乐 KO 和百事 PEP 的三年配置表现",
+    "symbols": [
+      "KO",
+      "PEP"
+    ],
+    "intent": "asset_comparison"
+  },
+  {
+    "prompt": "分析股票代码含糊的 ABC 公司，不能确定公司名称",
+    "clarification": true
+  },
+  {
+    "prompt": "研究 AMD 2024-01-01 至 2025-12-31 的行情与 MI300/MI350 AI 加速器行业事件，基准 QQQ，标注原始证据及事件窗口，生成四种文件。",
+    "symbols": [
+      "AMD"
+    ],
+    "intent": "event_study",
+    "benchmark": "QQQ"
+  },
+  {
+    "prompt": "回顾 MSFT 2023-01-01 至 2025-12-31 云计算行情和事件，以 SPY 为基准，导出 Excel 和 PPT。",
+    "symbols": [
+      "MSFT"
+    ],
+    "intent": "event_study",
+    "benchmark": "SPY"
+  }
+]

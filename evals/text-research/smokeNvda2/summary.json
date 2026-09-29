@@ -1,0 +1,88 @@
+{
+  "code_hash": "41136cf056f65ffb361b5aad9e3e18013eb9acb9275ceeea3c85f557d82bc23c",
+  "results": [
+    {
+      "case": "nvda",
+      "run_id": "ca3c911c18264bfe",
+      "started_at": "2026-09-29T07:49:53.664043+00:00",
+      "code_hash": "41136cf056f65ffb361b5aad9e3e18013eb9acb9275ceeea3c85f557d82bc23c",
+      "mode": "frozen-text",
+      "prompt": "回顾 NVDA 在 2021-09-28 至 2026-09-28 的五年 OHLCV 日线及 AI 行业大事件。必须核实 ChatGPT 首次公开发布、Blackwell（B100/B200）平台发布、DeepSeek-R1 模型发布；调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期。分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限。只输出有原文和数值依据的中文调研文字，不导出报告。",
+      "manual_edits": false,
+      "independent_content_audit": "pending",
+      "checks": {
+        "verified_text": true,
+        "complete": false,
+        "required_questions": false,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "symbols": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "automated_pass": false,
+      "budget": {
+        "elapsed_seconds": 103.11766316718422,
+        "model_calls": 6,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "bundle_hash": "cc8e1ac9fc78018d150bac14eac5b7f0c8eba84886050dacb22bf818d732ab1f",
+      "spec": {
+        "intent": "event_study",
+        "title": "NVDA 近五年日线行情回顾与 AI 行业大事件研究（含 2025-01-27 下跌归因）",
+        "symbols": [
+          "NVDA"
+        ],
+        "start": "2021-09-28",
+        "end": "2026-09-29",
+        "topics": [
+          "NVDA 近五年日线行情回顾",
+          "AI 行业大事件",
+          "2025-01-27 NVDA 下跌与同期信息"
+        ],
+        "required_events": [
+          "ChatGPT 发布",
+          "Blackwell 平台发布",
+          "DeepSeek 相关事件",
+          "2025-01-27 NVDA 下跌事件（区分论文日、模型发布日与市场反应日）"
+        ],
+        "event_scope": "broad",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          1.0
+        ],
+        "rebalance_months": 1,
+        "cost_bps": 10.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html",
+          "xlsx",
+          "pptx",
+          "docx"
+        ],
+        "assumptions": [
+          "研究类型为事件研究（event_study），基准为 SPY，仅作为基准不纳入 symbols",
+          "时间范围：2021-09-28 至 2026-09-29（最近五年，日线）",
+          "事件窗口为 1/5/20 个交易日",
+          "2025-01-27 下跌事件需区分 DeepSeek 论文发布日、模型发布日与市场反应日，并分别标注",
+          "AI 行业大事件为背景性回顾，不额外扩展为其他未点名公司或事件的强制覆盖",
+          "输出四种文件：html、xlsx、pptx、docx",
+          "未指定权重、再平衡、成本等参数，事件研究不涉及组合配置，故采用默认值"
+        ]
+      },
+      "finished_at": "2026-09-29T07:51:37.070681+00:00",
+      "code_unchanged": true
+    }
+  ],
+  "automated_pass": false,
+  "independent_content_audit": "pending"
+}

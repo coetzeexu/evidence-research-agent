@@ -1,0 +1,16 @@
+[
+  {
+    "case": "nvda",
+    "status": "generated",
+    "characters": 2038,
+    "path": "/Users/coetzee/Documents/Codex/2026-09-28/agent-agent-nvda-ai-chatgpt-b100-2/work/agent-text-review-20260929/nvda.txt",
+    "mode": "existing_snapshot_explain_only"
+  },
+  {
+    "case": "gold-bitcoin",
+    "status": "generated",
+    "characters": 1522,
+    "path": "/Users/coetzee/Documents/Codex/2026-09-28/agent-agent-nvda-ai-chatgpt-b100-2/work/agent-text-review-20260929/gold-bitcoin.txt",
+    "mode": "existing_snapshot_explain_only"
+  }
+]

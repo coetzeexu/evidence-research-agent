@@ -1,0 +1,109 @@
+{
+  "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+  "planned_cases": [
+    "amd"
+  ],
+  "results": [
+    {
+      "case": "amd",
+      "run_id": "9be63ae5c7be4601",
+      "started_at": "2026-09-29T09:35:19.012816+00:00",
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "mode": "live-end-to-end",
+      "prompt": "研究 AMD 在 2023-01-01 至 2026-09-28 的日线和 AI 产业相关行情变化，必须核实 MI300 系列发布，基准 SPY。分析主要异动及同期信息、反应强度、替代解释和证据局限。只输出可复核中文文字，不导出报告。",
+      "manual_edits": false,
+      "independent_content_audit": "pending",
+      "runtime": {
+        "python": "3.12.13",
+        "packages": {
+          "langchain": "1.4.2",
+          "langgraph": "1.2.12",
+          "langchain-openai": "1.6.6",
+          "pydantic": "2.13.5"
+        }
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "automated_pass": true,
+      "budget": {
+        "elapsed_seconds": 249.24915999989025,
+        "model_calls": 28,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "bundle_hash": "ef2fb6f506ccb55687ea871f6b24e678ee52aef8325f27bc30cf995411240873",
+      "spec": {
+        "intent": "event_study",
+        "title": "AMD 2023-01-01 至 2026-09-28 日线行情与 AI 产业相关变化：MI300 系列发布事件研究（基准 SPY）",
+        "symbols": [
+          "AMD"
+        ],
+        "start": "2023-01-01",
+        "end": "2026-09-28",
+        "topics": [
+          "MI300 系列发布"
+        ],
+        "required_events": [
+          "MI300 系列发布"
+        ],
+        "event_scope": "focused",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          1.0
+        ],
+        "rebalance_months": 1,
+        "cost_bps": 10.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html",
+          "xlsx",
+          "pptx",
+          "docx"
+        ],
+        "assumptions": [
+          "资产身份已通过 lookup_instrument 核实：AMD = Advanced Micro Devices, Inc.（NASDAQ，EQUITY）；SPY = State Street SPDR S&P 500 ETF Trust（ETF），仅作基准，不纳入 symbols。",
+          "研究类型为 event_study：用户要求行情回顾并核实 MI300 系列发布事件，基准 SPY；基准只放 benchmark 字段。",
+          "时间区间按用户明确指定：2023-01-01 至 2026-09-28（未超过今日 2026-09-29）。",
+          "频率为日线（用户明确要求日线）。",
+          "事件窗口采用默认 1/5/20 交易日。",
+          "事件范围 event_scope=focused：用户要求核实 MI300 系列发布这一明确点名事件，不扩展为整个 AI 行业回顾。",
+          "用户要求“只输出可复核中文文字，不导出报告”，因此不生成导出文件；四种文件格式仍按默认允许，但本次交付以中文文字结论为主。",
+          "异动识别、同期信息、反应强度、替代解释与证据局限均以可复核的中文文字呈现，不提供预测或实时交易建议。"
+        ]
+      },
+      "finished_at": "2026-09-29T09:39:28.587507+00:00",
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 28,
+        "input_tokens": 418101,
+        "output_tokens": 22006,
+        "failed_model_calls": 0
+      },
+      "code_unchanged": true
+    }
+  ],
+  "automated_pass": true,
+  "independent_content_audit": "pending"
+}

@@ -1,0 +1,38 @@
+{
+  "case": "gold-bitcoin",
+  "run_id": "2a80570321044e81",
+  "started_at": "2026-09-29T09:03:44.846830+00:00",
+  "code_hash": "d1fc98fb0985df559b61cb0040eb12b51a0a0a68002e18aabfadc4bbb1773f7e",
+  "mode": "live-end-to-end",
+  "prompt": "比较 2021-09-28 至 2026-09-28 黄金 GLD 与比特币 BTC-USD 的避险和抗通胀表现，美元计价，GLD/BTC 权重 60/40、季度再平衡、单边交易成本 20 bps、初始资本 100000 美元、基准 SPY。分析压力期保护、实际购买力、通胀关联、同口径组合与单资产基线，以及成本/权重/频率/分段敏感性，形成有条件的决策框架。只输出有证据的中文调研文字，不导出报告。",
+  "manual_edits": false,
+  "independent_content_audit": "pending",
+  "runtime": {
+    "python": "3.12.13",
+    "packages": {
+      "langchain": "1.4.2",
+      "langgraph": "1.2.12",
+      "langchain-openai": "1.6.6",
+      "pydantic": "2.13.5"
+    }
+  },
+  "automated_pass": false,
+  "error": "ModelCallLimitExceededError: Model call limits exceeded: run limit (2/2)",
+  "budget": {
+    "elapsed_seconds": 168.30261033284478,
+    "model_calls": 22,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "finished_at": "2026-09-29T09:06:33.227220+00:00",
+  "usage": {
+    "actual_models": [
+      "/workspace/model"
+    ],
+    "completed_model_calls": 22,
+    "input_tokens": 361188,
+    "output_tokens": 9444,
+    "failed_model_calls": 0
+  },
+  "code_unchanged": true
+}

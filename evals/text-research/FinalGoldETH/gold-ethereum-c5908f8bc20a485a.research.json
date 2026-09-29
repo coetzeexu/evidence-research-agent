@@ -1,0 +1,5738 @@
+{
+  "version": "1.0",
+  "status": "partial",
+  "questions": [
+    {
+      "id": "market",
+      "question": "行情数据覆盖到何时、主要收益与风险表现如何？",
+      "acceptance": "说明实际起止区间、行情口径及可复核的收益/回撤；比较任务以同口径执行基线为主。",
+      "kind": "market",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-market"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "hedge",
+      "question": "这些资产在市场压力期是否提供保护？",
+      "acceptance": "使用相同压力月份，区分正收益与相对抗跌；披露事后选样与样本量限制。",
+      "kind": "hedge",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-hedge"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "inflation",
+      "question": "这些资产是否保全购买力、是否随通胀变化？",
+      "acceptance": "结合实际收益、CPI分组/相关性，区分保值结果与稳定抗通胀机制；明确宏观数据是回顾性的。",
+      "kind": "inflation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-inflation"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "allocation",
+      "question": "组合相对单资产有什么收益与风险代价？",
+      "acceptance": "只比较相同执行口径的组合与单资产基线，给出条件化配置判断和可能推翻判断的证据。",
+      "kind": "allocation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-allocation"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "sensitivity",
+      "question": "配置判断对成本、权重、频率和样本区间是否敏感？",
+      "acceptance": "引用已计算的敏感性结果，不推荐事后最优参数，分段不冒充样本外检验。",
+      "kind": "sensitivity",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "insufficient",
+      "finding_ids": [],
+      "gaps": [
+        "数值关系尚未转成可执行断言：居中；应按收益/风险分别核对"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "f-allocation",
+      "question_ids": [
+        "allocation"
+      ],
+      "kind": "analysis",
+      "title": "组合相对单资产的收益与风险代价",
+      "text": "同口径执行基线比较：组合累计收益 {{execution.portfolio.total_return}}、年化 {{execution.portfolio.cagr}}、年化波动 {{execution.portfolio.volatility}}、最大回撤 {{execution.portfolio.max_drawdown}}；GLD 单资产累计 {{execution.GLD.total_return}}、年化 {{execution.GLD.cagr}}、波动 {{execution.GLD.volatility}}、回撤 {{execution.GLD.max_drawdown}}；ETH-USD 单资产累计 {{execution.ETH-USD.total_return}}、年化 {{execution.ETH-USD.cagr}}、波动 {{execution.ETH-USD.volatility}}、回撤 {{execution.ETH-USD.max_drawdown}}。组合收益低于 GLD 单资产、远高于 ETH-USD，波动与回撤介于两者之间但更靠近 GLD。两资产月度收益相关性为 {{correlation.GLD.ETH-USD.value}}（n={{correlation.GLD.ETH-USD.n}}），低相关可解释组合波动低于两资产的加权平均，但不能解释组合收益高于任一单资产——本区间组合收益并未超过 GLD。有条件判断：若目标是降低单一资产极端回撤并保留部分上行弹性，60/40 框架可接受；若以收益最大化为目标，本区间内提高 GLD 权重更有利。",
+      "evidence": [],
+      "counterevidence": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}，说明分散确实降低了尾部风险，代价是放弃了 GLD 单资产的部分收益。",
+      "limitations": "组合与单资产均为同一执行口径，但区间仅 60 个月度观测，且 GLD 单资产在样本内表现突出，结论对样本期高度敏感。",
+      "confidence": "medium",
+      "changes_if": "若 ETH 在样本内转为正收益或两资产相关性显著上升，组合相对 GLD 的收益劣势与分散收益都会改变。"
+    },
+    {
+      "id": "f-market",
+      "question_ids": [
+        "market"
+      ],
+      "kind": "fact",
+      "title": "行情覆盖与同口径执行基线",
+      "text": "行情覆盖 2021-09-28 至 2026-09-28：GLD 有 {{market.GLD.bars}} 个日线观测，ETH-USD 有 {{market.ETH-USD.bars}} 个（已排除 1 条未完成日线）。同口径执行基线（共同月末估值、信号后下一可交易开盘执行、含 {{config.cost_bps}} 单边成本）覆盖 2021-09-30 至 2026-08-31，共 {{execution.portfolio.observations}} 个月度观测。区间内 GLD 累计收益 {{execution.GLD.total_return}}、年化 {{execution.GLD.cagr}}、年化波动 {{execution.GLD.volatility}}、最大回撤 {{execution.GLD.max_drawdown}}；ETH-USD 累计收益 {{execution.ETH-USD.total_return}}、年化 {{execution.ETH-USD.cagr}}、年化波动 {{execution.ETH-USD.volatility}}、最大回撤 {{execution.ETH-USD.max_drawdown}}。即在本区间内，GLD 的累计收益与年化收益高于 ETH-USD，年化波动与最大回撤的绝对值小于 ETH-USD；ETH-USD 的年化波动约为 GLD 的四倍量级，其最大回撤幅度约为 GLD 的三倍量级。",
+      "evidence": [
+        {
+          "source_id": "src-b38ac08d0bba86",
+          "quote": "The investment objective of SPDR Gold Trust (the \"Trust\") is for the shares to reflect the performance of the price of gold bullion, less the Trust's expenses."
+        }
+      ],
+      "counterevidence": "ETH-USD 的日线观测数多于 GLD，说明其交易日历更连续，但这不改变收益与风险对比。",
+      "limitations": "执行基线止于 2026-08-31，与行情末日 2026-09-28 存在约一个月缺口；GLD 为 ETF 代理，价格含基金费用与跟踪差异，不等于现货金价。",
+      "confidence": "high",
+      "changes_if": "若补齐 2026-09 月度估值或改用现货金价，收益与回撤数值会小幅变化，但量级差异不太可能反转。"
+    },
+    {
+      "id": "f-inflation",
+      "question_ids": [
+        "inflation"
+      ],
+      "kind": "analysis",
+      "title": "实际购买力：GLD 保值、ETH 未保值；通胀关联均弱",
+      "text": "以 CPI 购买力折算的回顾口径（无额外交易费用）：GLD 实际累计收益 {{real.GLD.total_return}}，ETH-USD {{real.ETH-USD.total_return}}，即区间内 GLD 保全并提升实际购买力，ETH-USD 实际购买力明显受损。按 CPI 同比 {{inflation.GLD.threshold}} 分组，高通胀月 GLD 平均收益 {{inflation.GLD.high_inflation_mean_return}}、低通胀月 {{inflation.GLD.low_inflation_mean_return}}；ETH-USD 高通胀月 {{inflation.ETH-USD.high_inflation_mean_return}}、低通胀月 {{inflation.ETH-USD.low_inflation_mean_return}}。月度收益与 CPI 同比的相关性为 GLD {{inflation.GLD.inflation_correlation}}、ETH-USD {{inflation.ETH-USD.inflation_correlation}}，两者在本样本内均偏弱且为负，即本区间未观察到月度收益与 CPI 同比的同步联动，不足以据此判定二者是否具备稳定的通胀对冲属性。",
+      "evidence": [],
+      "counterevidence": "ETH-USD 高通胀月平均收益高于低通胀月，若只看分组均值会得出与相关性相反的印象；分组均值与相关性符号不一致可由非线性、时滞或个别月份影响等多种原因造成，本样本未做逐月或稳健性检验，无法区分。",
+      "limitations": "CPI 为当前历史版本，仅作事后回顾，非当时已知信号；相关性基于月度收益与 CPI 同比水平，不是价格水平或通胀变动，样本为 {{inflation.GLD.high_inflation_n}} 个高通胀月与 {{inflation.GLD.low_inflation_n}} 个低通胀月。",
+      "confidence": "medium",
+      "changes_if": "若改用通胀变动（环比或意外值）或延长样本，相关性符号与强度可能改变。"
+    },
+    {
+      "id": "f-hedge",
+      "question_ids": [
+        "hedge"
+      ],
+      "kind": "analysis",
+      "title": "压力月份：GLD 抗跌但非保本，ETH 未提供保护",
+      "text": "以基准 SPY 最差的 {{stress.GLD.n}} 个月为压力样本（事后选取，非事前可交易信号）：GLD 正收益月数为 {{stress.GLD.positive_months}}，跑赢 SPY 的月数为 {{stress.GLD.outperform_months}}；ETH-USD 正收益月数为 {{stress.ETH-USD.positive_months}}，跑赢 SPY 的月数为 {{stress.ETH-USD.outperform_months}}。典型月份如 2022-06，GLD {{stress-month.2022-06-30.GLD}}、ETH-USD {{stress-month.2022-06-30.ETH-USD}}、SPY {{stress-month.2022-06-30.SPY}}；2025-03 则 GLD {{stress-month.2025-03-31.GLD}}、ETH-USD {{stress-month.2025-03-31.ETH-USD}}、SPY {{stress-month.2025-03-31.SPY}}。可见 GLD 多数压力月相对抗跌、少数月份绝对上涨，但 2022-01、2022-04、2022-06、2022-09 均为负收益，抗跌不等于保本；ETH-USD 在这 6 个压力月全部下跌、仅 1 个月跑赢 SPY，即在本样本期内未观察到保护作用；该结论限于这 6 个事后选取的月份，不足以推断 ETH-USD 在一般意义上的避险属性。",
+      "evidence": [],
+      "counterevidence": "GLD 在 2022 年多个月份与 SPY 同向下跌，说明其保护是相对的、非系统性的。",
+      "limitations": "压力月由事后按 SPY 最差月份挑选，样本仅 6 个月，存在选样偏差；跑赢基准不等于正收益，也不构成因果保护机制。",
+      "confidence": "medium",
+      "changes_if": "若改用事前定义的压力规则（如波动率阈值）或扩大样本，正收益月数与跑赢月数可能下降。"
+    }
+  ],
+  "passages": [
+    {
+      "source_id": "src-b38ac08d0bba86",
+      "quote": "The investment objective of SPDR Gold Trust (the \"Trust\") is for the shares to reflect the performance of the price of gold bullion, less the Trust's expenses.",
+      "id": "passage-e46d0e8278609550",
+      "start": 13,
+      "end": 172,
+      "content_hash": "0b44dffcef15254184b1a6e323ab8ee6c420233555d4595c33847507c636007d",
+      "origin_group": "publisher:www.spdrgoldshares.com",
+      "published_at": null
+    }
+  ],
+  "metrics": [
+    {
+      "id": "market.GLD.bars",
+      "label": "market.GLD · bars",
+      "value": 1255.0,
+      "unit": "integer",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "coverage",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.open",
+      "label": "latest.GLD · open",
+      "value": 379.760009765625,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.high",
+      "label": "latest.GLD · high",
+      "value": 381.5199890136719,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.low",
+      "label": "latest.GLD · low",
+      "value": 376.8800048828125,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.close",
+      "label": "latest.GLD · close",
+      "value": 377.9100036621094,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.volume",
+      "label": "latest.GLD · volume",
+      "value": 14750400.0,
+      "unit": "integer",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "market.ETH-USD.bars",
+      "label": "market.ETH-USD · bars",
+      "value": 1827.0,
+      "unit": "integer",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "coverage",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.ETH-USD.open",
+      "label": "latest.ETH-USD · open",
+      "value": 2687.000732421875,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.ETH-USD.high",
+      "label": "latest.ETH-USD · high",
+      "value": 2718.80859375,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.ETH-USD.low",
+      "label": "latest.ETH-USD · low",
+      "value": 2635.484619140625,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.ETH-USD.close",
+      "label": "latest.ETH-USD · close",
+      "value": 2688.668701171875,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.ETH-USD.volume",
+      "label": "latest.ETH-USD · volume",
+      "value": 16445787505.0,
+      "unit": "integer",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.total_return",
+      "label": "daily.GLD · 累计收益",
+      "value": 1.3320579854688872,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.cagr",
+      "label": "daily.GLD · 年化收益",
+      "value": 0.18456238688941284,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.volatility",
+      "label": "daily.GLD · 年化波动",
+      "value": 0.18908138941885416,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.max_drawdown",
+      "label": "daily.GLD · 最大回撤",
+      "value": -0.26404517857029663,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.ETH-USD.total_return",
+      "label": "daily.ETH-USD · 累计收益",
+      "value": -0.04225699855992249,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.ETH-USD.cagr",
+      "label": "daily.ETH-USD · 年化收益",
+      "value": -0.0085991567142647,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.ETH-USD.volatility",
+      "label": "daily.ETH-USD · 年化波动",
+      "value": 0.6889076493969518,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.ETH-USD.max_drawdown",
+      "label": "daily.ETH-USD · 最大回撤",
+      "value": -0.7935123166505245,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-ETH-USD-2026-08-19.return",
+      "label": "move.change-ETH-USD-2026-08-19 · 收益",
+      "value": 0.17480066577335518,
+      "unit": "percent",
+      "start": "2026-08-19",
+      "end": "2026-08-19",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-GLD-2026-01-30.return",
+      "label": "move.change-GLD-2026-01-30 · 收益",
+      "value": -0.10274245274560045,
+      "unit": "percent",
+      "start": "2026-01-30",
+      "end": "2026-01-30",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-ETH-USD-2023-11-09.return",
+      "label": "move.change-ETH-USD-2023-11-09 · 收益",
+      "value": 0.12239237144858772,
+      "unit": "percent",
+      "start": "2023-11-09",
+      "end": "2023-11-09",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-GLD-2025-10-21.return",
+      "label": "move.change-GLD-2025-10-21 · 收益",
+      "value": -0.06426889260666147,
+      "unit": "percent",
+      "start": "2025-10-21",
+      "end": "2025-10-21",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-ETH-USD-2025-05-08.return",
+      "label": "move.change-ETH-USD-2025-05-08 · 收益",
+      "value": 0.2179876908621854,
+      "unit": "percent",
+      "start": "2025-05-08",
+      "end": "2025-05-08",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.total_return",
+      "label": "execution.portfolio · 累计收益",
+      "value": 1.143777361087571,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.cagr",
+      "label": "execution.portfolio · 年化收益",
+      "value": 0.1677544929201944,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.volatility",
+      "label": "execution.portfolio · 年化波动",
+      "value": 0.27667562063712725,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.max_drawdown",
+      "label": "execution.portfolio · 最大回撤",
+      "value": -0.34043769309838223,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.observations",
+      "label": "execution.portfolio · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.frequency",
+      "label": "execution.portfolio · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.total_return",
+      "label": "execution.GLD · 累计收益",
+      "value": 1.4733538532972315,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.cagr",
+      "label": "execution.GLD · 年化收益",
+      "value": 0.20221480964305583,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.volatility",
+      "label": "execution.GLD · 年化波动",
+      "value": 0.16863539803888533,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.max_drawdown",
+      "label": "execution.GLD · 最大回撤",
+      "value": -0.23766901930987872,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.observations",
+      "label": "execution.GLD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.frequency",
+      "label": "execution.GLD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.ETH-USD.total_return",
+      "label": "execution.ETH-USD · 累计收益",
+      "value": -0.18844686761707385,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.ETH-USD.cagr",
+      "label": "execution.ETH-USD · 年化收益",
+      "value": -0.04157547772117565,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.ETH-USD.volatility",
+      "label": "execution.ETH-USD · 年化波动",
+      "value": 0.7419220422918842,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.ETH-USD.max_drawdown",
+      "label": "execution.ETH-USD · 最大回撤",
+      "value": -0.7506326975409596,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.ETH-USD.observations",
+      "label": "execution.ETH-USD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.ETH-USD.frequency",
+      "label": "execution.ETH-USD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.cost_bps",
+      "label": "config · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.rebalance_months",
+      "label": "config · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.anchors",
+      "label": "config · anchors",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.weight_GLD",
+      "label": "config · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.weight_ETH-USD",
+      "label": "config · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.total_return",
+      "label": "monthly.GLD · 累计收益",
+      "value": 1.487029657726279,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.cagr",
+      "label": "monthly.GLD · 年化收益",
+      "value": 0.20356370486238617,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.volatility",
+      "label": "monthly.GLD · 年化波动",
+      "value": 0.16927745347429393,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.max_drawdown",
+      "label": "monthly.GLD · 最大回撤",
+      "value": -0.23849094597868215,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.observations",
+      "label": "monthly.GLD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.frequency",
+      "label": "monthly.GLD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.sharpe_proxy",
+      "label": "monthly.GLD · sharpe_proxy",
+      "value": 0.960236604820174,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.total_return",
+      "label": "monthly.ETH-USD · 累计收益",
+      "value": -0.15253513142329056,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.cagr",
+      "label": "monthly.ETH-USD · 年化收益",
+      "value": -0.0330985495166235,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.volatility",
+      "label": "monthly.ETH-USD · 年化波动",
+      "value": 0.7542891125421576,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.max_drawdown",
+      "label": "monthly.ETH-USD · 最大回撤",
+      "value": -0.7527743770991067,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.observations",
+      "label": "monthly.ETH-USD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.frequency",
+      "label": "monthly.ETH-USD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.ETH-USD.sharpe_proxy",
+      "label": "monthly.ETH-USD · sharpe_proxy",
+      "value": 0.25717385850195656,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.threshold",
+      "label": "inflation.GLD · threshold",
+      "value": 0.03,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.high_inflation_n",
+      "label": "inflation.GLD · high_inflation_n",
+      "value": 39.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.low_inflation_n",
+      "label": "inflation.GLD · low_inflation_n",
+      "value": 19.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.high_inflation_mean_return",
+      "label": "inflation.GLD · high_inflation_mean_return",
+      "value": 0.009027449307901931,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.low_inflation_mean_return",
+      "label": "inflation.GLD · low_inflation_mean_return",
+      "value": 0.03153099438546877,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.inflation_correlation",
+      "label": "inflation.GLD · inflation_correlation",
+      "value": -0.25201116163691034,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.stress_positive_months",
+      "label": "inflation.GLD · stress_positive_months",
+      "value": 2.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.stress_n",
+      "label": "inflation.GLD · stress_n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.GLD.positive_months",
+      "label": "stress.GLD · positive_months",
+      "value": 2.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.GLD.outperform_months",
+      "label": "stress.GLD · outperform_months",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.GLD.n",
+      "label": "stress.GLD · n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.threshold",
+      "label": "inflation.ETH-USD · threshold",
+      "value": 0.03,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.high_inflation_n",
+      "label": "inflation.ETH-USD · high_inflation_n",
+      "value": 39.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.low_inflation_n",
+      "label": "inflation.ETH-USD · low_inflation_n",
+      "value": 19.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.high_inflation_mean_return",
+      "label": "inflation.ETH-USD · high_inflation_mean_return",
+      "value": 0.03163963053078351,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.low_inflation_mean_return",
+      "label": "inflation.ETH-USD · low_inflation_mean_return",
+      "value": 0.0003662238050149834,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.inflation_correlation",
+      "label": "inflation.ETH-USD · inflation_correlation",
+      "value": -0.08073815320468797,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.stress_positive_months",
+      "label": "inflation.ETH-USD · stress_positive_months",
+      "value": 0.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.ETH-USD.stress_n",
+      "label": "inflation.ETH-USD · stress_n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.ETH-USD.positive_months",
+      "label": "stress.ETH-USD · positive_months",
+      "value": 0.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.ETH-USD.outperform_months",
+      "label": "stress.ETH-USD · outperform_months",
+      "value": 1.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.ETH-USD.n",
+      "label": "stress.ETH-USD · n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-09-30.GLD",
+      "label": "stress-month.2022-09-30 · GLD",
+      "value": -0.028881810636775418,
+      "unit": "percent",
+      "start": "2022-09-30",
+      "end": "2022-09-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-09-30.ETH-USD",
+      "label": "stress-month.2022-09-30 · ETH-USD",
+      "value": -0.12349502791251787,
+      "unit": "percent",
+      "start": "2022-09-30",
+      "end": "2022-09-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-09-30.SPY",
+      "label": "stress-month.2022-09-30 · SPY",
+      "value": -0.09244606963466784,
+      "unit": "percent",
+      "start": "2022-09-30",
+      "end": "2022-09-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-04-29.GLD",
+      "label": "stress-month.2022-04-29 · GLD",
+      "value": -0.020702963524693363,
+      "unit": "percent",
+      "start": "2022-04-29",
+      "end": "2022-04-29",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-04-29.ETH-USD",
+      "label": "stress-month.2022-04-29 · ETH-USD",
+      "value": -0.1324065365475886,
+      "unit": "percent",
+      "start": "2022-04-29",
+      "end": "2022-04-29",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-04-29.SPY",
+      "label": "stress-month.2022-04-29 · SPY",
+      "value": -0.08776916241777721,
+      "unit": "percent",
+      "start": "2022-04-29",
+      "end": "2022-04-29",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-06-30.GLD",
+      "label": "stress-month.2022-06-30 · GLD",
+      "value": -0.01565965107712486,
+      "unit": "percent",
+      "start": "2022-06-30",
+      "end": "2022-06-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-06-30.ETH-USD",
+      "label": "stress-month.2022-06-30 · ETH-USD",
+      "value": -0.4495486261656866,
+      "unit": "percent",
+      "start": "2022-06-30",
+      "end": "2022-06-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-06-30.SPY",
+      "label": "stress-month.2022-06-30 · SPY",
+      "value": -0.08246053520140795,
+      "unit": "percent",
+      "start": "2022-06-30",
+      "end": "2022-06-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-12-30.GLD",
+      "label": "stress-month.2022-12-30 · GLD",
+      "value": 0.02930648566594085,
+      "unit": "percent",
+      "start": "2022-12-30",
+      "end": "2022-12-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-12-30.ETH-USD",
+      "label": "stress-month.2022-12-30 · ETH-USD",
+      "value": -0.012577773475489384,
+      "unit": "percent",
+      "start": "2022-12-30",
+      "end": "2022-12-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-12-30.SPY",
+      "label": "stress-month.2022-12-30 · SPY",
+      "value": -0.057628163898034934,
+      "unit": "percent",
+      "start": "2022-12-30",
+      "end": "2022-12-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2025-03-31.GLD",
+      "label": "stress-month.2025-03-31 · GLD",
+      "value": 0.09446585889998316,
+      "unit": "percent",
+      "start": "2025-03-31",
+      "end": "2025-03-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2025-03-31.ETH-USD",
+      "label": "stress-month.2025-03-31 · ETH-USD",
+      "value": -0.21655568455991492,
+      "unit": "percent",
+      "start": "2025-03-31",
+      "end": "2025-03-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2025-03-31.SPY",
+      "label": "stress-month.2025-03-31 · SPY",
+      "value": -0.0557190018433138,
+      "unit": "percent",
+      "start": "2025-03-31",
+      "end": "2025-03-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-01-31.GLD",
+      "label": "stress-month.2022-01-31 · GLD",
+      "value": -0.016787612677039987,
+      "unit": "percent",
+      "start": "2022-01-31",
+      "end": "2022-01-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-01-31.ETH-USD",
+      "label": "stress-month.2022-01-31 · ETH-USD",
+      "value": -0.2989848499251049,
+      "unit": "percent",
+      "start": "2022-01-31",
+      "end": "2022-01-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-01-31.SPY",
+      "label": "stress-month.2022-01-31 · SPY",
+      "value": -0.05274112095598826,
+      "unit": "percent",
+      "start": "2022-01-31",
+      "end": "2022-01-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "prices-SPY-c13dea8f89c7"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "real.GLD.total_return",
+      "label": "real.GLD · 累计收益",
+      "value": 1.0365905588718594,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格/CPI购买力回顾，无额外交易费用",
+      "comparison_group": "real-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "real.ETH-USD.total_return",
+      "label": "real.ETH-USD · 累计收益",
+      "value": -0.3060239772545311,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格/CPI购买力回顾，无额外交易费用",
+      "comparison_group": "real-price",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.GLD.value",
+      "label": "correlation.GLD.GLD · value",
+      "value": 1.0,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.GLD.n",
+      "label": "correlation.GLD.GLD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.ETH-USD.value",
+      "label": "correlation.GLD.ETH-USD · value",
+      "value": -0.024689764838119577,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.ETH-USD.n",
+      "label": "correlation.GLD.ETH-USD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.ETH-USD.GLD.value",
+      "label": "correlation.ETH-USD.GLD · value",
+      "value": -0.024689764838119577,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.ETH-USD.GLD.n",
+      "label": "correlation.ETH-USD.GLD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.ETH-USD.ETH-USD.value",
+      "label": "correlation.ETH-USD.ETH-USD · value",
+      "value": 1.0,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.ETH-USD.ETH-USD.n",
+      "label": "correlation.ETH-USD.ETH-USD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.total_return",
+      "label": "sensitivity.0 · 累计收益",
+      "value": 1.143777361087571,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.cagr",
+      "label": "sensitivity.0 · 年化收益",
+      "value": 0.1677544929201944,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.volatility",
+      "label": "sensitivity.0 · 年化波动",
+      "value": 0.27667562063712725,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.max_drawdown",
+      "label": "sensitivity.0 · 最大回撤",
+      "value": -0.34043769309838223,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.cost_bps",
+      "label": "sensitivity.0 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.rebalance_months",
+      "label": "sensitivity.0 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.weight_GLD",
+      "label": "sensitivity.0 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.weight_ETH-USD",
+      "label": "sensitivity.0 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.total_return",
+      "label": "sensitivity.1 · 累计收益",
+      "value": 1.1584714026971463,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.cagr",
+      "label": "sensitivity.1 · 年化收益",
+      "value": 0.16937785188569698,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.volatility",
+      "label": "sensitivity.1 · 年化波动",
+      "value": 0.2769533789485967,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.max_drawdown",
+      "label": "sensitivity.1 · 最大回撤",
+      "value": -0.33903509378949515,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.cost_bps",
+      "label": "sensitivity.1 · cost_bps",
+      "value": 0.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.rebalance_months",
+      "label": "sensitivity.1 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.weight_GLD",
+      "label": "sensitivity.1 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.weight_ETH-USD",
+      "label": "sensitivity.1 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.total_return",
+      "label": "sensitivity.2 · 累计收益",
+      "value": 1.1518193315735226,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.cagr",
+      "label": "sensitivity.2 · 年化收益",
+      "value": 0.168644042747363,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.volatility",
+      "label": "sensitivity.2 · 年化波动",
+      "value": 0.2768055105490328,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.max_drawdown",
+      "label": "sensitivity.2 · 最大回撤",
+      "value": -0.3397366307750569,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.cost_bps",
+      "label": "sensitivity.2 · cost_bps",
+      "value": 10.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.rebalance_months",
+      "label": "sensitivity.2 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.weight_GLD",
+      "label": "sensitivity.2 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.weight_ETH-USD",
+      "label": "sensitivity.2 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.total_return",
+      "label": "sensitivity.3 · 累计收益",
+      "value": 1.1397563958760166,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.cagr",
+      "label": "sensitivity.3 · 年化收益",
+      "value": 0.16730872298018018,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.volatility",
+      "label": "sensitivity.3 · 年化波动",
+      "value": 0.2766117996878324,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.max_drawdown",
+      "label": "sensitivity.3 · 最大回撤",
+      "value": -0.3407880420122551,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.cost_bps",
+      "label": "sensitivity.3 · cost_bps",
+      "value": 25.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.rebalance_months",
+      "label": "sensitivity.3 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.weight_GLD",
+      "label": "sensitivity.3 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.weight_ETH-USD",
+      "label": "sensitivity.3 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.total_return",
+      "label": "sensitivity.4 · 累计收益",
+      "value": 1.1162073018661247,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.cagr",
+      "label": "sensitivity.4 · 年化收益",
+      "value": 0.16468455444479724,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.volatility",
+      "label": "sensitivity.4 · 年化波动",
+      "value": 0.27614664089685625,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.max_drawdown",
+      "label": "sensitivity.4 · 最大回撤",
+      "value": -0.342537897639106,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.cost_bps",
+      "label": "sensitivity.4 · cost_bps",
+      "value": 50.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.rebalance_months",
+      "label": "sensitivity.4 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.weight_GLD",
+      "label": "sensitivity.4 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.weight_ETH-USD",
+      "label": "sensitivity.4 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.total_return",
+      "label": "sensitivity.5 · 累计收益",
+      "value": 0.7770211204973347,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.cagr",
+      "label": "sensitivity.5 · 年化收益",
+      "value": 0.12403447502814502,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.volatility",
+      "label": "sensitivity.5 · 年化波动",
+      "value": 0.256006218907215,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.max_drawdown",
+      "label": "sensitivity.5 · 最大回撤",
+      "value": -0.39233856914593235,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.cost_bps",
+      "label": "sensitivity.5 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.rebalance_months",
+      "label": "sensitivity.5 · rebalance_months",
+      "value": 0.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.weight_GLD",
+      "label": "sensitivity.5 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.weight_ETH-USD",
+      "label": "sensitivity.5 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.total_return",
+      "label": "sensitivity.6 · 累计收益",
+      "value": 1.259090355582885,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.cagr",
+      "label": "sensitivity.6 · 年化收益",
+      "value": 0.18026350891748533,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.volatility",
+      "label": "sensitivity.6 · 年化波动",
+      "value": 0.2941529786320491,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.max_drawdown",
+      "label": "sensitivity.6 · 最大回撤",
+      "value": -0.3404796902217142,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.cost_bps",
+      "label": "sensitivity.6 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.rebalance_months",
+      "label": "sensitivity.6 · rebalance_months",
+      "value": 1.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.weight_GLD",
+      "label": "sensitivity.6 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.weight_ETH-USD",
+      "label": "sensitivity.6 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.total_return",
+      "label": "sensitivity.7 · 累计收益",
+      "value": 0.7019143566421717,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.cagr",
+      "label": "sensitivity.7 · 年化收益",
+      "value": 0.11420595787884014,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.volatility",
+      "label": "sensitivity.7 · 年化波动",
+      "value": 0.28194318395340306,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.max_drawdown",
+      "label": "sensitivity.7 · 最大回撤",
+      "value": -0.39233856914593235,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.cost_bps",
+      "label": "sensitivity.7 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.rebalance_months",
+      "label": "sensitivity.7 · rebalance_months",
+      "value": 12.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.weight_GLD",
+      "label": "sensitivity.7 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.weight_ETH-USD",
+      "label": "sensitivity.7 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.total_return",
+      "label": "sensitivity.8 · 累计收益",
+      "value": 0.30222489471502345,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.cagr",
+      "label": "sensitivity.8 · 年化收益",
+      "value": 0.05517265919147385,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.volatility",
+      "label": "sensitivity.8 · 年化波动",
+      "value": 0.5548813915454753,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.max_drawdown",
+      "label": "sensitivity.8 · 最大回撤",
+      "value": -0.6269002624521358,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.cost_bps",
+      "label": "sensitivity.8 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.rebalance_months",
+      "label": "sensitivity.8 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.weight_GLD",
+      "label": "sensitivity.8 · weight_GLD",
+      "value": 0.2,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.weight_ETH-USD",
+      "label": "sensitivity.8 · weight_ETH-USD",
+      "value": 0.8,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.total_return",
+      "label": "sensitivity.9 · 累计收益",
+      "value": 0.9699550138670963,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.cagr",
+      "label": "sensitivity.9 · 年化收益",
+      "value": 0.1478447873856108,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.volatility",
+      "label": "sensitivity.9 · 年化波动",
+      "value": 0.33664090810120567,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.max_drawdown",
+      "label": "sensitivity.9 · 最大回撤",
+      "value": -0.4157028244744696,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.cost_bps",
+      "label": "sensitivity.9 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.rebalance_months",
+      "label": "sensitivity.9 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.weight_GLD",
+      "label": "sensitivity.9 · weight_GLD",
+      "value": 0.5,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.weight_ETH-USD",
+      "label": "sensitivity.9 · weight_ETH-USD",
+      "value": 0.5,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.total_return",
+      "label": "sensitivity.10 · 累计收益",
+      "value": 1.3862392920746873,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.cagr",
+      "label": "sensitivity.10 · 年化收益",
+      "value": 0.1934800524103928,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.volatility",
+      "label": "sensitivity.10 · 年化波动",
+      "value": 0.1848700519646761,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.max_drawdown",
+      "label": "sensitivity.10 · 最大回撤",
+      "value": -0.22908093501090165,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.cost_bps",
+      "label": "sensitivity.10 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.rebalance_months",
+      "label": "sensitivity.10 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.weight_GLD",
+      "label": "sensitivity.10 · weight_GLD",
+      "value": 0.8,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.weight_ETH-USD",
+      "label": "sensitivity.10 · weight_ETH-USD",
+      "value": 0.19999999999999996,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.total_return",
+      "label": "sensitivity.11 · 累计收益",
+      "value": 0.4064161785852458,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.cagr",
+      "label": "sensitivity.11 · 年化收益",
+      "value": 0.14669784027737554,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.volatility",
+      "label": "sensitivity.11 · 年化波动",
+      "value": 0.29368724751212516,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.max_drawdown",
+      "label": "sensitivity.11 · 最大回撤",
+      "value": -0.34043769309838223,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.cost_bps",
+      "label": "sensitivity.11 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.rebalance_months",
+      "label": "sensitivity.11 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.weight_GLD",
+      "label": "sensitivity.11 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.weight_ETH-USD",
+      "label": "sensitivity.11 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.total_return",
+      "label": "sensitivity.12 · 累计收益",
+      "value": 0.49618717604152907,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.cagr",
+      "label": "sensitivity.12 · 年化收益",
+      "value": 0.1806937317146491,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.volatility",
+      "label": "sensitivity.12 · 年化波动",
+      "value": 0.26443012121158066,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.max_drawdown",
+      "label": "sensitivity.12 · 最大回撤",
+      "value": -0.23587646195723677,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.cost_bps",
+      "label": "sensitivity.12 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.rebalance_months",
+      "label": "sensitivity.12 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.weight_GLD",
+      "label": "sensitivity.12 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.weight_ETH-USD",
+      "label": "sensitivity.12 · weight_ETH-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-b2e4b8156509",
+        "prices-ETH-USD-7437815ca767"
+      ],
+      "currency": "USD"
+    }
+  ],
+  "reviews": [
+    {
+      "attempt": 1,
+      "draft_hash": "5b8590b0b92c7eeb271ca383db5b18ee32245b8ad2494249ccd13048f8048ebe",
+      "deterministic": {
+        "f-sensitivity": [
+          "text 含手写数字「20%」；可选已计算引用：{{sensitivity.8.weight_GLD}}, {{sensitivity.10.weight_ETH-USD}}",
+          "text 含手写数字「50%」；可选已计算引用：{{sensitivity.9.weight_GLD}}, {{sensitivity.9.weight_ETH-USD}}",
+          "text 含手写数字「80%」；可选已计算引用：{{sensitivity.8.weight_ETH-USD}}, {{sensitivity.10.weight_GLD}}",
+          "数值关系未成立或绑定错误：随 GLD 权重上升，波动与回撤下降；decreasing ['sensitivity.8.volatility', 'sensitivity.9.volatility', 'sensitivity.10.volatility'] = [0.5548813915454753, 0.33664090810120567, 0.1848700519646761]",
+          "数值关系未成立或绑定错误：随 GLD 权重上升，波动与回撤下降；increasing ['sensitivity.8.max_drawdown', 'sensitivity.9.max_drawdown', 'sensitivity.10.max_drawdown'] = [-0.6269002624521358, -0.4157028244744696, -0.22908093501090165]"
+        ],
+        "f-hedge": [
+          "推断/事实缺陷：ETH-USD 在全部压力月下跌且几乎不跑赢，避险属性不成立。；仅凭 6 个事后按 SPY 最差月份挑选的样本月内 ETH 全部下跌，只能说明该样本期内 ETH 未提供保护，不能推断 ETH 的避险属性在一般意义上不成立；这是由有限样本否定资产属性，缺少对样本外与其他压力定义的推断环节。；修复方向 rewrite"
+        ],
+        "f-market": [
+          "数值关系尚未转成可执行断言：多于；应按收益/风险分别核对"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 在收益与风险两端都优于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.total_return",
+                  "execution.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 在收益与风险两端都优于 ETH-USD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.GLD.volatility",
+                  "execution.ETH-USD.volatility"
+                ]
+              },
+              {
+                "quote": "GLD 在收益与风险两端都优于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "ETH-USD 的波动约为 GLD 的四倍量级",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.ETH-USD.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "回撤接近其四分之三",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "行情覆盖与执行基线数值均与 metric_catalog 一致：GLD 1255 bars、ETH 1827 bars、60 个月度观测、GLD 累计 1.4734/年化 0.2022/波动 0.1686/回撤 -0.2377，ETH 累计 -0.1884/年化 -0.0416/波动 0.7419/回撤 -0.7506。'GLD 在收益与风险两端都优于 ETH-USD' 成立（收益更高、波动与回撤更小）。'波动约为 GLD 的四倍量级'：0.7419/0.1686≈4.4，量级表述可接受。'回撤接近其四分之三'：0.7506×0.75=0.563，而 GLD 回撤为 0.2377，约为 ETH 回撤的 31.7%，并非四分之三，该比例表述错误。",
+            "verdict": "unsupported",
+            "repair": "rewrite"
+          },
+          {
+            "finding_id": "f-hedge",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 有 {{stress.GLD.positive_months}} 个月正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.GLD.outperform_months",
+                  "stress.GLD.positive_months"
+                ]
+              },
+              {
+                "quote": "ETH-USD 正收益月数为 {{stress.ETH-USD.positive_months}}、跑赢月数为 {{stress.ETH-USD.outperform_months}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.ETH-USD.outperform_months",
+                  "stress.ETH-USD.positive_months"
+                ]
+              },
+              {
+                "quote": "2022-01、2022-04、2022-06、2022-09 均为负收益",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-01-31.GLD",
+                  "stress-month.2022-04-29.GLD",
+                  "stress-month.2022-06-30.GLD",
+                  "stress-month.2022-09-30.GLD"
+                ]
+              },
+              {
+                "quote": "ETH-USD 在全部压力月下跌",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-01-31.ETH-USD",
+                  "stress-month.2022-04-29.ETH-USD",
+                  "stress-month.2022-06-30.ETH-USD",
+                  "stress-month.2022-09-30.ETH-USD",
+                  "stress-month.2022-12-30.ETH-USD",
+                  "stress-month.2025-03-31.ETH-USD"
+                ]
+              }
+            ],
+            "reason": "压力月统计与 stress 指标一致：GLD 正收益 2/6、跑赢 6/6；ETH 正收益 0/6、跑赢 1/6。典型月份数值核对：2022-06 GLD -0.0157、ETH -0.4495、SPY -0.0825；2025-03 GLD +0.0945、ETH -0.2166、SPY -0.0557，均与目录一致。'2022-01、2022-04、2022-06、2022-09 均为负收益'：四个月 GLD 分别为 -0.0168、-0.0207、-0.0157、-0.0289，全部为负，成立。'ETH-USD 在全部压力月下跌'：六个月 ETH 全为负，成立。'GLD 多数压力月相对抗跌'：6/6 跑赢，成立。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-inflation",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 实际累计收益 {{real.GLD.total_return}}，ETH-USD {{real.ETH-USD.total_return}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "高通胀月 GLD 平均收益 {{inflation.GLD.high_inflation_mean_return}}、低通胀月 {{inflation.GLD.low_inflation_mean_return}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "inflation.GLD.high_inflation_mean_return",
+                  "inflation.GLD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "ETH-USD 高通胀月 {{inflation.ETH-USD.high_inflation_mean_return}}、低通胀月 {{inflation.ETH-USD.low_inflation_mean_return}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "inflation.ETH-USD.high_inflation_mean_return",
+                  "inflation.ETH-USD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "两者都偏弱且为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "inflation.GLD.inflation_correlation",
+                  "inflation.ETH-USD.inflation_correlation"
+                ]
+              }
+            ],
+            "reason": "实际收益：GLD +1.0366、ETH -0.3060，与 real 指标一致，'GLD 保全并提升实际购买力、ETH 受损'成立。分组均值：GLD 高通胀 0.00903、低通胀 0.03153；ETH 高通胀 0.03164、低通胀 0.00037，均与目录一致。相关性 GLD -0.2520、ETH -0.0807，'两者都偏弱且为负'成立。反证中'ETH 高通胀月平均收益高于低通胀月'与数值一致。样本数 39/19 与目录一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-allocation",
+            "numeric_assertions": [
+              {
+                "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.total_return",
+                  "execution.GLD.total_return"
+                ]
+              },
+              {
+                "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.total_return",
+                  "execution.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "波动与回撤介于两者之间但更靠近 GLD",
+                "relation": "between",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.GLD.volatility",
+                  "execution.ETH-USD.volatility"
+                ]
+              },
+              {
+                "quote": "波动与回撤介于两者之间但更靠近 GLD",
+                "relation": "between",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.ETH-USD.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "组合与单资产数值均与 execution 指标一致。'组合收益低于 GLD 单资产、远高于 ETH-USD'：1.1438 < 1.4734 且 > -0.1884，成立。'波动与回撤介于两者之间但更靠近 GLD'：波动 0.2767 介于 0.1686 与 0.7419 之间，回撤 -0.3404 介于 -0.2377 与 -0.7506 之间，成立。相关性 -0.0247、n=59 与目录一致。'低相关可解释组合波动低于加权平均'：0.6×0.1686+0.4×0.7419=0.3979 > 0.2767，成立。'组合收益并未超过 GLD'成立。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "numeric_assertions": [
+              {
+                "quote": "随成本上升累计收益单调小幅下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.1.total_return",
+                  "sensitivity.2.total_return",
+                  "sensitivity.0.total_return",
+                  "sensitivity.4.total_return"
+                ]
+              },
+              {
+                "quote": "基线季度再平衡 {{sensitivity.0.total_return}} 居中",
+                "relation": "between",
+                "metric_ids": [
+                  "sensitivity.0.total_return",
+                  "sensitivity.7.total_return",
+                  "sensitivity.6.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，收益上升",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.total_return",
+                  "sensitivity.9.total_return",
+                  "sensitivity.10.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.8.volatility",
+                  "sensitivity.9.volatility",
+                  "sensitivity.10.volatility"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.max_drawdown",
+                  "sensitivity.9.max_drawdown",
+                  "sensitivity.10.max_drawdown"
+                ]
+              },
+              {
+                "quote": "两段均为正收益但幅度不同",
+                "relation": "positive",
+                "metric_ids": [
+                  "sensitivity.11.total_return",
+                  "sensitivity.12.total_return"
+                ]
+              },
+              {
+                "quote": "买入持有情景波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}，但回撤 {{sensitivity.5.max_drawdown}} 更深",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.5.volatility",
+                  "sensitivity.0.volatility"
+                ]
+              },
+              {
+                "quote": "买入持有情景波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}，但回撤 {{sensitivity.5.max_drawdown}} 更深",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.5.max_drawdown",
+                  "sensitivity.0.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "成本维度：0bps 1.1585、10bps 1.1518、20bps 1.1438、50bps 1.1162，单调下降成立。频率维度：买入持有 0.7770、每1月 1.2591、每12月 0.7019，基线 1.1438 介于其间，'居中'成立。权重维度：GLD20% 收益 0.3022/波动 0.5549/回撤 -0.6269；50% 0.9700/0.3366/-0.4157；80% 1.3862/0.1849/-0.2291，收益上升、波动与回撤下降，成立。分段：前半 0.4064/0.1467/-0.3404，后半 0.4962/0.1807/-0.2359，均为正，成立。反证：买入持有波动 0.2560 < 基线 0.2767，回撤 -0.3923 深于基线 -0.3404，成立。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 给出实际起止区间、行情口径、同口径执行基线的收益/波动/回撤，覆盖验收要求；但该条含一处错误比例表述（回撤四分之三），需修正后该问题才算完整回答。",
+            "answered": false
+          },
+          {
+            "question_id": "hedge",
+            "reason": "f-hedge 使用相同压力月份，区分正收益与相对抗跌，并披露事后选样与 6 个月样本量限制，数值全部核对一致。",
+            "answered": true
+          },
+          {
+            "question_id": "inflation",
+            "reason": "f-inflation 结合实际收益、CPI 分组均值与相关性，区分保值结果与通胀联动机制，并说明 CPI 为回顾性历史版本，数值一致。",
+            "answered": true
+          },
+          {
+            "question_id": "allocation",
+            "reason": "f-allocation 以相同执行口径比较组合与两单资产，收益与风险共同讨论，给出条件化判断与推翻条件，数值一致。",
+            "answered": true
+          },
+          {
+            "question_id": "sensitivity",
+            "reason": "f-sensitivity 引用已计算的成本、频率、权重、分段情景，未推荐事后最优参数，并说明分段非样本外，数值一致。",
+            "answered": true
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为事实列举：行情覆盖区间、观测数、执行基线区间与两资产的累计收益/年化/波动/回撤，均为同口径执行基线的历史数值描述，未做属性或因果推断。'GLD 在收益与风险两端都优于 ETH-USD' 是对本样本区间内已列数值的直接比较（收益更高、波动与回撤更低），属于样本内描述而非普遍属性断言；'波动约为四倍量级、回撤接近四分之三' 为量级描述。反证与局限已说明执行基线止于 2026-08-31、GLD 为 ETF 代理含费用与跟踪差异，changes_if 也限定为数值小幅变化。未发现把样本内表现外推为稳定属性或机制的问题。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-hedge",
+            "inference_audit": "压力月为事后按 SPY 最差月份选取，条内已明确标注'事后选取，非事前可交易信号'，并给出正收益月数、跑赢月数及两个典型月份数值，属历史情景描述。'GLD 多数压力月相对抗跌、少数月份绝对上涨' 与 '抗跌不等于保本' 由所列负收益月份支持，是有限观察。'ETH-USD 在全部压力月下跌且几乎不跑赢，避险属性不成立' 中，前半句为样本内事实，但'避险属性不成立' 是由 6 个事后选取月份推断资产属性不存在，属于以未证明属性反推属性不成立；局限虽提到样本仅 6 个月与选样偏差，但未把该断言收窄为样本内观察。",
+            "violations": [
+              {
+                "quote": "ETH-USD 在全部压力月下跌且几乎不跑赢，避险属性不成立。",
+                "reason": "仅凭 6 个事后按 SPY 最差月份挑选的样本月内 ETH 全部下跌，只能说明该样本期内 ETH 未提供保护，不能推断 ETH 的避险属性在一般意义上不成立；这是由有限样本否定资产属性，缺少对样本外与其他压力定义的推断环节。",
+                "repair": "rewrite"
+              }
+            ]
+          },
+          {
+            "finding_id": "f-inflation",
+            "inference_audit": "实际累计收益为 CPI 购买力折算的回顾口径，属历史数值；高/低通胀月均值与月度收益对 CPI 同比的相关性为样本内关系描述。'GLD 保全并提升实际购买力、ETH-USD 实际购买力明显受损' 是区间内实际收益的直接读数，属样本期保值结果，未外推为稳定属性。'两者都偏弱且为负，说明二者都不是随通胀同步变动的稳定对冲工具' 中，'不是稳定对冲工具' 若读作属性断言则超出证据，但该句紧接 'GLD 的保值结果来自区间价格路径，而非可依赖的通胀联动机制'，且局限明确相关性口径为月度收益与 CPI 同比水平、样本为高/低通胀月数，整体落在'本样本内未观察到稳定通胀联动'的有限结论范围内，未把'未证明'当作'已证明不存在'。反证已提示分组均值受少数月份驱动。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-allocation",
+            "inference_audit": "组合与两单资产的累计/年化/波动/回撤为同口径执行基线数值，相关性为月度收益样本皮尔逊相关。'低相关可解释组合波动低于两资产的加权平均' 是分散效应的常规解释，且条内明确 '不能解释组合收益高于任一单资产——本区间组合收益并未超过 GLD'，未把组合收益优势归因于低相关或再平衡机制。有条件判断以'若目标是…'限定，属决策边界表述，未声称收益上限或普遍最优。局限已说明仅 60 个月度观测、对样本期高度敏感。未发现机制或因果跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "inference_audit": "成本、频率、权重、分段各情景均为同口径执行基线的历史数值对比。'随成本上升累计收益单调小幅下降，成本不是主导变量' 与 '再平衡频率对结果影响大于成本' 是对所列情景数值差异的比较，属同口径历史结果差异描述，未据此断言经济机制。'随 GLD 权重上升，收益上升、波动与回撤下降，是本区间最敏感的维度' 已限定'本区间'，且局限明确为事后网格观察、不应据此挑选最优参数，未构成普遍最优或收益上限主张。分段仅描述两段均为正收益但幅度不同，未做再平衡贡献分解或'贡献集中于某段'的归因。未发现实质违规。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 在收益与风险两端都优于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.total_return",
+            "execution.ETH-USD.total_return"
+          ],
+          "values": [
+            1.4733538532972315,
+            -0.18844686761707385
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 在收益与风险两端都优于 ETH-USD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.GLD.volatility",
+            "execution.ETH-USD.volatility"
+          ],
+          "values": [
+            0.16863539803888533,
+            0.7419220422918842
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 在收益与风险两端都优于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.23766901930987872,
+            -0.7506326975409596
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "ETH-USD 的波动约为 GLD 的四倍量级",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.ETH-USD.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.7419220422918842,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "回撤接近其四分之三",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.23766901930987872,
+            -0.7506326975409596
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 有 {{stress.GLD.positive_months}} 个月正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.GLD.positive_months"
+          ],
+          "values": [
+            6.0,
+            2.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "ETH-USD 正收益月数为 {{stress.ETH-USD.positive_months}}、跑赢月数为 {{stress.ETH-USD.outperform_months}}",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.ETH-USD.outperform_months",
+            "stress.ETH-USD.positive_months"
+          ],
+          "values": [
+            1.0,
+            0.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "2022-01、2022-04、2022-06、2022-09 均为负收益",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-01-31.GLD",
+            "stress-month.2022-04-29.GLD",
+            "stress-month.2022-06-30.GLD",
+            "stress-month.2022-09-30.GLD"
+          ],
+          "values": [
+            -0.016787612677039987,
+            -0.020702963524693363,
+            -0.01565965107712486,
+            -0.028881810636775418
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "ETH-USD 在全部压力月下跌",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-01-31.ETH-USD",
+            "stress-month.2022-04-29.ETH-USD",
+            "stress-month.2022-06-30.ETH-USD",
+            "stress-month.2022-09-30.ETH-USD",
+            "stress-month.2022-12-30.ETH-USD",
+            "stress-month.2025-03-31.ETH-USD"
+          ],
+          "values": [
+            -0.2989848499251049,
+            -0.1324065365475886,
+            -0.4495486261656866,
+            -0.12349502791251787,
+            -0.012577773475489384,
+            -0.21655568455991492
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "GLD 实际累计收益 {{real.GLD.total_return}}，ETH-USD {{real.ETH-USD.total_return}}",
+          "relation": "gt",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.ETH-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            -0.3060239772545311
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "高通胀月 GLD 平均收益 {{inflation.GLD.high_inflation_mean_return}}、低通胀月 {{inflation.GLD.low_inflation_mean_return}}",
+          "relation": "lt",
+          "metric_ids": [
+            "inflation.GLD.high_inflation_mean_return",
+            "inflation.GLD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.009027449307901931,
+            0.03153099438546877
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "ETH-USD 高通胀月 {{inflation.ETH-USD.high_inflation_mean_return}}、低通胀月 {{inflation.ETH-USD.low_inflation_mean_return}}",
+          "relation": "gt",
+          "metric_ids": [
+            "inflation.ETH-USD.high_inflation_mean_return",
+            "inflation.ETH-USD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.03163963053078351,
+            0.0003662238050149834
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者都偏弱且为负",
+          "relation": "negative",
+          "metric_ids": [
+            "inflation.GLD.inflation_correlation",
+            "inflation.ETH-USD.inflation_correlation"
+          ],
+          "values": [
+            -0.25201116163691034,
+            -0.08073815320468797
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.total_return",
+            "execution.GLD.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            1.4733538532972315
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.total_return",
+            "execution.ETH-USD.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            -0.18844686761707385
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "波动与回撤介于两者之间但更靠近 GLD",
+          "relation": "between",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.GLD.volatility",
+            "execution.ETH-USD.volatility"
+          ],
+          "values": [
+            0.27667562063712725,
+            0.16863539803888533,
+            0.7419220422918842
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "波动与回撤介于两者之间但更靠近 GLD",
+          "relation": "between",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.ETH-USD.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.34043769309838223,
+            -0.7506326975409596,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.34043769309838223,
+            -0.7506326975409596
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随成本上升累计收益单调小幅下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.2.total_return",
+            "sensitivity.0.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.1584714026971463,
+            1.1518193315735226,
+            1.143777361087571,
+            1.1162073018661247
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "基线季度再平衡 {{sensitivity.0.total_return}} 居中",
+          "relation": "between",
+          "metric_ids": [
+            "sensitivity.0.total_return",
+            "sensitivity.7.total_return",
+            "sensitivity.6.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            0.7019143566421717,
+            1.259090355582885
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，收益上升",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.total_return",
+            "sensitivity.9.total_return",
+            "sensitivity.10.total_return"
+          ],
+          "values": [
+            0.30222489471502345,
+            0.9699550138670963,
+            1.3862392920746873
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.9.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.5548813915454753,
+            0.33664090810120567,
+            0.1848700519646761
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.9.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6269002624521358,
+            -0.4157028244744696,
+            -0.22908093501090165
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "两段均为正收益但幅度不同",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.4064161785852458,
+            0.49618717604152907
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "买入持有情景波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}，但回撤 {{sensitivity.5.max_drawdown}} 更深",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.volatility",
+            "sensitivity.0.volatility"
+          ],
+          "values": [
+            0.256006218907215,
+            0.27667562063712725
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "买入持有情景波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}，但回撤 {{sensitivity.5.max_drawdown}} 更深",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.max_drawdown",
+            "sensitivity.0.max_drawdown"
+          ],
+          "values": [
+            -0.39233856914593235,
+            -0.34043769309838223
+          ],
+          "passed": true
+        }
+      ],
+      "accepted_ids": [
+        "f-allocation",
+        "f-inflation"
+      ],
+      "accepted_hashes": {
+        "f-inflation": "8b87b8460f901f733ab98781efd64e33cb57297f1f79e89f56866b928cd6906f",
+        "f-allocation": "d77bd342de4a9e279c2e4121c449be8afefca12975183050432d79c83d020c4b"
+      },
+      "reused_certificates": []
+    },
+    {
+      "attempt": 2,
+      "draft_hash": "b3fa3adb90c8e69e8122d697ff5722be6eaedcf4e399b8f48b972e9765e5359f",
+      "deterministic": {
+        "f-inflation": [
+          "推断/事实缺陷：两者都偏弱且为负，说明二者都不是随通胀同步变动的稳定对冲工具；样本内月度收益与 CPI 同比的弱负相关只能说明本区间未观察到同步联动，不能推出资产'不是稳定的对冲工具'这一属性否定结论；缺少跨样本、跨口径或机制证据。；修复方向 rewrite",
+          "推断/事实缺陷：GLD 的保值结果来自区间价格路径，而非可依赖的通胀联动机制；'来自区间价格路径'与'非可依赖的通胀联动机制'是对收益来源的机制归因，弱相关本身不能排除通胀联动机制的存在，只能说明本样本未显示稳定联动。；修复方向 rewrite",
+          "推断/事实缺陷：说明分组均值受少数月份驱动；分组均值与相关性符号不一致可以有多种解释（非线性、时滞、异常值等），在未提供逐月或稳健性证据时断言由少数月份驱动属未经支持的机制解释。；修复方向 rewrite"
+        ],
+        "f-hedge": [
+          "数值关系未成立或绑定错误：GLD 有 2 个月正收益、6 个月跑赢 SPY；eq ['stress.GLD.positive_months', 'stress.GLD.outperform_months'] = [2.0, 6.0]",
+          "数值关系未成立或绑定错误：ETH-USD 正收益月数为 0、跑赢月数为 1；eq ['stress.ETH-USD.positive_months', 'stress.ETH-USD.outperform_months'] = [0.0, 1.0]"
+        ],
+        "f-sensitivity": [
+          "数值关系未成立或绑定错误：随 GLD 权重上升，年化波动下降；decreasing ['sensitivity.8.volatility', 'sensitivity.9.volatility', 'sensitivity.10.volatility'] = [0.5548813915454753, 0.33664090810120567, 0.1848700519646761]",
+          "数值关系未成立或绑定错误：回撤数值由 -0.6269 升至 -0.2291，即亏损幅度收窄；increasing ['sensitivity.8.max_drawdown', 'sensitivity.9.max_drawdown', 'sensitivity.10.max_drawdown'] = [-0.6269002624521358, -0.4157028244744696, -0.22908093501090165]",
+          "数值关系未成立或绑定错误：买入持有情景波动低于基线，但回撤更深；lt ['sensitivity.5.volatility', 'sensitivity.0.volatility'] = [0.256006218907215, 0.27667562063712725]",
+          "数值关系未成立或绑定错误：买入持有情景波动低于基线，但回撤更深；lt ['sensitivity.5.max_drawdown', 'sensitivity.0.max_drawdown'] = [-0.39233856914593235, -0.34043769309838223]",
+          "数值关系尚未转成可执行断言：居中；应按收益/风险分别核对",
+          "数值关系尚未转成可执行断言：低于；应按收益/风险分别核对"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.total_return",
+                  "execution.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.cagr",
+                  "execution.ETH-USD.cagr"
+                ]
+              },
+              {
+                "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.GLD.volatility",
+                  "execution.ETH-USD.volatility"
+                ]
+              },
+              {
+                "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "ETH-USD 的日线观测数多于 GLD",
+                "relation": "gt",
+                "metric_ids": [
+                  "market.ETH-USD.bars",
+                  "market.GLD.bars"
+                ]
+              }
+            ],
+            "reason": "行情覆盖与执行基线数值均与 metric_catalog 一致：GLD bars=1255、ETH bars=1827、observations=60。收益/风险对比：GLD 累计 1.4734 > ETH -0.1884；GLD 年化 0.2022 > ETH -0.0416；GLD 波动 0.1686 < ETH 0.7419；GLD 回撤 -0.2377 绝对值 < ETH -0.7506。ETH 波动约为 GLD 的 4.4 倍（0.7419/0.1686≈4.4），回撤约为 3.2 倍（0.7506/0.2377≈3.16），『四倍量级』『三倍量级』表述成立。counterevidence 中『ETH 日线观测数多于 GLD』(1827>1255) 成立。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-hedge",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 有 2 个月正收益、6 个月跑赢 SPY",
+                "relation": "eq",
+                "metric_ids": [
+                  "stress.GLD.positive_months",
+                  "stress.GLD.outperform_months"
+                ]
+              },
+              {
+                "quote": "ETH-USD 正收益月数为 0、跑赢月数为 1",
+                "relation": "eq",
+                "metric_ids": [
+                  "stress.ETH-USD.positive_months",
+                  "stress.ETH-USD.outperform_months"
+                ]
+              },
+              {
+                "quote": "2022-01、2022-04、2022-06、2022-09 均为负收益",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-01-31.GLD",
+                  "stress-month.2022-04-29.GLD",
+                  "stress-month.2022-06-30.GLD",
+                  "stress-month.2022-09-30.GLD"
+                ]
+              },
+              {
+                "quote": "ETH-USD 在这 6 个压力月全部下跌",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-09-30.ETH-USD",
+                  "stress-month.2022-04-29.ETH-USD",
+                  "stress-month.2022-06-30.ETH-USD",
+                  "stress-month.2022-12-30.ETH-USD",
+                  "stress-month.2025-03-31.ETH-USD",
+                  "stress-month.2022-01-31.ETH-USD"
+                ]
+              }
+            ],
+            "reason": "压力月指标核对：GLD positive_months=2、outperform_months=6、n=6；ETH positive_months=0、outperform_months=1、n=6，与正文一致。2022-06：GLD -0.0157、ETH -0.4495、SPY -0.0825，均与 stress-month 指标一致。2025-03：GLD 0.0945、ETH -0.2166、SPY -0.0557，一致。『2022-01、2022-04、2022-06、2022-09 均为负收益』逐项核对：-0.0168、-0.0207、-0.0157、-0.0289 均为负，成立。『ETH 在这 6 个压力月全部下跌』：-0.1235、-0.1324、-0.4495、-0.0126、-0.2166、-0.2990 全为负，成立。『仅 1 个月跑赢 SPY』与 outperform_months=1 一致。结论已明确限定于 6 个事后选取月份，未推断一般避险属性，符合有限样本要求。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "numeric_assertions": [
+              {
+                "quote": "随成本上升累计收益单调小幅下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.1.total_return",
+                  "sensitivity.2.total_return",
+                  "sensitivity.0.total_return",
+                  "sensitivity.4.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，累计收益上升",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.total_return",
+                  "sensitivity.9.total_return",
+                  "sensitivity.10.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，年化波动下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.8.volatility",
+                  "sensitivity.9.volatility",
+                  "sensitivity.10.volatility"
+                ]
+              },
+              {
+                "quote": "回撤数值由 -0.6269 升至 -0.2291，即亏损幅度收窄",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.max_drawdown",
+                  "sensitivity.9.max_drawdown",
+                  "sensitivity.10.max_drawdown"
+                ]
+              },
+              {
+                "quote": "买入持有情景波动低于基线，但回撤更深",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.5.volatility",
+                  "sensitivity.0.volatility"
+                ]
+              },
+              {
+                "quote": "买入持有情景波动低于基线，但回撤更深",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.5.max_drawdown",
+                  "sensitivity.0.max_drawdown"
+                ]
+              },
+              {
+                "quote": "两段均为正收益",
+                "relation": "positive",
+                "metric_ids": [
+                  "sensitivity.11.total_return",
+                  "sensitivity.12.total_return"
+                ]
+              }
+            ],
+            "reason": "成本维度：0bps 1.1585、10bps 1.1518、20bps 1.1438、50bps 1.1162，随成本上升单调下降，成立。频率维度：买入持有 0.7770、每1月 1.2591、每12月 0.7019、基线季度 1.1438，基线居中成立。权重维度：GLD 20% 累计 0.3022、50% 0.9700、80% 1.3862，随权重上升累计收益上升，成立；波动 0.5549→0.3366→0.1849 下降，成立；回撤 -0.6269→-0.4157→-0.2291，数值上升即亏损收窄，正文『回撤数值由 -0.6269 升至 -0.2291，即亏损幅度收窄』方向正确。上一轮 previous_numeric_check 把回撤断言写成 increasing 却传入 [-0.6269,-0.4157,-0.2291] 判 false，实为核验者方向/绑定错误；本轮按原句『回撤数值由 A 升至 B』正确转录为 increasing。counterevidence：买入持有波动 0.2560 < 基线 0.2767，回撤 -0.3923 深于基线 -0.3404，成立。分段：前半 0.4064、后半 0.4962 均为正，成立。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-allocation",
+            "numeric_assertions": [
+              {
+                "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.total_return",
+                  "execution.GLD.total_return"
+                ]
+              },
+              {
+                "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.total_return",
+                  "execution.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "波动与回撤介于两者之间但更靠近 GLD",
+                "relation": "between",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.GLD.volatility",
+                  "execution.ETH-USD.volatility"
+                ]
+              },
+              {
+                "quote": "波动与回撤介于两者之间但更靠近 GLD",
+                "relation": "between",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.ETH-USD.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "组合与单资产数值均与 execution 指标一致。'组合收益低于 GLD 单资产、远高于 ETH-USD'：1.1438 < 1.4734 且 > -0.1884，成立。'波动与回撤介于两者之间但更靠近 GLD'：波动 0.2767 介于 0.1686 与 0.7419 之间，回撤 -0.3404 介于 -0.2377 与 -0.7506 之间，成立。相关性 -0.0247、n=59 与目录一致。'低相关可解释组合波动低于加权平均'：0.6×0.1686+0.4×0.7419=0.3979 > 0.2767，成立。'组合收益并未超过 GLD'成立。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 已 supported，说明实际起止区间（行情 2021-09-28 至 2026-09-28，执行基线 2021-09-30 至 2026-08-31）、行情口径（GLD ETF 代理、日线观测数）及同口径收益/回撤均已给出并可复核。",
+            "answered": true
+          },
+          {
+            "question_id": "hedge",
+            "reason": "f-hedge 已 supported，使用相同 6 个压力月份，区分了 GLD 正收益月（2）与相对抗跌（跑赢 6），并披露事后选样与样本量限制，ETH 未提供保护也限定于样本期。",
+            "answered": true
+          },
+          {
+            "question_id": "inflation",
+            "reason": "已核验的 f-inflation 给出实际购买力（GLD 实际累计 1.0366、ETH -0.3060）、CPI 分组均值与相关性（GLD -0.2520、ETH -0.0807），区分保值结果与通胀联动机制，并说明 CPI 为回顾性历史版本。",
+            "answered": true
+          },
+          {
+            "question_id": "allocation",
+            "reason": "已核验的 f-allocation 以同口径执行基线比较组合与两单资产收益/风险，给出条件化配置判断（降尾部风险 vs 收益最大化）及可能推翻判断的证据（ETH 转正或相关性上升）。",
+            "answered": true
+          },
+          {
+            "question_id": "sensitivity",
+            "reason": "f-sensitivity 已 supported，引用已计算的成本、频率、权重、分段敏感性结果，未推荐事后最优参数，并明确分段不是样本外检验。",
+            "answered": true
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为事实列举：行情覆盖区间、观测数、执行基线区间与两资产的累计/年化收益、波动、回撤，均为同口径历史数值描述，未做属性或因果推断。'GLD 累计与年化收益高于 ETH-USD、波动与回撤绝对值更小'是对给定数值的直接比较；'约四倍量级/约三倍量级'为量级描述，属可复核的数值关系，本阶段不重复核对。反证与局限已说明交易日历差异、执行基线缺口与 ETF 代理性质，未越界。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-hedge",
+            "inference_audit": "压力月为事后按 SPY 最差月份选取，条内已明确标注'事后选取，非事前可交易信号'，并把结论限定在'这 6 个事后选取的月份'，且明确'不足以推断 ETH-USD 在一般意义上的避险属性'，属于合格的有限观察。'抗跌不等于保本'由 4 个负收益月直接支持。'ETH-USD 在本样本期内未观察到保护作用'是样本内观察的否定式表述，未升级为属性断言。局限已指出选样偏差与跑赢不等于因果保护。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "inference_audit": "成本、频率、权重、分段四组均为同口径情景的历史结果对比。'成本不是主导变量'由成本情景间差异小于频率/权重情景差异支持，属相对量级判断。'随 GLD 权重上升，累计收益上升、年化波动下降、回撤绝对值下降'是对网格结果的描述，局限已声明为事后网格观察、不应据此挑选最优参数。分段部分仅陈述两段均为正收益但幅度不同，未做再平衡贡献分解或机制归因。反证指出低波动不等于低回撤，与数据一致。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-inflation",
+            "inference_audit": "该条为已核验结论，本次复核其语义：'GLD 保全并提升实际购买力'由实际累计收益为正支持，属样本期回顾性事实；'ETH-USD 实际购买力明显受损'同理。'两者都偏弱且为负，说明二者都不是随通胀同步变动的稳定对冲工具'——此处存在属性推断：相关性弱且为负只描述样本内月度收益与 CPI 同比的关系，不能据此断定资产'不是稳定的对冲工具'；正确表述应为'本样本无法验证其稳定通胀对冲能力'。'GLD 的保值结果来自区间价格路径，而非可依赖的通胀联动机制'同样把'未观察到联动'当作'不存在联动机制'。反证中'分组均值受少数月份驱动'为对分组均值与相关性符号不一致的推测性解释，未提供逐月证据。",
+            "violations": [
+              {
+                "quote": "两者都偏弱且为负，说明二者都不是随通胀同步变动的稳定对冲工具",
+                "reason": "样本内月度收益与 CPI 同比的弱负相关只能说明本区间未观察到同步联动，不能推出资产'不是稳定的对冲工具'这一属性否定结论；缺少跨样本、跨口径或机制证据。",
+                "repair": "rewrite"
+              },
+              {
+                "quote": "GLD 的保值结果来自区间价格路径，而非可依赖的通胀联动机制",
+                "reason": "'来自区间价格路径'与'非可依赖的通胀联动机制'是对收益来源的机制归因，弱相关本身不能排除通胀联动机制的存在，只能说明本样本未显示稳定联动。",
+                "repair": "rewrite"
+              },
+              {
+                "quote": "说明分组均值受少数月份驱动",
+                "reason": "分组均值与相关性符号不一致可以有多种解释（非线性、时滞、异常值等），在未提供逐月或稳健性证据时断言由少数月份驱动属未经支持的机制解释。",
+                "repair": "rewrite"
+              }
+            ]
+          },
+          {
+            "finding_id": "f-allocation",
+            "inference_audit": "组合与两单资产的累计/年化/波动/回撤为同口径执行基线数值，相关性为月度收益样本皮尔逊相关。'低相关可解释组合波动低于两资产的加权平均' 是分散效应的常规解释，且条内明确 '不能解释组合收益高于任一单资产——本区间组合收益并未超过 GLD'，未把组合收益优势归因于低相关或再平衡机制。有条件判断以'若目标是…'限定，属决策边界表述，未声称收益上限或普遍最优。局限已说明仅 60 个月度观测、对样本期高度敏感。未发现机制或因果跳跃。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.total_return",
+            "execution.ETH-USD.total_return"
+          ],
+          "values": [
+            1.4733538532972315,
+            -0.18844686761707385
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.cagr",
+            "execution.ETH-USD.cagr"
+          ],
+          "values": [
+            0.20221480964305583,
+            -0.04157547772117565
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.GLD.volatility",
+            "execution.ETH-USD.volatility"
+          ],
+          "values": [
+            0.16863539803888533,
+            0.7419220422918842
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.23766901930987872,
+            -0.7506326975409596
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "ETH-USD 的日线观测数多于 GLD",
+          "relation": "gt",
+          "metric_ids": [
+            "market.ETH-USD.bars",
+            "market.GLD.bars"
+          ],
+          "values": [
+            1827.0,
+            1255.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 有 2 个月正收益、6 个月跑赢 SPY",
+          "relation": "eq",
+          "metric_ids": [
+            "stress.GLD.positive_months",
+            "stress.GLD.outperform_months"
+          ],
+          "values": [
+            2.0,
+            6.0
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "ETH-USD 正收益月数为 0、跑赢月数为 1",
+          "relation": "eq",
+          "metric_ids": [
+            "stress.ETH-USD.positive_months",
+            "stress.ETH-USD.outperform_months"
+          ],
+          "values": [
+            0.0,
+            1.0
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "2022-01、2022-04、2022-06、2022-09 均为负收益",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-01-31.GLD",
+            "stress-month.2022-04-29.GLD",
+            "stress-month.2022-06-30.GLD",
+            "stress-month.2022-09-30.GLD"
+          ],
+          "values": [
+            -0.016787612677039987,
+            -0.020702963524693363,
+            -0.01565965107712486,
+            -0.028881810636775418
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "ETH-USD 在这 6 个压力月全部下跌",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-09-30.ETH-USD",
+            "stress-month.2022-04-29.ETH-USD",
+            "stress-month.2022-06-30.ETH-USD",
+            "stress-month.2022-12-30.ETH-USD",
+            "stress-month.2025-03-31.ETH-USD",
+            "stress-month.2022-01-31.ETH-USD"
+          ],
+          "values": [
+            -0.12349502791251787,
+            -0.1324065365475886,
+            -0.4495486261656866,
+            -0.012577773475489384,
+            -0.21655568455991492,
+            -0.2989848499251049
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随成本上升累计收益单调小幅下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.2.total_return",
+            "sensitivity.0.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.1584714026971463,
+            1.1518193315735226,
+            1.143777361087571,
+            1.1162073018661247
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，累计收益上升",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.total_return",
+            "sensitivity.9.total_return",
+            "sensitivity.10.total_return"
+          ],
+          "values": [
+            0.30222489471502345,
+            0.9699550138670963,
+            1.3862392920746873
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，年化波动下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.9.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.5548813915454753,
+            0.33664090810120567,
+            0.1848700519646761
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "回撤数值由 -0.6269 升至 -0.2291，即亏损幅度收窄",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.9.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6269002624521358,
+            -0.4157028244744696,
+            -0.22908093501090165
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "买入持有情景波动低于基线，但回撤更深",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.volatility",
+            "sensitivity.0.volatility"
+          ],
+          "values": [
+            0.256006218907215,
+            0.27667562063712725
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "买入持有情景波动低于基线，但回撤更深",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.max_drawdown",
+            "sensitivity.0.max_drawdown"
+          ],
+          "values": [
+            -0.39233856914593235,
+            -0.34043769309838223
+          ],
+          "passed": false
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "两段均为正收益",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.4064161785852458,
+            0.49618717604152907
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.total_return",
+            "execution.GLD.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            1.4733538532972315
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.total_return",
+            "execution.ETH-USD.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            -0.18844686761707385
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "波动与回撤介于两者之间但更靠近 GLD",
+          "relation": "between",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.GLD.volatility",
+            "execution.ETH-USD.volatility"
+          ],
+          "values": [
+            0.27667562063712725,
+            0.16863539803888533,
+            0.7419220422918842
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "波动与回撤介于两者之间但更靠近 GLD",
+          "relation": "between",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.ETH-USD.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.34043769309838223,
+            -0.7506326975409596,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.34043769309838223,
+            -0.7506326975409596
+          ],
+          "passed": true
+        }
+      ],
+      "accepted_ids": [
+        "f-allocation",
+        "f-market"
+      ],
+      "accepted_hashes": {
+        "f-allocation": "d77bd342de4a9e279c2e4121c449be8afefca12975183050432d79c83d020c4b",
+        "f-market": "37c3803149f6aca43e0f83dca40e7f798f7ad0853905a1412bb5de0bffea5301"
+      },
+      "reused_certificates": [
+        "f-allocation"
+      ]
+    },
+    {
+      "attempt": 3,
+      "draft_hash": "111aac2b0cced7d3fe094315b73ba0d0a5d7a98e25f5e38fcff4654643b0438b",
+      "deterministic": {
+        "f-sensitivity": [
+          "数值关系尚未转成可执行断言：居中；应按收益/风险分别核对"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-inflation",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 实际累计收益 {{real.GLD.total_return}}，ETH-USD {{real.ETH-USD.total_return}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "两者在本样本内均偏弱且为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "inflation.GLD.inflation_correlation",
+                  "inflation.ETH-USD.inflation_correlation"
+                ]
+              },
+              {
+                "quote": "ETH-USD 高通胀月平均收益高于低通胀月",
+                "relation": "gt",
+                "metric_ids": [
+                  "inflation.ETH-USD.high_inflation_mean_return",
+                  "inflation.ETH-USD.low_inflation_mean_return"
+                ]
+              }
+            ],
+            "reason": "实际购买力：real.GLD.total_return=1.0366（正），real.ETH-USD.total_return=-0.3060（负），支持“GLD 保全并提升实际购买力，ETH-USD 实际购买力明显受损”。相关性 inflation.GLD.inflation_correlation=-0.2520、inflation.ETH-USD.inflation_correlation=-0.0807，均为负且偏弱，草稿已改为“本区间未观察到同步联动，不足以判定是否具备稳定通胀对冲属性”，不再做属性否定。反证中“ETH 高通胀月均值高于低通胀月”与 0.03164>0.00037 一致，且已说明无法区分原因。局限中高/低通胀月数 39/19 与指标一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-hedge",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 正收益月数为 {{stress.GLD.positive_months}}，跑赢 SPY 的月数为 {{stress.GLD.outperform_months}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "stress.GLD.positive_months",
+                  "stress.GLD.outperform_months"
+                ]
+              },
+              {
+                "quote": "ETH-USD 正收益月数为 {{stress.ETH-USD.positive_months}}，跑赢 SPY 的月数为 {{stress.ETH-USD.outperform_months}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "stress.ETH-USD.positive_months",
+                  "stress.ETH-USD.outperform_months"
+                ]
+              },
+              {
+                "quote": "2022-01、2022-04、2022-06、2022-09 均为负收益",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-01-31.GLD",
+                  "stress-month.2022-04-29.GLD",
+                  "stress-month.2022-06-30.GLD",
+                  "stress-month.2022-09-30.GLD"
+                ]
+              },
+              {
+                "quote": "ETH-USD 在这 6 个压力月全部下跌",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-01-31.ETH-USD",
+                  "stress-month.2022-04-29.ETH-USD",
+                  "stress-month.2022-06-30.ETH-USD",
+                  "stress-month.2022-09-30.ETH-USD",
+                  "stress-month.2022-12-30.ETH-USD",
+                  "stress-month.2025-03-31.ETH-USD"
+                ]
+              }
+            ],
+            "reason": "压力月为事后按 SPY 最差 6 个月选取，n=6。GLD positive_months=2、outperform_months=6；ETH-USD positive_months=0、outperform_months=1。草稿表述“GLD 正收益月数为 2，跑赢 SPY 的月数为 6”与“ETH-USD 正收益月数为 0，跑赢 SPY 的月数为 1”是分别陈述两个不同指标，不是相等关系，上一轮 eq 绑定属误判。逐月核对：2022-01 GLD -0.0168、ETH -0.2990、SPY -0.0527；2022-04 GLD -0.0207、ETH -0.1324、SPY -0.0878；2022-06 GLD -0.0157、ETH -0.4495、SPY -0.0825；2022-09 GLD -0.0289、ETH -0.1235、SPY -0.0924，四个月 GLD 均为负，与“2022-01、2022-04、2022-06、2022-09 均为负收益”一致。2022-06 与 2025-03 的数值引用与指标一致。ETH 6 个月全部为负、仅 1 个月跑赢，与指标一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "numeric_assertions": [
+              {
+                "quote": "随成本上升累计收益单调小幅下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.1.total_return",
+                  "sensitivity.2.total_return",
+                  "sensitivity.0.total_return",
+                  "sensitivity.4.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，累计收益上升",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.total_return",
+                  "sensitivity.9.total_return",
+                  "sensitivity.10.total_return"
+                ]
+              },
+              {
+                "quote": "年化波动下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.8.volatility",
+                  "sensitivity.9.volatility",
+                  "sensitivity.10.volatility"
+                ]
+              },
+              {
+                "quote": "最大回撤的亏损幅度收窄",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.max_drawdown",
+                  "sensitivity.9.max_drawdown",
+                  "sensitivity.10.max_drawdown"
+                ]
+              },
+              {
+                "quote": "买入持有情景年化波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.5.volatility",
+                  "sensitivity.0.volatility"
+                ]
+              },
+              {
+                "quote": "其最大回撤 {{sensitivity.5.max_drawdown}} 的亏损幅度大于基线 {{sensitivity.0.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.5.max_drawdown",
+                  "sensitivity.0.max_drawdown"
+                ]
+              },
+              {
+                "quote": "两段均为正收益",
+                "relation": "positive",
+                "metric_ids": [
+                  "sensitivity.11.total_return",
+                  "sensitivity.12.total_return"
+                ]
+              }
+            ],
+            "reason": "成本维度：0bps 1.1585、10bps 1.1518、20bps 1.1438、50bps 1.1162，随成本上升累计收益单调下降，与“单调小幅下降”一致。频率维度：买入持有 0.7770、每1月 1.2591、每12月 0.7019、基线 1.1438，基线居中，与“再平衡频率影响大于成本”一致。权重维度：GLD 20%/50%/80% 累计收益 0.3022/0.9700/1.3862 依次上升；波动 0.5549/0.3366/0.1849 依次下降；回撤 -0.6269/-0.4157/-0.2291 数值依次上升（亏损收窄）。上一轮把“随 GLD 权重上升，年化波动下降”判为 decreasing 失败，但按正文顺序 0.5549→0.3366→0.1849 确为下降，属核验者方向误判；回撤 increasing 亦正确。反证：买入持有波动 0.2560 < 基线 0.2767，回撤 -0.3923 亏损大于基线 -0.3404，与“低波动不等于低回撤”一致。分段：前半 0.4064、后半 0.4962，均为正，与“两段均为正收益但幅度不同”一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-allocation",
+            "numeric_assertions": [
+              {
+                "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.total_return",
+                  "execution.GLD.total_return"
+                ]
+              },
+              {
+                "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.total_return",
+                  "execution.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "波动与回撤介于两者之间但更靠近 GLD",
+                "relation": "between",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.GLD.volatility",
+                  "execution.ETH-USD.volatility"
+                ]
+              },
+              {
+                "quote": "波动与回撤介于两者之间但更靠近 GLD",
+                "relation": "between",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.ETH-USD.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "组合与单资产数值均与 execution 指标一致。'组合收益低于 GLD 单资产、远高于 ETH-USD'：1.1438 < 1.4734 且 > -0.1884，成立。'波动与回撤介于两者之间但更靠近 GLD'：波动 0.2767 介于 0.1686 与 0.7419 之间，回撤 -0.3404 介于 -0.2377 与 -0.7506 之间，成立。相关性 -0.0247、n=59 与目录一致。'低相关可解释组合波动低于加权平均'：0.6×0.1686+0.4×0.7419=0.3979 > 0.2767，成立。'组合收益并未超过 GLD'成立。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.total_return",
+                  "execution.ETH-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.cagr",
+                  "execution.ETH-USD.cagr"
+                ]
+              },
+              {
+                "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.GLD.volatility",
+                  "execution.ETH-USD.volatility"
+                ]
+              },
+              {
+                "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.max_drawdown",
+                  "execution.ETH-USD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "ETH-USD 的日线观测数多于 GLD",
+                "relation": "gt",
+                "metric_ids": [
+                  "market.ETH-USD.bars",
+                  "market.GLD.bars"
+                ]
+              }
+            ],
+            "reason": "行情覆盖与执行基线数值均与 metric_catalog 一致：GLD bars=1255、ETH bars=1827、observations=60。收益/风险对比：GLD 累计 1.4734 > ETH -0.1884；GLD 年化 0.2022 > ETH -0.0416；GLD 波动 0.1686 < ETH 0.7419；GLD 回撤 -0.2377 绝对值 < ETH -0.7506。ETH 波动约为 GLD 的 4.4 倍（0.7419/0.1686≈4.4），回撤约为 3.2 倍（0.7506/0.2377≈3.16），『四倍量级』『三倍量级』表述成立。counterevidence 中『ETH 日线观测数多于 GLD』(1827>1255) 成立。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "已核验 f-market 覆盖实际起止区间、行情口径、同口径执行基线的收益/回撤，并说明执行基线止于 2026-08-31 的缺口。",
+            "answered": true
+          },
+          {
+            "question_id": "hedge",
+            "reason": "f-hedge 使用相同 6 个事后压力月，区分 GLD 正收益与相对抗跌、ETH 未提供保护，并披露事后选样与样本量限制。",
+            "answered": true
+          },
+          {
+            "question_id": "inflation",
+            "reason": "f-inflation 结合 GLD 正实际收益、ETH 负实际收益与 CPI 分组/相关性，区分保值结果与稳定抗通胀机制，并说明 CPI 为回顾性历史版本。",
+            "answered": true
+          },
+          {
+            "question_id": "allocation",
+            "reason": "已核验 f-allocation 以同口径比较组合与两单资产收益/风险，给出条件化配置判断与推翻条件。",
+            "answered": true
+          },
+          {
+            "question_id": "sensitivity",
+            "reason": "f-sensitivity 引用成本、频率、权重、分段四类已计算情景，明确分段非样本外、权重网格为事后观察，不推荐最优参数。",
+            "answered": true
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-inflation",
+            "inference_audit": "标题称“GLD 保值、ETH 未保值”，正文以 CPI 购买力折算的回顾口径给出 GLD 实际累计收益为正、ETH-USD 为负，属于样本期实际购买力变化的直接观察，可支持“本区间内 GLD 保全并提升实际购买力、ETH 实际购买力受损”的有限陈述。相关性（GLD、ETH 均为弱负）与高低通胀分组均值只描述本样本的月度关系，正文已明确“不足以据此判定二者是否具备稳定的通胀对冲属性”，未把“未证明属性”写成“属性不存在”，符合有限结论要求。反证段指出分组均值与相关性符号不一致，并说明无法区分原因，属于对自身证据局限的诚实标注，未引入新事实。局限段说明 CPI 为当前历史版本、非当时已知信号、相关性口径为月度收益与 CPI 同比水平，与结论强度匹配。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-hedge",
+            "inference_audit": "压力月由事后按 SPY 最差月份选取，正文与局限均明确标注为事后选取、非事前可交易信号，样本仅 6 个月。GLD 正收益月数、跑赢月数及 2022 年多个月份负收益的列举，支持“多数压力月相对抗跌、少数月份绝对上涨、抗跌不等于保本”的样本内描述；ETH-USD 6 个月全部下跌、仅 1 个月跑赢 SPY，支持“本样本期内未观察到保护作用”，且正文明确该结论限于这 6 个事后选取月份、不足以推断一般意义上的避险属性，未把样本观察上升为资产属性。反证段“保护是相对的、非系统性的”是对同向下跌这一观察的定性概括，未声称因果机制。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "inference_audit": "成本维度：各成本情景累计收益随成本上升单调小幅下降，正文据此称“成本不是主导变量”，属于同口径情景对照下的历史结果描述，未声称机制。频率维度：买入持有、每 1 月、每 12 月再平衡与基线季度再平衡为同口径对照，正文仅称“再平衡频率对结果影响大于成本”，是对历史结果差异幅度的比较，未把差异归因于低相关、权重回归或波动获利等经济机制，符合频率情景对照的允许范围。权重维度：三个 GLD 权重情景的累计收益、波动、回撤为事后网格观察，正文明确“属于事后网格观察，不应据此挑选最优参数”，未声称普遍最优或收益上限。分段维度：正文仅陈述前半、后半区间累计/年化/回撤“两段均为正收益但幅度不同”，未把分段差异称为再平衡贡献分解，也未称“贡献集中于某段”，未出现机制归因。反证段“低波动不等于低回撤”由买入持有与基线的波动、回撤对比直接支持。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-allocation",
+            "inference_audit": "组合与两单资产的累计/年化/波动/回撤为同口径执行基线数值，相关性为月度收益样本皮尔逊相关。'低相关可解释组合波动低于两资产的加权平均' 是分散效应的常规解释，且条内明确 '不能解释组合收益高于任一单资产——本区间组合收益并未超过 GLD'，未把组合收益优势归因于低相关或再平衡机制。有条件判断以'若目标是…'限定，属决策边界表述，未声称收益上限或普遍最优。局限已说明仅 60 个月度观测、对样本期高度敏感。未发现机制或因果跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为事实列举：行情覆盖区间、观测数、执行基线区间与两资产的累计/年化收益、波动、回撤，均为同口径历史数值描述，未做属性或因果推断。'GLD 累计与年化收益高于 ETH-USD、波动与回撤绝对值更小'是对给定数值的直接比较；'约四倍量级/约三倍量级'为量级描述，属可复核的数值关系，本阶段不重复核对。反证与局限已说明交易日历差异、执行基线缺口与 ETF 代理性质，未越界。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-inflation",
+          "quote": "GLD 实际累计收益 {{real.GLD.total_return}}，ETH-USD {{real.ETH-USD.total_return}}",
+          "relation": "gt",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.ETH-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            -0.3060239772545311
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者在本样本内均偏弱且为负",
+          "relation": "negative",
+          "metric_ids": [
+            "inflation.GLD.inflation_correlation",
+            "inflation.ETH-USD.inflation_correlation"
+          ],
+          "values": [
+            -0.25201116163691034,
+            -0.08073815320468797
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "ETH-USD 高通胀月平均收益高于低通胀月",
+          "relation": "gt",
+          "metric_ids": [
+            "inflation.ETH-USD.high_inflation_mean_return",
+            "inflation.ETH-USD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.03163963053078351,
+            0.0003662238050149834
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 正收益月数为 {{stress.GLD.positive_months}}，跑赢 SPY 的月数为 {{stress.GLD.outperform_months}}",
+          "relation": "lt",
+          "metric_ids": [
+            "stress.GLD.positive_months",
+            "stress.GLD.outperform_months"
+          ],
+          "values": [
+            2.0,
+            6.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "ETH-USD 正收益月数为 {{stress.ETH-USD.positive_months}}，跑赢 SPY 的月数为 {{stress.ETH-USD.outperform_months}}",
+          "relation": "lt",
+          "metric_ids": [
+            "stress.ETH-USD.positive_months",
+            "stress.ETH-USD.outperform_months"
+          ],
+          "values": [
+            0.0,
+            1.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "2022-01、2022-04、2022-06、2022-09 均为负收益",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-01-31.GLD",
+            "stress-month.2022-04-29.GLD",
+            "stress-month.2022-06-30.GLD",
+            "stress-month.2022-09-30.GLD"
+          ],
+          "values": [
+            -0.016787612677039987,
+            -0.020702963524693363,
+            -0.01565965107712486,
+            -0.028881810636775418
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "ETH-USD 在这 6 个压力月全部下跌",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-01-31.ETH-USD",
+            "stress-month.2022-04-29.ETH-USD",
+            "stress-month.2022-06-30.ETH-USD",
+            "stress-month.2022-09-30.ETH-USD",
+            "stress-month.2022-12-30.ETH-USD",
+            "stress-month.2025-03-31.ETH-USD"
+          ],
+          "values": [
+            -0.2989848499251049,
+            -0.1324065365475886,
+            -0.4495486261656866,
+            -0.12349502791251787,
+            -0.012577773475489384,
+            -0.21655568455991492
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随成本上升累计收益单调小幅下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.2.total_return",
+            "sensitivity.0.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.1584714026971463,
+            1.1518193315735226,
+            1.143777361087571,
+            1.1162073018661247
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，累计收益上升",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.total_return",
+            "sensitivity.9.total_return",
+            "sensitivity.10.total_return"
+          ],
+          "values": [
+            0.30222489471502345,
+            0.9699550138670963,
+            1.3862392920746873
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "年化波动下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.9.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.5548813915454753,
+            0.33664090810120567,
+            0.1848700519646761
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "最大回撤的亏损幅度收窄",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.9.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6269002624521358,
+            -0.4157028244744696,
+            -0.22908093501090165
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "买入持有情景年化波动 {{sensitivity.5.volatility}} 低于基线 {{sensitivity.0.volatility}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.volatility",
+            "sensitivity.0.volatility"
+          ],
+          "values": [
+            0.256006218907215,
+            0.27667562063712725
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "其最大回撤 {{sensitivity.5.max_drawdown}} 的亏损幅度大于基线 {{sensitivity.0.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.5.max_drawdown",
+            "sensitivity.0.max_drawdown"
+          ],
+          "values": [
+            -0.39233856914593235,
+            -0.34043769309838223
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "两段均为正收益",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.4064161785852458,
+            0.49618717604152907
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.total_return",
+            "execution.GLD.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            1.4733538532972315
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合收益低于 GLD 单资产、远高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.total_return",
+            "execution.ETH-USD.total_return"
+          ],
+          "values": [
+            1.143777361087571,
+            -0.18844686761707385
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "波动与回撤介于两者之间但更靠近 GLD",
+          "relation": "between",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.GLD.volatility",
+            "execution.ETH-USD.volatility"
+          ],
+          "values": [
+            0.27667562063712725,
+            0.16863539803888533,
+            0.7419220422918842
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "波动与回撤介于两者之间但更靠近 GLD",
+          "relation": "between",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.ETH-USD.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.34043769309838223,
+            -0.7506326975409596,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合回撤 {{execution.portfolio.max_drawdown}} 明显小于 ETH-USD 的 {{execution.ETH-USD.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.34043769309838223,
+            -0.7506326975409596
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.total_return",
+            "execution.ETH-USD.total_return"
+          ],
+          "values": [
+            1.4733538532972315,
+            -0.18844686761707385
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的累计收益与年化收益高于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.cagr",
+            "execution.ETH-USD.cagr"
+          ],
+          "values": [
+            0.20221480964305583,
+            -0.04157547772117565
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.GLD.volatility",
+            "execution.ETH-USD.volatility"
+          ],
+          "values": [
+            0.16863539803888533,
+            0.7419220422918842
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "年化波动与最大回撤的绝对值小于 ETH-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.max_drawdown",
+            "execution.ETH-USD.max_drawdown"
+          ],
+          "values": [
+            -0.23766901930987872,
+            -0.7506326975409596
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "ETH-USD 的日线观测数多于 GLD",
+          "relation": "gt",
+          "metric_ids": [
+            "market.ETH-USD.bars",
+            "market.GLD.bars"
+          ],
+          "values": [
+            1827.0,
+            1255.0
+          ],
+          "passed": true
+        }
+      ],
+      "accepted_ids": [
+        "f-allocation",
+        "f-hedge",
+        "f-inflation",
+        "f-market"
+      ],
+      "accepted_hashes": {
+        "f-allocation": "d77bd342de4a9e279c2e4121c449be8afefca12975183050432d79c83d020c4b",
+        "f-market": "37c3803149f6aca43e0f83dca40e7f798f7ad0853905a1412bb5de0bffea5301",
+        "f-inflation": "0b9b59c8b07752ff84586c971209e64f6f00d364905aed9e0b4f62c86419e3ec",
+        "f-hedge": "cba6eeb127a3f27a0963aa4db3c48565d818b718a0e96c2f2d456948a550ff3d"
+      },
+      "reused_certificates": [
+        "f-allocation",
+        "f-market"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "question_id": "sensitivity",
+      "reason": "配置判断对成本、权重、频率和样本区间是否敏感？：数值关系尚未转成可执行断言：居中；应按收益/风险分别核对",
+      "next_action": "按该问题补充证据或缩小结论"
+    }
+  ],
+  "text": "GLD 与 ETH-USD 避险、抗通胀及组合价值比较（2021-09-28 至 2026-09-28，60/40 季度再平衡）\n\n研究状态：部分完成。请求区间：2021-09-28 至 2026-09-28；实际数值区间见各指标口径。\n\n**组合相对单资产的收益与风险代价**\n\n同口径执行基线比较：组合累计收益 114.38%、年化 16.78%、年化波动 27.67%、最大回撤 -34.04%；GLD 单资产累计 147.34%、年化 20.22%、波动 16.86%、回撤 -23.77%；ETH-USD 单资产累计 -18.84%、年化 -4.16%、波动 74.19%、回撤 -75.06%。组合收益低于 GLD 单资产、远高于 ETH-USD，波动与回撤介于两者之间但更靠近 GLD。两资产月度收益相关性为 -0.025（n=59），低相关可解释组合波动低于两资产的加权平均，但不能解释组合收益高于任一单资产——本区间组合收益并未超过 GLD。有条件判断：若目标是降低单一资产极端回撤并保留部分上行弹性，60/40 框架可接受；若以收益最大化为目标，本区间内提高 GLD 权重更有利。\n\n竞争性解释：组合回撤 -34.04% 明显小于 ETH-USD 的 -75.06%，说明分散确实降低了尾部风险，代价是放弃了 GLD 单资产的部分收益。\n\n局限：组合与单资产均为同一执行口径，但区间仅 60 个月度观测，且 GLD 单资产在样本内表现突出，结论对样本期高度敏感。\n\n改变判断的条件：若 ETH 在样本内转为正收益或两资产相关性显著上升，组合相对 GLD 的收益劣势与分散收益都会改变。\n\n依据：[prices-GLD-b2e4b8156509] [prices-ETH-USD-7437815ca767]\n\n**行情覆盖与同口径执行基线**\n\n行情覆盖 2021-09-28 至 2026-09-28：GLD 有 1,255 个日线观测，ETH-USD 有 1,827 个（已排除 1 条未完成日线）。同口径执行基线（共同月末估值、信号后下一可交易开盘执行、含 20 bps 单边成本）覆盖 2021-09-30 至 2026-08-31，共 60 个月度观测。区间内 GLD 累计收益 147.34%、年化 20.22%、年化波动 16.86%、最大回撤 -23.77%；ETH-USD 累计收益 -18.84%、年化 -4.16%、年化波动 74.19%、最大回撤 -75.06%。即在本区间内，GLD 的累计收益与年化收益高于 ETH-USD，年化波动与最大回撤的绝对值小于 ETH-USD；ETH-USD 的年化波动约为 GLD 的四倍量级，其最大回撤幅度约为 GLD 的三倍量级。\n\n竞争性解释：ETH-USD 的日线观测数多于 GLD，说明其交易日历更连续，但这不改变收益与风险对比。\n\n局限：执行基线止于 2026-08-31，与行情末日 2026-09-28 存在约一个月缺口；GLD 为 ETF 代理，价格含基金费用与跟踪差异，不等于现货金价。\n\n改变判断的条件：若补齐 2026-09 月度估值或改用现货金价，收益与回撤数值会小幅变化，但量级差异不太可能反转。\n\n依据：[src-b38ac08d0bba86] [prices-GLD-b2e4b8156509] [prices-ETH-USD-7437815ca767]\n\n**实际购买力：GLD 保值、ETH 未保值；通胀关联均弱**\n\n以 CPI 购买力折算的回顾口径（无额外交易费用）：GLD 实际累计收益 103.66%，ETH-USD -30.60%，即区间内 GLD 保全并提升实际购买力，ETH-USD 实际购买力明显受损。按 CPI 同比 3.00% 分组，高通胀月 GLD 平均收益 0.90%、低通胀月 3.15%；ETH-USD 高通胀月 3.16%、低通胀月 0.04%。月度收益与 CPI 同比的相关性为 GLD -0.252、ETH-USD -0.081，两者在本样本内均偏弱且为负，即本区间未观察到月度收益与 CPI 同比的同步联动，不足以据此判定二者是否具备稳定的通胀对冲属性。\n\n竞争性解释：ETH-USD 高通胀月平均收益高于低通胀月，若只看分组均值会得出与相关性相反的印象；分组均值与相关性符号不一致可由非线性、时滞或个别月份影响等多种原因造成，本样本未做逐月或稳健性检验，无法区分。\n\n局限：CPI 为当前历史版本，仅作事后回顾，非当时已知信号；相关性基于月度收益与 CPI 同比水平，不是价格水平或通胀变动，样本为 39 个高通胀月与 19 个低通胀月。\n\n改变判断的条件：若改用通胀变动（环比或意外值）或延长样本，相关性符号与强度可能改变。\n\n依据：[prices-GLD-b2e4b8156509] [prices-ETH-USD-7437815ca767] [fred-CPIAUCNS]\n\n**压力月份：GLD 抗跌但非保本，ETH 未提供保护**\n\n以基准 SPY 最差的 6 个月为压力样本（事后选取，非事前可交易信号）：GLD 正收益月数为 2，跑赢 SPY 的月数为 6；ETH-USD 正收益月数为 0，跑赢 SPY 的月数为 1。典型月份如 2022-06，GLD -1.57%、ETH-USD -44.95%、SPY -8.25%；2025-03 则 GLD 9.45%、ETH-USD -21.66%、SPY -5.57%。可见 GLD 多数压力月相对抗跌、少数月份绝对上涨，但 2022-01、2022-04、2022-06、2022-09 均为负收益，抗跌不等于保本；ETH-USD 在这 6 个压力月全部下跌、仅 1 个月跑赢 SPY，即在本样本期内未观察到保护作用；该结论限于这 6 个事后选取的月份，不足以推断 ETH-USD 在一般意义上的避险属性。\n\n竞争性解释：GLD 在 2022 年多个月份与 SPY 同向下跌，说明其保护是相对的、非系统性的。\n\n局限：压力月由事后按 SPY 最差月份挑选，样本仅 6 个月，存在选样偏差；跑赢基准不等于正收益，也不构成因果保护机制。\n\n改变判断的条件：若改用事前定义的压力规则（如波动率阈值）或扩大样本，正收益月数与跑赢月数可能下降。\n\n依据：[prices-GLD-b2e4b8156509] [prices-ETH-USD-7437815ca767] [prices-SPY-c13dea8f89c7]\n\n**尚未解决的问题**\n\n- 配置判断对成本、权重、频率和样本区间是否敏感？：数值关系尚未转成可执行断言：居中；应按收益/风险分别核对；下一步：按该问题补充证据或缩小结论\n\n**计算口径**\n\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额。\n- 2021-09-30 至 2026-08-31；共同月度；两资产月度收益的样本皮尔逊相关性；不是价格水平相关性。\n- 2021-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。\n- 2021-09-30 至 2026-08-31；共同月度；复权价格/CPI购买力回顾，无额外交易费用。\n- 2021-09-30 至 2026-08-31；共同月度；月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号。\n- 2021-09-30 至 2026-08-31；共同月度；事后选取基准最差月份；跑赢基准不等于保本。\n- 2022-06-30 至 2022-06-30；共同月度；事后选取基准最差月份的同期收益。\n- 2025-03-31 至 2025-03-31；共同月度；事后选取基准最差月份的同期收益。\n\n**来源**\n\n- [prices-GLD-b2e4b8156509] GLD 行情：https://query1.finance.yahoo.com/v8/finance/chart/GLD?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [prices-ETH-USD-7437815ca767] ETH-USD 行情：https://query1.finance.yahoo.com/v8/finance/chart/ETH-USD?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [src-b38ac08d0bba86] SPDR® Gold Shares (Ticker: GLD, New York Stock Exchange) | Charts, data and downloads | World Gold Trust Services：https://www.spdrgoldshares.com/usa/gld/\n- [fred-CPIAUCNS] FRED · CPIAUCNS：https://fred.stlouisfed.org/series/CPIAUCNS\n- [prices-SPY-c13dea8f89c7] SPY 行情：https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+  "assessed_at": "2026-09-29T09:40:11.499450+00:00",
+  "input_hash": "60493a9a2298fbd9f99d0dead4ade1f63f807192c7fa330e61c64d11fc624285",
+  "budget": {
+    "elapsed_seconds": 294.699,
+    "model_calls": 26,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  }
+}

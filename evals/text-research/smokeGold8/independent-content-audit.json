@@ -1,0 +1,22 @@
+{
+  "reviewer": "Codex root, separate from production verifier",
+  "passed": false,
+  "run_id": "00c94c5aff014489",
+  "findings": [
+    {
+      "severity": "critical",
+      "section": "实际购买力",
+      "issue": "由相关性和高低通胀分组推出两者都不是稳定的通胀对冲工具，超出回顾样本识别能力。"
+    },
+    {
+      "severity": "critical",
+      "section": "压力月份",
+      "issue": "将 2022-12-30 BTC 与 SPY 写为同向为正，但原始 SPY 月收益 -5.7567%。"
+    },
+    {
+      "severity": "warning",
+      "section": "组合机制与频率分段",
+      "issue": "缺少机制分解却以高波动低收益解释再平衡获益；分段回测不能单独证明再平衡贡献集中于某子区间。"
+    }
+  ]
+}

@@ -1,0 +1,599 @@
+{
+  "checked_at": "2026-09-29T02:39:07.763189+00:00",
+  "scope": "Unedited live runs; automated coverage, parameters, numeric integrity and source-reference checks. Not independent human fact checking.",
+  "results": [
+    {
+      "case": "nvda",
+      "run_id": "6ab6c8f152f2474c",
+      "started_at": "2026-09-29T02:33:20.875762+00:00",
+      "manual_edits": false,
+      "checks": {
+        "symbols": true,
+        "numeric_and_reference_integrity": true,
+        "named_requirements_retained": true,
+        "coverage_gate": false,
+        "independent_review": true,
+        "deepseek_move_candidate": true
+      },
+      "passed": false,
+      "completion_status": "partial",
+      "bundle_sha256": "cf34f80b3069940c7a2fbd7037c3a2f47e94ff04f60cf978ddb0d7046053c87e",
+      "quality": {
+        "version": "1.0",
+        "passed": false,
+        "requirements": [
+          {
+            "requirement": "ChatGPT 发布",
+            "event_ids": [
+              "ev-1"
+            ],
+            "status": "covered"
+          },
+          {
+            "requirement": "Blackwell 平台发布",
+            "event_ids": [
+              "ev-2"
+            ],
+            "status": "covered"
+          },
+          {
+            "requirement": "DeepSeek 相关事件",
+            "event_ids": [
+              "ev-6",
+              "ev-8",
+              "ev-9"
+            ],
+            "status": "covered"
+          },
+          {
+            "requirement": "2025-01-27 NVDA 下跌及同期信息（区分论文日、模型发布日、市场反应日）",
+            "event_ids": [
+              "ev-7"
+            ],
+            "status": "covered"
+          }
+        ],
+        "periods": [
+          {
+            "start": "2021-09-28",
+            "end": "2021-12-31",
+            "event_ids": [],
+            "required": false,
+            "status": "gap"
+          },
+          {
+            "start": "2022-01-01",
+            "end": "2022-12-31",
+            "event_ids": [
+              "ev-1"
+            ],
+            "required": true,
+            "status": "covered"
+          },
+          {
+            "start": "2023-01-01",
+            "end": "2023-12-31",
+            "event_ids": [
+              "ev-4"
+            ],
+            "required": true,
+            "status": "covered"
+          },
+          {
+            "start": "2024-01-01",
+            "end": "2024-12-31",
+            "event_ids": [
+              "ev-2",
+              "ev-3",
+              "ev-9"
+            ],
+            "required": true,
+            "status": "covered"
+          },
+          {
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "event_ids": [
+              "ev-5",
+              "ev-6",
+              "ev-7",
+              "ev-8",
+              "ev-10"
+            ],
+            "required": true,
+            "status": "covered"
+          },
+          {
+            "start": "2026-01-01",
+            "end": "2026-09-29",
+            "event_ids": [
+              "ev-11"
+            ],
+            "required": true,
+            "status": "covered"
+          }
+        ],
+        "major_moves": [
+          {
+            "change_id": "change-NVDA-2023-05-25",
+            "date": "2023-05-25",
+            "symbol": "NVDA",
+            "event_ids": [
+              "ev-4"
+            ],
+            "queries": [],
+            "investigated": true
+          },
+          {
+            "change_id": "change-NVDA-2024-02-22",
+            "date": "2024-02-22",
+            "symbol": "NVDA",
+            "event_ids": [
+              "ev-3"
+            ],
+            "queries": [],
+            "investigated": true
+          },
+          {
+            "change_id": "change-NVDA-2025-01-27",
+            "date": "2025-01-27",
+            "symbol": "NVDA",
+            "event_ids": [
+              "ev-8",
+              "ev-5",
+              "ev-6"
+            ],
+            "queries": [
+              "DeepSeek R1 NVDA selloff"
+            ],
+            "investigated": true
+          },
+          {
+            "change_id": "change-NVDA-2021-11-04",
+            "date": "2021-11-04",
+            "symbol": "NVDA",
+            "event_ids": [],
+            "queries": [],
+            "investigated": false
+          },
+          {
+            "change_id": "change-NVDA-2025-04-09",
+            "date": "2025-04-09",
+            "symbol": "NVDA",
+            "event_ids": [
+              "ev-10"
+            ],
+            "queries": [],
+            "investigated": true
+          }
+        ],
+        "repair_actions": [
+          {
+            "kind": "uninvestigated_move",
+            "query": "NVDA 2021-11-04",
+            "date": "2021-11-04",
+            "reason": "主要异动尚未进行窄时间窗检索"
+          }
+        ],
+        "data_gaps": [],
+        "event_count": 11,
+        "source_count": 12,
+        "changes": 23,
+        "associated_changes": 5,
+        "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
+      },
+      "review": {
+        "passed": true,
+        "findings": [
+          {
+            "object_id": "ev-7",
+            "severity": "warning",
+            "issue": "ev-7 标题与摘要明确写“2025-01-27 NVDA 单日暴跌 17%”，但其 1 日窗口为 2025-01-27→2025-01-28，return=+0.0893（+8.93%），方向为上涨；17% 的暴跌实际落在 ev-8 的 1 日窗口（2025-01-24→2025-01-27，return=-0.1697）。同一暴跌日被拆到两个事件，ev-7 的窗口起点晚一天，导致其核心事实在自身窗口内表现为上涨。",
+            "repair": "将 ev-7 的 1 日窗口改为 2025-01-24→2025-01-27（前一收盘至事件日收盘），与 ev-8 对齐；或在 ev-7 中显式说明该窗口度量的是事件日次日反弹，避免 +8.93% 被误读为对暴跌日的度量。"
+          },
+          {
+            "object_id": "ev-8",
+            "severity": "warning",
+            "issue": "ev-7 与 ev-8 事件日期同为 2025-01-27，修正后 1 日窗口将完全重合，5 日窗口（ev-7: 01-27→02-03；ev-8: 01-24→01-31）也高度重叠。ev-8 的 uncertainty 已自述“属下跌同期信息而非下跌事件本身”，但两者仍各带一套完整窗口指标，易被当作两个独立样本。",
+            "repair": "在报告中把 ev-8 标注为 ev-7 的同期信息（companion），不单独呈现其窗口收益；或明确声明二者共享市场窗口、不可加总，符合 definitions 中“同日同标的多条事件共享市场窗口，不是独立统计样本”的口径。"
+          },
+          {
+            "object_id": "ev-6",
+            "severity": "warning",
+            "issue": "模型发布日 2025-01-20 仅由 URL slug（news250120）推定，src-35526d9a0fa829 正文无任何日期字段，src-af915ec3e82793 仅称“last week released R1”，无法确认 1 月 20 日。该事件 satisfies 声明“DeepSeek 相关事件”建立在推定日期之上。",
+            "repair": "保留事件但将日期标注为“推定（URL slug）”，并在 satisfies 说明中注明日期未经原始公告确认；不要用该日期做精确的 1 日窗口归因。"
+          },
+          {
+            "object_id": "ev-5",
+            "severity": "warning",
+            "issue": "spec 的 required_events 含“2025-01-27 NVDA 下跌及同期信息（区分论文日、模型发布日、市场反应日）”，ev-5 正是论文日，却 satisfies 为空。该要求目前仅由 ev-7 单独声明满足，论文日/模型发布日的区分在 satisfies 层面无对应事件。",
+            "repair": "将 ev-5 的 satisfies 补为该项要求（作为“论文日”子项），或确认 ev-7 的 satisfies 文本已覆盖三个日期的区分。"
+          },
+          {
+            "object_id": "ev-2",
+            "severity": "warning",
+            "issue": "日期 2024-03-18 为推定：src-2703b6b30f807b 正文仅写“GTC—...today announced”，无日期字段，日期由 GTC 会期（3 月 18 日起）推定。satisfies 声明“Blackwell 平台发布”依赖该推定日期。",
+            "repair": "保留事件，但在报告中标注日期为推定；1 日窗口（+0.70%）不宜作为精确的事件日反应解读。"
+          },
+          {
+            "object_id": "ev-3",
+            "severity": "warning",
+            "issue": "ev-3 与 ev-4 的日期均为推定：src-9b28aba03660aa 与 src-e9eb25897e82d8 正文均无发布日期字段，日期由季度结束日与财报发布惯例推定（ev-3: 2024-02-21；ev-4: 2023-05-24）。两者 satisfies 为空属合理（spec 未要求财报事件），但日期推定未在 satisfies 层面体现。",
+            "repair": "无需修改 satisfies；在报告中保留“日期推定”标注即可。"
+          }
+        ],
+        "summary": "已读全部 12 条来源原文，重点抽查 4 条高影响标注（ev-1 ChatGPT 发布、ev-2 Blackwell 发布、ev-7 2025-01-27 暴跌、ev-8 NVIDIA 回应），并核对 8 组数值。未发现 critical 级问题：无伪造引用、无来源不支持的主要事实、无日期事实错误、无量级或百分数换算错误。已确认：ev-1 的 2022-11-30 在 HISTORY 正文明确；ev-7 的 17%、$118.58、近 6000 亿美元、纳指 3.1% 与 CNBC 原文一致；ev-8 的\"excellent AI advancement\"、test-time scaling、出口合规表述与 CNBC 原文一致；ev-9 的 671B/37B/14.8T/60 tokens 与官方页一致；ev-10 的涨跌名单与七巨头 1.8 万亿与 CNBC 原文一致；ev-5 的 arXiv v1 提交时刻 2025-01-22 15:19:35 UTC 与页面一致。数值方面 performance-NVDA 的 1010.53%、-66.34%、CAGR 61.86% 及 ev-7/ev-8/ev-1/ev-10 的收益率均 display_compatible，600 billion = 6000 亿严格相等。日期对齐方面，ev-11 盘后财报取次日窗口、ev-10 跨 04-04→04-07 的前一收盘至当日收盘口径均正确。主要实质问题集中在 ev-7 的 1 日窗口与事件日错位（暴跌 17% 落在 ev-8 窗口，ev-7 自身窗口反为 +8.93%）、ev-7 与 ev-8 共享窗口的重复计数风险，以及 ev-6/ev-2/ev-3/ev-4 的推定日期。未核验范围：各事件窗口的底层价格数据集未直接读取，仅核对指标输出与来源陈述的一致性；ev-6 的 2025-01-20 与 ev-2 的 2024-03-18 仍属推定日期，未取得带明确日期的原始公告。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。",
+        "deterministic": {
+          "passed": true,
+          "failures": [],
+          "claims": 1,
+          "events": 11,
+          "annotations": 11
+        }
+      },
+      "events": 11,
+      "sources": 12,
+      "spec": {
+        "intent": "event_study",
+        "title": "NVDA 近五年日线行情回顾与 AI 行业大事件研究（含 2025-01-27 下跌专题）",
+        "symbols": [
+          "NVDA"
+        ],
+        "start": "2021-09-28",
+        "end": "2026-09-29",
+        "topics": [
+          "NVDA 近五年日线行情回顾",
+          "同期 AI 行业大事件",
+          "2025-01-27 NVDA 下跌及同期信息（区分论文日、模型发布日、市场反应日）"
+        ],
+        "required_events": [
+          "ChatGPT 发布",
+          "Blackwell 平台发布",
+          "DeepSeek 相关事件",
+          "2025-01-27 NVDA 下跌及同期信息（区分论文日、模型发布日、市场反应日）"
+        ],
+        "event_scope": "broad",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          1.0
+        ],
+        "rebalance_months": 1,
+        "cost_bps": 10.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html",
+          "xlsx",
+          "pptx",
+          "docx"
+        ],
+        "assumptions": [
+          "研究类型为事件研究（event_study），基准仅作为 benchmark 使用，不纳入 symbols",
+          "时间范围采用默认最近五年：2021-09-28 至 2026-09-29（截止日不超过今天 2026-09-29）",
+          "日线频率",
+          "事件窗口为 1/5/20 交易日",
+          "基准为 SPY",
+          "DeepSeek 相关事件按用户点名保留，具体事件日期在研究中依据公开信息确定",
+          "2025-01-27 专题需分别标注论文日、模型发布日与市场反应日，避免混同",
+          "输出四种文件：html、xlsx、pptx、docx"
+        ]
+      },
+      "finished_at": "2026-09-29T02:37:01.904720+00:00"
+    },
+    {
+      "case": "gold-bitcoin",
+      "run_id": "8b9f3e9505554331",
+      "started_at": "2026-09-29T02:33:20.952056+00:00",
+      "manual_edits": false,
+      "checks": {
+        "symbols": true,
+        "numeric_and_reference_integrity": true,
+        "named_requirements_retained": true,
+        "coverage_gate": false,
+        "independent_review": false,
+        "parameters": true,
+        "sensitivity": true
+      },
+      "passed": false,
+      "completion_status": "partial",
+      "bundle_sha256": "01c0ebc1bfdb6f86df23d29e544646bc5574f91cf0a215b17a52f8a4b08c1afb",
+      "quality": {
+        "version": "1.0",
+        "passed": false,
+        "requirements": [],
+        "periods": [],
+        "major_moves": [
+          {
+            "change_id": "change-GLD-2026-01-30",
+            "date": "2026-01-30",
+            "symbol": "GLD",
+            "event_ids": [
+              "ev-6"
+            ],
+            "queries": [],
+            "investigated": true
+          },
+          {
+            "change_id": "change-BTC-USD-2026-02-05",
+            "date": "2026-02-05",
+            "symbol": "BTC-USD",
+            "event_ids": [
+              "ev-7"
+            ],
+            "queries": [],
+            "investigated": true
+          },
+          {
+            "change_id": "change-BTC-USD-2023-10-23",
+            "date": "2023-10-23",
+            "symbol": "BTC-USD",
+            "event_ids": [
+              "ev-3"
+            ],
+            "queries": [],
+            "investigated": true
+          },
+          {
+            "change_id": "change-GLD-2025-10-21",
+            "date": "2025-10-21",
+            "symbol": "GLD",
+            "event_ids": [],
+            "queries": [],
+            "investigated": false
+          },
+          {
+            "change_id": "change-GLD-2023-10-13",
+            "date": "2023-10-13",
+            "symbol": "GLD",
+            "event_ids": [],
+            "queries": [],
+            "investigated": false
+          }
+        ],
+        "repair_actions": [
+          {
+            "kind": "uninvestigated_move",
+            "query": "GLD 2025-10-21",
+            "date": "2025-10-21",
+            "reason": "主要异动尚未进行窄时间窗检索"
+          },
+          {
+            "kind": "uninvestigated_move",
+            "query": "GLD 2023-10-13",
+            "date": "2023-10-13",
+            "reason": "主要异动尚未进行窄时间窗检索"
+          }
+        ],
+        "data_gaps": [],
+        "event_count": 6,
+        "source_count": 10,
+        "changes": 43,
+        "associated_changes": 3,
+        "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
+      },
+      "review": {
+        "passed": false,
+        "findings": [
+          {
+            "object_id": "ev-5",
+            "severity": "critical",
+            "issue": "summary 称“加密货币总市值达3.02万亿美元”，但来源原文为“$3.02 trillion market cap”。3.02 trillion = 3.02 万亿，表述本身正确；然而同一 summary 将“总成交额升至3,290亿美元”与来源“$329 billion”对应，329 billion = 3,290 亿，换算正确。经 compare_numbers 核对，3.02 billion 与 30200 亿不相等，说明若把 3.02 trillion 误读为 3.02 billion 会差 1000 倍。当前 summary 文字为“3.02万亿美元”，与来源一致，未发现量级错误——此项经复核后不成立，不作为问题保留。",
+            "repair": "无需修改；保留“3.02万亿美元”与“3,290亿美元”的现有表述。"
+          },
+          {
+            "object_id": "ev-3",
+            "severity": "warning",
+            "issue": "summary 称“为7月中以来最高”，来源原文为“The last time the asset was this high was back in July”及“Bitcoin was last this high in mid-July”，表述与来源一致。但 summary 未提及来源中“24小时涨近5%”对应的是报道时点 CoinGecko 报价 31,284 美元，而事件标题写“升破31,000美元”，两者口径不同（标题为阈值、正文为时点价），可能被误读为同一数字。",
+            "repair": "在 summary 中明确“报道时点报价约31,284美元（CoinGecko），24小时涨近5%”，与标题的“升破31,000美元”区分开，避免读者将阈值与具体报价混同。"
+          },
+          {
+            "object_id": "ev-5",
+            "severity": "warning",
+            "issue": "summary 称“比特币领涨9.58%至88,904美元”，来源原文一致；但来源页面顶部行情条显示 BTC $82,913 -0.89%，与正文 88,904 美元存在明显差异，且来源为行业媒体、未交叉验证（confidence 已标 medium）。summary 未披露该页面内数据自相矛盾。",
+            "repair": "在 uncertainty 中补充“来源页面行情条与正文价格不一致（82,913 vs 88,904），正文数字未获独立来源确认”，或将 confidence 进一步下调。"
+          },
+          {
+            "object_id": "ev-6",
+            "severity": "warning",
+            "issue": "summary 称“现货黄金跌约9%至4,895.22美元/盎司”，来源原文为“spot gold shed around 9% to trade at $4,895.22 an ounce”，一致。但 summary 将“黄金期货跌11.4%至4,745.10美元”与现货并列陈述，未说明前者为结算价、后者为盘中报价，来源明确区分“settle”与“trade at”。",
+            "repair": "在 summary 或 uncertainty 中标注“现货为盘中报价、期货为结算价”，避免将两类价格口径混用。"
+          },
+          {
+            "object_id": "ev-7",
+            "severity": "warning",
+            "issue": "summary 称“当日跌约15%”，来源原文为“Bitcoin was last down about 15% at 7:37 p.m. ET, trading at $62,448.00”，即该跌幅为美东 19:37 的时点值，而非当日收盘定值；summary 未标明该跌幅的时点属性。",
+            "repair": "在 summary 中注明“约15%为美东19:37时点跌幅”，与“一度跌至60,062美元”的盘中低点区分。"
+          },
+          {
+            "object_id": "ev-1",
+            "severity": "warning",
+            "issue": "ev-1 与 ev-2 的 published_at 均为 null，time_precision 为 date，uncertainty 已说明“未取得匹配的精确发布时刻，降级为日期对齐”。声明原文仅标注“For release at 2:00 p.m. EDT”，未含完整发布时刻，故日期对齐处理合理；但两条事件均未在 satisfies 中声明任何 required_events（spec.required_events 为空），此处无错误。",
+            "repair": "无需修改；保留现有日期对齐与不确定性披露。"
+          }
+        ],
+        "summary": "已读取全部 7 条来源原文（2 份 FOMC 声明、SEC ETF 批准、Decrypt ETF 乐观报道、TechGraph 市值报道、CNBC 沃什提名金银暴跌、CNBC 比特币跌破 61,000）。核心事实大体得到来源支持：ev-1 的 1.5%–1.75% 区间、1994 年以来最大单次加息、俄乌与中国封控措辞均与声明一致；ev-2 的 3%–3.25% 区间与缩表表述一致；ev-4 的批准、灰度转换、贝莱德/富达、次日 Cboe BZX 交易、根斯勒“仅限比特币非证券商品 ETP”引语均与 CNBC 原文吻合；ev-6 的现货金跌约 9% 至 4,895.22、期货跌 11.4% 至 4,745.10、现货银跌 28%、期货跌 31.4%、1980 年 3 月以来最差单日、美元指数约 +0.8% 均与原文一致；ev-7 的 60,062 美元、跌破 70,000、当日约 -15%、本周近 -30%、较 10 月逾 126,000 高点回落超 50%、黄金期货一年 +61% 对比比特币近 -40% 均与原文一致。发现的问题集中在 ev-5 的市值单位换算与 ev-3 的“7 月中以来最高”表述。事件日期与行情窗口对齐（含 BTC 次日 00:00 UTC 收盘、盘后公告对应下一交易日）未发现口径错误；未核验范围包括 GLD 资金流向、ETF 上市首日表现、以及 warnings 中已披露检索失败的事件。",
+        "deterministic": {
+          "passed": true,
+          "failures": [],
+          "claims": 2,
+          "events": 7,
+          "annotations": 10
+        }
+      },
+      "events": 6,
+      "sources": 10,
+      "spec": {
+        "intent": "asset_comparison",
+        "title": "黄金 ETF 代理 (GLD) 与比特币 (BTC-USD) 近五年避险与抗通胀表现比较",
+        "symbols": [
+          "GLD",
+          "BTC-USD"
+        ],
+        "start": "2021-09-28",
+        "end": "2026-09-29",
+        "topics": [
+          "避险属性",
+          "抗通胀表现",
+          "多资产配置比较"
+        ],
+        "required_events": [],
+        "event_scope": "broad",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          0.6,
+          0.4
+        ],
+        "rebalance_months": 3,
+        "cost_bps": 20.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html",
+          "xlsx",
+          "pptx",
+          "docx"
+        ],
+        "assumptions": [
+          "黄金以 GLD（SPDR Gold Shares，ETF）作为黄金 ETF 代理，非现货黄金。",
+          "比特币以 BTC-USD 计价，美元计价。",
+          "时间区间为最近五年：2021-09-28 至 2026-09-29（截止日不超过今天 2026-09-29）。",
+          "日线数据。",
+          "基准为 SPY，仅作为基准，不纳入比较组合。",
+          "组合权重 GLD 60% / BTC-USD 40%，非负等权不适用（用户指定权重），月度再平衡改为季度（3 个月）再平衡。",
+          "交易成本 20 bps。",
+          "初始资金 100,000 美元。",
+          "事件窗口 1/5/20 交易日（默认，用于避险/通胀冲击事件观察）。",
+          "输出四种文件：html、xlsx、pptx、docx。"
+        ]
+      },
+      "finished_at": "2026-09-29T02:39:07.756436+00:00"
+    },
+    {
+      "case": "focused",
+      "run_id": "2374f63c9f4f4c30",
+      "started_at": "2026-09-29T02:37:01.908535+00:00",
+      "manual_edits": false,
+      "checks": {
+        "symbols": true,
+        "numeric_and_reference_integrity": true,
+        "named_requirements_retained": true,
+        "coverage_gate": true,
+        "independent_review": true,
+        "focused_scope": true,
+        "no_unrequested_events": true
+      },
+      "passed": true,
+      "completion_status": "complete",
+      "bundle_sha256": "a86d2dac9660c256cbff76a1698129530570d72f549ae104bc78330b22512002",
+      "quality": {
+        "version": "1.0",
+        "passed": true,
+        "requirements": [
+          {
+            "requirement": "NVDA Blackwell 平台发布（2024-03-18）",
+            "event_ids": [
+              "ev-blackwell-launch-20240318"
+            ],
+            "status": "covered"
+          }
+        ],
+        "periods": [],
+        "major_moves": [],
+        "repair_actions": [],
+        "data_gaps": [],
+        "event_count": 1,
+        "source_count": 7,
+        "changes": 3,
+        "associated_changes": 0,
+        "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
+      },
+      "review": {
+        "passed": true,
+        "findings": [
+          {
+            "object_id": "ev-blackwell-launch-20240318",
+            "severity": "warning",
+            "issue": "summary 称 \"相较 H100 可将 LLM 推理成本与能耗降低最多 25 倍\"，但官方稿中 25x 对应的是 GB200 NVL72 对比同数量 H100 的 LLM 推理场景（原文：GB200 NVL72 provides up to a 30x performance increase compared to the same number of NVIDIA H100 ... and reduces cost and energy consumption by up to 25x），summary 未限定为 NVL72 机架级对比，存在轻微语境收窄。",
+            "repair": "改为 \"GB200 NVL72 相较同数量 H100 在 LLM 推理上成本与能耗最多降低 25x\"，或保留原句并补注对比对象为 GB200 NVL72。"
+          },
+          {
+            "object_id": "association-ev-blackwell-launch-20240318-NVDA",
+            "severity": "warning",
+            "issue": "rating 标注为 \"低\"，但 5 日相对收益为 +6.05%（standardized_response 0.859），1 日相对收益 +0.51%（standardized_response 0.162）。按 definitions，rating 是确定性计算的反应幅度、与来源 confidence 独立，此处需确认 rating 阈值口径与 5 日窗口一致，避免读者将 \"低\" 误读为无反应。",
+            "repair": "在报告中同时列出 1/5/20 日相对收益与 standardized_response，并注明 rating 所依据的窗口与阈值口径。"
+          },
+          {
+            "object_id": "ev-blackwell-launch-20240318",
+            "severity": "warning",
+            "issue": "summary 称 \"AWS、Google、微软、Oracle 等为首批云服务商\"，与原文一致，但省略了原文同时列出的 NVIDIA Cloud Partner 公司（CoreWeave、IBM Cloud、Lambda、Nebius 等）与主权云。属简化，非事实错误。",
+            "repair": "如需完整，可补 \"及 CoreWeave、IBM Cloud、Lambda 等 NCP 伙伴与主权云\"；否则无需修改。"
+          },
+          {
+            "object_id": "claim-performance-NVDA",
+            "severity": "warning",
+            "issue": "claim 文本 \"复权累计收益 5.02%、最大回撤 -19.79%\" 与 metric 一致（display_compatible=true），但未说明区间终点为最后完整日线 2024-04-30、observations=42，读者可能误以为覆盖至 2024-04-30 之后的全部交易日。",
+            "repair": "在 claim 或脚注中注明 \"截至最后完整日线 2024-04-30，共 42 个观测\"。"
+          }
+        ],
+        "summary": "已读三篇原文（NVIDIA 官方新闻稿 src-2703b6b30f807b、The Verge src-119d026375f8f1、IEEE Spectrum src-68034618b931bc）并核对 performance-NVDA 与事件窗口数值。核心判断成立：官方稿原文明确 \"NVIDIA today announced that the NVIDIA Blackwell platform has arrived\"，含 B200、GB200 Grace Blackwell 超级芯片、2080 亿晶体管、4NP TSMC 工艺、第五代 NVLink 1.8TB/s、LLM 推理成本/能耗最多降低 25x、AWS/Google/Microsoft/Oracle 为首批云服务商、合作伙伴当年晚些时候供货，与 summary 一致；The Verge 标注 Mar 18, 2024 8:39 PM UTC 与 published_at 2024-03-18T20:39:02+00:00 一致，IEEE Spectrum 亦为 2024-03-18，事件日期无误。窗口对齐正确：公告 UTC 20:39 晚于 2024-03-18 收盘 20:00 UTC，1 日窗口为公告前收盘至次日收盘，符合盘后公告顺延一交易日规则，非日期错误。数值口径：total_return 0.050159→5.02%、max_drawdown -0.197911→-19.79%、1 日 return 0.010660→1.066%，compare_numbers 均 display_compatible=true，属展示舍入，不构成数值错误。satisfies 声明成立：required_events 为平台发布（非论文公开、非量产），事件确为平台发布。未发现 critical 级问题：无伪造引用、无来源不支持主要事实、无日期错误、无数值量级错误、无错误 satisfies 声明。仍未核验：src-10e0d1e3d19f9f、src-62a6b1a54b0b23、src-26cc0e45256639、src-748bae8e757130 未读取（未被用于本事件）；GTC 主题演讲分钟级时刻、Blackwell 后续量产/客户部署进展在已读来源中无覆盖，warnings 已披露；事件对股价的因果归因无直接来源支持，本核验不背书因果。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。",
+        "deterministic": {
+          "passed": true,
+          "failures": [],
+          "claims": 1,
+          "events": 1,
+          "annotations": 1
+        }
+      },
+      "events": 1,
+      "sources": 7,
+      "spec": {
+        "intent": "event_study",
+        "title": "NVDA Blackwell 平台发布事件研究（2024-03-18）",
+        "symbols": [
+          "NVDA"
+        ],
+        "start": "2024-03-01",
+        "end": "2024-04-30",
+        "topics": [
+          "NVDA Blackwell 平台发布"
+        ],
+        "required_events": [
+          "NVDA Blackwell 平台发布（2024-03-18）"
+        ],
+        "event_scope": "focused",
+        "benchmark": "SPY",
+        "windows": [
+          1,
+          5,
+          20
+        ],
+        "weights": [
+          1.0
+        ],
+        "rebalance_months": 1,
+        "cost_bps": 10.0,
+        "initial_capital": 100000.0,
+        "outputs": [
+          "html"
+        ],
+        "assumptions": [
+          "事件日：2024-03-18（Blackwell 平台发布）",
+          "日线数据，事件窗口为 1/5/20 交易日",
+          "基准为 SPY，仅作基准不纳入 symbols",
+          "仅研究该单一事件，不扩展至其他事件或行业整体回顾",
+          "仅输出 HTML 文件",
+          "用户指定日期范围 2024-03-01 至 2024-04-30，未超过今天日期"
+        ]
+      },
+      "finished_at": "2026-09-29T02:38:23.874231+00:00"
+    }
+  ]
+}

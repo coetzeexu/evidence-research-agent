@@ -1,0 +1,85 @@
+NVDA 2021-09-28 至 2026-09-28 五年 OHLCV 日线与 AI 行业大事件回顾（含 ChatGPT 发布、Blackwell 发布、DeepSeek-R1 发布及 2025-01-27 下跌归因）
+
+研究状态：部分完成。请求区间：2021-09-28 至 2026-09-28；实际数值区间见各指标口径。
+
+**行情覆盖与全期收益风险**
+
+行情为 NVDA 日线复权 OHLCV，实际覆盖 2021-09-28 至 2026-09-28，共 1,255 根日线，区间末收盘 228.86 美元。全期累计收益 1010.53%，年化收益 61.86%，年化波动 51.97%，最大回撤 -66.34%。即五年维度上是高收益伴随高波动的单一标的路径，回撤幅度与波动水平说明任何单日事件窗口的读数都必须放在这一背景里解读。
+
+竞争性解释：区间内存在 2025-01-27 单日 -16.97% 与 2025-04-09 单日 18.72% 等极端日，说明全期统计对少数交易日高度敏感。
+
+局限：收益与回撤为复权价格回顾、无交易费用，未扣除税费与滑点；未与 SPY 做同口径全期比较，因此不能据此断言相对基准的长期优劣。
+
+改变判断的条件：若改用月度或含费用口径，或延长/缩短区间，收益与回撤数值会明显变化。
+
+依据：[src-095b03880c506c] [prices-NVDA-4bb154ed9e9f]
+
+**ChatGPT 公开发布：日期可核，当日反应弱**
+
+已读来源记载 2022-11-30 OpenAI 向公众发布 ChatGPT，先以免费预览形式开放，属事后回顾页面而非当日官方公告。事件窗口上，当日 1 日收益 8.24%、相对基准 5.09%，标准化反应幅度 1.338；5 日相对收益 2.61%，20 日转为 -5.97%。方向为发布当日小幅上涨、随后 20 日相对走弱，反应强度评级为低。
+
+竞争性解释：下一交易日起算的 1 日相对收益 1.33% 与当日口径同向但更小，20 日口径 -8.20% 仍为负，说明“发布即利好”的读法不稳健。
+
+局限：来源为 2025 年发布的事后回顾，未取得 2022-11-30 当日原始公告；日期只有日精度，盘前盘后未知，故同时给出下一交易日起算的敏感性窗口。
+
+改变判断的条件：若取得当日官方公告及其发布时刻，可确定应使用当日还是次日窗口。
+
+依据：[src-0574c1fd7cebfb] [prices-NVDA-4bb154ed9e9f] [prices-SPY-0078bb2fefeb]
+
+**行情与事件的关联可信度：候选关联而非因果**
+
+已调查的主要异动中，2023-05-25 单日 24.37% 与 2024-02-22 单日 16.40% 均出现在财报公开后的第 1 根日线，属时间先后的候选关联；2025-01-27 的 -16.97% 与 DeepSeek 相关事件同日或滞后数日，属同日/滞后候选关联。这些关联只说明时间先后与同标的，未证明事件触发行情。2021-11-04 的 12.04% 与 2025-04-09 的 18.72% 在已读来源中没有可核实的事件对应，属重大异动但原因未证实。
+
+竞争性解释：同一标的在多个事件窗口都出现大幅波动，说明价格对信息高度敏感，单一事件难以解释全部异动。
+
+局限：事件窗口与财报、产品发布、行业政策等多项信息在时间上重叠，无法分离各自作用；未取得 2021-11-04 与 2025-04-09 的可引用原文。
+
+改变判断的条件：若取得 2021-11-04 与 2025-04-09 的当日公司级或宏观级原文，可补充或推翻现有候选关联。
+
+依据：[src-e9eb25897e82d8] [prices-NVDA-4bb154ed9e9f]
+
+**证据边界与不可确认项**
+
+本结论的边界有三点：一是 ChatGPT 发布仅有事后回顾来源，Blackwell 仅有平台宣布而无量产日期，DeepSeek-R1 仅有第三方博文与 arXiv 页面，均未取得公司级当日原始公告；二是 2025-01-27 下跌的竞争性解释（资本开支效率质疑、出口管制、宏观因素）在已读来源中缺乏可引用证据，因此未纳入事件；三是 2026 年区间仅核实到 2026-07-24 开放权重联署信与 2026-08-26 财报两项事件，其余 AI 行业大事件未取得可引用原文。这些缺口意味着关联可信度整体只能给到中等，不能升级为因果结论。
+
+竞争性解释：2026-08-26 财报窗口的下一交易日起算 1 日相对收益 8.08% 为正，而当日口径 -1.61% 为负，再次说明起算日选择会改变方向判断。
+
+局限：未取得当日收盘精确跌幅、成交量或市值变动的原文数值；HN 检索命中的多家媒体未作为已读来源引用。
+
+改变判断的条件：若补齐公司级原始公告、当日收盘数据与更多独立来源，可提高关联可信度并纳入竞争性解释。
+
+依据：[src-ae4dcdf780f63a] [prices-NVDA-4bb154ed9e9f] [prices-SPY-0078bb2fefeb]
+
+**尚未解决的问题**
+
+- Blackwell（B100/B200）平台发布：数值关系未成立或绑定错误：以 2024-03-18 为起算日的 5 日相对基准收益为正，以 2024-03-15 为起算日的 5 日相对基准收益亦为正，两者同向；positive ['next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return', 'event.ev-blackwell-platform-announce-2024-03-18.NVDA.5.relative_return'] = [0.060541598390718265, 0.05113305774566945]；数值关系未成立或绑定错误：以 2024-03-18 为起算日的 20 日相对基准收益为正，以 2024-03-15 为起算日的 20 日相对基准收益为负，两者方向相反；opposite_sign ['next-session.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return', 'event.ev-blackwell-platform-announce-2024-03-18.NVDA.20.relative_return'] = [0.006434793987104226, -0.01034984083686974]；数值关系尚未转成可执行断言：方向相反；应按收益/风险分别核对；下一步：按该问题补充证据或缩小结论
+- DeepSeek-R1 模型发布：数值关系未成立或绑定错误：发布日 1 日相对收益为正，论文日 1 日相对收益亦为正；positive ['event.ev-deepseek-r1-release-2025-01-20.NVDA.1.relative_return', 'event.ev-deepseek-r1-paper-2025-01-22.NVDA.1.relative_return'] = [0.013503099811765562, 0.03868734856465905]；下一步：按该问题补充证据或缩小结论
+- 2025-01-27 NVDA 下跌（区分模型发布、论文公开与市场反应日期）：数值关系未成立或绑定错误：1 日相对基准收益、5 日相对基准收益、20 日相对基准收益均为负；negative ['event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return', 'event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return', 'event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return'] = [-0.1555362994119368, -0.14799679898860485, -0.06882544290697334]；数值关系未成立或绑定错误：以 2025-01-27 为起算日，1 日相对基准收益为正，20 日相对基准收益亦为正；positive ['next-session.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return', 'next-session.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return'] = [0.08066641619642168, 0.07788862341490588]；数值关系尚未转成可执行断言：均为负；应按收益/风险分别核对；下一步：按该问题补充证据或缩小结论
+- 调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期：数值关系未成立或绑定错误：发布日 1 日相对收益为正，论文日 1 日相对收益亦为正；positive ['event.ev-deepseek-r1-release-2025-01-20.NVDA.1.relative_return', 'event.ev-deepseek-r1-paper-2025-01-22.NVDA.1.relative_return'] = [0.013503099811765562, 0.03868734856465905]；数值关系未成立或绑定错误：1 日相对基准收益、5 日相对基准收益、20 日相对基准收益均为负；negative ['event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return', 'event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.5.relative_return', 'event.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return'] = [-0.1555362994119368, -0.14799679898860485, -0.06882544290697334]；数值关系未成立或绑定错误：以 2025-01-27 为起算日，1 日相对基准收益为正，20 日相对基准收益亦为正；positive ['next-session.ev-nvda-deepseek-selloff-2025-01-27.NVDA.1.relative_return', 'next-session.ev-nvda-deepseek-selloff-2025-01-27.NVDA.20.relative_return'] = [0.08066641619642168, 0.07788862341490588]；数值关系尚未转成可执行断言：均为负；应按收益/风险分别核对；下一步：按该问题补充证据或缩小结论
+
+**计算口径**
+
+- 2021-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。
+- 2026-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。
+- 2021-09-28 至 2026-09-28；日线；复权价格回顾，无交易费用。
+- 2025-01-27 至 2025-01-27；一日；复权收盘到收盘。
+- 2025-04-09 至 2025-04-09；一日；复权收盘到收盘。
+- 2022-11-29 至 2022-11-30；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。
+- 2022-11-29 至 2022-12-06；5 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。
+- 2022-11-29 至 2022-12-28；20 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。
+- 2022-11-30 至 2022-12-01；1 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。
+- 2022-11-30 至 2022-12-29；20 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。
+- 2023-05-25 至 2023-05-25；一日；复权收盘到收盘。
+- 2024-02-22 至 2024-02-22；一日；复权收盘到收盘。
+- 2021-11-04 至 2021-11-04；一日；复权收盘到收盘。
+- 2026-08-26 至 2026-08-27；1 根完整日线；日期不明盘前盘后时，下一交易日起算的敏感性窗口。
+- 2026-08-25 至 2026-08-26；1 根完整日线；事件窗口；相对收益为标的减基准，非因果效应。
+
+**来源**
+
+- [src-095b03880c506c] Nvidia (NVDA) Q2 2027 earnings report: Live updates：https://www.cnbc.com/2026/08/26/nvidia-nvda-earnings-report-q2-2027-live-updates.html
+- [prices-NVDA-4bb154ed9e9f] NVDA 行情：https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true
+- [src-0574c1fd7cebfb] ChatGPT is released to the public | HISTORY：https://www.history.com/this-day-in-history/november-30/chatgpt-released-openai
+- [prices-SPY-0078bb2fefeb] SPY 行情：https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true
+- [src-e9eb25897e82d8] NVIDIA Announces Financial Results for First Quarter Fiscal 2024 | NVIDIA Newsroom：https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-first-quarter-fiscal-2024
+- [src-ae4dcdf780f63a] Nvidia, Microsoft, Meta warn against overregulating open-weight models：https://www.cnbc.com/2026/07/24/nvidia-microsoft-meta-open-weight-ai-models.html

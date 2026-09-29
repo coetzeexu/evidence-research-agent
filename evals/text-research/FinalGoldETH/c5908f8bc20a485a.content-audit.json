@@ -1,0 +1,19 @@
+{
+  "run_id": "c5908f8bc20a485a",
+  "content_pass": false,
+  "issues": [
+    {
+      "severity": "incomplete",
+      "quote": "敏感性",
+      "reason": "正文只发布通过核验的部分，缺少用户明确要求的敏感性结论；不能视为完整交付。"
+    },
+    {
+      "severity": "warning",
+      "quote": "若补齐 2026-09 月度估值或改用现货金价，收益与回撤数值会小幅变化，但量级差异不太可能反转",
+      "reason": "尚未计算该情景，不宜预判变化幅度或概率。"
+    }
+  ],
+  "auditor": "Codex independent reading, separate from production reviewer",
+  "audited_at": "2026-09-29T09:43:42.338454+00:00",
+  "method": "Read published prose, deterministic metrics and saved original source passages; no LLM score used"
+}

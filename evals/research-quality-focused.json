@@ -1,0 +1,110 @@
+{
+  "case": "focused",
+  "run_id": "ac2e3a4796fc46b3",
+  "started_at": "2026-09-29T06:35:57.154109+00:00",
+  "manual_edits": false,
+  "resumed_from_checkpoint": true,
+  "checks": {
+    "symbols": true,
+    "numeric_and_reference_integrity": true,
+    "named_requirements_retained": true,
+    "coverage_gate": true,
+    "independent_review": true,
+    "date_evidence": true,
+    "focused_scope": true,
+    "no_unrequested_events": true
+  },
+  "passed": true,
+  "completion_status": "complete",
+  "bundle_sha256": "3917308ff89953e2b377746bae47e410582c53af0e24c51b5aae8c1e4837db4a",
+  "quality": {
+    "version": "1.0",
+    "passed": true,
+    "requirements": [
+      {
+        "requirement": "NVDA Blackwell 平台发布（2024-03-18）",
+        "event_ids": [
+          "ev-blackwell-launch-20240318",
+          "ev-blackwell-specs-20240318",
+          "ev-aws-blackwell-20240318"
+        ],
+        "status": "covered"
+      }
+    ],
+    "periods": [],
+    "major_moves": [],
+    "repair_actions": [],
+    "data_gaps": [],
+    "event_count": 3,
+    "source_count": 12,
+    "changes": 3,
+    "associated_changes": 0,
+    "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
+  },
+  "review": {
+    "passed": true,
+    "findings": [
+      {
+        "object_id": "ev-aws-blackwell-20240318",
+        "severity": "warning",
+        "issue": "spec.required_events 为\"NVDA Blackwell 平台发布（2024-03-18）\"，而该事件 category=partnership，实为 AWS 侧合作公告，并非 Blackwell 平台发布本体。其 satisfies 声明把合作公告等同于\"平台发布\"，属口径混用，并与 ev-blackwell-launch-20240318 重复计入同一 required_event。",
+        "repair": "将该事件 satisfies 改为空或标注为\"关联事件（非 required_event 本体）\"，避免与 ev-blackwell-launch-20240318 重复计入同一 required_event。"
+      },
+      {
+        "object_id": "ev-blackwell-specs-20240318",
+        "severity": "warning",
+        "issue": "ev-blackwell-launch-20240318 与 ev-blackwell-specs-20240318 同日、同标的、共享同一行情窗口（shared_window_event_ids 已互相标注），specs 内容基本是 launch 的技术细节展开，两条事件同时 satisfies 同一 required_event，存在重复计数风险。",
+        "repair": "保留一条作为 required_event 主事件，另一条降级为补充说明或合并，避免读者误认为两个独立信号。"
+      }
+    ],
+    "summary": "复核 prior_review 三条问题：一条 critical 属误报，两条 warning 成立。AWS 事件（ev-aws-blackwell-20240318）的 date_quote 为空、日期仅由 source.published_at 元数据支撑，但该来源可支撑同页同日发布，且事件 uncertainty 已明确披露\"降级为日期对齐\"，属已披露不确定性，不应重复列为 critical，予以纠正。保留两条 warning：AWS 合作公告（partnership）被声明满足\"NVDA Blackwell 平台发布\"required_event，属口径混用并与 launch 事件重复计入；launch 与 specs 两事件高度重叠且同时 satisfies 同一 required_event，存在重复计数风险。数值方面经 compare_numbers 确认：414 exaflops、claim 的 5.02% 与 -19.79% 均与原文/指标展示舍入相容，非数值错误。行情窗口对齐正确，盘后公告对应下一交易日符合规则。未核验范围：NVIDIA 官方一手新闻稿正文与官方发布时刻缺失，出货时间表兑现情况未纳入。",
+    "deterministic": {
+      "passed": true,
+      "failures": [],
+      "claims": 1,
+      "events": 3,
+      "annotations": 3
+    }
+  },
+  "events": 3,
+  "sources": 12,
+  "spec": {
+    "intent": "event_study",
+    "title": "NVDA Blackwell 平台发布事件研究（2024-03-18）",
+    "symbols": [
+      "NVDA"
+    ],
+    "start": "2024-03-01",
+    "end": "2024-04-30",
+    "topics": [
+      "NVDA Blackwell 平台发布"
+    ],
+    "required_events": [
+      "NVDA Blackwell 平台发布（2024-03-18）"
+    ],
+    "event_scope": "focused",
+    "benchmark": "SPY",
+    "windows": [
+      1,
+      5,
+      20
+    ],
+    "weights": [
+      1.0
+    ],
+    "rebalance_months": 1,
+    "cost_bps": 10.0,
+    "initial_capital": 100000.0,
+    "outputs": [
+      "html"
+    ],
+    "assumptions": [
+      "仅研究 NVDA 于 2024-03-18 的 Blackwell 平台发布事件，不纳入其他事件",
+      "日线数据，事件窗口为 1/5/20 个交易日",
+      "基准为 SPY",
+      "仅输出 HTML 文件",
+      "事件日期以 2024-03-18 为事件日（t=0）"
+    ]
+  },
+  "finished_at": "2026-09-29T06:38:16.972637+00:00"
+}

@@ -1,0 +1,502 @@
+{
+  "status": "evaluation_finished",
+  "acceptance_passed": false,
+  "pause_requested_after_evaluation": true,
+  "planned_runs": 8,
+  "completed_runs": 8,
+  "fixed_version": true,
+  "automated_pass_count": 3,
+  "independently_accepted_count": 0,
+  "results": [
+    {
+      "suite": "FinalNVDA",
+      "case": "nvda",
+      "run_id": "a37b23dee36946f0",
+      "automated_pass": false,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "critical",
+          "quote": "ChatGPT 对算力需求的传导在数月后才被市场定价",
+          "reason": "没有市场预期或定价时点证据。"
+        },
+        {
+          "severity": "critical",
+          "quote": "产品细节此前已被媒体与供应链预期消化",
+          "reason": "Blackwell发布原文不能证明市场已提前消化预期；与已知基线缺陷相同。"
+        },
+        {
+          "severity": "warning",
+          "quote": "2025-01-27 仅有盘中跌幅口径，无收盘跌幅",
+          "reason": "资讯未给出收盘不等于行情数据不存在收盘跌幅。"
+        },
+        {
+          "severity": "incomplete",
+          "quote": "2025-01-27 NVDA 下跌",
+          "reason": "用户明确要求的下跌分析未完整发布，生产返回partial准确，但正文仍存在漏检。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 455.9481866671704,
+        "model_calls": 52,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 52,
+        "input_tokens": 1715453,
+        "output_tokens": 45005,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": false,
+        "required_questions": false,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalNVDA/nvda-a37b23dee36946f0.result.json",
+      "text_file": "FinalNVDA/nvda-a37b23dee36946f0.txt"
+    },
+    {
+      "suite": "FinalNVDA",
+      "case": "nvda",
+      "run_id": "8d903309177346fc",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "critical",
+          "quote": "论文日期未取得",
+          "reason": "请求明确区分模型发布、论文公开与市场反应日期；正文承认论文日期缺证据，却把研究标为complete，完整度门禁漏检。"
+        },
+        {
+          "severity": "warning",
+          "quote": "发布当日与次日 NVDA 相对基准为正",
+          "reason": "2025-01-20无NVDA日线（休市）；计算使用后续交易日窗口，正文应明确首个可交易日而不是发布当日。"
+        },
+        {
+          "severity": "warning",
+          "quote": "说明累计收益高度依赖少数交易日",
+          "reason": "仅列出几个大幅异动未完成移除这些交易日的收益贡献计算，不能据此证明高度依赖。"
+        },
+        {
+          "severity": "warning",
+          "quote": "说明“当日为正”对起算日选择敏感",
+          "reason": "两个1日相对窗口均为正，幅度变化不能被说成符号变化。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 384.44013045798056,
+        "model_calls": 55,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 55,
+        "input_tokens": 1646817,
+        "output_tokens": 46025,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalNVDA/nvda-8d903309177346fc.result.json",
+      "text_file": "FinalNVDA/nvda-8d903309177346fc.txt"
+    },
+    {
+      "suite": "FinalNVDA",
+      "case": "nvda",
+      "run_id": "1a40cf5889a445ec",
+      "automated_pass": false,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "incomplete",
+          "quote": "Blackwell（B100/B200）平台发布；DeepSeek-R1 模型发布；2025-01-27 NVDA 下跌",
+          "reason": "用户点名的必答段落未完整发布。多条数学上成立的正负关系被引文定位或断言绑定检查拒绝，partial 状态准确，但必答覆盖仍不达标。"
+        },
+        {
+          "severity": "warning",
+          "quote": "均未取得公司级当日原始公告",
+          "reason": "已读来源 src-2703b6b30f807b 是 NVIDIA 官方 Blackwell 发布公告，元数据为 2024-03-18；不能将该事实混同于缺少量产日期。"
+        },
+        {
+          "severity": "warning",
+          "quote": "说明全期统计对少数交易日高度敏感",
+          "reason": "两个极端交易日不足以支持全期统计敏感性结论，尚未计算剔除这些交易日后的收益和风险变化。"
+        },
+        {
+          "severity": "warning",
+          "quote": "未取得当日收盘精确跌幅、成交量或市值变动的原文数值",
+          "reason": "应区分资讯未给出的数字与行情已计算的收盘跌幅及成交量；正文已给出 2025-01-27 的 -16.97%，现有措辞可能使读者误以为缺少行情数据。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 387.03012383310124,
+        "model_calls": 50,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 50,
+        "input_tokens": 1808186,
+        "output_tokens": 37761,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": false,
+        "required_questions": false,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalNVDA/nvda-1a40cf5889a445ec.result.json",
+      "text_file": "FinalNVDA/nvda-1a40cf5889a445ec.txt"
+    },
+    {
+      "suite": "FinalGoldBTC",
+      "case": "gold-bitcoin",
+      "run_id": "a029870d97cd4201",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "critical",
+          "quote": "但“随通胀变化”的机制并不成立",
+          "reason": "相关与分组统计不足以否定资产机制，末尾免责声明不能修复。"
+        },
+        {
+          "severity": "critical",
+          "quote": "两者与通胀水平的相关性均为负，即高通胀月份的平均收益反而更低",
+          "reason": "错误地把相关系数符号等同分组均值排序；BTC高通胀月3.30%实际高于低通胀月0.79%。"
+        },
+        {
+          "severity": "warning",
+          "quote": "正收益月数才是购买力层面的保护证据",
+          "reason": "压力月为名义收益，没有该月CPI平减，不能直接称购买力保护。"
+        },
+        {
+          "severity": "warning",
+          "quote": "GLD",
+          "reason": "正文没有明确黄金ETF代理与现货的区别。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 360.1889777078759,
+        "model_calls": 25,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 25,
+        "input_tokens": 475112,
+        "output_tokens": 22599,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalGoldBTC/gold-bitcoin-a029870d97cd4201.result.json",
+      "text_file": "FinalGoldBTC/gold-bitcoin-a029870d97cd4201.txt"
+    },
+    {
+      "suite": "FinalGoldBTC",
+      "case": "gold-bitcoin",
+      "run_id": "c3901fcf59574029",
+      "automated_pass": false,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "incomplete",
+          "quote": "压力保护、通胀、成本与权重敏感性",
+          "reason": "必答问题的部分内容因引文定位/关系转录错误未获发布，不满足主场景完整性。"
+        },
+        {
+          "severity": "warning",
+          "quote": "成本与再平衡频率不是关键变量，权重与样本区间才是",
+          "reason": "缺少统一决策重要性标准；历史有限网格不足以如此笼统判断。"
+        },
+        {
+          "severity": "warning",
+          "quote": "买入持有与季度再平衡的累计收益差距有限，说明再平衡频率并非收益主要来源",
+          "reason": "累计收益118.16%与162.20%相差44.04个百分点；有限的频率对照不是收益来源分解。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 235.80493824998848,
+        "model_calls": 25,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 25,
+        "input_tokens": 429990,
+        "output_tokens": 25855,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": false,
+        "required_questions": false,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalGoldBTC/gold-bitcoin-c3901fcf59574029.result.json",
+      "text_file": "FinalGoldBTC/gold-bitcoin-c3901fcf59574029.txt"
+    },
+    {
+      "suite": "FinalGoldBTC",
+      "case": "gold-bitcoin",
+      "run_id": "bb46e598f9bf4551",
+      "automated_pass": false,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "critical",
+          "quote": "通胀关联为负、机制不成立",
+          "reason": "标题仍把相关性扩展为机制否定；正文中的限定措辞不能修复标题断言。"
+        },
+        {
+          "severity": "incomplete",
+          "quote": "压力期与分段敏感性",
+          "reason": "因关系转录选错运算符或参数，必答内容未完整发布。"
+        },
+        {
+          "severity": "warning",
+          "quote": "前半与后半区间差异表明结论不具备跨期稳定性",
+          "reason": "分段收益差异不足以证明配置结论不存在跨期稳定性，应收窄为尚未验证。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 316.2947772080079,
+        "model_calls": 25,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 25,
+        "input_tokens": 554784,
+        "output_tokens": 30588,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": false,
+        "required_questions": false,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalGoldBTC/gold-bitcoin-bb46e598f9bf4551.result.json",
+      "text_file": "FinalGoldBTC/gold-bitcoin-bb46e598f9bf4551.txt"
+    },
+    {
+      "suite": "FinalAMD",
+      "case": "amd",
+      "run_id": "9be63ae5c7be4601",
+      "automated_pass": true,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "warning",
+          "quote": "12 月正值 AI 主题整体走强",
+          "reason": "已读芯片报道未提供同期板块行情；应改为待验证假设。"
+        },
+        {
+          "severity": "warning",
+          "quote": "阈值未在已读来源中说明",
+          "reason": "强度是系统确定性方法，不应要求新闻证明算法阈值。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 249.24915999989025,
+        "model_calls": 28,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 28,
+        "input_tokens": 418101,
+        "output_tokens": 22006,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": true,
+        "required_questions": true,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "explicit_events_preserved": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalAMD/amd-9be63ae5c7be4601.result.json",
+      "text_file": "FinalAMD/amd-9be63ae5c7be4601.txt"
+    },
+    {
+      "suite": "FinalGoldETH",
+      "case": "gold-ethereum",
+      "run_id": "c5908f8bc20a485a",
+      "automated_pass": false,
+      "content_pass": false,
+      "issues": [
+        {
+          "severity": "incomplete",
+          "quote": "敏感性",
+          "reason": "正文只发布通过核验的部分，缺少用户明确要求的敏感性结论；不能视为完整交付。"
+        },
+        {
+          "severity": "warning",
+          "quote": "若补齐 2026-09 月度估值或改用现货金价，收益与回撤数值会小幅变化，但量级差异不太可能反转",
+          "reason": "尚未计算该情景，不宜预判变化幅度或概率。"
+        }
+      ],
+      "budget": {
+        "elapsed_seconds": 294.8199371669907,
+        "model_calls": 26,
+        "max_seconds": 900,
+        "max_model_calls": 64
+      },
+      "usage": {
+        "actual_models": [
+          "/workspace/model"
+        ],
+        "completed_model_calls": 26,
+        "input_tokens": 439066,
+        "output_tokens": 21236,
+        "failed_model_calls": 0
+      },
+      "checks": {
+        "verified_text": true,
+        "complete": false,
+        "required_questions": false,
+        "deterministic_provenance": true,
+        "recomputed_metrics": true,
+        "publication_review_hashes": true,
+        "market_calculations": true,
+        "replayed_numeric_relationships": true,
+        "inference_review": true,
+        "symbols": true,
+        "requested_dates": true,
+        "requested_execution": true,
+        "no_exports": true,
+        "bounded": true,
+        "bounded_tools": true
+      },
+      "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+      "code_unchanged": true,
+      "result_file": "FinalGoldETH/gold-ethereum-c5908f8bc20a485a.result.json",
+      "text_file": "FinalGoldETH/gold-ethereum-c5908f8bc20a485a.txt"
+    }
+  ]
+}

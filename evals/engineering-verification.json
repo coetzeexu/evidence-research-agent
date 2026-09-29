@@ -1,0 +1,19 @@
+{
+  "backend": {
+    "passed": 142,
+    "deselected": 3,
+    "command": "pytest -q -k 'not workbook_real and not docx_and_native and not offline_html_embeds'"
+  },
+  "frontend": {
+    "passed": 28,
+    "command": "npm test -- --run"
+  },
+  "typescript": "passed",
+  "prettier": "passed",
+  "ruff": "passed",
+  "api_cli_record": "text-api-cli-verification.json",
+  "browser_opened": false,
+  "reports_exported": false,
+  "images_loaded": false,
+  "scope": "Functional checks only; independent research-content audit remains separate."
+}

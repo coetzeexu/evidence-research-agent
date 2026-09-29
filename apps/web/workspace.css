@@ -1,0 +1,400 @@
+/* One bounded workspace; scrolling belongs to the active content panel. */
+* {
+  scrollbar-width: none !important;
+}
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.app-shell {
+  --sidebar-width: 240px;
+  --workspace-header-height: 58px;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  height: 100dvh;
+  min-height: 0;
+  padding: 12px 12px 12px 0;
+  overflow: hidden;
+}
+.app-shell .sidebar {
+  position: static;
+  width: auto;
+  height: 100%;
+  min-height: 0;
+  padding-bottom: 12px;
+}
+.app-shell .brand {
+  flex: 0 0 var(--workspace-header-height);
+  height: var(--workspace-header-height);
+  margin-top: 1px;
+  padding-block: 0;
+  border-bottom: 1px solid transparent;
+}
+.app-shell .main-shell {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  height: 100%;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.app-shell .topbar {
+  flex: 0 0 var(--workspace-header-height);
+  min-height: var(--workspace-header-height);
+  height: var(--workspace-header-height);
+  padding: 0 24px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--surface);
+  z-index: 2;
+}
+.app-shell .breadcrumb {
+  flex: 1;
+  min-width: 0;
+  gap: 8px;
+}
+.breadcrumb > button {
+  flex-shrink: 0;
+  color: var(--ink-2);
+  border-radius: 5px;
+}
+.breadcrumb > button:hover {
+  color: var(--ink);
+}
+.app-shell .breadcrumb strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink);
+  font-size: 12px;
+}
+.app-shell .actions {
+  flex-shrink: 0;
+}
+.app-shell .sidebar-search {
+  margin: 12px 12px 22px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition:
+    background 150ms,
+    border-color 150ms;
+}
+.app-shell .sidebar-search:focus-within {
+  outline: none;
+  background: var(--surface);
+  border-color: #d6d6d6;
+  box-shadow: 0 1px 2px #00000003;
+}
+.app-shell button:focus-visible,
+.app-shell a:focus-visible,
+.research-help-panel button:focus-visible {
+  outline: 2px solid #969696;
+  outline-offset: 3px;
+}
+.workspace-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.app-shell .error-banner {
+  flex-shrink: 0;
+  margin: 10px 18px 0;
+}
+.home-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.home-scroll .home {
+  width: 100%;
+  padding-top: clamp(48px, 8vh, 90px);
+  padding-bottom: 48px;
+}
+.composer-bottom {
+  justify-content: flex-end;
+}
+.composer-bottom > span {
+  margin-right: auto;
+}
+.app-shell .bui-composer:focus-within {
+  border-color: #b9b9b9;
+  box-shadow: 0 1px 6px #02041a0d;
+}
+.app-shell .conversation-page {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.app-shell .research-conversation {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--surface);
+}
+.app-shell .conversation-messages {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 28px;
+}
+.conversation-messages:focus-visible,
+.home-scroll:focus-visible,
+.workspace-main:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.conversation-thread {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 28px 0 20px;
+}
+.app-shell .conversation-compose {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 876px;
+  margin: 0 auto;
+  padding: 12px 28px 22px;
+  background: var(--surface);
+}
+.conversation-compose .bui-composer {
+  border-radius: 18px;
+  border-color: var(--line-strong);
+  background: var(--surface);
+  box-shadow: 0 2px 8px #02041a08;
+  padding: 14px;
+}
+.conversation-compose .bui-composer textarea {
+  min-height: 42px;
+  height: 48px;
+  max-height: 160px;
+}
+.app-shell .conversation-compose .follow-latest {
+  position: absolute;
+  top: -34px;
+  right: 28px;
+  bottom: auto;
+  margin: 0;
+}
+.running-compose-note {
+  padding: 6px 0;
+}
+.running-compose-note > button {
+  margin-left: auto;
+}
+.app-shell .workspace-layout {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  align-items: stretch;
+  overflow: hidden;
+}
+.app-shell .workspace-main {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.app-shell .workspace-main .study-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--surface);
+}
+.app-shell .workspace-layout .inspector {
+  position: relative;
+  top: auto;
+  right: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  width: auto;
+  overflow: hidden;
+}
+.workspace-layout .evidence-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.workspace-layout .panel-heading,
+.workspace-layout .conversation-heading {
+  flex-shrink: 0;
+}
+.workspace-layout .evidence-content {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.workspace-layout .evidence-chat {
+  flex-shrink: 0;
+}
+.app-shell .compact .conversation-messages {
+  padding: 0 16px;
+}
+.compact .conversation-thread {
+  padding: 18px 0 12px;
+}
+.app-shell .compact .conversation-compose {
+  padding: 10px 14px 16px;
+}
+.research-help-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: #11111128;
+}
+.research-help-panel {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(430px, calc(100vw - 40px));
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  z-index: 61;
+  padding: 30px;
+  border: 1px solid #e8e8e8;
+  border-radius: 20px;
+  background: #fff;
+  color: #242424;
+  box-shadow: 0 20px 80px #00000016;
+}
+.research-help-panel h2 {
+  font-size: 18px;
+  font-weight: 550;
+  margin-bottom: 9px;
+}
+.research-help-panel p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #777;
+}
+.research-help-panel ol {
+  list-style: decimal;
+  padding-left: 18px;
+  margin: 24px 0 0;
+}
+.research-help-panel li {
+  padding-left: 5px;
+  margin-top: 20px;
+}
+.research-help-panel strong {
+  font-size: 13px;
+  font-weight: 550;
+}
+.research-help-panel li p {
+  margin-top: 5px;
+}
+.research-help-close {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+}
+@media (max-width: 1250px) {
+  .app-shell .workspace-layout.with-inspector {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-shell .workspace-layout .inspector {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(380px, 100%);
+    border-left: 1px solid var(--line);
+    box-shadow: -12px 0 40px #0000000d;
+    z-index: 4;
+  }
+}
+@media (max-width: 1100px) {
+  .app-shell {
+    --sidebar-width: 204px;
+  }
+}
+@media (max-width: 850px) {
+  .app-shell {
+    --sidebar-width: 180px;
+  }
+  .app-shell .topbar {
+    padding: 0 16px;
+  }
+}
+@media (max-width: 680px) {
+  .app-shell {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 8px;
+  }
+  .app-shell .main-shell {
+    border-radius: 14px;
+  }
+  .app-shell .topbar {
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .app-shell .topbar .breadcrumb > button,
+  .app-shell .topbar .breadcrumb > svg {
+    display: none;
+  }
+  .app-shell .topbar .actions > .icon-button {
+    display: inline-flex;
+  }
+  .app-shell .conversation-messages {
+    padding: 0 16px;
+  }
+  .conversation-thread {
+    padding-top: 20px;
+  }
+  .app-shell .conversation-compose {
+    padding: 10px 14px max(14px, env(safe-area-inset-bottom));
+  }
+  .home-scroll .home {
+    padding-top: 38px;
+  }
+  .conversation-compose .bui-composer textarea {
+    font-size: 16px;
+  }
+}
+@media print {
+  .app-shell,
+  .app-shell .main-shell,
+  .workspace-content,
+  .app-shell .workspace-layout,
+  .app-shell .workspace-main,
+  .app-shell .conversation-page,
+  .app-shell .research-conversation,
+  .app-shell .conversation-messages,
+  .home-scroll {
+    height: auto;
+    overflow: visible;
+  }
+  .app-shell {
+    display: block;
+    padding: 0;
+  }
+  .app-shell .conversation-compose {
+    display: none;
+  }
+}

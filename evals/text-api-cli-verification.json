@@ -1,0 +1,10 @@
+{
+  "case": "actual partial research snapshot",
+  "api_status": 200,
+  "api_text_matches": true,
+  "cli_text_matches": true,
+  "research_status": "partial",
+  "export_reports": 0,
+  "artifacts_exist": false,
+  "scope": "Functional API and CLI check; not content acceptance of this failed development run"
+}

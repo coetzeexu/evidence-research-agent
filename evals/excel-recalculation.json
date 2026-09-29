@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-09-29T06:32:50.262592+00:00",
+  "checks": [
+    {
+      "sample": "nvda",
+      "modified": false,
+      "passed": true,
+      "monthly_rows": 60,
+      "max_nav_difference_usd": 1.5133991837501526e-09,
+      "formula_errors": []
+    },
+    {
+      "sample": "nvda",
+      "modified": true,
+      "passed": true,
+      "monthly_rows": 60,
+      "max_nav_difference_usd": 1.0477378964424133e-09,
+      "formula_errors": []
+    },
+    {
+      "sample": "gold-bitcoin",
+      "modified": false,
+      "passed": true,
+      "monthly_rows": 60,
+      "max_nav_difference_usd": 5.238689482212067e-10,
+      "formula_errors": []
+    },
+    {
+      "sample": "gold-bitcoin",
+      "modified": true,
+      "passed": true,
+      "monthly_rows": 60,
+      "max_nav_difference_usd": 4.3655745685100555e-10,
+      "formula_errors": []
+    }
+  ]
+}

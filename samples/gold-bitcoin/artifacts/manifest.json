@@ -1,0 +1,40 @@
+{
+  "run_id": "3302715305fc4dac",
+  "generated_at": "2026-09-29T03:43:05.645042+00:00",
+  "schema_version": "1.0",
+  "method_version": "2026.09.3",
+  "validation": {
+    "passed": true,
+    "failures": [],
+    "claims": 2,
+    "events": 10,
+    "annotations": 13
+  },
+  "data_snapshots": {
+    "GLD": "1a8f833cf4e3345f8e66ff7fa8261860dfede09eb2082a7061e28c6e7e3799b8",
+    "BTC-USD": "f3226c91d62b515ef9227d5bb113b945e45cf7e18dbb6d3f8ce726a63f3512b0",
+    "SPY": "ba0266b147e1210651f9991e41f1ed135bc89c7cc3faa0088be1865d09d2bbb6"
+  },
+  "files": {
+    "report.pptx": {
+      "sha256": "263bb9a9ab534348b785b94a8b292ea79b64a9d139bf9b206882a04b3ba7c9f8",
+      "bytes": 122865
+    },
+    "report.docx": {
+      "sha256": "b76ca05e9bd955084a65b0190f2176155fb52042b00150fc94eb39aa31307d85",
+      "bytes": 136856
+    },
+    "research-data.json": {
+      "sha256": "1c66aaeaa1203c538a82b89f132106b38a75cf8dbb282ac12504f3aa003aa7ce",
+      "bytes": 2359614
+    },
+    "report.html": {
+      "sha256": "ec268b47c85100bbdb5ab4c55f4152cfbbfc6cc01f2663eadc7470713688ae74",
+      "bytes": 2994079
+    },
+    "report.xlsx": {
+      "sha256": "aff0317fdbfd8af5484d928a0d59a373ac7f7a30f20bbb3255d68f805b9d16d4",
+      "bytes": 443476
+    }
+  }
+}

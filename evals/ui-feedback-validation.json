@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-28",
+  "backend_tests": 61,
+  "frontend_tests": 15,
+  "production_build": "passed",
+  "beautiful_ui": {
+    "upstream": "https://github.com/slev12397/beautiful-ui",
+    "revision": "44a274e598395ab61e7c96c26fda2758780253b7",
+    "license": "MIT",
+    "adapted_components": [
+      "TaskRows",
+      "ToolChips",
+      "ChatComposer (composer section)",
+      "Button",
+      "light theme tokens"
+    ]
+  },
+  "live_run": {
+    "id": "01bfcc662d7e4dc7",
+    "status": "complete",
+    "events": 4,
+    "sources": 9,
+    "warnings": 6,
+    "pipeline_records": 87,
+    "tools": 41,
+    "source_failures": 2,
+    "recovered_failures": 2,
+    "chat_messages": 2,
+    "download_http": 200,
+    "download_sha256": "8e2611913c767676a871fcbed5ea7b25079663c719cdbbad61493fc39af85ede",
+    "license_embedded": true,
+    "conversation_model_records": 1
+  },
+  "browser_checks": [
+    "Mouse click New research opens a draft and focuses textarea",
+    "Enter submits a real model research",
+    "Six phase SSE progress and tool records remain in conversation",
+    "Failure is visible and checkpoint retry resumes to complete",
+    "Follow-up question returns a cited answer",
+    "High-reaction filter shows exactly two NVDA events",
+    "High marker opens the matching FY2024 Q1 evidence panel",
+    "No browser console errors observed"
+  ],
+  "unit_only_checks": [
+    "Chinese IME and Shift+Enter do not submit",
+    "Double submission suppressed",
+    "Cross-study delayed response and delayed creation isolated",
+    "Creation failure preserves input",
+    "SSE reconnect notice and record deduplication",
+    "Retry subscribes to a fresh SSE stream",
+    "Repair loop resets later phase states",
+    "Rating color independent of price direction; unavailable separate"
+  ],
+  "artifact_checks": "Both bundled samples regenerated; manifest, data/HTML equality, spreadsheet caches and OOXML structures passed. Office pages were not rerendered for visual review this turn."
+}

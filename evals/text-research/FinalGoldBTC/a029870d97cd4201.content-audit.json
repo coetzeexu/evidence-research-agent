@@ -1,0 +1,29 @@
+{
+  "run_id": "a029870d97cd4201",
+  "content_pass": false,
+  "issues": [
+    {
+      "severity": "critical",
+      "quote": "但“随通胀变化”的机制并不成立",
+      "reason": "相关与分组统计不足以否定资产机制，末尾免责声明不能修复。"
+    },
+    {
+      "severity": "critical",
+      "quote": "两者与通胀水平的相关性均为负，即高通胀月份的平均收益反而更低",
+      "reason": "错误地把相关系数符号等同分组均值排序；BTC高通胀月3.30%实际高于低通胀月0.79%。"
+    },
+    {
+      "severity": "warning",
+      "quote": "正收益月数才是购买力层面的保护证据",
+      "reason": "压力月为名义收益，没有该月CPI平减，不能直接称购买力保护。"
+    },
+    {
+      "severity": "warning",
+      "quote": "GLD",
+      "reason": "正文没有明确黄金ETF代理与现货的区别。"
+    }
+  ],
+  "auditor": "Codex independent reading, separate from production reviewer",
+  "audited_at": "2026-09-29T09:43:42.338215+00:00",
+  "method": "Read published prose, deterministic metrics and saved original source passages; no LLM score used"
+}

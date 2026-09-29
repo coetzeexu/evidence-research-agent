@@ -1,0 +1,29 @@
+{
+  "run_id": "8d903309177346fc",
+  "content_pass": false,
+  "auditor": "Codex independent reading, separate from production reviewer",
+  "audited_at": "2026-09-29T09:51:03.674881+00:00",
+  "method": "Read text, sources, research questions and market session data",
+  "issues": [
+    {
+      "severity": "critical",
+      "quote": "论文日期未取得",
+      "reason": "请求明确区分模型发布、论文公开与市场反应日期；正文承认论文日期缺证据，却把研究标为complete，完整度门禁漏检。"
+    },
+    {
+      "severity": "warning",
+      "quote": "发布当日与次日 NVDA 相对基准为正",
+      "reason": "2025-01-20无NVDA日线（休市）；计算使用后续交易日窗口，正文应明确首个可交易日而不是发布当日。"
+    },
+    {
+      "severity": "warning",
+      "quote": "说明累计收益高度依赖少数交易日",
+      "reason": "仅列出几个大幅异动未完成移除这些交易日的收益贡献计算，不能据此证明高度依赖。"
+    },
+    {
+      "severity": "warning",
+      "quote": "说明“当日为正”对起算日选择敏感",
+      "reason": "两个1日相对窗口均为正，幅度变化不能被说成符号变化。"
+    }
+  ]
+}

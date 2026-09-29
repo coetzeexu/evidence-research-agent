@@ -1,0 +1,35 @@
+{
+  "requested_model": "self-evo-glm-atl-260826",
+  "platform": "maas",
+  "base_url": "https://1688openai.alibaba-inc.com/v1",
+  "returned_model": "/workspace/model",
+  "tool_calls": [
+    {
+      "name": "verify_number",
+      "args": {
+        "value": 7
+      },
+      "id": "chatcmpl-tool-b8a990b1a3c73a7c",
+      "type": "tool_call"
+    }
+  ],
+  "usage": {
+    "input_tokens": 305,
+    "output_tokens": 67,
+    "total_tokens": 372,
+    "input_token_details": {},
+    "output_token_details": {
+      "reasoning": 28
+    }
+  },
+  "passed": true,
+  "identity_basis": "user_confirmed",
+  "vllm_thinking": false,
+  "thinking_disabled_probe": {
+    "content": "OK",
+    "output_tokens": 2,
+    "reasoning_tokens": 0
+  },
+  "nvda_run": "15412514d7234a05",
+  "focused_run": "ac2e3a4796fc46b3"
+}

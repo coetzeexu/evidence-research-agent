@@ -1,0 +1,7 @@
+{
+  "run_id": "526e7fe32ca44536",
+  "status": "cancelled",
+  "automated_pass": false,
+  "finished_at": "2026-09-29T08:37:30.151994+00:00",
+  "reason": "候选批次已发现工程失败，主动中止其余尝试后修复；不计入最终八次验收。"
+}

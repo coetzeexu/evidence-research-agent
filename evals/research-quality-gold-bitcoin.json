@@ -1,0 +1,177 @@
+{
+  "case": "gold-bitcoin",
+  "run_id": "3302715305fc4dac",
+  "started_at": "2026-09-29T02:49:10.698759+00:00",
+  "manual_edits": false,
+  "checks": {
+    "symbols": true,
+    "numeric_and_reference_integrity": true,
+    "named_requirements_retained": true,
+    "coverage_gate": true,
+    "independent_review": true,
+    "parameters": true,
+    "sensitivity": true
+  },
+  "passed": true,
+  "completion_status": "complete",
+  "bundle_sha256": "67280beb98672ed43229683a12420056f298f5c789c8a5e9efae193d66ec2f8b",
+  "quality": {
+    "version": "1.0",
+    "passed": true,
+    "requirements": [],
+    "periods": [],
+    "major_moves": [
+      {
+        "change_id": "change-GLD-2026-01-30",
+        "date": "2026-01-30",
+        "symbol": "GLD",
+        "event_ids": [
+          "ev-7"
+        ],
+        "queries": [
+          "gold silver"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-BTC-USD-2026-02-05",
+        "date": "2026-02-05",
+        "symbol": "BTC-USD",
+        "event_ids": [
+          "ev-9",
+          "ev-8"
+        ],
+        "queries": [
+          "Bitcoin"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-BTC-USD-2023-10-23",
+        "date": "2023-10-23",
+        "symbol": "BTC-USD",
+        "event_ids": [
+          "ev-5"
+        ],
+        "queries": [
+          "Bitcoin ETF BlackRock",
+          "Bitcoin"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-GLD-2025-10-21",
+        "date": "2025-10-21",
+        "symbol": "GLD",
+        "event_ids": [],
+        "queries": [
+          "gold",
+          "gold selloff",
+          "gold price"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-GLD-2023-10-13",
+        "date": "2023-10-13",
+        "symbol": "GLD",
+        "event_ids": [],
+        "queries": [
+          "gold"
+        ],
+        "investigated": true
+      }
+    ],
+    "repair_actions": [],
+    "data_gaps": [],
+    "event_count": 10,
+    "source_count": 15,
+    "changes": 43,
+    "associated_changes": 5,
+    "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
+  },
+  "review": {
+    "passed": true,
+    "findings": [
+      {
+        "object_id": "ev-7",
+        "severity": "warning",
+        "issue": "标题“黄金重挫、白银期货暴跌31.4%”将期货跌幅置于标题，而摘要中同时列出“现货白银跌28%至83.45美元”与“白银期货跌31.4%至78.53美元”。来源 src-52290fdbe0be60 原文分别给出两个口径，摘要本身标注了现货/期货，事实无误；但标题仅取期货 31.4%，与摘要中现货黄金 -9% 并列时易被误读为现货跌幅。",
+        "repair": "将标题改为“现货白银跌28%、白银期货跌31.4%”或“贵金属大跌：现货黄金跌约9%、现货白银跌28%”，使标题口径与摘要一致，避免现货/期货混淆。"
+      },
+      {
+        "object_id": "ev-9",
+        "severity": "warning",
+        "issue": "摘要“过去一年跌近40%，同期黄金期货涨61%”直接引自 src-6e0021d495f65b，但该对比为“比特币现货 vs 黄金期货”的跨口径比较，且未在摘要中标注黄金为期货口径。",
+        "repair": "在摘要中明确“同期黄金期货涨61%”，或补充说明该对比为 BTC 现货与黄金期货的跨口径比较，避免读者误认为同为现货口径。"
+      },
+      {
+        "object_id": "ev-2",
+        "severity": "warning",
+        "issue": "摘要“比特币一度跌约17%至约22,764美元”为盘中低点口径，而关联窗口 1 日 return 为 -15.97%（收盘对收盘）。两者口径不同、并不矛盾，但摘要未说明 17% 为盘中值。",
+        "repair": "保留“一度”限定即可，无需修改；如需与行情窗口对齐，可补充说明该 17% 为盘中最大跌幅、收盘跌幅约15%。"
+      }
+    ],
+    "summary": "已读全部 15 条来源原文（含 Fed 声明、CNBC、Decrypt、NPR 等高影响来源），逐项核对 10 个事件的日期、事实与来源支持度。核心事实均获原文支持：ev-1 的 1.5%–1.75% 区间、1994 年以来最大、点阵图 3.4%、GDP 由 2.8% 下调至 1.7%；ev-4 的 3%–3.25% 区间与缩表措辞；ev-2 的盘中跌约17%至约22,764美元、市值首破1万亿；ev-3 的 LUNA 归零、UST 约12美分、BTC 反弹至约30,046美元；ev-5 的 $31,284 与 ETF 乐观情绪；ev-6 的 SEC 批准规则变更与账号误发；ev-7 的现货黄金约-9%、期货-11.4%、现货白银-28%、期货-31.4%；ev-8 的跌破8万美元、盘中低74,876美元；ev-9 的60,062美元低点、单周近30%、较10月高点回落超50%、过去一年跌近40%对黄金期货涨61%；ev-10 的五种资产与 BTC 涨10%至94,343.82美元。未发现伪造引用、日期错误或来源不支持主要事实的 critical 问题。spec.required_events 为空，satisfies 均为空数组，无错误满足声明。数值口径经 compare_numbers 核对，未发现量级或百分数换算错误；盘中值与收盘值口径差异（如 ev-2 的 -15.97% 收盘窗口 vs 来源盘中约17%）不构成矛盾。仍未核验范围限于 warnings 已披露的检索缺口（FTX 崩盘、2023-10-13 GLD 异动、2025年10月黄金高位、2024年8月波动）及 GLD 与 BTC-USD 避险/抗通胀相关性的新闻证据，相关结论只能依赖行情计算。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。",
+    "deterministic": {
+      "passed": true,
+      "failures": [],
+      "claims": 2,
+      "events": 10,
+      "annotations": 13
+    }
+  },
+  "events": 10,
+  "sources": 15,
+  "spec": {
+    "intent": "asset_comparison",
+    "title": "黄金 ETF 代理（GLD）与比特币（BTC-USD）近五年避险与抗通胀表现比较：60/40 组合、季度再平衡",
+    "symbols": [
+      "GLD",
+      "BTC-USD"
+    ],
+    "start": "2021-09-28",
+    "end": "2026-09-29",
+    "topics": [
+      "避险属性（危机期间相对表现与回撤保护）",
+      "抗通胀表现（与通胀预期/CPI 的相关性）",
+      "风险收益特征与波动率",
+      "60/40 组合回测与再平衡效应"
+    ],
+    "required_events": [],
+    "event_scope": "broad",
+    "benchmark": "SPY",
+    "windows": [
+      1,
+      5,
+      20
+    ],
+    "weights": [
+      0.6,
+      0.4
+    ],
+    "rebalance_months": 3,
+    "cost_bps": 20.0,
+    "initial_capital": 100000.0,
+    "outputs": [
+      "html",
+      "xlsx",
+      "pptx",
+      "docx"
+    ],
+    "assumptions": [
+      "黄金以 GLD（SPDR Gold Shares，ETF）作为黄金 ETF 代理，非现货黄金",
+      "比特币以 BTC-USD 计价，美元计价",
+      "时间区间为最近五年：2021-09-28 至 2026-09-29（截止日不超过今天 2026-09-29）",
+      "日线数据",
+      "基准为 SPY",
+      "事件窗口为 1/5/20 交易日",
+      "权重为 GLD 60% / BTC-USD 40%，非负、等权以外的固定权重",
+      "季度再平衡（每 3 个月）",
+      "单边成交成本 20 bps",
+      "初始资金 100000 美元",
+      "输出四种文件：html、xlsx、pptx、docx"
+    ]
+  },
+  "finished_at": "2026-09-29T02:53:56.351345+00:00"
+}

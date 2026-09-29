@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-09-29T06:31:56.760658+00:00",
+  "checks": [
+    {
+      "sample": "gold-bitcoin",
+      "passed": true,
+      "method_version": "2026.09.3",
+      "events": 10,
+      "sources": 15,
+      "manifest_files": 5,
+      "workbook_errors": [],
+      "structures": {
+        "report.docx": {
+          "zip_valid": true
+        },
+        "report.pptx": {
+          "zip_valid": true,
+          "native_charts": 1,
+          "slides": 16
+        }
+      }
+    },
+    {
+      "sample": "nvda",
+      "passed": true,
+      "method_version": "2026.09.3",
+      "events": 7,
+      "sources": 17,
+      "manifest_files": 5,
+      "workbook_errors": [],
+      "structures": {
+        "report.docx": {
+          "zip_valid": true
+        },
+        "report.pptx": {
+          "zip_valid": true,
+          "native_charts": 1,
+          "slides": 10
+        }
+      }
+    }
+  ],
+  "scope": "Snapshot/HTML equality, manifest hashes, cached Excel formulas, OOXML structure. Not browser or Office visual acceptance."
+}

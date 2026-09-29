@@ -1,0 +1,155 @@
+{
+  "code_hash": "6c8780ad334245b9c72020d3f4f42bd783d00c79cb7dc020d4be66eaba8960d2",
+  "skill_hashes": {
+    "skills/asset-comparison/SKILL.md": "28c469ccf4ffdf618051246dfbb5c25757d4c47ddc7c9812e68386c251b280d1",
+    "skills/event-study/SKILL.md": "c19739fbc9d5dd50e32394347c43a282c063576653a8285b7a76cf8ded95c1b2",
+    "skills/evidence-review/SKILL.md": "5eec56fb109a2503d2fad6d88303cef771d92c60167b43a27bd2442696e767fd",
+    "skills/report-authoring/SKILL.md": "7026a7812bc067d8d3e439cc0623df86165ad7314502539986fa4ba02bd1badf"
+  },
+  "runs": [
+    {
+      "suite": "FinalNVDA",
+      "run_id": "a37b23dee36946f0",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 19,
+      "read_count": 24
+    },
+    {
+      "suite": "FinalNVDA",
+      "run_id": "8d903309177346fc",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 19,
+      "read_count": 20
+    },
+    {
+      "suite": "FinalNVDA",
+      "run_id": "1a40cf5889a445ec",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 17,
+      "read_count": 28
+    },
+    {
+      "suite": "FinalGoldBTC",
+      "run_id": "a029870d97cd4201",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 14,
+      "read_count": 23
+    },
+    {
+      "suite": "FinalGoldBTC",
+      "run_id": "c3901fcf59574029",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 16,
+      "read_count": 15
+    },
+    {
+      "suite": "FinalGoldBTC",
+      "run_id": "bb46e598f9bf4551",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 16,
+      "read_count": 19
+    },
+    {
+      "suite": "FinalAMD",
+      "run_id": "9be63ae5c7be4601",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 10,
+      "read_count": 9
+    },
+    {
+      "suite": "FinalGoldETH",
+      "run_id": "c5908f8bc20a485a",
+      "requested_model": "self-evo-glm-atl-260826",
+      "prompt_hashes": {
+        "planner": "1a339984c81e3dc704088138d96af590ca004c4ddaf9bc308ada1d7d047d8e4a",
+        "researcher": "1d5e2ca26d88d34c0b42ae4be59200d28b4e4059966d000abac3767a343ca22d",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "0c064de29e228541c4051a7411667549c25f0bfbca7de0072fd778c6e572f793",
+        "text-reviewer": "a202ae4d4b9df1085cd2f137e8b4eeb9b9ff6843a7a4abcb8ce5a9c4bd2bff5d",
+        "meaning-review": "7f0c8a5e1102a9bb563d416ebb564b68010016e5e725f75c731f38eab8ba9b54",
+        "text-repair": "563eec9b1690f51cbb08501e8d71c46cc1e771b5a441318da662a1e9a003bd29"
+      },
+      "search_count": 16,
+      "read_count": 15
+    }
+  ]
+}

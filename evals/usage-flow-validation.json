@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-28",
+  "target": "http://127.0.0.1:8000/",
+  "scope": "Frontend usage flow, content scrolling, and persistent workspace layout",
+  "checks": {
+    "frontend_tests": { "passed": 24, "failed": 0 },
+    "typescript": "passed",
+    "prettier": "passed",
+    "web_build": "passed",
+    "offline_report_build": "passed",
+    "backend_tests_rerun": false,
+    "new_model_run": false,
+    "web_bundle_kb": 1110.72,
+    "web_bundle_gzip_kb": 365.62
+  },
+  "browser": {
+    "viewport_css_pixels": { "width": 811, "height": 959 },
+    "new_research_creates_untitled_sidebar_entry": false,
+    "search_focused_border": "rgb(214, 214, 214)",
+    "help_dialog_open_close_escape_and_focus_restore": "passed",
+    "main_panel_border_radius": "18px",
+    "document_height": 959,
+    "window_scroll_y": 0,
+    "scrollbar_width": "none",
+    "conversation": {
+      "scroll_top_before": 664.5,
+      "scroll_top_after": 0,
+      "scroll_height": 1389,
+      "client_height": 725,
+      "topbar_y_before_and_after": 13,
+      "composer_y_before_and_after": 795.5,
+      "composer_bottom_before_and_after": 946
+    },
+    "report": {
+      "scroll_top": 709.5,
+      "scroll_height": 1584,
+      "client_height": 875,
+      "topbar_y": 13,
+      "sticky_report_tabs_y": 71,
+      "chat_sidebar_width": 380,
+      "chat_sidebar_composer_y_before_and_after_scroll": 803.5,
+      "chat_sidebar_composer_bottom_before_and_after_scroll": 946,
+      "chat_sidebar_close": "passed"
+    }
+  },
+  "screenshots": ["usage-homepage.jpg", "usage-conversation.jpg", "usage-report.jpg"],
+  "limits": [
+    "Validated current natural browser viewport; no full responsive or cross-browser audit.",
+    "Browser checks reused saved research records; new conversation creation and streaming regressions covered by frontend tests."
+  ]
+}

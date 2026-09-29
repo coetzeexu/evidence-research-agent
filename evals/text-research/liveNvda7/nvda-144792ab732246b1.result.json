@@ -1,0 +1,38 @@
+{
+  "case": "nvda",
+  "run_id": "144792ab732246b1",
+  "started_at": "2026-09-29T09:25:28.121873+00:00",
+  "code_hash": "d3987c3b29df4e86e8ae86cf7fe0d572f650a5e56ca1c33e5be58d203334cbf3",
+  "mode": "live-end-to-end",
+  "prompt": "回顾 NVDA 在 2021-09-28 至 2026-09-28 的五年 OHLCV 日线及 AI 行业大事件。必须核实 ChatGPT 首次公开发布、Blackwell（B100/B200）平台发布、DeepSeek-R1 模型发布；调查 2025-01-27 下跌，区分模型发布、论文公开和市场反应日期。分析主要行情变化、对应事件、反应强度与关联可信度、竞争性解释和局限。只输出有原文和数值依据的中文调研文字，不导出报告。",
+  "manual_edits": false,
+  "independent_content_audit": "pending",
+  "runtime": {
+    "python": "3.12.13",
+    "packages": {
+      "langchain": "1.4.2",
+      "langgraph": "1.2.12",
+      "langchain-openai": "1.6.6",
+      "pydantic": "2.13.5"
+    }
+  },
+  "automated_pass": false,
+  "error": "ModelCallLimitExceededError: Model call limits exceeded: run limit (2/2)",
+  "budget": {
+    "elapsed_seconds": 110.2938647500705,
+    "model_calls": 22,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  },
+  "finished_at": "2026-09-29T09:27:18.501944+00:00",
+  "usage": {
+    "actual_models": [
+      "/workspace/model"
+    ],
+    "completed_model_calls": 22,
+    "input_tokens": 624315,
+    "output_tokens": 12295,
+    "failed_model_calls": 0
+  },
+  "code_unchanged": true
+}

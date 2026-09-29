@@ -1,0 +1,10 @@
+{
+  "case": "focused",
+  "run_id": "ac2e3a4796fc46b3",
+  "started_at": "2026-09-29T06:30:03.237333+00:00",
+  "manual_edits": false,
+  "resumed_from_checkpoint": false,
+  "passed": false,
+  "error": "ModelCallLimitExceededError: Model call limits exceeded: run limit (4/4)",
+  "finished_at": "2026-09-29T06:31:29.039504+00:00"
+}

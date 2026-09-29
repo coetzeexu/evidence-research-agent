@@ -1,0 +1,39 @@
+{
+  "run_id": "15412514d7234a05",
+  "generated_at": "2026-09-29T06:31:52.704661+00:00",
+  "schema_version": "1.0",
+  "method_version": "2026.09.3",
+  "validation": {
+    "passed": true,
+    "failures": [],
+    "claims": 1,
+    "events": 7,
+    "annotations": 7
+  },
+  "data_snapshots": {
+    "NVDA": "e6d1853924e8d11c72555b67da66bdbfcbb59678a268c8f020bafcff2b248577",
+    "SPY": "ba0266b147e1210651f9991e41f1ed135bc89c7cc3faa0088be1865d09d2bbb6"
+  },
+  "files": {
+    "report.pptx": {
+      "sha256": "d18fd977b99e1d1dc83ba93c2e28f450e93d54053ddaf05983a5167887be3f59",
+      "bytes": 89001
+    },
+    "report.docx": {
+      "sha256": "7aba4dbad5aefe05d2f3440c8088ad36776621532c60189e53ad9f8248dcbfb4",
+      "bytes": 125133
+    },
+    "research-data.json": {
+      "sha256": "064ddfcbacf409655ed78d7aca070ec52a5b9baa40df8a9becf08b8b48a92389",
+      "bytes": 1264846
+    },
+    "report.html": {
+      "sha256": "71bf0e37290f8a6aa7f816fabfd146bb7d2def7ebced4c05ea3fa942f05b15de",
+      "bytes": 2316123
+    },
+    "report.xlsx": {
+      "sha256": "980aaa9c7193a6e2abebe1c918945b328af501bd8c391f22e4b5152c47173a99",
+      "bytes": 264318
+    }
+  }
+}

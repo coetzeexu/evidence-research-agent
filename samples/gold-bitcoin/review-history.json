@@ -1,0 +1,26 @@
+[
+  {
+    "seq": 8016,
+    "run_id": "3302715305fc4dac",
+    "kind": "quality",
+    "label": "研究要求覆盖检查",
+    "payload": {
+      "passed": false,
+      "missing": 1,
+      "repair_round": 0
+    },
+    "at": "2026-09-29T02:52:18.051649+00:00"
+  },
+  {
+    "seq": 8590,
+    "run_id": "3302715305fc4dac",
+    "kind": "quality",
+    "label": "研究要求覆盖检查",
+    "payload": {
+      "passed": true,
+      "missing": 0,
+      "repair_round": 1
+    },
+    "at": "2026-09-29T02:53:56.161805+00:00"
+  }
+]

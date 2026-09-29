@@ -1,0 +1,16 @@
+{
+  "passed": false,
+  "auditor": "Codex independent reading of published text, outside production review",
+  "run_id": "ad24ed0a3825436d",
+  "critical_findings": [
+    {
+      "quote": "BTC-USD 的日线观测数少于 GLD",
+      "evidence": "BTC 1827 > GLD 1255, from source datasets"
+    },
+    {
+      "quote": "2022-12-30 与 2025-03-31 两个月 BTC 与 GLD 表现分化方向相反",
+      "evidence": "2022-12-30 both positive; March 2025 opposite signs"
+    }
+  ],
+  "unresolved_question": "inflation, numeric transcription joined text with an ellipsis"
+}

@@ -1,0 +1,16 @@
+{
+  "kind": "real-run-replay",
+  "run_id": "3302715305fc4dac",
+  "promoted_at": "2026-09-29T03:02:53.760768+00:00",
+  "model_requested": "deepseek-v4-flash",
+  "original_bundle_sha256": "67280beb98672ed43229683a12420056f298f5c789c8a5e9efae193d66ec2f8b",
+  "manual_event_edits": false,
+  "transformations": [
+    "mode: live -> sample; event facts, coverage and review unchanged"
+  ],
+  "completion_status": "complete",
+  "events": 10,
+  "sources": 15,
+  "review_passed": true,
+  "schema_migration": "Temporal evidence fields added with legacy defaults; original events, review and completion status retained. Latest live validation blocked by model API 402."
+}

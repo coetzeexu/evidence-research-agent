@@ -1,0 +1,5724 @@
+{
+  "version": "1.0",
+  "status": "complete",
+  "questions": [
+    {
+      "id": "market",
+      "question": "行情数据覆盖到何时、主要收益与风险表现如何？",
+      "acceptance": "说明实际起止区间、行情口径及可复核的收益/回撤；比较任务以同口径执行基线为主。",
+      "kind": "market",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-market"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "hedge",
+      "question": "这些资产在市场压力期是否提供保护？",
+      "acceptance": "使用相同压力月份，区分正收益与相对抗跌；披露事后选样与样本量限制。",
+      "kind": "hedge",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-hedge"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "inflation",
+      "question": "这些资产是否保全购买力、是否随通胀变化？",
+      "acceptance": "结合实际收益、CPI分组/相关性，区分保值结果与稳定抗通胀机制；明确宏观数据是回顾性的。",
+      "kind": "inflation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-inflation"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "allocation",
+      "question": "组合相对单资产有什么收益与风险代价？",
+      "acceptance": "只比较相同执行口径的组合与单资产基线，给出条件化配置判断和可能推翻判断的证据。",
+      "kind": "allocation",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-allocation",
+        "f-framework"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "sensitivity",
+      "question": "配置判断对成本、权重、频率和样本区间是否敏感？",
+      "acceptance": "引用已计算的敏感性结果，不推荐事后最优参数，分段不冒充样本外检验。",
+      "kind": "sensitivity",
+      "required": true,
+      "priority": 2,
+      "required_event": "",
+      "request_quote": "",
+      "status": "answered",
+      "finding_ids": [
+        "f-framework",
+        "f-sensitivity"
+      ],
+      "gaps": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "f-market",
+      "question_ids": [
+        "market"
+      ],
+      "kind": "fact",
+      "title": "行情覆盖与同口径收益风险基线",
+      "text": "行情覆盖 2021-09-28 至 2026-09-28：GLD 有 {{market.GLD.bars}} 个日线观测，BTC-USD 有 {{market.BTC-USD.bars}} 个（已排除 1 条未完成日线）。但可比较的执行口径基线是共同月末估值，区间为 2021-09-30 至 2026-08-31，共 {{execution.portfolio.observations}} 个月度观测，信号后下一可交易开盘执行、含 {{config.cost_bps}} 单边成本与现金余额。该口径下组合累计收益 {{execution.portfolio.total_return}}、年化 {{execution.portfolio.cagr}}、年化波动 {{execution.portfolio.volatility}}、最大回撤 {{execution.portfolio.max_drawdown}}；GLD 单资产累计 {{execution.GLD.total_return}}、年化 {{execution.GLD.cagr}}、波动 {{execution.GLD.volatility}}、最大回撤 {{execution.GLD.max_drawdown}}；BTC-USD 单资产累计 {{execution.BTC-USD.total_return}}、年化 {{execution.BTC-USD.cagr}}、波动 {{execution.BTC-USD.volatility}}、最大回撤 {{execution.BTC-USD.max_drawdown}}。要点是：本区间 GLD 的收益高于 BTC-USD，而 BTC-USD 的波动与回撤远大于 GLD。",
+      "evidence": [],
+      "counterevidence": "日线口径下 BTC-USD 的路径可能更极端，月度估值会平滑部分波动。",
+      "limitations": "执行口径为月度估值，与日线行情口径不同，不能混用；区间末端为 2026-08-31 而非 2026-09-28，因共同月末估值需完整日线。",
+      "confidence": "high",
+      "changes_if": "若改用日线或不同再平衡锚点，收益与回撤数值会变化。"
+    },
+    {
+      "id": "f-hedge",
+      "question_ids": [
+        "hedge"
+      ],
+      "kind": "analysis",
+      "title": "压力期：GLD 相对抗跌，BTC 保护有限",
+      "text": "以事后选取的基准最差月份为压力样本（共 {{stress.GLD.n}} 个月），GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY；BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢。典型例子：2022-06-30 SPY {{stress-month.2022-06-30.SPY}}，GLD {{stress-month.2022-06-30.GLD}}，BTC-USD {{stress-month.2022-06-30.BTC-USD}}；2025-03-31 SPY {{stress-month.2025-03-31.SPY}}，GLD {{stress-month.2025-03-31.GLD}}，BTC-USD {{stress-month.2025-03-31.BTC-USD}}。可见 GLD 在多数压力月跌幅小于基准，而 BTC 在部分月份跌幅显著大于基准。",
+      "evidence": [],
+      "counterevidence": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负，说明 GLD 也非每月抗跌。",
+      "limitations": "压力月份是事后按基准最差月挑选，存在选样偏差；样本仅 6 个月，不能外推为稳定规律。跑赢基准不等于保本。",
+      "confidence": "medium",
+      "changes_if": "若压力定义改为波动率或回撤触发，结论可能不同。"
+    },
+    {
+      "id": "f-inflation",
+      "question_ids": [
+        "inflation"
+      ],
+      "kind": "analysis",
+      "title": "实际购买力与通胀关联",
+      "text": "实际购买力（复权价格/CPI 回顾口径）上，GLD 累计实际收益 {{real.GLD.total_return}}，BTC-USD {{real.BTC-USD.total_return}}，两者均高于零，但 GLD 更高。通胀关联方面，以 CPI 同比 {{inflation.GLD.threshold}} 为分界：高通胀月 GLD 平均收益 {{inflation.GLD.high_inflation_mean_return}}、BTC-USD {{inflation.BTC-USD.high_inflation_mean_return}}；低通胀月 GLD {{inflation.GLD.low_inflation_mean_return}}、BTC-USD {{inflation.BTC-USD.low_inflation_mean_return}}。GLD 在高通胀月收益低于低通胀月，BTC 则相反。月度收益与 CPI 同比的相关性：GLD {{inflation.GLD.inflation_correlation}}，BTC-USD {{inflation.BTC-USD.inflation_correlation}}，均为弱负相关。",
+      "evidence": [],
+      "counterevidence": "弱负相关不能证明资产具备抗通胀属性，也不能否定其长期保值结果。",
+      "limitations": "CPI 为当前历史版本，仅作回顾分析，非当时已知信号；相关性基于月度收益与通胀水平，不等于价格水平保值机制。",
+      "confidence": "medium",
+      "changes_if": "若改用通胀变动而非水平，或换用不同 CPI 序列，相关性会变化。"
+    },
+    {
+      "id": "f-allocation",
+      "question_ids": [
+        "allocation"
+      ],
+      "kind": "analysis",
+      "title": "组合相对单资产的收益与风险代价",
+      "text": "同口径（execution）比较：组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}；组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}；组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}。即组合以高于 GLD 的波动与回撤为代价换取更高收益，同时显著降低了 BTC 单资产的风险。两资产月度相关性 {{correlation.GLD.BTC-USD.value}}（n={{correlation.GLD.BTC-USD.n}}），低相关有助于解释分散风险，但不能单独解释组合收益高于两单资产。",
+      "evidence": [],
+      "counterevidence": "若相关性上升，分散收益会减弱。",
+      "limitations": "相关性为样本内估计，样本量有限；组合收益高于单资产可能来自再平衡与权重效应，非因果贡献。",
+      "confidence": "medium",
+      "changes_if": "若权重或再平衡频率改变，组合收益风险关系会变化。"
+    },
+    {
+      "id": "f-framework",
+      "question_ids": [
+        "allocation",
+        "sensitivity"
+      ],
+      "kind": "assumption",
+      "title": "有条件决策框架",
+      "text": "基于本快照：若目标是降低组合波动与回撤并保留部分上行，较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}，但收益也相应变化；若追求更高收益并接受更大回撤，可提高 BTC 权重，但需承受 {{sensitivity.8.max_drawdown}} 级别的回撤。季度再平衡在成本与频率间较为均衡。该框架为条件化研究判断，非投资建议。",
+      "evidence": [],
+      "counterevidence": "若未来相关性或波动结构改变，权重取舍会不同。",
+      "limitations": "框架基于单一历史区间与事后参数，未考虑税费、流动性、监管变化。",
+      "confidence": "low",
+      "changes_if": "若加入更多资产或更长区间，框架需重建。"
+    },
+    {
+      "id": "f-sensitivity",
+      "question_ids": [
+        "sensitivity"
+      ],
+      "kind": "analysis",
+      "title": "成本、频率、权重、分段敏感性",
+      "text": "成本：从 {{sensitivity.1.cost_bps}} 到 {{sensitivity.4.cost_bps}}，累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}，随成本上升而下降，但幅度有限。频率：买入持有累计 {{sensitivity.5.total_return}}，每 1 月再平衡 {{sensitivity.6.total_return}}，每 12 月再平衡 {{sensitivity.7.total_return}}，季度基线 {{sensitivity.0.total_return}}，再平衡频率影响收益但不改变量级。权重：GLD 权重 {{sensitivity.8.weight_GLD}} 时波动 {{sensitivity.8.volatility}}、回撤 {{sensitivity.8.max_drawdown}}；GLD 权重 {{sensitivity.10.weight_GLD}} 时波动 {{sensitivity.10.volatility}}、回撤 {{sensitivity.10.max_drawdown}}，随 GLD 权重上升，波动与回撤下降。分段：前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正但差异明显。",
+      "evidence": [],
+      "counterevidence": "成本敏感性小，说明结论对成本假设不敏感；但权重与分段敏感性大。",
+      "limitations": "分段为样本内切分，不构成样本外检验；不应从网格中挑选事后最优参数。",
+      "confidence": "medium",
+      "changes_if": "若区间或资产改变，敏感性排序可能不同。"
+    }
+  ],
+  "passages": [],
+  "metrics": [
+    {
+      "id": "market.GLD.bars",
+      "label": "market.GLD · bars",
+      "value": 1255.0,
+      "unit": "integer",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "coverage",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.open",
+      "label": "latest.GLD · open",
+      "value": 379.760009765625,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.high",
+      "label": "latest.GLD · high",
+      "value": 381.5199890136719,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.low",
+      "label": "latest.GLD · low",
+      "value": 376.8800048828125,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.close",
+      "label": "latest.GLD · close",
+      "value": 377.9100036621094,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.GLD.volume",
+      "label": "latest.GLD · volume",
+      "value": 14750400.0,
+      "unit": "integer",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "market.BTC-USD.bars",
+      "label": "market.BTC-USD · bars",
+      "value": 1827.0,
+      "unit": "integer",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "coverage",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.BTC-USD.open",
+      "label": "latest.BTC-USD · open",
+      "value": 84454.1171875,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.BTC-USD.high",
+      "label": "latest.BTC-USD · high",
+      "value": 84972.6640625,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.BTC-USD.low",
+      "label": "latest.BTC-USD · low",
+      "value": 82570.71875,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.BTC-USD.close",
+      "label": "latest.BTC-USD · close",
+      "value": 83502.609375,
+      "unit": "usd",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "latest.BTC-USD.volume",
+      "label": "latest.BTC-USD · volume",
+      "value": 42589028679.0,
+      "unit": "integer",
+      "start": "2026-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "Yahoo split-adjusted OHLC; adj_close additionally reflects distributions",
+      "comparison_group": "ohlcv",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.total_return",
+      "label": "daily.GLD · 累计收益",
+      "value": 1.3320579854688872,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.cagr",
+      "label": "daily.GLD · 年化收益",
+      "value": 0.18456238688941284,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.volatility",
+      "label": "daily.GLD · 年化波动",
+      "value": 0.18908138941885416,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.GLD.max_drawdown",
+      "label": "daily.GLD · 最大回撤",
+      "value": -0.26404517857029663,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.BTC-USD.total_return",
+      "label": "daily.BTC-USD · 累计收益",
+      "value": 1.0349345535197432,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.BTC-USD.cagr",
+      "label": "daily.BTC-USD · 年化收益",
+      "value": 0.1527059583932946,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.BTC-USD.volatility",
+      "label": "daily.BTC-USD · 年化波动",
+      "value": 0.5149570844409697,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "daily.BTC-USD.max_drawdown",
+      "label": "daily.BTC-USD · 最大回撤",
+      "value": -0.7663456370856909,
+      "unit": "percent",
+      "start": "2021-09-28",
+      "end": "2026-09-28",
+      "frequency": "日线",
+      "method": "复权价格回顾，无交易费用",
+      "comparison_group": "daily",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-GLD-2026-01-30.return",
+      "label": "move.change-GLD-2026-01-30 · 收益",
+      "value": -0.10274245274560045,
+      "unit": "percent",
+      "start": "2026-01-30",
+      "end": "2026-01-30",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-BTC-USD-2026-02-05.return",
+      "label": "move.change-BTC-USD-2026-02-05 · 收益",
+      "value": -0.14129892381358544,
+      "unit": "percent",
+      "start": "2026-02-05",
+      "end": "2026-02-05",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-BTC-USD-2023-10-23.return",
+      "label": "move.change-BTC-USD-2023-10-23 · 收益",
+      "value": 0.10309890521346299,
+      "unit": "percent",
+      "start": "2023-10-23",
+      "end": "2023-10-23",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-GLD-2025-10-21.return",
+      "label": "move.change-GLD-2025-10-21 · 收益",
+      "value": -0.06426889260666147,
+      "unit": "percent",
+      "start": "2025-10-21",
+      "end": "2025-10-21",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "move.change-GLD-2023-10-13.return",
+      "label": "move.change-GLD-2023-10-13 · 收益",
+      "value": 0.03214825984540237,
+      "unit": "percent",
+      "start": "2023-10-13",
+      "end": "2023-10-13",
+      "frequency": "一日",
+      "method": "复权收盘到收盘",
+      "comparison_group": "event",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.total_return",
+      "label": "execution.portfolio · 累计收益",
+      "value": 1.621958236660832,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.cagr",
+      "label": "execution.portfolio · 年化收益",
+      "value": 0.2165650492193245,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.volatility",
+      "label": "execution.portfolio · 年化波动",
+      "value": 0.24855432585327095,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.max_drawdown",
+      "label": "execution.portfolio · 最大回撤",
+      "value": -0.367414822221963,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.observations",
+      "label": "execution.portfolio · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.portfolio.frequency",
+      "label": "execution.portfolio · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.total_return",
+      "label": "execution.GLD · 累计收益",
+      "value": 1.4733538532972315,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.cagr",
+      "label": "execution.GLD · 年化收益",
+      "value": 0.20221480964305583,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.volatility",
+      "label": "execution.GLD · 年化波动",
+      "value": 0.16863539803888533,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.max_drawdown",
+      "label": "execution.GLD · 最大回撤",
+      "value": -0.23766901930987872,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.observations",
+      "label": "execution.GLD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.GLD.frequency",
+      "label": "execution.GLD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.BTC-USD.total_return",
+      "label": "execution.BTC-USD · 累计收益",
+      "value": 0.7728191284250496,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.BTC-USD.cagr",
+      "label": "execution.BTC-USD · 年化收益",
+      "value": 0.12349342727448431,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.BTC-USD.volatility",
+      "label": "execution.BTC-USD · 年化波动",
+      "value": 0.557557453841724,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.BTC-USD.max_drawdown",
+      "label": "execution.BTC-USD · 最大回撤",
+      "value": -0.727047074945036,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.BTC-USD.observations",
+      "label": "execution.BTC-USD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "execution.BTC-USD.frequency",
+      "label": "execution.BTC-USD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "execution",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.cost_bps",
+      "label": "config · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.rebalance_months",
+      "label": "config · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.anchors",
+      "label": "config · anchors",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.weight_GLD",
+      "label": "config · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "config.weight_BTC-USD",
+      "label": "config · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额",
+      "comparison_group": "config",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.total_return",
+      "label": "monthly.GLD · 累计收益",
+      "value": 1.487029657726279,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.cagr",
+      "label": "monthly.GLD · 年化收益",
+      "value": 0.20356370486238617,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.volatility",
+      "label": "monthly.GLD · 年化波动",
+      "value": 0.16927745347429393,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.max_drawdown",
+      "label": "monthly.GLD · 最大回撤",
+      "value": -0.23849094597868215,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.observations",
+      "label": "monthly.GLD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.frequency",
+      "label": "monthly.GLD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.GLD.sharpe_proxy",
+      "label": "monthly.GLD · sharpe_proxy",
+      "value": 0.960236604820174,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.total_return",
+      "label": "monthly.BTC-USD · 累计收益",
+      "value": 0.8686096497365672,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.cagr",
+      "label": "monthly.BTC-USD · 年化收益",
+      "value": 0.13558161869161944,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.volatility",
+      "label": "monthly.BTC-USD · 年化波动",
+      "value": 0.5708719203478639,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.max_drawdown",
+      "label": "monthly.BTC-USD · 最大回撤",
+      "value": -0.7287297460633932,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.observations",
+      "label": "monthly.BTC-USD · observations",
+      "value": 60.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.frequency",
+      "label": "monthly.BTC-USD · frequency",
+      "value": 12.0,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "monthly.BTC-USD.sharpe_proxy",
+      "label": "monthly.BTC-USD · sharpe_proxy",
+      "value": 0.42677639334618933,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格，无交易费用",
+      "comparison_group": "monthly-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.threshold",
+      "label": "inflation.GLD · threshold",
+      "value": 0.03,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.high_inflation_n",
+      "label": "inflation.GLD · high_inflation_n",
+      "value": 39.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.low_inflation_n",
+      "label": "inflation.GLD · low_inflation_n",
+      "value": 19.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.high_inflation_mean_return",
+      "label": "inflation.GLD · high_inflation_mean_return",
+      "value": 0.009027449307901931,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.low_inflation_mean_return",
+      "label": "inflation.GLD · low_inflation_mean_return",
+      "value": 0.03153099438546877,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.inflation_correlation",
+      "label": "inflation.GLD · inflation_correlation",
+      "value": -0.25201116163691034,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.stress_positive_months",
+      "label": "inflation.GLD · stress_positive_months",
+      "value": 2.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.GLD.stress_n",
+      "label": "inflation.GLD · stress_n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.GLD.positive_months",
+      "label": "stress.GLD · positive_months",
+      "value": 2.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.GLD.outperform_months",
+      "label": "stress.GLD · outperform_months",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.GLD.n",
+      "label": "stress.GLD · n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.threshold",
+      "label": "inflation.BTC-USD · threshold",
+      "value": 0.03,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.high_inflation_n",
+      "label": "inflation.BTC-USD · high_inflation_n",
+      "value": 39.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.low_inflation_n",
+      "label": "inflation.BTC-USD · low_inflation_n",
+      "value": 19.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.high_inflation_mean_return",
+      "label": "inflation.BTC-USD · high_inflation_mean_return",
+      "value": 0.03304907134509211,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.low_inflation_mean_return",
+      "label": "inflation.BTC-USD · low_inflation_mean_return",
+      "value": 0.007900642290315939,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.inflation_correlation",
+      "label": "inflation.BTC-USD · inflation_correlation",
+      "value": -0.1822297208522549,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.stress_positive_months",
+      "label": "inflation.BTC-USD · stress_positive_months",
+      "value": 1.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "inflation.BTC-USD.stress_n",
+      "label": "inflation.BTC-USD · stress_n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号",
+      "comparison_group": "inflation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.BTC-USD.positive_months",
+      "label": "stress.BTC-USD · positive_months",
+      "value": 1.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.BTC-USD.outperform_months",
+      "label": "stress.BTC-USD · outperform_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress.BTC-USD.n",
+      "label": "stress.BTC-USD · n",
+      "value": 6.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份；跑赢基准不等于保本",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-09-30.GLD",
+      "label": "stress-month.2022-09-30 · GLD",
+      "value": -0.028881810636775418,
+      "unit": "percent",
+      "start": "2022-09-30",
+      "end": "2022-09-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-09-30.BTC-USD",
+      "label": "stress-month.2022-09-30 · BTC-USD",
+      "value": -0.011302721417968398,
+      "unit": "percent",
+      "start": "2022-09-30",
+      "end": "2022-09-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-09-30.SPY",
+      "label": "stress-month.2022-09-30 · SPY",
+      "value": -0.09244575805600008,
+      "unit": "percent",
+      "start": "2022-09-30",
+      "end": "2022-09-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-04-29.GLD",
+      "label": "stress-month.2022-04-29 · GLD",
+      "value": -0.020702963524693363,
+      "unit": "percent",
+      "start": "2022-04-29",
+      "end": "2022-04-29",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-04-29.BTC-USD",
+      "label": "stress-month.2022-04-29 · BTC-USD",
+      "value": -0.15487512410730309,
+      "unit": "percent",
+      "start": "2022-04-29",
+      "end": "2022-04-29",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-04-29.SPY",
+      "label": "stress-month.2022-04-29 · SPY",
+      "value": -0.08776914981961281,
+      "unit": "percent",
+      "start": "2022-04-29",
+      "end": "2022-04-29",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-06-30.GLD",
+      "label": "stress-month.2022-06-30 · GLD",
+      "value": -0.01565965107712486,
+      "unit": "percent",
+      "start": "2022-06-30",
+      "end": "2022-06-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-06-30.BTC-USD",
+      "label": "stress-month.2022-06-30 · BTC-USD",
+      "value": -0.3663312138110574,
+      "unit": "percent",
+      "start": "2022-06-30",
+      "end": "2022-06-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-06-30.SPY",
+      "label": "stress-month.2022-06-30 · SPY",
+      "value": -0.08246045670472002,
+      "unit": "percent",
+      "start": "2022-06-30",
+      "end": "2022-06-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-12-30.GLD",
+      "label": "stress-month.2022-12-30 · GLD",
+      "value": 0.02930648566594085,
+      "unit": "percent",
+      "start": "2022-12-30",
+      "end": "2022-12-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-12-30.BTC-USD",
+      "label": "stress-month.2022-12-30 · BTC-USD",
+      "value": 0.012001190997776634,
+      "unit": "percent",
+      "start": "2022-12-30",
+      "end": "2022-12-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-12-30.SPY",
+      "label": "stress-month.2022-12-30 · SPY",
+      "value": -0.05762809868682006,
+      "unit": "percent",
+      "start": "2022-12-30",
+      "end": "2022-12-30",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2025-03-31.GLD",
+      "label": "stress-month.2025-03-31 · GLD",
+      "value": 0.09446585889998316,
+      "unit": "percent",
+      "start": "2025-03-31",
+      "end": "2025-03-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2025-03-31.BTC-USD",
+      "label": "stress-month.2025-03-31 · BTC-USD",
+      "value": -0.027976208758030308,
+      "unit": "percent",
+      "start": "2025-03-31",
+      "end": "2025-03-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2025-03-31.SPY",
+      "label": "stress-month.2025-03-31 · SPY",
+      "value": -0.0557190018433138,
+      "unit": "percent",
+      "start": "2025-03-31",
+      "end": "2025-03-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-01-31.GLD",
+      "label": "stress-month.2022-01-31 · GLD",
+      "value": -0.016787612677039987,
+      "unit": "percent",
+      "start": "2022-01-31",
+      "end": "2022-01-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-01-31.BTC-USD",
+      "label": "stress-month.2022-01-31 · BTC-USD",
+      "value": -0.19628850102669404,
+      "unit": "percent",
+      "start": "2022-01-31",
+      "end": "2022-01-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "stress-month.2022-01-31.SPY",
+      "label": "stress-month.2022-01-31 · SPY",
+      "value": -0.05274132632698758,
+      "unit": "percent",
+      "start": "2022-01-31",
+      "end": "2022-01-31",
+      "frequency": "共同月度",
+      "method": "事后选取基准最差月份的同期收益",
+      "comparison_group": "stress",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "prices-SPY-8b7e46407b31"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "real.GLD.total_return",
+      "label": "real.GLD · 累计收益",
+      "value": 1.0365905588718594,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格/CPI购买力回顾，无额外交易费用",
+      "comparison_group": "real-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "real.BTC-USD.total_return",
+      "label": "real.BTC-USD · 累计收益",
+      "value": 0.5301758702586352,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "复权价格/CPI购买力回顾，无额外交易费用",
+      "comparison_group": "real-price",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a",
+        "fred-CPIAUCNS"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.GLD.value",
+      "label": "correlation.GLD.GLD · value",
+      "value": 1.0,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.GLD.n",
+      "label": "correlation.GLD.GLD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.BTC-USD.value",
+      "label": "correlation.GLD.BTC-USD · value",
+      "value": 0.15162414818666103,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.GLD.BTC-USD.n",
+      "label": "correlation.GLD.BTC-USD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.BTC-USD.GLD.value",
+      "label": "correlation.BTC-USD.GLD · value",
+      "value": 0.15162414818666103,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.BTC-USD.GLD.n",
+      "label": "correlation.BTC-USD.GLD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.BTC-USD.BTC-USD.value",
+      "label": "correlation.BTC-USD.BTC-USD · value",
+      "value": 0.9999999999999998,
+      "unit": "number",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "correlation.BTC-USD.BTC-USD.n",
+      "label": "correlation.BTC-USD.BTC-USD · n",
+      "value": 59.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "两资产月度收益的样本皮尔逊相关性；不是价格水平相关性",
+      "comparison_group": "correlation",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.total_return",
+      "label": "sensitivity.0 · 累计收益",
+      "value": 1.621958236660832,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.cagr",
+      "label": "sensitivity.0 · 年化收益",
+      "value": 0.2165650492193245,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.volatility",
+      "label": "sensitivity.0 · 年化波动",
+      "value": 0.24855432585327095,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.max_drawdown",
+      "label": "sensitivity.0 · 最大回撤",
+      "value": -0.367414822221963,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.cost_bps",
+      "label": "sensitivity.0 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.rebalance_months",
+      "label": "sensitivity.0 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.weight_GLD",
+      "label": "sensitivity.0 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.0.weight_BTC-USD",
+      "label": "sensitivity.0 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.total_return",
+      "label": "sensitivity.1 · 累计收益",
+      "value": 1.639453739247807,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.cagr",
+      "label": "sensitivity.1 · 年化收益",
+      "value": 0.21821157548948267,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.volatility",
+      "label": "sensitivity.1 · 年化波动",
+      "value": 0.24878169930995023,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.max_drawdown",
+      "label": "sensitivity.1 · 最大回撤",
+      "value": -0.3662155950417454,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.cost_bps",
+      "label": "sensitivity.1 · cost_bps",
+      "value": 0.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.rebalance_months",
+      "label": "sensitivity.1 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.weight_GLD",
+      "label": "sensitivity.1 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.1.weight_BTC-USD",
+      "label": "sensitivity.1 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.total_return",
+      "label": "sensitivity.2 · 累计收益",
+      "value": 1.6311154218482518,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.cagr",
+      "label": "sensitivity.2 · 年化收益",
+      "value": 0.21742793267503502,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.volatility",
+      "label": "sensitivity.2 · 年化波动",
+      "value": 0.24866403425352554,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.max_drawdown",
+      "label": "sensitivity.2 · 最大回撤",
+      "value": -0.3667695347334068,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.cost_bps",
+      "label": "sensitivity.2 · cost_bps",
+      "value": 10.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.rebalance_months",
+      "label": "sensitivity.2 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.weight_GLD",
+      "label": "sensitivity.2 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.2.weight_BTC-USD",
+      "label": "sensitivity.2 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 10 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.total_return",
+      "label": "sensitivity.3 · 累计收益",
+      "value": 1.617370276044538,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.cagr",
+      "label": "sensitivity.3 · 年化收益",
+      "value": 0.21613182168967304,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.volatility",
+      "label": "sensitivity.3 · 年化波动",
+      "value": 0.2484998918719548,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.max_drawdown",
+      "label": "sensitivity.3 · 最大回撤",
+      "value": -0.3677363436728096,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.cost_bps",
+      "label": "sensitivity.3 · cost_bps",
+      "value": 25.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.rebalance_months",
+      "label": "sensitivity.3 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.weight_GLD",
+      "label": "sensitivity.3 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.3.weight_BTC-USD",
+      "label": "sensitivity.3 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 25 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.total_return",
+      "label": "sensitivity.4 · 累计收益",
+      "value": 1.5943426175546391,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.cagr",
+      "label": "sensitivity.4 · 年化收益",
+      "value": 0.21394820465063868,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.volatility",
+      "label": "sensitivity.4 · 年化波动",
+      "value": 0.2482318405214267,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.max_drawdown",
+      "label": "sensitivity.4 · 最大回撤",
+      "value": -0.36933279631995997,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.cost_bps",
+      "label": "sensitivity.4 · cost_bps",
+      "value": 50.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.rebalance_months",
+      "label": "sensitivity.4 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.weight_GLD",
+      "label": "sensitivity.4 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.4.weight_BTC-USD",
+      "label": "sensitivity.4 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.total_return",
+      "label": "sensitivity.5 · 累计收益",
+      "value": 1.181551254862352,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.cagr",
+      "label": "sensitivity.5 · 年化收益",
+      "value": 0.1719099681842553,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.volatility",
+      "label": "sensitivity.5 · 年化波动",
+      "value": 0.24898062065360244,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.max_drawdown",
+      "label": "sensitivity.5 · 最大回撤",
+      "value": -0.3731344801683525,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.cost_bps",
+      "label": "sensitivity.5 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.rebalance_months",
+      "label": "sensitivity.5 · rebalance_months",
+      "value": 0.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.weight_GLD",
+      "label": "sensitivity.5 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.5.weight_BTC-USD",
+      "label": "sensitivity.5 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.total_return",
+      "label": "sensitivity.6 · 累计收益",
+      "value": 1.6176807733636922,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.cagr",
+      "label": "sensitivity.6 · 年化收益",
+      "value": 0.21616116010911268,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.volatility",
+      "label": "sensitivity.6 · 年化波动",
+      "value": 0.25416372206228244,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.max_drawdown",
+      "label": "sensitivity.6 · 最大回撤",
+      "value": -0.36304824371160593,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.cost_bps",
+      "label": "sensitivity.6 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.rebalance_months",
+      "label": "sensitivity.6 · rebalance_months",
+      "value": 1.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.weight_GLD",
+      "label": "sensitivity.6 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.6.weight_BTC-USD",
+      "label": "sensitivity.6 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.total_return",
+      "label": "sensitivity.7 · 累计收益",
+      "value": 1.3276625068400323,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.cagr",
+      "label": "sensitivity.7 · 年化收益",
+      "value": 0.18746278524738869,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.volatility",
+      "label": "sensitivity.7 · 年化波动",
+      "value": 0.25631364509104365,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.max_drawdown",
+      "label": "sensitivity.7 · 最大回撤",
+      "value": -0.37398556236655256,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.cost_bps",
+      "label": "sensitivity.7 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.rebalance_months",
+      "label": "sensitivity.7 · rebalance_months",
+      "value": 12.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.weight_GLD",
+      "label": "sensitivity.7 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.7.weight_BTC-USD",
+      "label": "sensitivity.7 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.total_return",
+      "label": "sensitivity.8 · 累计收益",
+      "value": 1.1986094372065654,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.cagr",
+      "label": "sensitivity.8 · 年化收益",
+      "value": 0.17376776002179795,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.volatility",
+      "label": "sensitivity.8 · 年化波动",
+      "value": 0.44402111382665616,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.max_drawdown",
+      "label": "sensitivity.8 · 最大回撤",
+      "value": -0.6280235018733044,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.cost_bps",
+      "label": "sensitivity.8 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.rebalance_months",
+      "label": "sensitivity.8 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.weight_GLD",
+      "label": "sensitivity.8 · weight_GLD",
+      "value": 0.2,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.8.weight_BTC-USD",
+      "label": "sensitivity.8 · weight_BTC-USD",
+      "value": 0.8,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.total_return",
+      "label": "sensitivity.9 · 累计收益",
+      "value": 1.573018948431312,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.cagr",
+      "label": "sensitivity.9 · 年化收益",
+      "value": 0.21191235747435533,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.volatility",
+      "label": "sensitivity.9 · 年化波动",
+      "value": 0.2915226439152824,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.max_drawdown",
+      "label": "sensitivity.9 · 最大回撤",
+      "value": -0.44008000627248645,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.cost_bps",
+      "label": "sensitivity.9 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.rebalance_months",
+      "label": "sensitivity.9 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.weight_GLD",
+      "label": "sensitivity.9 · weight_GLD",
+      "value": 0.5,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.9.weight_BTC-USD",
+      "label": "sensitivity.9 · weight_BTC-USD",
+      "value": 0.5,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 50%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.total_return",
+      "label": "sensitivity.10 · 累计收益",
+      "value": 1.6134368250215982,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.cagr",
+      "label": "sensitivity.10 · 年化收益",
+      "value": 0.21575991563376462,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.volatility",
+      "label": "sensitivity.10 · 年化波动",
+      "value": 0.18379885962072676,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.max_drawdown",
+      "label": "sensitivity.10 · 最大回撤",
+      "value": -0.224770528894484,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.cost_bps",
+      "label": "sensitivity.10 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.rebalance_months",
+      "label": "sensitivity.10 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.weight_GLD",
+      "label": "sensitivity.10 · weight_GLD",
+      "value": 0.8,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.10.weight_BTC-USD",
+      "label": "sensitivity.10 · weight_BTC-USD",
+      "value": 0.19999999999999996,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.total_return",
+      "label": "sensitivity.11 · 累计收益",
+      "value": 0.5382153702438539,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.cagr",
+      "label": "sensitivity.11 · 年化收益",
+      "value": 0.18867670116035873,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.volatility",
+      "label": "sensitivity.11 · 年化波动",
+      "value": 0.28745060346240214,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.max_drawdown",
+      "label": "sensitivity.11 · 最大回撤",
+      "value": -0.367414822221963,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.cost_bps",
+      "label": "sensitivity.11 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.rebalance_months",
+      "label": "sensitivity.11 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.weight_GLD",
+      "label": "sensitivity.11 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.11.weight_BTC-USD",
+      "label": "sensitivity.11 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2021-09-30",
+      "end": "2024-03-28",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.total_return",
+      "label": "sensitivity.12 · 累计收益",
+      "value": 0.6725150172228052,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.cagr",
+      "label": "sensitivity.12 · 年化收益",
+      "value": 0.2361848328658105,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.volatility",
+      "label": "sensitivity.12 · 年化波动",
+      "value": 0.20758777505488935,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.max_drawdown",
+      "label": "sensitivity.12 · 最大回撤",
+      "value": -0.1923552957922492,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.cost_bps",
+      "label": "sensitivity.12 · cost_bps",
+      "value": 20.0,
+      "unit": "bps",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.rebalance_months",
+      "label": "sensitivity.12 · rebalance_months",
+      "value": 3.0,
+      "unit": "integer",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.weight_GLD",
+      "label": "sensitivity.12 · weight_GLD",
+      "value": 0.6,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    },
+    {
+      "id": "sensitivity.12.weight_BTC-USD",
+      "label": "sensitivity.12 · weight_BTC-USD",
+      "value": 0.4,
+      "unit": "percent",
+      "start": "2024-03-28",
+      "end": "2026-08-31",
+      "frequency": "共同月度",
+      "method": "共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间",
+      "comparison_group": "sensitivity",
+      "dataset_ids": [
+        "prices-GLD-8b981092fa7c",
+        "prices-BTC-USD-985393bca67a"
+      ],
+      "currency": "USD"
+    }
+  ],
+  "reviews": [
+    {
+      "attempt": 1,
+      "draft_hash": "0314c1cf172e51f40ad5df32c5818d809e661e7d67ab2b44848c1e46a36555e2",
+      "deterministic": {
+        "f-sensitivity": [
+          "text 含手写数字「20%」；可选已计算引用：{{sensitivity.8.weight_GLD}}, {{sensitivity.10.weight_BTC-USD}}",
+          "text 含手写数字「80%」；可选已计算引用：{{sensitivity.8.weight_BTC-USD}}, {{sensitivity.10.weight_GLD}}"
+        ]
+      },
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [
+              {
+                "quote": "本区间 GLD 的收益高于 BTC-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.total_return",
+                  "execution.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 的收益高于 BTC-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.cagr",
+                  "execution.BTC-USD.cagr"
+                ]
+              },
+              {
+                "quote": "BTC-USD 的波动与回撤远大于 GLD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.BTC-USD.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "BTC-USD 的波动与回撤远大于 GLD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.BTC-USD.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "行情覆盖与执行口径描述与指标一致：GLD 1255 bars、BTC 1827 bars、60 个月度观测、成本 20bps。数值关系核对：GLD 累计 1.4734 > BTC 0.7728（gt 成立）；GLD 年化 0.2022 > BTC 0.1235（gt 成立）；BTC 波动 0.5576 > GLD 0.1686（gt 成立）；BTC 回撤 -0.7270 深于 GLD -0.2377，即 GLD 回撤数值更大（gt 成立）。所有引用指标口径为 execution 共同月度，未混用日线。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-hedge",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.GLD.outperform_months",
+                  "stress.GLD.positive_months"
+                ]
+              },
+              {
+                "quote": "BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.BTC-USD.outperform_months",
+                  "stress.BTC-USD.positive_months"
+                ]
+              },
+              {
+                "quote": "GLD 在多数压力月跌幅小于基准",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress-month.2022-06-30.GLD",
+                  "stress-month.2022-06-30.SPY"
+                ]
+              },
+              {
+                "quote": "BTC 在部分月份跌幅显著大于基准",
+                "relation": "lt",
+                "metric_ids": [
+                  "stress-month.2022-06-30.BTC-USD",
+                  "stress-month.2022-06-30.SPY"
+                ]
+              },
+              {
+                "quote": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-09-30.GLD",
+                  "stress-month.2022-09-30.BTC-USD"
+                ]
+              }
+            ],
+            "reason": "压力样本 6 个月，GLD 正收益 2 个月、跑赢 6 个月；BTC 正收益 1 个月、跑赢 3 个月，与 stress 指标一致。例证核对：2022-06-30 SPY -8.25%、GLD -1.57%、BTC -36.63%，GLD 跌幅小于基准、BTC 远大于基准，成立；2025-03-31 SPY -5.57%、GLD +9.45%、BTC -2.80%，成立。反证 2022-09-30 GLD -2.89%、BTC -1.13% 均为负，成立。'多数压力月跌幅小于基准'与 outperform_months=6/6 一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-inflation",
+            "numeric_assertions": [
+              {
+                "quote": "两者均高于零，但 GLD 更高",
+                "relation": "positive",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "两者均高于零，但 GLD 更高",
+                "relation": "gt",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 在高通胀月收益低于低通胀月",
+                "relation": "lt",
+                "metric_ids": [
+                  "inflation.GLD.high_inflation_mean_return",
+                  "inflation.GLD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "BTC 则相反",
+                "relation": "gt",
+                "metric_ids": [
+                  "inflation.BTC-USD.high_inflation_mean_return",
+                  "inflation.BTC-USD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "均为弱负相关",
+                "relation": "negative",
+                "metric_ids": [
+                  "inflation.GLD.inflation_correlation",
+                  "inflation.BTC-USD.inflation_correlation"
+                ]
+              }
+            ],
+            "reason": "实际收益：GLD 1.0366 > BTC 0.5302，均 >0，与 real 指标一致。高/低通胀均值：GLD 高 0.00903 < 低 0.03153（'高通胀月收益低于低通胀月'成立）；BTC 高 0.03305 > 低 0.00790（'BTC 则相反'成立）。相关性 GLD -0.2520、BTC -0.1822，均为负且绝对值小，'弱负相关'成立。CPI 回顾性限制已披露。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-allocation",
+            "numeric_assertions": [
+              {
+                "quote": "组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.cagr",
+                  "execution.GLD.cagr",
+                  "execution.BTC-USD.cagr"
+                ]
+              },
+              {
+                "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.BTC-USD.volatility"
+                ]
+              },
+              {
+                "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.BTC-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "组合年化 0.2166 > GLD 0.2022 与 BTC 0.1235（gt 成立）；组合波动 0.2486 > GLD 0.1686 且 < BTC 0.5576（成立）；组合回撤 -0.3674 深于 GLD -0.2377（lt 成立）但浅于 BTC -0.7270（gt 成立）。相关性 0.1516、n=59 与指标一致。'低相关不能单独解释组合收益高于两单资产'为审慎表述，未越界。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "numeric_assertions": [
+              {
+                "quote": "累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}，随成本上升而下降",
+                "relation": "gt",
+                "metric_ids": [
+                  "sensitivity.1.total_return",
+                  "sensitivity.4.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 20% 时波动 {{sensitivity.8.volatility}}、回撤 {{sensitivity.8.max_drawdown}}；GLD 80% 时波动 {{sensitivity.10.volatility}}、回撤 {{sensitivity.10.max_drawdown}}，随 GLD 权重上升，波动与回撤下降",
+                "relation": "gt",
+                "metric_ids": [
+                  "sensitivity.8.volatility",
+                  "sensitivity.10.volatility"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.8.max_drawdown",
+                  "sensitivity.10.max_drawdown"
+                ]
+              },
+              {
+                "quote": "前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正",
+                "relation": "positive",
+                "metric_ids": [
+                  "sensitivity.11.total_return",
+                  "sensitivity.12.total_return"
+                ]
+              }
+            ],
+            "reason": "成本：0bps 累计 1.6395 > 50bps 1.5943，'随成本上升而下降'成立。频率：买入持有 1.1816、每1月 1.6177、每12月 1.3277、季度 1.6220，'影响收益但不改变量级'成立。权重：GLD20% 波动 0.4440、回撤 -0.6280；GLD80% 波动 0.1838、回撤 -0.2248，'随 GLD 权重上升波动与回撤下降'成立。分段：前半 0.5382、后半 0.6725，均为正且差异明显，成立。手写 20%/80% 与 sensitivity.8/10 权重一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-framework",
+            "numeric_assertions": [
+              {
+                "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.10.volatility",
+                  "sensitivity.8.volatility"
+                ]
+              },
+              {
+                "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "sensitivity.10.max_drawdown",
+                  "sensitivity.8.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "框架引用 GLD80% 权重 0.8、波动 0.1838、回撤 -0.2248，与 sensitivity.10 一致；GLD20% 回撤 -0.6280 与 sensitivity.8 一致。'较高 GLD 权重对应更低波动与更浅回撤'与指标方向一致。'收益也相应变化'为模糊表述，未断言方向，不构成数值错误。整体为条件化判断并声明非投资建议，限制已披露。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 给出实际起止区间（行情 2021-09-28 至 2026-09-28，执行口径 2021-09-30 至 2026-08-31）、口径说明与可复核的收益/波动/回撤，并明确日线与月度口径不可混用，满足验收。",
+            "answered": true
+          },
+          {
+            "question_id": "hedge",
+            "reason": "f-hedge 使用相同压力月份，区分正收益（GLD 2/6、BTC 1/6）与相对抗跌（跑赢 6/6 与 3/6），并披露事后选样与 6 个月样本量限制，满足验收。",
+            "answered": true
+          },
+          {
+            "question_id": "inflation",
+            "reason": "f-inflation 结合实际收益（GLD 1.0366、BTC 0.5302）与 CPI 分组均值及相关系数，区分保值结果与抗通胀机制，并说明 CPI 为回顾性历史版本，满足验收。",
+            "answered": true
+          },
+          {
+            "question_id": "allocation",
+            "reason": "f-allocation 在相同 execution 口径下比较组合与两单资产基线的收益、波动、回撤，给出条件化判断与推翻条件（相关性上升），满足验收。",
+            "answered": true
+          },
+          {
+            "question_id": "sensitivity",
+            "reason": "f-sensitivity 引用已计算的成本、频率、权重、分段情景结果，未推荐事后最优参数，并声明分段非样本外检验，满足验收。",
+            "answered": true
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为事实列举：行情覆盖条数、共同月末估值区间、组合与两单资产的累计收益/年化/波动/最大回撤，均为同口径历史数值描述。末句“本区间 GLD 的收益高于 BTC-USD，而 BTC-USD 的波动与回撤远大于 GLD”是对本样本区间内已列数值的直接比较，未外推为属性或未来结论。counterevidence 与 limitations 已标注日线/月度口径差异与末端日期差异，未混用。无属性、因果或机制跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-hedge",
+            "inference_audit": "压力月为事后按基准最差月选取，条内已明确标注选样偏差、样本仅 6 个月、跑赢不等于保本。结论“GLD 在多数压力月跌幅小于基准，而 BTC 在部分月份跌幅显著大于基准”是对所列正收益月数/跑赢月数与两个典型月份数值的有限描述，未声称稳定避险属性或未来保护。counterevidence 给出 2022-09-30 反例，与结论一致。属合格有限观察。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-inflation",
+            "inference_audit": "实际购买力部分：复权价格/CPI 回顾口径下两资产累计实际收益均高于零且 GLD 更高，这是样本期历史结果，条内未据此断言“具备抗通胀属性”。通胀关联部分：高/低通胀月平均收益与月度收益-CPI 同比相关性均为样本内描述性统计，counterevidence 明确“弱负相关不能证明资产具备抗通胀属性，也不能否定其长期保值结果”，limitations 说明 CPI 为当前历史版本、非当时已知信号、相关性不等于价格水平保值机制。未出现“方向不一致所以不是稳定通胀对冲工具”一类无依据属性推断，也未把未证明属性当作属性不存在。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-allocation",
+            "inference_audit": "组合与单资产的年化、波动、最大回撤比较为同口径历史数值，结论“以高于 GLD 的波动与回撤为代价换取更高收益，同时显著降低了 BTC 单资产的风险”是对已列数值的代价-收益描述，未声称普遍最优或未来保护。相关性部分明确写“低相关有助于解释分散风险，但不能单独解释组合收益高于两单资产”，limitations 进一步指出组合收益高于单资产可能来自再平衡与权重效应、非因果贡献，未把组合收益高于两单资产当作低相关或再平衡机制的证明。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "inference_audit": "成本、频率、权重、分段四组均为同口径情景数值对照：成本上升收益下降、再平衡频率影响收益但不改变量级、GLD 权重上升波动与回撤下降、前后半段均为正但差异明显。这些是改变规则后的历史结果差异描述，未据此断言经济机制（如波动获利、权重回归）成立。limitations 已声明分段非样本外检验、不应事后挑选最优参数。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-framework",
+            "inference_audit": "该条为条件化决策框架：以“若目标是降低波动与回撤……若追求更高收益并接受更大回撤……”的条件句式给出权重取舍，并明确“该框架为条件化研究判断，非投资建议”，limitations 声明基于单一历史区间与事后参数、未考虑税费/流动性/监管。未出现“收益上限由某资产主导”“未来保护”“稳定属性”或“普遍最优”等越界断言；引用的波动与回撤为对应情景历史数值。合格。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-market",
+          "quote": "本区间 GLD 的收益高于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.total_return",
+            "execution.BTC-USD.total_return"
+          ],
+          "values": [
+            1.4733538532972315,
+            0.7728191284250496
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的收益高于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.cagr",
+            "execution.BTC-USD.cagr"
+          ],
+          "values": [
+            0.20221480964305583,
+            0.12349342727448431
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "BTC-USD 的波动与回撤远大于 GLD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.BTC-USD.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.557557453841724,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "BTC-USD 的波动与回撤远大于 GLD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.BTC-USD.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.727047074945036,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.GLD.positive_months"
+          ],
+          "values": [
+            6.0,
+            2.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.BTC-USD.outperform_months",
+            "stress.BTC-USD.positive_months"
+          ],
+          "values": [
+            3.0,
+            1.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 在多数压力月跌幅小于基准",
+          "relation": "gt",
+          "metric_ids": [
+            "stress-month.2022-06-30.GLD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.01565965107712486,
+            -0.08246045670472002
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "BTC 在部分月份跌幅显著大于基准",
+          "relation": "lt",
+          "metric_ids": [
+            "stress-month.2022-06-30.BTC-USD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.3663312138110574,
+            -0.08246045670472002
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-09-30.GLD",
+            "stress-month.2022-09-30.BTC-USD"
+          ],
+          "values": [
+            -0.028881810636775418,
+            -0.011302721417968398
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者均高于零，但 GLD 更高",
+          "relation": "positive",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.BTC-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            0.5301758702586352
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者均高于零，但 GLD 更高",
+          "relation": "gt",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.BTC-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            0.5301758702586352
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "GLD 在高通胀月收益低于低通胀月",
+          "relation": "lt",
+          "metric_ids": [
+            "inflation.GLD.high_inflation_mean_return",
+            "inflation.GLD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.009027449307901931,
+            0.03153099438546877
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "BTC 则相反",
+          "relation": "gt",
+          "metric_ids": [
+            "inflation.BTC-USD.high_inflation_mean_return",
+            "inflation.BTC-USD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.03304907134509211,
+            0.007900642290315939
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "均为弱负相关",
+          "relation": "negative",
+          "metric_ids": [
+            "inflation.GLD.inflation_correlation",
+            "inflation.BTC-USD.inflation_correlation"
+          ],
+          "values": [
+            -0.25201116163691034,
+            -0.1822297208522549
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.cagr",
+            "execution.GLD.cagr",
+            "execution.BTC-USD.cagr"
+          ],
+          "values": [
+            0.2165650492193245,
+            0.20221480964305583,
+            0.12349342727448431
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.24855432585327095,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.BTC-USD.volatility"
+          ],
+          "values": [
+            0.24855432585327095,
+            0.557557453841724
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.367414822221963,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.BTC-USD.max_drawdown"
+          ],
+          "values": [
+            -0.367414822221963,
+            -0.727047074945036
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}，随成本上升而下降",
+          "relation": "gt",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.639453739247807,
+            1.5943426175546391
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "GLD 20% 时波动 {{sensitivity.8.volatility}}、回撤 {{sensitivity.8.max_drawdown}}；GLD 80% 时波动 {{sensitivity.10.volatility}}、回撤 {{sensitivity.10.max_drawdown}}，随 GLD 权重上升，波动与回撤下降",
+          "relation": "gt",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.44402111382665616,
+            0.18379885962072676
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6280235018733044,
+            -0.224770528894484
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.5382153702438539,
+            0.6725150172228052
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-framework",
+          "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.10.volatility",
+            "sensitivity.8.volatility"
+          ],
+          "values": [
+            0.18379885962072676,
+            0.44402111382665616
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-framework",
+          "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "sensitivity.10.max_drawdown",
+            "sensitivity.8.max_drawdown"
+          ],
+          "values": [
+            -0.224770528894484,
+            -0.6280235018733044
+          ],
+          "passed": true
+        }
+      ],
+      "accepted_ids": [
+        "f-allocation",
+        "f-framework",
+        "f-hedge",
+        "f-inflation",
+        "f-market"
+      ],
+      "accepted_hashes": {
+        "f-market": "bba71c4f32aecff91222a8bcac7bcdebd363ba2925c97780f5be5632db492976",
+        "f-hedge": "9dcbcd99c45247e840fe2c31eb4cb437c4b513604500041cf038132761864484",
+        "f-inflation": "316a9410cd8ae95761769a093ad3f72b97154c3a0bcb5d75b632546945421d9a",
+        "f-allocation": "9009c6c32554b6c6d8fb524e4ec4308a2483f4308f9c49399046d7d4b91124cc",
+        "f-framework": "6a7e8c2a7dfbe5ec99f43ef519deaee847ab1e0fb4bfdace84704d2e4742b44b"
+      },
+      "reused_certificates": []
+    },
+    {
+      "attempt": 2,
+      "draft_hash": "b80a691ab665f23e0576ec6c0dc05058dd4083dfd3a919ec7e815be1b988ec17",
+      "deterministic": {},
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-sensitivity",
+            "numeric_assertions": [
+              {
+                "quote": "累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.1.total_return",
+                  "sensitivity.4.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.8.volatility",
+                  "sensitivity.10.volatility"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.max_drawdown",
+                  "sensitivity.10.max_drawdown"
+                ]
+              },
+              {
+                "quote": "前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正",
+                "relation": "positive",
+                "metric_ids": [
+                  "sensitivity.11.total_return",
+                  "sensitivity.12.total_return"
+                ]
+              }
+            ],
+            "reason": "逐句核对：(1) 成本句：sensitivity.1.cost_bps=0，sensitivity.4.cost_bps=50，累计收益 1.6395→1.5943，确实随成本上升而下降，方向正确，且降幅约 4.5 个百分点，相对 164% 的累计收益属有限，表述成立。(2) 频率句：买入持有 1.1816、每1月 1.6177、每12月 1.3277、季度基线 1.6220，均为正且量级相近（1.18–1.62），『影响收益但不改变量级』成立；原文未声称单调关系，故不转录序列断言。(3) 权重句：GLD 20% 波动 0.4440、回撤 -0.6280；GLD 80% 波动 0.1838、回撤 -0.2248，随 GLD 权重上升波动与回撤均下降（回撤为负数，-0.2248 > -0.6280 即更浅），方向正确。(4) 分段句：前半 0.5382、后半 0.6725，均为正且差异明显，成立。previous_program_findings 提示正文含手写数字 20%/80%，但正文实际使用 {{sensitivity.8.weight_GLD}} 与 {{sensitivity.10.weight_GLD}} 占位符，未出现手写百分比，该提示不构成本条错误。局限中『分段为样本内切分，不构成样本外检验』与数据口径一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [
+              {
+                "quote": "本区间 GLD 的收益高于 BTC-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.total_return",
+                  "execution.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 的收益高于 BTC-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.cagr",
+                  "execution.BTC-USD.cagr"
+                ]
+              },
+              {
+                "quote": "BTC-USD 的波动与回撤远大于 GLD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.BTC-USD.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "BTC-USD 的波动与回撤远大于 GLD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.BTC-USD.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "行情覆盖与执行口径描述与指标一致：GLD 1255 bars、BTC 1827 bars、60 个月度观测、成本 20bps。数值关系核对：GLD 累计 1.4734 > BTC 0.7728（gt 成立）；GLD 年化 0.2022 > BTC 0.1235（gt 成立）；BTC 波动 0.5576 > GLD 0.1686（gt 成立）；BTC 回撤 -0.7270 深于 GLD -0.2377，即 GLD 回撤数值更大（gt 成立）。所有引用指标口径为 execution 共同月度，未混用日线。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-hedge",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.GLD.outperform_months",
+                  "stress.GLD.positive_months"
+                ]
+              },
+              {
+                "quote": "BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.BTC-USD.outperform_months",
+                  "stress.BTC-USD.positive_months"
+                ]
+              },
+              {
+                "quote": "GLD 在多数压力月跌幅小于基准",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress-month.2022-06-30.GLD",
+                  "stress-month.2022-06-30.SPY"
+                ]
+              },
+              {
+                "quote": "BTC 在部分月份跌幅显著大于基准",
+                "relation": "lt",
+                "metric_ids": [
+                  "stress-month.2022-06-30.BTC-USD",
+                  "stress-month.2022-06-30.SPY"
+                ]
+              },
+              {
+                "quote": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-09-30.GLD",
+                  "stress-month.2022-09-30.BTC-USD"
+                ]
+              }
+            ],
+            "reason": "压力样本 6 个月，GLD 正收益 2 个月、跑赢 6 个月；BTC 正收益 1 个月、跑赢 3 个月，与 stress 指标一致。例证核对：2022-06-30 SPY -8.25%、GLD -1.57%、BTC -36.63%，GLD 跌幅小于基准、BTC 远大于基准，成立；2025-03-31 SPY -5.57%、GLD +9.45%、BTC -2.80%，成立。反证 2022-09-30 GLD -2.89%、BTC -1.13% 均为负，成立。'多数压力月跌幅小于基准'与 outperform_months=6/6 一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-inflation",
+            "numeric_assertions": [
+              {
+                "quote": "两者均高于零，但 GLD 更高",
+                "relation": "positive",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "两者均高于零，但 GLD 更高",
+                "relation": "gt",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 在高通胀月收益低于低通胀月",
+                "relation": "lt",
+                "metric_ids": [
+                  "inflation.GLD.high_inflation_mean_return",
+                  "inflation.GLD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "BTC 则相反",
+                "relation": "gt",
+                "metric_ids": [
+                  "inflation.BTC-USD.high_inflation_mean_return",
+                  "inflation.BTC-USD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "均为弱负相关",
+                "relation": "negative",
+                "metric_ids": [
+                  "inflation.GLD.inflation_correlation",
+                  "inflation.BTC-USD.inflation_correlation"
+                ]
+              }
+            ],
+            "reason": "实际收益：GLD 1.0366 > BTC 0.5302，均 >0，与 real 指标一致。高/低通胀均值：GLD 高 0.00903 < 低 0.03153（'高通胀月收益低于低通胀月'成立）；BTC 高 0.03305 > 低 0.00790（'BTC 则相反'成立）。相关性 GLD -0.2520、BTC -0.1822，均为负且绝对值小，'弱负相关'成立。CPI 回顾性限制已披露。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-allocation",
+            "numeric_assertions": [
+              {
+                "quote": "组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.cagr",
+                  "execution.GLD.cagr",
+                  "execution.BTC-USD.cagr"
+                ]
+              },
+              {
+                "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.BTC-USD.volatility"
+                ]
+              },
+              {
+                "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.BTC-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "组合年化 0.2166 > GLD 0.2022 与 BTC 0.1235（gt 成立）；组合波动 0.2486 > GLD 0.1686 且 < BTC 0.5576（成立）；组合回撤 -0.3674 深于 GLD -0.2377（lt 成立）但浅于 BTC -0.7270（gt 成立）。相关性 0.1516、n=59 与指标一致。'低相关不能单独解释组合收益高于两单资产'为审慎表述，未越界。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-framework",
+            "numeric_assertions": [
+              {
+                "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.10.volatility",
+                  "sensitivity.8.volatility"
+                ]
+              },
+              {
+                "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "sensitivity.10.max_drawdown",
+                  "sensitivity.8.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "框架引用 GLD80% 权重 0.8、波动 0.1838、回撤 -0.2248，与 sensitivity.10 一致；GLD20% 回撤 -0.6280 与 sensitivity.8 一致。'较高 GLD 权重对应更低波动与更浅回撤'与指标方向一致。'收益也相应变化'为模糊表述，未断言方向，不构成数值错误。整体为条件化判断并声明非投资建议，限制已披露。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "sensitivity",
+            "reason": "已核验的 f-framework 与 f-market 提供了权重取舍与基线口径，本条 f-sensitivity 逐项覆盖了成本（0→50 bps 累计收益下降但幅度有限）、频率（买入持有/1月/12月/季度基线对比）、权重（GLD 20% 与 80% 的波动与回撤）、分段（前半/后半均为正但差异明显），并明确披露分段为样本内切分、不推荐事后最优参数。四个维度均有已计算指标支撑，满足验收要求。",
+            "answered": true
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-sensitivity",
+            "inference_audit": "该条为情景对照的事实列举：成本、频率、权重、分段四组情景的累计收益/波动/回撤均为同口径（共同月末估值、下一可交易开盘执行、含成本）的历史结果，属于可复核的观察描述。'随成本上升而下降，但幅度有限'、'再平衡频率影响收益但不改变量级'、'随 GLD 权重上升，波动与回撤下降'、'两段均为正但差异明显'都是对情景数值方向的描述，未声称机制来源或未来属性。反证中'成本敏感性小，说明结论对成本假设不敏感'是对成本情景稳健性的有限陈述，未越界；'权重与分段敏感性大'同样是情景差异描述。局限已声明分段为样本内切分、不构成样本外检验、不应事后挑参。未发现属性/因果/机制/外推跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为事实列举：行情覆盖条数、共同月末估值区间、组合与两单资产的累计收益/年化/波动/最大回撤，均为同口径历史数值描述。末句“本区间 GLD 的收益高于 BTC-USD，而 BTC-USD 的波动与回撤远大于 GLD”是对本样本区间内已列数值的直接比较，未外推为属性或未来结论。counterevidence 与 limitations 已标注日线/月度口径差异与末端日期差异，未混用。无属性、因果或机制跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-hedge",
+            "inference_audit": "压力月为事后按基准最差月选取，条内已明确标注选样偏差、样本仅 6 个月、跑赢不等于保本。结论“GLD 在多数压力月跌幅小于基准，而 BTC 在部分月份跌幅显著大于基准”是对所列正收益月数/跑赢月数与两个典型月份数值的有限描述，未声称稳定避险属性或未来保护。counterevidence 给出 2022-09-30 反例，与结论一致。属合格有限观察。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-inflation",
+            "inference_audit": "实际购买力部分：复权价格/CPI 回顾口径下两资产累计实际收益均高于零且 GLD 更高，这是样本期历史结果，条内未据此断言“具备抗通胀属性”。通胀关联部分：高/低通胀月平均收益与月度收益-CPI 同比相关性均为样本内描述性统计，counterevidence 明确“弱负相关不能证明资产具备抗通胀属性，也不能否定其长期保值结果”，limitations 说明 CPI 为当前历史版本、非当时已知信号、相关性不等于价格水平保值机制。未出现“方向不一致所以不是稳定通胀对冲工具”一类无依据属性推断，也未把未证明属性当作属性不存在。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-allocation",
+            "inference_audit": "组合与单资产的年化、波动、最大回撤比较为同口径历史数值，结论“以高于 GLD 的波动与回撤为代价换取更高收益，同时显著降低了 BTC 单资产的风险”是对已列数值的代价-收益描述，未声称普遍最优或未来保护。相关性部分明确写“低相关有助于解释分散风险，但不能单独解释组合收益高于两单资产”，limitations 进一步指出组合收益高于单资产可能来自再平衡与权重效应、非因果贡献，未把组合收益高于两单资产当作低相关或再平衡机制的证明。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-framework",
+            "inference_audit": "该条为条件化决策框架：以“若目标是降低波动与回撤……若追求更高收益并接受更大回撤……”的条件句式给出权重取舍，并明确“该框架为条件化研究判断，非投资建议”，limitations 声明基于单一历史区间与事后参数、未考虑税费/流动性/监管。未出现“收益上限由某资产主导”“未来保护”“稳定属性”或“普遍最优”等越界断言；引用的波动与回撤为对应情景历史数值。合格。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.639453739247807,
+            1.5943426175546391
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.44402111382665616,
+            0.18379885962072676
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6280235018733044,
+            -0.224770528894484
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.5382153702438539,
+            0.6725150172228052
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "本区间 GLD 的收益高于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.total_return",
+            "execution.BTC-USD.total_return"
+          ],
+          "values": [
+            1.4733538532972315,
+            0.7728191284250496
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的收益高于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.cagr",
+            "execution.BTC-USD.cagr"
+          ],
+          "values": [
+            0.20221480964305583,
+            0.12349342727448431
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "BTC-USD 的波动与回撤远大于 GLD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.BTC-USD.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.557557453841724,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "BTC-USD 的波动与回撤远大于 GLD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.BTC-USD.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.727047074945036,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.GLD.positive_months"
+          ],
+          "values": [
+            6.0,
+            2.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.BTC-USD.outperform_months",
+            "stress.BTC-USD.positive_months"
+          ],
+          "values": [
+            3.0,
+            1.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 在多数压力月跌幅小于基准",
+          "relation": "gt",
+          "metric_ids": [
+            "stress-month.2022-06-30.GLD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.01565965107712486,
+            -0.08246045670472002
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "BTC 在部分月份跌幅显著大于基准",
+          "relation": "lt",
+          "metric_ids": [
+            "stress-month.2022-06-30.BTC-USD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.3663312138110574,
+            -0.08246045670472002
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-09-30.GLD",
+            "stress-month.2022-09-30.BTC-USD"
+          ],
+          "values": [
+            -0.028881810636775418,
+            -0.011302721417968398
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者均高于零，但 GLD 更高",
+          "relation": "positive",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.BTC-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            0.5301758702586352
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者均高于零，但 GLD 更高",
+          "relation": "gt",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.BTC-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            0.5301758702586352
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "GLD 在高通胀月收益低于低通胀月",
+          "relation": "lt",
+          "metric_ids": [
+            "inflation.GLD.high_inflation_mean_return",
+            "inflation.GLD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.009027449307901931,
+            0.03153099438546877
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "BTC 则相反",
+          "relation": "gt",
+          "metric_ids": [
+            "inflation.BTC-USD.high_inflation_mean_return",
+            "inflation.BTC-USD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.03304907134509211,
+            0.007900642290315939
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "均为弱负相关",
+          "relation": "negative",
+          "metric_ids": [
+            "inflation.GLD.inflation_correlation",
+            "inflation.BTC-USD.inflation_correlation"
+          ],
+          "values": [
+            -0.25201116163691034,
+            -0.1822297208522549
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.cagr",
+            "execution.GLD.cagr",
+            "execution.BTC-USD.cagr"
+          ],
+          "values": [
+            0.2165650492193245,
+            0.20221480964305583,
+            0.12349342727448431
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.24855432585327095,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.BTC-USD.volatility"
+          ],
+          "values": [
+            0.24855432585327095,
+            0.557557453841724
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.367414822221963,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.BTC-USD.max_drawdown"
+          ],
+          "values": [
+            -0.367414822221963,
+            -0.727047074945036
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-framework",
+          "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.10.volatility",
+            "sensitivity.8.volatility"
+          ],
+          "values": [
+            0.18379885962072676,
+            0.44402111382665616
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-framework",
+          "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "sensitivity.10.max_drawdown",
+            "sensitivity.8.max_drawdown"
+          ],
+          "values": [
+            -0.224770528894484,
+            -0.6280235018733044
+          ],
+          "passed": true
+        }
+      ],
+      "accepted_ids": [
+        "f-allocation",
+        "f-framework",
+        "f-hedge",
+        "f-inflation",
+        "f-market",
+        "f-sensitivity"
+      ],
+      "accepted_hashes": {
+        "f-market": "bba71c4f32aecff91222a8bcac7bcdebd363ba2925c97780f5be5632db492976",
+        "f-hedge": "9dcbcd99c45247e840fe2c31eb4cb437c4b513604500041cf038132761864484",
+        "f-inflation": "316a9410cd8ae95761769a093ad3f72b97154c3a0bcb5d75b632546945421d9a",
+        "f-allocation": "9009c6c32554b6c6d8fb524e4ec4308a2483f4308f9c49399046d7d4b91124cc",
+        "f-framework": "6a7e8c2a7dfbe5ec99f43ef519deaee847ab1e0fb4bfdace84704d2e4742b44b",
+        "f-sensitivity": "1b9a4afa7d0f3fee6ba6894341653f9518a89152aeb0128d500e6ff0d535759b"
+      },
+      "reused_certificates": [
+        "f-allocation",
+        "f-framework",
+        "f-hedge",
+        "f-inflation",
+        "f-market"
+      ]
+    },
+    {
+      "attempt": 3,
+      "draft_hash": "b80a691ab665f23e0576ec6c0dc05058dd4083dfd3a919ec7e815be1b988ec17",
+      "deterministic": {},
+      "review": {
+        "claims": [
+          {
+            "finding_id": "f-market",
+            "numeric_assertions": [
+              {
+                "quote": "本区间 GLD 的收益高于 BTC-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.total_return",
+                  "execution.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 的收益高于 BTC-USD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.GLD.cagr",
+                  "execution.BTC-USD.cagr"
+                ]
+              },
+              {
+                "quote": "BTC-USD 的波动与回撤远大于 GLD",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.BTC-USD.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "BTC-USD 的波动与回撤远大于 GLD",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.BTC-USD.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "行情覆盖与执行口径描述与指标一致：GLD 1255 bars、BTC 1827 bars、60 个月度观测、成本 20bps。数值关系核对：GLD 累计 1.4734 > BTC 0.7728（gt 成立）；GLD 年化 0.2022 > BTC 0.1235（gt 成立）；BTC 波动 0.5576 > GLD 0.1686（gt 成立）；BTC 回撤 -0.7270 深于 GLD -0.2377，即 GLD 回撤数值更大（gt 成立）。所有引用指标口径为 execution 共同月度，未混用日线。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-hedge",
+            "numeric_assertions": [
+              {
+                "quote": "GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.GLD.outperform_months",
+                  "stress.GLD.positive_months"
+                ]
+              },
+              {
+                "quote": "BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress.BTC-USD.outperform_months",
+                  "stress.BTC-USD.positive_months"
+                ]
+              },
+              {
+                "quote": "GLD 在多数压力月跌幅小于基准",
+                "relation": "gt",
+                "metric_ids": [
+                  "stress-month.2022-06-30.GLD",
+                  "stress-month.2022-06-30.SPY"
+                ]
+              },
+              {
+                "quote": "BTC 在部分月份跌幅显著大于基准",
+                "relation": "lt",
+                "metric_ids": [
+                  "stress-month.2022-06-30.BTC-USD",
+                  "stress-month.2022-06-30.SPY"
+                ]
+              },
+              {
+                "quote": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负",
+                "relation": "negative",
+                "metric_ids": [
+                  "stress-month.2022-09-30.GLD",
+                  "stress-month.2022-09-30.BTC-USD"
+                ]
+              }
+            ],
+            "reason": "压力样本 6 个月，GLD 正收益 2 个月、跑赢 6 个月；BTC 正收益 1 个月、跑赢 3 个月，与 stress 指标一致。例证核对：2022-06-30 SPY -8.25%、GLD -1.57%、BTC -36.63%，GLD 跌幅小于基准、BTC 远大于基准，成立；2025-03-31 SPY -5.57%、GLD +9.45%、BTC -2.80%，成立。反证 2022-09-30 GLD -2.89%、BTC -1.13% 均为负，成立。'多数压力月跌幅小于基准'与 outperform_months=6/6 一致。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-inflation",
+            "numeric_assertions": [
+              {
+                "quote": "两者均高于零，但 GLD 更高",
+                "relation": "positive",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "两者均高于零，但 GLD 更高",
+                "relation": "gt",
+                "metric_ids": [
+                  "real.GLD.total_return",
+                  "real.BTC-USD.total_return"
+                ]
+              },
+              {
+                "quote": "GLD 在高通胀月收益低于低通胀月",
+                "relation": "lt",
+                "metric_ids": [
+                  "inflation.GLD.high_inflation_mean_return",
+                  "inflation.GLD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "BTC 则相反",
+                "relation": "gt",
+                "metric_ids": [
+                  "inflation.BTC-USD.high_inflation_mean_return",
+                  "inflation.BTC-USD.low_inflation_mean_return"
+                ]
+              },
+              {
+                "quote": "均为弱负相关",
+                "relation": "negative",
+                "metric_ids": [
+                  "inflation.GLD.inflation_correlation",
+                  "inflation.BTC-USD.inflation_correlation"
+                ]
+              }
+            ],
+            "reason": "实际收益：GLD 1.0366 > BTC 0.5302，均 >0，与 real 指标一致。高/低通胀均值：GLD 高 0.00903 < 低 0.03153（'高通胀月收益低于低通胀月'成立）；BTC 高 0.03305 > 低 0.00790（'BTC 则相反'成立）。相关性 GLD -0.2520、BTC -0.1822，均为负且绝对值小，'弱负相关'成立。CPI 回顾性限制已披露。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-allocation",
+            "numeric_assertions": [
+              {
+                "quote": "组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.cagr",
+                  "execution.GLD.cagr",
+                  "execution.BTC-USD.cagr"
+                ]
+              },
+              {
+                "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.GLD.volatility"
+                ]
+              },
+              {
+                "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.volatility",
+                  "execution.BTC-USD.volatility"
+                ]
+              },
+              {
+                "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.GLD.max_drawdown"
+                ]
+              },
+              {
+                "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "execution.portfolio.max_drawdown",
+                  "execution.BTC-USD.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "组合年化 0.2166 > GLD 0.2022 与 BTC 0.1235（gt 成立）；组合波动 0.2486 > GLD 0.1686 且 < BTC 0.5576（成立）；组合回撤 -0.3674 深于 GLD -0.2377（lt 成立）但浅于 BTC -0.7270（gt 成立）。相关性 0.1516、n=59 与指标一致。'低相关不能单独解释组合收益高于两单资产'为审慎表述，未越界。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-framework",
+            "numeric_assertions": [
+              {
+                "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+                "relation": "lt",
+                "metric_ids": [
+                  "sensitivity.10.volatility",
+                  "sensitivity.8.volatility"
+                ]
+              },
+              {
+                "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+                "relation": "gt",
+                "metric_ids": [
+                  "sensitivity.10.max_drawdown",
+                  "sensitivity.8.max_drawdown"
+                ]
+              }
+            ],
+            "reason": "框架引用 GLD80% 权重 0.8、波动 0.1838、回撤 -0.2248，与 sensitivity.10 一致；GLD20% 回撤 -0.6280 与 sensitivity.8 一致。'较高 GLD 权重对应更低波动与更浅回撤'与指标方向一致。'收益也相应变化'为模糊表述，未断言方向，不构成数值错误。整体为条件化判断并声明非投资建议，限制已披露。",
+            "verdict": "supported",
+            "repair": "none"
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "numeric_assertions": [
+              {
+                "quote": "累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.1.total_return",
+                  "sensitivity.4.total_return"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "decreasing",
+                "metric_ids": [
+                  "sensitivity.8.volatility",
+                  "sensitivity.10.volatility"
+                ]
+              },
+              {
+                "quote": "随 GLD 权重上升，波动与回撤下降",
+                "relation": "increasing",
+                "metric_ids": [
+                  "sensitivity.8.max_drawdown",
+                  "sensitivity.10.max_drawdown"
+                ]
+              },
+              {
+                "quote": "前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正",
+                "relation": "positive",
+                "metric_ids": [
+                  "sensitivity.11.total_return",
+                  "sensitivity.12.total_return"
+                ]
+              }
+            ],
+            "reason": "逐句核对：(1) 成本句：sensitivity.1.cost_bps=0，sensitivity.4.cost_bps=50，累计收益 1.6395→1.5943，确实随成本上升而下降，方向正确，且降幅约 4.5 个百分点，相对 164% 的累计收益属有限，表述成立。(2) 频率句：买入持有 1.1816、每1月 1.6177、每12月 1.3277、季度基线 1.6220，均为正且量级相近（1.18–1.62），『影响收益但不改变量级』成立；原文未声称单调关系，故不转录序列断言。(3) 权重句：GLD 20% 波动 0.4440、回撤 -0.6280；GLD 80% 波动 0.1838、回撤 -0.2248，随 GLD 权重上升波动与回撤均下降（回撤为负数，-0.2248 > -0.6280 即更浅），方向正确。(4) 分段句：前半 0.5382、后半 0.6725，均为正且差异明显，成立。previous_program_findings 提示正文含手写数字 20%/80%，但正文实际使用 {{sensitivity.8.weight_GLD}} 与 {{sensitivity.10.weight_GLD}} 占位符，未出现手写百分比，该提示不构成本条错误。局限中『分段为样本内切分，不构成样本外检验』与数据口径一致。",
+            "verdict": "supported",
+            "repair": "none"
+          }
+        ],
+        "questions": [
+          {
+            "question_id": "market",
+            "reason": "f-market 已给出实际起止区间（行情 2021-09-28 至 2026-09-28，执行口径 2021-09-30 至 2026-08-31）、行情口径与同口径执行基线的收益/波动/回撤，并说明月度估值与日线口径不可混用。",
+            "answered": true
+          },
+          {
+            "question_id": "hedge",
+            "reason": "f-hedge 使用相同 6 个事后压力月份，区分 GLD 正收益（2/6）与跑赢（6/6）、BTC 正收益（1/6）与跑赢（3/6），并披露事后选样与样本量限制，符合验收要求。",
+            "answered": true
+          },
+          {
+            "question_id": "inflation",
+            "reason": "f-inflation 结合 GLD/BTC 实际累计收益（均高于零）与 CPI 分组均值、相关性，区分保值结果与抗通胀机制，并说明 CPI 为当前历史版本、仅回顾。",
+            "answered": true
+          },
+          {
+            "question_id": "allocation",
+            "reason": "f-allocation 在相同 execution 口径下比较组合与 GLD、BTC 单资产的年化、波动、回撤，给出条件化判断（以更高波动/回撤换取更高收益、显著降低 BTC 风险）及可能推翻判断的证据（相关性上升）。",
+            "answered": true
+          },
+          {
+            "question_id": "sensitivity",
+            "reason": "f-sensitivity 引用已计算的成本、频率、权重、分段敏感性结果，未推荐事后最优参数，并明确分段为样本内切分、不构成样本外检验。",
+            "answered": true
+          }
+        ]
+      },
+      "meaning_review": {
+        "checks": [
+          {
+            "finding_id": "f-market",
+            "inference_audit": "该条为事实列举：行情覆盖条数、共同月末估值区间、组合与两单资产的累计收益/年化/波动/最大回撤，均为同口径历史数值描述。末句“本区间 GLD 的收益高于 BTC-USD，而 BTC-USD 的波动与回撤远大于 GLD”是对本样本区间内已列数值的直接比较，未外推为属性或未来结论。counterevidence 与 limitations 已标注日线/月度口径差异与末端日期差异，未混用。无属性、因果或机制跳跃。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-hedge",
+            "inference_audit": "压力月为事后按基准最差月选取，条内已明确标注选样偏差、样本仅 6 个月、跑赢不等于保本。结论“GLD 在多数压力月跌幅小于基准，而 BTC 在部分月份跌幅显著大于基准”是对所列正收益月数/跑赢月数与两个典型月份数值的有限描述，未声称稳定避险属性或未来保护。counterevidence 给出 2022-09-30 反例，与结论一致。属合格有限观察。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-inflation",
+            "inference_audit": "实际购买力部分：复权价格/CPI 回顾口径下两资产累计实际收益均高于零且 GLD 更高，这是样本期历史结果，条内未据此断言“具备抗通胀属性”。通胀关联部分：高/低通胀月平均收益与月度收益-CPI 同比相关性均为样本内描述性统计，counterevidence 明确“弱负相关不能证明资产具备抗通胀属性，也不能否定其长期保值结果”，limitations 说明 CPI 为当前历史版本、非当时已知信号、相关性不等于价格水平保值机制。未出现“方向不一致所以不是稳定通胀对冲工具”一类无依据属性推断，也未把未证明属性当作属性不存在。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-allocation",
+            "inference_audit": "组合与单资产的年化、波动、最大回撤比较为同口径历史数值，结论“以高于 GLD 的波动与回撤为代价换取更高收益，同时显著降低了 BTC 单资产的风险”是对已列数值的代价-收益描述，未声称普遍最优或未来保护。相关性部分明确写“低相关有助于解释分散风险，但不能单独解释组合收益高于两单资产”，limitations 进一步指出组合收益高于单资产可能来自再平衡与权重效应、非因果贡献，未把组合收益高于两单资产当作低相关或再平衡机制的证明。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-framework",
+            "inference_audit": "该条为条件化决策框架：以“若目标是降低波动与回撤……若追求更高收益并接受更大回撤……”的条件句式给出权重取舍，并明确“该框架为条件化研究判断，非投资建议”，limitations 声明基于单一历史区间与事后参数、未考虑税费/流动性/监管。未出现“收益上限由某资产主导”“未来保护”“稳定属性”或“普遍最优”等越界断言；引用的波动与回撤为对应情景历史数值。合格。",
+            "violations": []
+          },
+          {
+            "finding_id": "f-sensitivity",
+            "inference_audit": "该条为情景对照的事实列举：成本、频率、权重、分段四组情景的累计收益/波动/回撤均为同口径（共同月末估值、下一可交易开盘执行、含成本）的历史结果，属于可复核的观察描述。'随成本上升而下降，但幅度有限'、'再平衡频率影响收益但不改变量级'、'随 GLD 权重上升，波动与回撤下降'、'两段均为正但差异明显'都是对情景数值方向的描述，未声称机制来源或未来属性。反证中'成本敏感性小，说明结论对成本假设不敏感'是对成本情景稳健性的有限陈述，未越界；'权重与分段敏感性大'同样是情景差异描述。局限已声明分段为样本内切分、不构成样本外检验、不应事后挑参。未发现属性/因果/机制/外推跳跃。",
+            "violations": []
+          }
+        ]
+      },
+      "numeric_relationships": [
+        {
+          "finding_id": "f-market",
+          "quote": "本区间 GLD 的收益高于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.total_return",
+            "execution.BTC-USD.total_return"
+          ],
+          "values": [
+            1.4733538532972315,
+            0.7728191284250496
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "GLD 的收益高于 BTC-USD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.GLD.cagr",
+            "execution.BTC-USD.cagr"
+          ],
+          "values": [
+            0.20221480964305583,
+            0.12349342727448431
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "BTC-USD 的波动与回撤远大于 GLD",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.BTC-USD.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.557557453841724,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-market",
+          "quote": "BTC-USD 的波动与回撤远大于 GLD",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.BTC-USD.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.727047074945036,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 有 {{stress.GLD.positive_months}} 个月取得正收益、{{stress.GLD.outperform_months}} 个月跑赢 SPY",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.GLD.outperform_months",
+            "stress.GLD.positive_months"
+          ],
+          "values": [
+            6.0,
+            2.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "BTC-USD 仅 {{stress.BTC-USD.positive_months}} 个月正收益、{{stress.BTC-USD.outperform_months}} 个月跑赢",
+          "relation": "gt",
+          "metric_ids": [
+            "stress.BTC-USD.outperform_months",
+            "stress.BTC-USD.positive_months"
+          ],
+          "values": [
+            3.0,
+            1.0
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "GLD 在多数压力月跌幅小于基准",
+          "relation": "gt",
+          "metric_ids": [
+            "stress-month.2022-06-30.GLD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.01565965107712486,
+            -0.08246045670472002
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "BTC 在部分月份跌幅显著大于基准",
+          "relation": "lt",
+          "metric_ids": [
+            "stress-month.2022-06-30.BTC-USD",
+            "stress-month.2022-06-30.SPY"
+          ],
+          "values": [
+            -0.3663312138110574,
+            -0.08246045670472002
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-hedge",
+          "quote": "2022-09-30 GLD {{stress-month.2022-09-30.GLD}} 与 BTC-USD {{stress-month.2022-09-30.BTC-USD}} 均为负",
+          "relation": "negative",
+          "metric_ids": [
+            "stress-month.2022-09-30.GLD",
+            "stress-month.2022-09-30.BTC-USD"
+          ],
+          "values": [
+            -0.028881810636775418,
+            -0.011302721417968398
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者均高于零，但 GLD 更高",
+          "relation": "positive",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.BTC-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            0.5301758702586352
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "两者均高于零，但 GLD 更高",
+          "relation": "gt",
+          "metric_ids": [
+            "real.GLD.total_return",
+            "real.BTC-USD.total_return"
+          ],
+          "values": [
+            1.0365905588718594,
+            0.5301758702586352
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "GLD 在高通胀月收益低于低通胀月",
+          "relation": "lt",
+          "metric_ids": [
+            "inflation.GLD.high_inflation_mean_return",
+            "inflation.GLD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.009027449307901931,
+            0.03153099438546877
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "BTC 则相反",
+          "relation": "gt",
+          "metric_ids": [
+            "inflation.BTC-USD.high_inflation_mean_return",
+            "inflation.BTC-USD.low_inflation_mean_return"
+          ],
+          "values": [
+            0.03304907134509211,
+            0.007900642290315939
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-inflation",
+          "quote": "均为弱负相关",
+          "relation": "negative",
+          "metric_ids": [
+            "inflation.GLD.inflation_correlation",
+            "inflation.BTC-USD.inflation_correlation"
+          ],
+          "values": [
+            -0.25201116163691034,
+            -0.1822297208522549
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合年化 {{execution.portfolio.cagr}} 高于 GLD {{execution.GLD.cagr}} 与 BTC-USD {{execution.BTC-USD.cagr}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.cagr",
+            "execution.GLD.cagr",
+            "execution.BTC-USD.cagr"
+          ],
+          "values": [
+            0.2165650492193245,
+            0.20221480964305583,
+            0.12349342727448431
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.GLD.volatility"
+          ],
+          "values": [
+            0.24855432585327095,
+            0.16863539803888533
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合波动 {{execution.portfolio.volatility}} 高于 GLD {{execution.GLD.volatility}} 但远低于 BTC-USD {{execution.BTC-USD.volatility}}",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.volatility",
+            "execution.BTC-USD.volatility"
+          ],
+          "values": [
+            0.24855432585327095,
+            0.557557453841724
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.GLD.max_drawdown"
+          ],
+          "values": [
+            -0.367414822221963,
+            -0.23766901930987872
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-allocation",
+          "quote": "组合最大回撤 {{execution.portfolio.max_drawdown}} 深于 GLD {{execution.GLD.max_drawdown}} 但浅于 BTC-USD {{execution.BTC-USD.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "execution.portfolio.max_drawdown",
+            "execution.BTC-USD.max_drawdown"
+          ],
+          "values": [
+            -0.367414822221963,
+            -0.727047074945036
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-framework",
+          "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+          "relation": "lt",
+          "metric_ids": [
+            "sensitivity.10.volatility",
+            "sensitivity.8.volatility"
+          ],
+          "values": [
+            0.18379885962072676,
+            0.44402111382665616
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-framework",
+          "quote": "较高 GLD 权重（如 {{sensitivity.10.weight_GLD}}）对应更低波动 {{sensitivity.10.volatility}} 与更浅回撤 {{sensitivity.10.max_drawdown}}",
+          "relation": "gt",
+          "metric_ids": [
+            "sensitivity.10.max_drawdown",
+            "sensitivity.8.max_drawdown"
+          ],
+          "values": [
+            -0.224770528894484,
+            -0.6280235018733044
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "累计收益由 {{sensitivity.1.total_return}} 降至 {{sensitivity.4.total_return}}",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.1.total_return",
+            "sensitivity.4.total_return"
+          ],
+          "values": [
+            1.639453739247807,
+            1.5943426175546391
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "decreasing",
+          "metric_ids": [
+            "sensitivity.8.volatility",
+            "sensitivity.10.volatility"
+          ],
+          "values": [
+            0.44402111382665616,
+            0.18379885962072676
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "随 GLD 权重上升，波动与回撤下降",
+          "relation": "increasing",
+          "metric_ids": [
+            "sensitivity.8.max_drawdown",
+            "sensitivity.10.max_drawdown"
+          ],
+          "values": [
+            -0.6280235018733044,
+            -0.224770528894484
+          ],
+          "passed": true
+        },
+        {
+          "finding_id": "f-sensitivity",
+          "quote": "前半区间累计 {{sensitivity.11.total_return}}、后半区间 {{sensitivity.12.total_return}}，两段均为正",
+          "relation": "positive",
+          "metric_ids": [
+            "sensitivity.11.total_return",
+            "sensitivity.12.total_return"
+          ],
+          "values": [
+            0.5382153702438539,
+            0.6725150172228052
+          ],
+          "passed": true
+        }
+      ],
+      "accepted_ids": [
+        "f-allocation",
+        "f-framework",
+        "f-hedge",
+        "f-inflation",
+        "f-market",
+        "f-sensitivity"
+      ],
+      "accepted_hashes": {
+        "f-market": "bba71c4f32aecff91222a8bcac7bcdebd363ba2925c97780f5be5632db492976",
+        "f-hedge": "9dcbcd99c45247e840fe2c31eb4cb437c4b513604500041cf038132761864484",
+        "f-inflation": "316a9410cd8ae95761769a093ad3f72b97154c3a0bcb5d75b632546945421d9a",
+        "f-allocation": "9009c6c32554b6c6d8fb524e4ec4308a2483f4308f9c49399046d7d4b91124cc",
+        "f-framework": "6a7e8c2a7dfbe5ec99f43ef519deaee847ab1e0fb4bfdace84704d2e4742b44b",
+        "f-sensitivity": "1b9a4afa7d0f3fee6ba6894341653f9518a89152aeb0128d500e6ff0d535759b"
+      },
+      "reused_certificates": [
+        "f-allocation",
+        "f-framework",
+        "f-hedge",
+        "f-inflation",
+        "f-market",
+        "f-sensitivity"
+      ]
+    }
+  ],
+  "gaps": [],
+  "text": "GLD 与 BTC-USD 避险与抗通胀比较（2021-09-28 至 2026-09-28，60/40 季度再平衡）\n\n研究状态：完整。请求区间：2021-09-28 至 2026-09-28；实际数值区间见各指标口径。\n\n**行情覆盖与同口径收益风险基线**\n\n行情覆盖 2021-09-28 至 2026-09-28：GLD 有 1,255 个日线观测，BTC-USD 有 1,827 个（已排除 1 条未完成日线）。但可比较的执行口径基线是共同月末估值，区间为 2021-09-30 至 2026-08-31，共 60 个月度观测，信号后下一可交易开盘执行、含 20 bps 单边成本与现金余额。该口径下组合累计收益 162.20%、年化 21.66%、年化波动 24.86%、最大回撤 -36.74%；GLD 单资产累计 147.34%、年化 20.22%、波动 16.86%、最大回撤 -23.77%；BTC-USD 单资产累计 77.28%、年化 12.35%、波动 55.76%、最大回撤 -72.70%。要点是：本区间 GLD 的收益高于 BTC-USD，而 BTC-USD 的波动与回撤远大于 GLD。\n\n竞争性解释：日线口径下 BTC-USD 的路径可能更极端，月度估值会平滑部分波动。\n\n局限：执行口径为月度估值，与日线行情口径不同，不能混用；区间末端为 2026-08-31 而非 2026-09-28，因共同月末估值需完整日线。\n\n改变判断的条件：若改用日线或不同再平衡锚点，收益与回撤数值会变化。\n\n依据：[prices-GLD-8b981092fa7c] [prices-BTC-USD-985393bca67a]\n\n**压力期：GLD 相对抗跌，BTC 保护有限**\n\n以事后选取的基准最差月份为压力样本（共 6 个月），GLD 有 2 个月取得正收益、6 个月跑赢 SPY；BTC-USD 仅 1 个月正收益、3 个月跑赢。典型例子：2022-06-30 SPY -8.25%，GLD -1.57%，BTC-USD -36.63%；2025-03-31 SPY -5.57%，GLD 9.45%，BTC-USD -2.80%。可见 GLD 在多数压力月跌幅小于基准，而 BTC 在部分月份跌幅显著大于基准。\n\n竞争性解释：2022-09-30 GLD -2.89% 与 BTC-USD -1.13% 均为负，说明 GLD 也非每月抗跌。\n\n局限：压力月份是事后按基准最差月挑选，存在选样偏差；样本仅 6 个月，不能外推为稳定规律。跑赢基准不等于保本。\n\n改变判断的条件：若压力定义改为波动率或回撤触发，结论可能不同。\n\n依据：[prices-GLD-8b981092fa7c] [prices-BTC-USD-985393bca67a] [prices-SPY-8b7e46407b31]\n\n**实际购买力与通胀关联**\n\n实际购买力（复权价格/CPI 回顾口径）上，GLD 累计实际收益 103.66%，BTC-USD 53.02%，两者均高于零，但 GLD 更高。通胀关联方面，以 CPI 同比 3.00% 为分界：高通胀月 GLD 平均收益 0.90%、BTC-USD 3.30%；低通胀月 GLD 3.15%、BTC-USD 0.79%。GLD 在高通胀月收益低于低通胀月，BTC 则相反。月度收益与 CPI 同比的相关性：GLD -0.252，BTC-USD -0.182，均为弱负相关。\n\n竞争性解释：弱负相关不能证明资产具备抗通胀属性，也不能否定其长期保值结果。\n\n局限：CPI 为当前历史版本，仅作回顾分析，非当时已知信号；相关性基于月度收益与通胀水平，不等于价格水平保值机制。\n\n改变判断的条件：若改用通胀变动而非水平，或换用不同 CPI 序列，相关性会变化。\n\n依据：[prices-GLD-8b981092fa7c] [prices-BTC-USD-985393bca67a] [fred-CPIAUCNS]\n\n**组合相对单资产的收益与风险代价**\n\n同口径（execution）比较：组合年化 21.66% 高于 GLD 20.22% 与 BTC-USD 12.35%；组合波动 24.86% 高于 GLD 16.86% 但远低于 BTC-USD 55.76%；组合最大回撤 -36.74% 深于 GLD -23.77% 但浅于 BTC-USD -72.70%。即组合以高于 GLD 的波动与回撤为代价换取更高收益，同时显著降低了 BTC 单资产的风险。两资产月度相关性 0.152（n=59），低相关有助于解释分散风险，但不能单独解释组合收益高于两单资产。\n\n竞争性解释：若相关性上升，分散收益会减弱。\n\n局限：相关性为样本内估计，样本量有限；组合收益高于单资产可能来自再平衡与权重效应，非因果贡献。\n\n改变判断的条件：若权重或再平衡频率改变，组合收益风险关系会变化。\n\n依据：[prices-GLD-8b981092fa7c] [prices-BTC-USD-985393bca67a]\n\n**有条件决策框架**\n\n基于本快照：若目标是降低组合波动与回撤并保留部分上行，较高 GLD 权重（如 80.00%）对应更低波动 18.38% 与更浅回撤 -22.48%，但收益也相应变化；若追求更高收益并接受更大回撤，可提高 BTC 权重，但需承受 -62.80% 级别的回撤。季度再平衡在成本与频率间较为均衡。该框架为条件化研究判断，非投资建议。\n\n竞争性解释：若未来相关性或波动结构改变，权重取舍会不同。\n\n局限：框架基于单一历史区间与事后参数，未考虑税费、流动性、监管变化。\n\n改变判断的条件：若加入更多资产或更长区间，框架需重建。\n\n依据：[prices-GLD-8b981092fa7c] [prices-BTC-USD-985393bca67a]\n\n**成本、频率、权重、分段敏感性**\n\n成本：从 0 bps 到 50 bps，累计收益由 163.95% 降至 159.43%，随成本上升而下降，但幅度有限。频率：买入持有累计 118.16%，每 1 月再平衡 161.77%，每 12 月再平衡 132.77%，季度基线 162.20%，再平衡频率影响收益但不改变量级。权重：GLD 权重 20.00% 时波动 44.40%、回撤 -62.80%；GLD 权重 80.00% 时波动 18.38%、回撤 -22.48%，随 GLD 权重上升，波动与回撤下降。分段：前半区间累计 53.82%、后半区间 67.25%，两段均为正但差异明显。\n\n竞争性解释：成本敏感性小，说明结论对成本假设不敏感；但权重与分段敏感性大。\n\n局限：分段为样本内切分，不构成样本外检验；不应从网格中挑选事后最优参数。\n\n改变判断的条件：若区间或资产改变，敏感性排序可能不同。\n\n依据：[prices-GLD-8b981092fa7c] [prices-BTC-USD-985393bca67a]\n\n**计算口径**\n\n- 2021-09-28 至 2026-09-28；日线；Yahoo split-adjusted OHLC; adj_close additionally reflects distributions。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额。\n- 2021-09-30 至 2026-08-31；共同月度；事后选取基准最差月份；跑赢基准不等于保本。\n- 2022-06-30 至 2022-06-30；共同月度；事后选取基准最差月份的同期收益。\n- 2025-03-31 至 2025-03-31；共同月度；事后选取基准最差月份的同期收益。\n- 2022-09-30 至 2022-09-30；共同月度；事后选取基准最差月份的同期收益。\n- 2021-09-30 至 2026-08-31；共同月度；复权价格/CPI购买力回顾，无额外交易费用。\n- 2021-09-30 至 2026-08-31；共同月度；月度资产收益与 CPI 同比水平的关系；不是价格水平或通胀变动；当前历史版本仅作回顾，非当时已知交易信号。\n- 2021-09-30 至 2026-08-31；共同月度；两资产月度收益的样本皮尔逊相关性；不是价格水平相关性。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 80%。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 GLD 20%。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 0 bps。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 成本 50 bps。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 买入持有。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 1 月再平衡。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 每 12 月再平衡。\n- 2021-09-30 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 原始配置。\n- 2021-09-30 至 2024-03-28；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 前半区间。\n- 2024-03-28 至 2026-08-31；共同月度；共同月末估值，信号后下一可交易开盘执行，含指定交易费用与现金余额；情景 后半区间。\n\n**来源**\n\n- [prices-GLD-8b981092fa7c] GLD 行情：https://query1.finance.yahoo.com/v8/finance/chart/GLD?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [prices-BTC-USD-985393bca67a] BTC-USD 行情：https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [prices-SPY-8b7e46407b31] SPY 行情：https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1598227200&period2=1790640000&interval=1d&events=div%2Csplits&includeAdjustedClose=true\n- [fred-CPIAUCNS] FRED · CPIAUCNS：https://fred.stlouisfed.org/series/CPIAUCNS",
+  "assessed_at": "2026-09-29T09:37:00.355676+00:00",
+  "input_hash": "4610fef668aaff76cffcc5f50b6f7a7896622ed378b06ffa28be9e24185250f9",
+  "budget": {
+    "elapsed_seconds": 213.234,
+    "model_calls": 25,
+    "max_seconds": 900,
+    "max_model_calls": 64
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "real-run-replay",
+  "run_id": "15412514d7234a05",
+  "promoted_at": "2026-09-29T06:31:47.677607+00:00",
+  "model_requested": "self-evo-glm-atl-260826",
+  "models_observed": [
+    "/workspace/model",
+    "deepseek-flash"
+  ],
+  "model_configuration_history": [
+    {
+      "requested_model": "self-evo-glm-atl-260826",
+      "provider": "1688openai.alibaba-inc.com",
+      "platform": "maas",
+      "identity_basis": "user-confirmed; gateway returns /workspace/model"
+    },
+    {
+      "prompt_hashes": {
+        "planner": "c2a6b79d3464127f3b8cf2d75f01ec18e03a1c2487321da508fc29d52303e658",
+        "researcher": "f6e2b80cf02abfded77df4eab516731a3091ca43db937785e12ea4ea5476bd56",
+        "extractor": "f986e16039ee40f5c78461ca4ebc7043f587a54e953e2e4626aafa8d50522f99",
+        "reviewer": "8f8eb6fe2154f5ae6ab8dfed1c7bc8f4fd6127eacaec89930c1334579bb8af0b"
+      },
+      "requested_model": "self-evo-glm-atl-260826",
+      "platform": "maas"
+    },
+    {
+      "prompt_hashes": {
+        "planner": "c2a6b79d3464127f3b8cf2d75f01ec18e03a1c2487321da508fc29d52303e658",
+        "researcher": "f6e2b80cf02abfded77df4eab516731a3091ca43db937785e12ea4ea5476bd56",
+        "extractor": "f986e16039ee40f5c78461ca4ebc7043f587a54e953e2e4626aafa8d50522f99",
+        "reviewer": "8f8eb6fe2154f5ae6ab8dfed1c7bc8f4fd6127eacaec89930c1334579bb8af0b"
+      },
+      "requested_model": "self-evo-glm-atl-260826",
+      "platform": "maas"
+    }
+  ],
+  "original_bundle_sha256": "e9031ea0e617938806f5fc87c2f29e20c79f835d5de213fc171be68e549aa2dc",
+  "manual_event_edits": false,
+  "transformations": [
+    "mode: live -> sample; event facts, coverage and review unchanged"
+  ],
+  "completion_status": "complete",
+  "events": 7,
+  "sources": 17,
+  "review_passed": true
+}

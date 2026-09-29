@@ -1,0 +1,334 @@
+.research-activity {
+  margin: 16px 0 22px;
+}
+.bui-loading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 30px;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.bui-loading time {
+  margin-left: 4px;
+  color: var(--ink-3);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.bui-loader-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 1.5px;
+  flex-shrink: 0;
+}
+.bui-loader-grid i {
+  width: 4px;
+  height: 4px;
+  border-radius: 1px;
+  background: var(--ink-2);
+  animation: activity-pixel 650ms ease-in-out infinite;
+}
+.bui-shimmer {
+  background: linear-gradient(90deg, var(--ink-2) 35%, var(--ink) 50%, var(--ink-2) 65%);
+  background-size: 200% 100%;
+  background-clip: text;
+  color: transparent;
+  animation: activity-shimmer 1.4s linear infinite;
+}
+.bui-thinking {
+  padding: 3px 0;
+}
+.activity-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 6px;
+  text-align: left;
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.6;
+  border-radius: 7px;
+}
+.activity-header:hover {
+  background: var(--hover);
+}
+.activity-header > span {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.activity-header small {
+  margin-left: auto;
+  font-size: 10px;
+  white-space: nowrap;
+  font-weight: 400;
+  color: var(--ink-2);
+}
+.bui-thinking.failed > .activity-header {
+  color: #b45309;
+}
+.activity-header > svg:last-child {
+  transition: transform 150ms;
+}
+.activity-header > svg.expanded {
+  transform: rotate(90deg);
+}
+.activity-body {
+  margin: 0 6px 9px 13px;
+  padding: 5px 0 5px 20px;
+  border-left: 1px solid var(--line-strong);
+  overflow-wrap: anywhere;
+}
+.activity-note {
+  color: var(--ink-2);
+  font-size: 12px;
+  line-height: 1.85;
+  margin: 6px 0 10px;
+  white-space: pre-wrap;
+}
+.activity-note.warning,
+.answer-interrupted {
+  color: #b45309;
+}
+.activity-model {
+  margin: 8px 0 12px;
+}
+.activity-model > small {
+  display: block;
+  margin: 6px 0;
+  color: var(--ink-2);
+  font-size: 10px;
+}
+.research-activity .bui-tool-chips {
+  max-height: none;
+  overflow: visible;
+}
+.research-activity .tool-chip {
+  display: inline-flex;
+}
+.bui-streaming {
+  margin: 9px 0 14px;
+  font-size: 13px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+.streaming-prose p {
+  margin: 6px 0;
+}
+.streaming-prose ul,
+.streaming-prose ol {
+  list-style: revert;
+  padding-left: 20px;
+}
+.streaming-prose pre {
+  white-space: pre-wrap;
+  background: var(--field);
+  padding: 10px;
+  border-radius: 8px;
+}
+.streaming-prose a {
+  color: var(--accent-ink);
+}
+.streaming-prose .inline-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  vertical-align: baseline;
+  max-width: 210px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  background: var(--inset);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 4px;
+  margin: 0 2px;
+  text-decoration: none;
+}
+.inline-source:hover {
+  background: var(--hover);
+}
+.streaming-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  margin-left: 3px;
+  background: var(--ink);
+  border-radius: 2px;
+  animation: activity-cursor 1s steps(2) infinite;
+}
+.is-streaming .streaming-prose,
+.is-streaming .streaming-prose > p:last-child {
+  display: inline;
+}
+.streaming-sources {
+  margin-top: 8px;
+}
+.streaming-sources > button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 3px 4px;
+  border-radius: 6px;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+.streaming-sources > button:hover {
+  background: var(--hover);
+}
+.streaming-sources > button > svg.expanded {
+  transform: rotate(180deg);
+}
+.source-stack {
+  display: inline-flex;
+  padding-left: 3px;
+}
+.source-stack i {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  background: var(--field);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  margin-left: -3px;
+}
+.source-list {
+  background: var(--inset);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px;
+  margin-top: 5px;
+  max-height: 260px;
+  overflow: auto;
+}
+.source-list > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+.source-list > a:hover {
+  background: var(--hover);
+}
+.source-list > a > span {
+  min-width: 0;
+  flex: 1;
+}
+.source-list strong {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.source-list small {
+  display: block;
+  font-size: 10px;
+  margin-top: 3px;
+}
+.source-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+.source-preview a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 220px;
+  padding: 4px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  text-decoration: none;
+  background: var(--surface);
+}
+.source-preview a > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.source-preview a:hover {
+  background: var(--hover);
+}
+.follow-latest {
+  position: sticky;
+  bottom: 12px;
+  display: block;
+  margin: 0 auto 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  color: var(--ink-2);
+  font-size: 11px;
+  z-index: 3;
+}
+.research-conversation:not(.compact) > .follow-latest {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  margin: 0;
+}
+.compact .activity-body {
+  margin-left: 8px;
+  padding-left: 12px;
+}
+.compact .activity-header small {
+  font-size: 9px;
+}
+.compact .bui-streaming {
+  font-size: 12px;
+}
+@keyframes activity-pixel {
+  0%,
+  70%,
+  100% {
+    opacity: 0.15;
+  }
+  30% {
+    opacity: 0.9;
+  }
+}
+@keyframes activity-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes activity-cursor {
+  50% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bui-shimmer,
+  .bui-loader-grid i,
+  .streaming-cursor {
+    animation: none;
+  }
+  .activity-header > svg {
+    transition: none;
+  }
+}
+@media (max-width: 680px) {
+  .activity-header {
+    font-size: 12px;
+  }
+  .activity-header small {
+    font-size: 9px;
+  }
+  .source-preview a {
+    max-width: 100%;
+  }
+  .research-activity .tool-chip {
+    font-size: 9px;
+  }
+}

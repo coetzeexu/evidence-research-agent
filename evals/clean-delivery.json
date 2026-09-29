@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-09-29T03:02:48.390137+00:00",
+  "environment": "macOS ARM64; fresh ZIP extraction; no model credentials",
+  "install": "uv sync --frozen; npm ci",
+  "backend_tests": 79,
+  "frontend_tests": 27,
+  "build": true,
+  "launcher": "./run.sh; RESEARCH_PORT=8021",
+  "health": {
+    "status": "ok",
+    "model_configured": false,
+    "model": "",
+    "data_policy": "免费公开来源 · 按需刷新日线"
+  },
+  "checks": [
+    {
+      "run_id": "020fae3f190b461f",
+      "status": "partial",
+      "bundle": true,
+      "downloads": 4
+    },
+    {
+      "run_id": "3302715305fc4dac",
+      "status": "complete",
+      "bundle": true,
+      "downloads": 4
+    }
+  ],
+  "browser_opened": false
+}

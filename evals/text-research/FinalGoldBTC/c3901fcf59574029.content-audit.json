@@ -1,0 +1,25 @@
+{
+  "run_id": "c3901fcf59574029",
+  "content_pass": false,
+  "auditor": "Codex independent reading, separate from production reviewer",
+  "audited_at": "2026-09-29T09:47:31.640387+00:00",
+  "method": "Compared published prose and rejected claims with original metric values and production audits",
+  "issues": [
+    {
+      "severity": "incomplete",
+      "quote": "压力保护、通胀、成本与权重敏感性",
+      "reason": "必答问题的部分内容因引文定位/关系转录错误未获发布，不满足主场景完整性。"
+    },
+    {
+      "severity": "warning",
+      "quote": "成本与再平衡频率不是关键变量，权重与样本区间才是",
+      "reason": "缺少统一决策重要性标准；历史有限网格不足以如此笼统判断。"
+    },
+    {
+      "severity": "warning",
+      "quote": "买入持有与季度再平衡的累计收益差距有限，说明再平衡频率并非收益主要来源",
+      "reason": "累计收益118.16%与162.20%相差44.04个百分点；有限的频率对照不是收益来源分解。"
+    }
+  ],
+  "gate_diagnosis": "多数被拒绝的数学关系本身为真，但 reviewer quote 改写了原句或把占位符换成数值，违反精确定位；应与真正数值错误分开记录。"
+}

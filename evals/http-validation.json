@@ -1,0 +1,30 @@
+{
+  "checked_at": "2026-09-28T09:58:55.767334+00:00",
+  "health": 200,
+  "frontend": 200,
+  "checks": [
+    {
+      "sample": "gold-bitcoin",
+      "status": "complete",
+      "bundle_matches": true,
+      "download_bytes": {
+        "html": 2942991,
+        "xlsx": 443975,
+        "pptx": 93106,
+        "docx": 137673
+      }
+    },
+    {
+      "sample": "nvda",
+      "status": "complete",
+      "bundle_matches": true,
+      "download_bytes": {
+        "html": 2267685,
+        "xlsx": 263051,
+        "pptx": 91688,
+        "docx": 123290
+      }
+    }
+  ],
+  "browser_used": false
+}

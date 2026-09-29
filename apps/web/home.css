@@ -1,0 +1,462 @@
+/* Visual reference: YouMind's authenticated /new-task page, observed 2026-09-28.
+ * Local implementation; the controlled composer remains adapted from Beautiful UI.
+ * Keep the research chart's semantic colors independent of these neutral surfaces. */
+.app-shell {
+  --page: #fff;
+  --canvas: #f7f7f7;
+  --surface: #fff;
+  --inset: #fafafa;
+  --field: #f7f7f7;
+  --hover: #f2f2f2;
+  --hover-2: #ebebeb;
+  --ink: #1f1f1f;
+  --ink-2: #707070;
+  --ink-3: #969696;
+  --line: #02041a12;
+  --line-strong: #e5e5e5;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+.app-shell .sidebar {
+  width: 240px;
+  border: 0;
+}
+.app-shell .main-shell {
+  margin-left: 240px;
+}
+.app-shell .brand {
+  padding: 27px 22px 30px;
+  gap: 8px;
+  font-size: 21px;
+  font-weight: 550;
+}
+.app-shell .brand-mark {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  font-size: 36px;
+  width: 28px;
+}
+.app-shell .brand small {
+  display: none;
+}
+.app-shell .new-study {
+  margin: 0 12px;
+  border: 0;
+  border-radius: 7px;
+  padding: 10px 12px;
+  background: transparent;
+  box-shadow: none;
+  font-size: 14px;
+}
+.app-shell .new-study[aria-current='page'],
+.app-shell .new-study:hover {
+  background: #ebebeb;
+}
+.app-shell .sidebar-search {
+  margin: 16px 24px 29px;
+}
+.app-shell .sidebar-search input {
+  font-size: 13px;
+}
+.app-shell .sidebar-label {
+  font-size: 11px;
+}
+.app-shell .sidebar-label span {
+  background: #ececec;
+  color: var(--ink-2);
+}
+.app-shell .run-item {
+  padding: 11px 12px;
+}
+.app-shell .run-item strong {
+  font-size: 13px;
+  font-weight: 400;
+}
+.app-shell .run-item small {
+  font-size: 10px;
+}
+.app-shell .run-item.active {
+  background: #eaeaea;
+  box-shadow: none;
+}
+.app-shell .profile > span {
+  color: var(--ink-2);
+}
+.home-active .main-shell {
+  margin: 12px 12px 12px 240px;
+  border-radius: 16px;
+  min-height: calc(100vh - 24px);
+}
+.home-active .topbar {
+  height: 54px;
+  border: 0;
+  border-radius: 16px 16px 0 0;
+  background: transparent;
+}
+.home-active .breadcrumb strong {
+  color: var(--ink);
+}
+.home {
+  max-width: 800px;
+  padding: clamp(64px, 10vh, 116px) 40px 36px;
+  margin: 0 auto;
+}
+.home h1 {
+  font-family: inherit;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.7px;
+  line-height: 1.5;
+  text-align: center;
+}
+.home .home-description {
+  margin-top: 8px;
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.8;
+  text-align: center;
+  text-wrap: balance;
+}
+.home .home-composer {
+  margin-top: 30px;
+  padding: 0;
+  border-radius: 24px;
+  background: transparent;
+  box-shadow: none;
+}
+.home .bui-composer {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--surface);
+  padding: 18px;
+  gap: 14px;
+  box-shadow: 0 1px 4px #02041a0a;
+}
+.home .bui-composer:focus-within {
+  border-color: #b9b9b9;
+  box-shadow: 0 1px 6px #02041a0d;
+}
+.home .bui-composer textarea {
+  height: 66px;
+  min-height: 66px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.home .bui-composer textarea::placeholder {
+  color: #929292;
+}
+.home .composer-bottom > button {
+  min-height: 34px;
+  box-shadow: none;
+}
+.home .composer-bottom > button:disabled {
+  background: #f0f0f0;
+  color: #868686;
+  opacity: 1;
+}
+.home .send-explainer {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.send-explainer > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  width: fit-content;
+  margin: auto;
+  border-radius: 5px;
+  list-style: none;
+}
+.send-explainer > summary::-webkit-details-marker {
+  display: none;
+}
+.send-explainer > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+.send-explainer[open] > summary > svg:last-child {
+  transform: rotate(180deg);
+}
+.send-explainer[open] {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.send-explainer > strong {
+  display: block;
+  margin-top: 20px;
+  color: var(--ink);
+}
+.home-library {
+  margin-top: 46px;
+}
+.home .home-section-title {
+  margin: 0 0 18px;
+  gap: 12px;
+}
+.home-categories {
+  display: flex;
+  gap: 7px;
+}
+.home-categories button {
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-size: 13px;
+}
+.home-categories button:hover,
+.home-categories button[aria-pressed='true'] {
+  background: var(--canvas);
+  color: var(--ink);
+}
+.home-categories button[aria-pressed='true'] {
+  font-weight: 550;
+}
+.home .home-section-title small {
+  font-size: 11px;
+}
+.home .example-grid {
+  gap: 18px;
+}
+.home .example-card {
+  border: 0;
+  padding: 0;
+  border-radius: 16px;
+  background: transparent;
+  box-shadow: none;
+  min-width: 0;
+}
+.home .example-card:hover {
+  transform: none;
+}
+.example-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 112px;
+  padding: 16px 20px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.example-cover.market {
+  background: #e9efeb;
+  color: #40574b;
+}
+.example-cover.allocation {
+  background: #f3efe4;
+  color: #706348;
+}
+.example-cover > svg {
+  position: absolute;
+  top: 17px;
+  right: 18px;
+  opacity: 0.6;
+}
+.example-card:hover .example-cover > svg {
+  opacity: 1;
+}
+.example-category {
+  font-size: 11px;
+  letter-spacing: 0.6px;
+}
+.example-symbol {
+  font-size: clamp(23px, 2.7vw, 32px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+.example-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 2px 2px;
+}
+.example-copy strong {
+  font-size: 14px;
+  font-weight: 450;
+  color: var(--ink);
+}
+.example-copy > span {
+  font-size: 11px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.home-recent {
+  display: grid;
+  gap: 6px;
+}
+.home-recent > button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  padding: 14px 12px;
+  border-radius: 12px;
+}
+.home-recent > button:hover {
+  background: var(--inset);
+}
+.recent-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--canvas);
+  color: var(--ink-2);
+}
+.home-recent strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 450;
+  line-height: 1.7;
+}
+.home-recent small {
+  display: block;
+  color: var(--ink-2);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.home-recent > button > svg {
+  margin-left: auto;
+  color: var(--ink-2);
+}
+.home-library-empty {
+  padding: 30px 14px;
+  font-size: 13px;
+  color: var(--ink-2);
+  text-align: center;
+  background: var(--inset);
+  border-radius: 12px;
+}
+.home .home-footnote {
+  justify-content: center;
+  margin-top: 35px;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--ink-2);
+}
+@media (max-width: 1100px) {
+  .app-shell .sidebar {
+    width: 204px;
+  }
+  .app-shell .main-shell {
+    margin-left: 204px;
+  }
+  .home {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+@media (max-width: 850px) {
+  .app-shell .sidebar {
+    width: 180px;
+  }
+  .app-shell .main-shell {
+    margin-left: 180px;
+  }
+  .app-shell .brand {
+    padding-left: 18px;
+  }
+  .home {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .home .home-section-title small {
+    display: none;
+  }
+  .home h1 {
+    font-size: 29px;
+  }
+}
+@media (max-width: 680px) {
+  .app-shell .sidebar {
+    display: none;
+  }
+  .app-shell .main-shell {
+    margin: 0;
+    border-radius: 0;
+    min-height: 100vh;
+  }
+  .home-active .topbar {
+    height: 56px;
+  }
+  .home {
+    padding: 58px 20px 28px;
+  }
+  .home h1 {
+    font-size: 27px;
+  }
+  .home .home-description {
+    font-size: 12px;
+  }
+  .home .home-composer {
+    margin-top: 25px;
+  }
+  .home .bui-composer {
+    padding: 15px;
+    border-radius: 20px;
+  }
+  .home .bui-composer textarea {
+    font-size: 16px;
+  }
+  .home .composer-bottom {
+    align-items: center;
+  }
+  .home .composer-bottom > span {
+    max-width: 115px;
+    font-size: 10px;
+  }
+  .home .composer-bottom > button {
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+  .home .send-explainer {
+    font-size: 11px;
+  }
+  .home-library {
+    margin-top: 35px;
+  }
+  .home .example-grid {
+    gap: 12px;
+  }
+  .example-cover {
+    height: 103px;
+    padding: 14px;
+    border-radius: 12px;
+  }
+  .example-cover > svg {
+    top: 14px;
+    right: 12px;
+    width: 16px;
+  }
+  .example-symbol {
+    font-size: 23px;
+  }
+  .example-copy strong {
+    font-size: 12px;
+  }
+  .home .home-footnote {
+    font-size: 9px;
+    gap: 6px;
+  }
+}
+@media (max-width: 360px) {
+  .home {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .example-symbol {
+    font-size: 20px;
+  }
+  .home-categories button {
+    padding: 6px 9px;
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "case": "nvda",
+  "run_id": "15412514d7234a05",
+  "started_at": "2026-09-29T06:25:21.556034+00:00",
+  "manual_edits": false,
+  "resumed_from_checkpoint": true,
+  "checks": {
+    "symbols": true,
+    "numeric_and_reference_integrity": true,
+    "named_requirements_retained": true,
+    "coverage_gate": true,
+    "independent_review": true,
+    "date_evidence": true,
+    "deepseek_move_candidate": true
+  },
+  "passed": true,
+  "completion_status": "complete",
+  "bundle_sha256": "e9031ea0e617938806f5fc87c2f29e20c79f835d5de213fc171be68e549aa2dc",
+  "quality": {
+    "version": "1.0",
+    "passed": true,
+    "requirements": [
+      {
+        "requirement": "ChatGPT 发布",
+        "event_ids": [
+          "ev-chatgpt-release-2022-11-30"
+        ],
+        "status": "covered"
+      },
+      {
+        "requirement": "Blackwell 平台发布",
+        "event_ids": [
+          "ev-blackwell-platform-2024-03-18"
+        ],
+        "status": "covered"
+      },
+      {
+        "requirement": "DeepSeek 相关事件",
+        "event_ids": [
+          "ev-deepseek-r1-paper-2025-01-22"
+        ],
+        "status": "covered"
+      },
+      {
+        "requirement": "2025-01-27 NVDA 下跌事件（区分论文日、模型发布日与市场反应日）",
+        "event_ids": [
+          "ev-nvda-deepseek-selloff-2025-01-27"
+        ],
+        "status": "covered"
+      }
+    ],
+    "periods": [
+      {
+        "start": "2021-09-28",
+        "end": "2021-12-31",
+        "event_ids": [],
+        "required": false,
+        "status": "gap"
+      },
+      {
+        "start": "2022-01-01",
+        "end": "2022-12-31",
+        "event_ids": [
+          "ev-chatgpt-release-2022-11-30"
+        ],
+        "required": true,
+        "status": "covered"
+      },
+      {
+        "start": "2023-01-01",
+        "end": "2023-12-31",
+        "event_ids": [
+          "ev-nvda-q1fy24-earnings-2023-05-24"
+        ],
+        "required": true,
+        "status": "covered"
+      },
+      {
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "event_ids": [
+          "ev-blackwell-platform-2024-03-18"
+        ],
+        "required": true,
+        "status": "covered"
+      },
+      {
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "event_ids": [
+          "ev-deepseek-r1-paper-2025-01-22",
+          "ev-nvda-deepseek-selloff-2025-01-27",
+          "ev-nvda-h20-policy-2025-04-09"
+        ],
+        "required": true,
+        "status": "covered"
+      },
+      {
+        "start": "2026-01-01",
+        "end": "2026-09-29",
+        "event_ids": [
+          "ev-nvda-q2fy27-earnings-2026-08-26"
+        ],
+        "required": true,
+        "status": "covered"
+      }
+    ],
+    "major_moves": [
+      {
+        "change_id": "change-NVDA-2023-05-25",
+        "date": "2023-05-25",
+        "symbol": "NVDA",
+        "event_ids": [
+          "ev-nvda-q1fy24-earnings-2023-05-24"
+        ],
+        "queries": [
+          "NVIDIA earnings Q1 fiscal 2024 guidance",
+          "Nvidia",
+          "Nvidia"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-NVDA-2024-02-22",
+        "date": "2024-02-22",
+        "symbol": "NVDA",
+        "event_ids": [],
+        "queries": [
+          "Nvidia stock surge earnings",
+          "Nvidia",
+          "Nvidia"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-NVDA-2025-01-27",
+        "date": "2025-01-27",
+        "symbol": "NVDA",
+        "event_ids": [
+          "ev-nvda-deepseek-selloff-2025-01-27",
+          "ev-deepseek-r1-paper-2025-01-22"
+        ],
+        "queries": [
+          "DeepSeek R1 Nvidia",
+          "Nvidia DeepSeek selloff Nasdaq",
+          "Nvidia stock plunge DeepSeek"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-NVDA-2021-11-04",
+        "date": "2021-11-04",
+        "symbol": "NVDA",
+        "event_ids": [],
+        "queries": [
+          "Nvidia",
+          "Nvidia Omniverse GTC keynote",
+          "Nvidia GTC November 2021 keynote",
+          "Nvidia"
+        ],
+        "investigated": true
+      },
+      {
+        "change_id": "change-NVDA-2025-04-09",
+        "date": "2025-04-09",
+        "symbol": "NVDA",
+        "event_ids": [
+          "ev-nvda-h20-policy-2025-04-09"
+        ],
+        "queries": [
+          "Nvidia",
+          "Nvidia H20 chip export restrictions White House April 2025",
+          "Nvidia H20 license requirement Commerce Department April 9 2025",
+          "H20 Nvidia"
+        ],
+        "investigated": true
+      }
+    ],
+    "repair_actions": [],
+    "data_gaps": [],
+    "event_count": 7,
+    "source_count": 17,
+    "changes": 23,
+    "associated_changes": 4,
+    "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。"
+  },
+  "review": {
+    "passed": true,
+    "findings": [],
+    "summary": "复核 prior_review 的三个问题，均不成立，已纠正。ev-nvda-h20-policy-2025-04-09：NPR 原文确实只给相对时间（last week 晚宴、as soon as this week 实施），但事件标题已标注“（报道日）”、uncertainty 与 warnings 三处均明确说明 2025-04-09 仅为报道发布日、不能证明政策转向发生日、不用于解释当日或次日行情，且 timing_basis=retrospective、confidence=low，属已明确披露的不确定性，不构成实际写错或不支持的断言，prior 的 critical 撤销。ev-nvda-deepseek-selloff-2025-01-27：摘要写“当日下跌 17%”并保留“未区分盘中与收盘口径”的限定，未把 17% 误称为收盘值，也未与行情窗口 -16.97% 混同，prior 自认不构成事实错误却仍列 warning，属非必要修复任务，撤销。ev-deepseek-r1-paper-2025-01-22：标题明确为论文 v1 提交，date_quote 直接支持 2025-01-22，uncertainty 已写明不等同模型/API 发布日，模型发布日缺口已在 warnings 中披露，属已披露证据缺口而非表述错误，撤销。数值经 compare_numbers 确认 71.9 亿=7.19 billion、160 亿=16 billion 相等，无量级或百分数换算错误。未核验：未纳入事件的若干来源未逐字核对，performance-NVDA 未独立复算。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。",
+    "deterministic": {
+      "passed": true,
+      "failures": [],
+      "claims": 1,
+      "events": 7,
+      "annotations": 7
+    }
+  },
+  "events": 7,
+  "sources": 17,
+  "spec": {
+    "intent": "event_study",
+    "title": "NVDA 近五年日线行情回顾与 AI 行业大事件研究（含 2025-01-27 下跌归因）",
+    "symbols": [
+      "NVDA"
+    ],
+    "start": "2021-09-28",
+    "end": "2026-09-29",
+    "topics": [
+      "NVDA 近五年日线行情回顾",
+      "AI 行业大事件",
+      "2025-01-27 NVDA 下跌与同期信息"
+    ],
+    "required_events": [
+      "ChatGPT 发布",
+      "Blackwell 平台发布",
+      "DeepSeek 相关事件",
+      "2025-01-27 NVDA 下跌事件（区分论文日、模型发布日与市场反应日）"
+    ],
+    "event_scope": "broad",
+    "benchmark": "SPY",
+    "windows": [
+      1,
+      5,
+      20
+    ],
+    "weights": [
+      1.0
+    ],
+    "rebalance_months": 1,
+    "cost_bps": 10.0,
+    "initial_capital": 100000.0,
+    "outputs": [
+      "html",
+      "xlsx",
+      "pptx",
+      "docx"
+    ],
+    "assumptions": [
+      "研究类型为事件研究（event_study），基准为 SPY，仅作为基准不纳入 symbols",
+      "时间范围：2021-09-28 至 2026-09-29（最近五年，日线）",
+      "事件窗口为 1/5/20 个交易日",
+      "2025-01-27 下跌事件需区分 DeepSeek 论文发布日、模型发布日与市场反应日，并分别标注",
+      "AI 行业大事件为背景性回顾，不额外扩展为其他未点名公司或事件的强制覆盖",
+      "输出四种文件：html、xlsx、pptx、docx",
+      "未指定权重、再平衡、成本等参数，事件研究不涉及组合配置，故采用默认值"
+    ]
+  },
+  "finished_at": "2026-09-29T06:30:46.860707+00:00"
+}
