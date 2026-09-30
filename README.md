@@ -8,6 +8,11 @@ Evidence 是一个本地投研工作台。它把行情、行业事件与原始�
 
 [快速启动](#快速启动) · [WebUI 怎么用](#webui-怎么用) · [产物样例](#产物样例) · [架构](#架构) · [开发与验证](#开发与验证) · [完整文档](docs/README.md)
 
+> **题目产物位置**（真实运行导出，已入库；说明与复核方式见 [`samples/README.md`](samples/README.md)）
+>
+> - 题目一 NVDA → 交互 HTML：[`samples/nvda/artifacts/report.html`](samples/nvda/artifacts/report.html)
+> - 题目二 黄金 / 比特币 → Excel：[`samples/gold-bitcoin/artifacts/report.xlsx`](samples/gold-bitcoin/artifacts/report.xlsx) · PPT：[`samples/gold-bitcoin/artifacts/report.pptx`](samples/gold-bitcoin/artifacts/report.pptx) · Word：[`samples/gold-bitcoin/artifacts/report.docx`](samples/gold-bitcoin/artifacts/report.docx)
+
 ![Evidence 工作台首页：输入问题、选择研究起点、回看历史会话](docs/assets/webui-home.jpg)
 
 ## 可以完成什么
@@ -87,7 +92,7 @@ LLM_API_KEY=你的密钥
 
 ## 产物样例
 
-无需模型即可打开以下交付文件。GitHub 不直接运行 HTML；请下载后用浏览器打开。
+无需模型即可打开以下交付文件，目录说明见 [`samples/README.md`](samples/README.md)。GitHub 不直接运行 HTML；请下载后用浏览器打开。
 
 | 样例          | 文件                                                        | 可复核内容                                                                     |
 | ------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------ |
