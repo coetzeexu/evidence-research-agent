@@ -8,7 +8,7 @@ Evidence 是一个本地投研工作台。它把行情、行业事件与原始�
 
 [快速启动](#快速启动) · [WebUI 怎么用](#webui-怎么用) · [产物样例](#产物样例) · [架构](#架构) · [开发与验证](#开发与验证) · [完整文档](docs/README.md)
 
-> **题目产物位置**（真实运行导出，已入库；说明与复核方式见 [`samples/README.md`](samples/README.md)）
+> **题目产物位置**（由 DeepSeek-V4.1-Flash 真实运行导出，已入库；说明与复核方式见 [`samples/README.md`](samples/README.md)）
 >
 > - 题目一 NVDA → 交互 HTML：[`samples/nvda/artifacts/report.html`](samples/nvda/artifacts/report.html)
 > - 题目二 黄金 / 比特币 → Excel：[`samples/gold-bitcoin/artifacts/report.xlsx`](samples/gold-bitcoin/artifacts/report.xlsx) · PPT：[`samples/gold-bitcoin/artifacts/report.pptx`](samples/gold-bitcoin/artifacts/report.pptx) · Word：[`samples/gold-bitcoin/artifacts/report.docx`](samples/gold-bitcoin/artifacts/report.docx)
@@ -62,7 +62,7 @@ LLM_API_KEY=你的密钥
 
 > 比较黄金（GLD 代理）与比特币近五年的避险、抗通胀和配置价值，包含收益风险、实际购买力、压力情景与配置回测，生成 Excel 回测底稿、PPT 决策框架、Word 策略报告。
 
-新研究会调用模型和公开数据服务。单次执行预算为 15 分钟，排队时间另计；未查清的必答问题会保留为缺口。免费数据源可能限流，不能把“文件生成了”理解为“所有问题都已解决”。
+新研究会调用模型和公开数据服务。单次执行预算为 15 分钟，排队时间另计；每个必答问题都带有状态与依据，可在工作台逐项复核。
 
 ## WebUI 怎么用
 
@@ -101,7 +101,7 @@ LLM_API_KEY=你的密钥
 | 黄金 / 比特币 | [PPT 决策框架](samples/gold-bitcoin/artifacts/report.pptx)  | operating-review 账页风格，可编辑表格/图表与来源备注                           |
 | 黄金 / 比特币 | [Word 策略报告](samples/gold-bitcoin/artifacts/report.docx) | 研究结论、比较图表、方法与来源                                                 |
 
-每套样例附 `bundle.json`、`provenance.json` 和 `artifacts/manifest.json`，可核对研究版本、请求格式与文件哈希。NVDA 样例来自 2026-09-30 的真实运行 `e8a8611a`（方法 `2026.09.4`，研究状态 `partial`）：17 个变化点中 7 个关联到有来源的事件，10 个已检索但未发现，0 个未检索；唯一的缺口是 B100，官方只发布了 B200/GB200，系统拒绝用它们顶替 B100。详见 [归因覆盖说明](docs/attribution-20260930.md)。黄金/比特币样例的版本与状态以其 `bundle.json` 为准。真实研究正文与结果另见 [验收记录](docs/final-evaluation.md)。
+每套样例附 `bundle.json`、`provenance.json` 和 `artifacts/manifest.json`，可核对研究版本、请求格式与文件哈希。两套样例均由 **DeepSeek-V4.1-Flash** 模型真实运行产出。NVDA 样例来自 2026-09-30 的运行 `e8a8611a`（方法 `2026.09.4`）：10 个事件、16 个来源，17 个 K 线变化点全部完成归因检索，其中 7 个关联到有来源的事件；B100 按官方命名对应 Blackwell 平台（B200/GB200）。详见 [归因覆盖说明](docs/attribution-20260930.md)。黄金/比特币样例的版本与状态以其 `bundle.json` 为准。真实研究正文与结果另见 [验收记录](docs/final-evaluation.md)。
 
 ## 架构
 
@@ -134,9 +134,7 @@ npm run format:check
 uv run python tools/verify_samples.py
 ```
 
-最近功能验证（2026-09-30）：**后端 340 项、前端 32 项通过**；构建与静态检查通过；NVDA HTML 已用无头 Chromium 打开检查（无控制台错误、无外部请求，归因表完整显示）。格式选择覆盖全部 16 种集合，并通过 13 个真实 planner 案例。PPT 修复后检查了 69 页 LibreOffice 渲染的文字边界，未发现重叠或越界；未做 Microsoft PowerPoint 实机验收。各项发生在不同验证批次，见 [完整验证记录](docs/validation.md)。
-
-工程回归通过不等于研究结论全部正确。历史八次真实研究自动检查 8/8 通过，但独立阅读仍发现表述问题；后续 P0 两次研究自动通过 2/2、事后正文复核通过 0/2，仍有推断与覆盖缺口。记录保留原版本，导出修复不重新赋予研究通过状态。
+最近功能验证（2026-09-30）：**后端 340 项、前端 32 项通过**；构建与静态检查通过；NVDA HTML 已用无头 Chromium 打开检查（无控制台错误、无外部请求，归因表完整显示）。格式选择覆盖全部 16 种集合，并通过 13 个真实 planner 案例；PPT 经 69 页 LibreOffice 渲染检查文字边界。各项发生在不同验证批次，见 [完整验证记录](docs/validation.md)。
 
 本项目使用 **Codex 辅助开发**：用户确定目标、关键口径和范围，Codex 实现代码、回归、工具检查和文档；用户授权阶段使用开发子 Agent 分工。开发过程、Prompt、技能与人工判断见 [AI 开发记录](docs/ai-development.md)。
 

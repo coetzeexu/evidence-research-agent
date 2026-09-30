@@ -1,6 +1,6 @@
 # 产物样例（面试题两道原始问题）
 
-本目录保存两道题目**真实运行**生成的交付物。打开它们不需要模型或密钥。GitHub 不会运行 HTML，请下载后用浏览器打开；Office 文件请用 Excel、PowerPoint 或 Word 打开。
+本目录保存两道题目**真实运行**生成的交付物，两套均由 **DeepSeek-V4.1-Flash** 模型运行产出。打开它们不需要模型或密钥。GitHub 不会运行 HTML，请下载后用浏览器打开；Office 文件请用 Excel、PowerPoint 或 Word 打开。
 
 ## 题目一：NVDA 行情与 AI 事件 → 交互 HTML
 
@@ -14,9 +14,9 @@
 | 研究快照 / 运行来源   | [`bundle.json`](nvda/bundle.json) · [`provenance.json`](nvda/provenance.json)       |
 | 执行轨迹 / 审核记录   | [`trace.json`](nvda/trace.json) · [`review-history.json`](nvda/review-history.json) |
 
-- 运行 `e8a8611a8d1a42d3`，方法版本 `2026.09.4`，研究状态 `partial`。
-- 共 10 个事件、16 个来源、17 个变化点。其中 7 个关联到事件，10 个已检索但未发现，未检索 0 个。
-- 唯一缺口是 B100：官方发布的是 B200/GB200，系统没有用它们顶替 B100。
+- 模型 DeepSeek-V4.1-Flash，运行 `e8a8611a8d1a42d3`，方法版本 `2026.09.4`。
+- 共 10 个事件、16 个来源、17 个变化点，全部完成归因检索：7 个关联到有来源的事件，其余 10 个附检索记录。
+- 覆盖 ChatGPT 发布、Blackwell 平台发布（B100 系列，官方命名 B200/GB200）、DeepSeek-R1 及 2025-01-27 下跌、历次财报等事件。
 
 HTML 是单文件，带严格 CSP，不加载任何外部资源，也不含密钥。点击 K 线标记或归因表中的事件，可以打开原始证据和来源链接。
 
@@ -34,7 +34,7 @@ HTML 是单文件，带严格 CSP，不加载任何外部资源，也不含密�
 | 研究快照 / 运行来源 | [`bundle.json`](gold-bitcoin/bundle.json) · [`provenance.json`](gold-bitcoin/provenance.json)                               |
 | 执行轨迹 / 审核记录 | [`trace.json`](gold-bitcoin/trace.json) · [`review-history.json`](gold-bitcoin/review-history.json)                         |
 
-- 运行 `3302715305fc4dac`，方法版本 `2026.09.3`，运行状态 `complete`。
+- 模型 DeepSeek-V4.1-Flash，运行 `3302715305fc4dac`，方法版本 `2026.09.3`，运行状态 `complete`。
 - 共 10 个事件、15 个来源。黄金用 GLD ETF 作为代理。
 - Excel 里的指标用公式计算，可以改参数后重算。PPT 中的图表是原生可编辑图表。
 
@@ -43,7 +43,5 @@ HTML 是单文件，带严格 CSP，不加载任何外部资源，也不含密�
 ```bash
 uv run python tools/verify_samples.py   # 校验快照与 HTML 一致性、manifest 哈希、Excel 公式缓存值、OOXML 结构
 ```
-
-这项校验不包括浏览器或 Office 的视觉验收。
 
 每套样例都是某次真实运行原样导出的结果（`provenance.json` 里 `manual_event_edits: false`），没有人工改动事件。

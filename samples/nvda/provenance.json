@@ -34,5 +34,6 @@
   "completion_status": "partial",
   "events": 10,
   "sources": 16,
-  "review_passed": true
+  "review_passed": true,
+  "model": "DeepSeek-V4.1-Flash"
 }

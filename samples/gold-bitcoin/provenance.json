@@ -12,5 +12,6 @@
   "events": 10,
   "sources": 15,
   "review_passed": true,
-  "schema_migration": "Temporal evidence fields added with legacy defaults; original events, review and completion status retained. Latest live validation blocked by model API 402."
+  "schema_migration": "Temporal evidence fields added with legacy defaults; original events, review and completion status retained. Latest live validation blocked by model API 402.",
+  "model": "DeepSeek-V4.1-Flash"
 }

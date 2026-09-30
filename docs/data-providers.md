@@ -2,11 +2,11 @@
 
 `DataProviderInterface` 按能力组合三个接口，默认 `public` 配置继续使用现有 Yahoo、DuckDuckGo / HN 和 FRED。主管、采集节点和研究工具都通过同一组适配器访问数据，不再在业务节点实例化具体公共数据源。
 
-| 接口 | 返回契约 | 实现责任 |
-| --- | --- | --- |
-| `MarketDataProvider.history / lookup` | `MarketDataset` / 资产检索记录 | OHLCV、复权定义、时区/交易日历、来源 URL、采集时间与内容哈希 |
-| `NewsDataProvider.search / read` | 搜索线索 / `(SourceRecord, 原文)` | 搜索摘要不作为已读证据；保留发布日期、原文定位、来源及版权范围 |
-| `MacroDataProvider.series` | `(日期数值序列, SourceRecord)` | 当前研究使用 CPIAUCNS / DGS3MO 的语义；厂商代码在适配器内映射，披露修订口径 |
+| 接口                                  | 返回契约                          | 实现责任                                                                    |
+| ------------------------------------- | --------------------------------- | --------------------------------------------------------------------------- |
+| `MarketDataProvider.history / lookup` | `MarketDataset` / 资产检索记录    | OHLCV、复权定义、时区/交易日历、来源 URL、采集时间与内容哈希                |
+| `NewsDataProvider.search / read`      | 搜索线索 / `(SourceRecord, 原文)` | 搜索摘要不作为已读证据；保留发布日期、原文定位、来源及版权范围              |
+| `MacroDataProvider.series`            | `(日期数值序列, SourceRecord)`    | 当前研究使用 CPIAUCNS / DGS3MO 的语义；厂商代码在适配器内映射，披露修订口径 |
 
 适配器必须把单位、币种、复权、交易时点映射为既有领域契约。接口一致不等于不同厂商的金融口径天然一致；不满足请求时应报错或缺失，不能静默返回其他资产。公共适配器原有网络、SSRF、重定向及缓存边界保留。
 
