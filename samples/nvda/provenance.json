@@ -29,7 +29,8 @@
   "manual_event_edits": false,
   "transformations": [
     "mode: live -> sample; event facts, coverage and review unchanged",
-    "change.attribution.method recomputed with current attribute_changes (label-only; status, events, coverage and review unchanged)"
+    "change.attribution.method recomputed with current attribute_changes (label-only; status, events, coverage and review unchanged)",
+    "research text: two descriptive sentences aligned with recorded metrics and the detection rule (ChatGPT reaction wording, move-detection method); events, metrics and review unchanged"
   ],
   "completion_status": "partial",
   "events": 10,

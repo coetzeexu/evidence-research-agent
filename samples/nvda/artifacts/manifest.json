@@ -1,6 +1,6 @@
 {
   "run_id": "e8a8611a8d1a42d3",
-  "generated_at": "2026-09-30T08:38:02.547563+00:00",
+  "generated_at": "2026-09-30T09:42:20.194975+00:00",
   "schema_version": "1.1",
   "method_version": "2026.09.4",
   "research_status": "partial",
@@ -20,12 +20,12 @@
   },
   "files": {
     "research-data.json": {
-      "sha256": "a4838c38030e88d2338ab5e764403727dae6159b08b4753b881f736ddd556e11",
-      "bytes": 1770649
+      "sha256": "c30da2632abac122b62df7541485fbc0281ee6020001e723a60cef98ab66d79f",
+      "bytes": 1770823
     },
     "report.html": {
-      "sha256": "db0402f906d6f4b202f4364ccb26eb6d15df2f1b19af95dadd714d9979e23534",
-      "bytes": 2277886
+      "sha256": "5da6f0ad7805c3ed058017c8b03b0573193aaff20bebc4978832005c88b58d25",
+      "bytes": 2278060
     }
   }
 }
