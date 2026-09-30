@@ -27,6 +27,7 @@ from dataclasses import replace
 from research_app.data_providers import public_providers
 from .market import LicensedMarketProvider  # 扩展包实现对应厂商 SDK 与口径映射
 
+
 def create_providers(settings):
     return replace(
         public_providers(),

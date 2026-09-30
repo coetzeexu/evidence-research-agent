@@ -56,7 +56,12 @@ def performance(values: list[float], dates: list[str], periods: int) -> dict:
     }
 
 
-def detect_changes(dataset: MarketDataset, start: date, end: date, maximum: int = 18) -> list[dict]:
+# One limit for both the researcher's worklist and the published chart, so every
+# displayed move was offered for investigation within the fixed research budget.
+CHANGE_LIMIT = 12
+
+
+def detect_changes(dataset: MarketDataset, start: date, end: date, maximum: int = CHANGE_LIMIT) -> list[dict]:
     data = frame(dataset).loc[: str(end)]
     returns = data.adj_close.pct_change()
     historical_vol = returns.rolling(63, min_periods=40).std().shift(1)

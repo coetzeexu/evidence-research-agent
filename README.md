@@ -89,14 +89,14 @@ LLM_API_KEY=你的密钥
 
 无需模型即可打开以下交付文件。GitHub 不直接运行 HTML；请下载后用浏览器打开。
 
-| 样例          | 文件                                                        | 可复核内容                                           |
-| ------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
-| NVDA          | [HTML 报告](samples/nvda/artifacts/report.html)             | K 线与事件联动、来源链接、数据与方法                 |
-| 黄金 / 比特币 | [Excel 底稿](samples/gold-bitcoin/artifacts/report.xlsx)    | 行情、参数、公式、执行台账与来源                     |
-| 黄金 / 比特币 | [PPT 决策框架](samples/gold-bitcoin/artifacts/report.pptx)  | operating-review 账页风格，可编辑表格/图表与来源备注 |
-| 黄金 / 比特币 | [Word 策略报告](samples/gold-bitcoin/artifacts/report.docx) | 研究结论、比较图表、方法与来源                       |
+| 样例          | 文件                                                        | 可复核内容                                                                     |
+| ------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| NVDA          | [HTML 报告](samples/nvda/artifacts/report.html)             | K 线与事件联动、逐点归因表（已关联/已检索未发现/未检索）、来源链接、数据与方法 |
+| 黄金 / 比特币 | [Excel 底稿](samples/gold-bitcoin/artifacts/report.xlsx)    | 行情、参数、公式、执行台账与来源                                               |
+| 黄金 / 比特币 | [PPT 决策框架](samples/gold-bitcoin/artifacts/report.pptx)  | operating-review 账页风格，可编辑表格/图表与来源备注                           |
+| 黄金 / 比特币 | [Word 策略报告](samples/gold-bitcoin/artifacts/report.docx) | 研究结论、比较图表、方法与来源                                                 |
 
-每套样例附 `bundle.json` 和 `artifacts/manifest.json`，可核对研究版本、请求格式与文件哈希。历史样例保留原计算版本 `2026.09.3`，正文核验状态为 `unassessed`；它们用于演示产物，不冒充最新协议的研究质量验收。真实研究正文与结果另见 [验收记录](docs/final-evaluation.md)。
+每套样例附 `bundle.json`、`provenance.json` 和 `artifacts/manifest.json`，可核对研究版本、请求格式与文件哈希。NVDA 样例来自 2026-09-30 的真实运行 `e8a8611a`（方法 `2026.09.4`，研究状态 `partial`）：17 个变化点中 7 个关联到有来源的事件，10 个已检索但未发现，0 个未检索；唯一的缺口是 B100，官方只发布了 B200/GB200，系统拒绝用它们顶替 B100。详见 [归因覆盖说明](docs/attribution-20260930.md)。黄金/比特币样例的版本与状态以其 `bundle.json` 为准。真实研究正文与结果另见 [验收记录](docs/final-evaluation.md)。
 
 ## 架构
 
@@ -129,7 +129,7 @@ npm run format:check
 uv run python tools/verify_samples.py
 ```
 
-最近功能验证：**后端 308 项、前端 31 项通过**；构建与静态检查通过。格式选择覆盖全部 16 种集合，并通过 13 个真实 planner 案例。PPT 修复后检查了 69 页 LibreOffice 渲染的文字边界，未发现重叠或越界；未做 Microsoft PowerPoint 实机验收。各项发生在不同验证批次，见 [完整验证记录](docs/validation.md)。
+最近功能验证（2026-09-30）：**后端 340 项、前端 32 项通过**；构建与静态检查通过；NVDA HTML 已用无头 Chromium 打开检查（无控制台错误、无外部请求，归因表完整显示）。格式选择覆盖全部 16 种集合，并通过 13 个真实 planner 案例。PPT 修复后检查了 69 页 LibreOffice 渲染的文字边界，未发现重叠或越界；未做 Microsoft PowerPoint 实机验收。各项发生在不同验证批次，见 [完整验证记录](docs/validation.md)。
 
 工程回归通过不等于研究结论全部正确。历史八次真实研究自动检查 8/8 通过，但独立阅读仍发现表述问题；后续 P0 两次研究自动通过 2/2、事后正文复核通过 0/2，仍有推断与覆盖缺口。记录保留原版本，导出修复不重新赋予研究通过状态。
 

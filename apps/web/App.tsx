@@ -321,6 +321,9 @@ export default function App() {
       />
     );
 
+  const filteredRuns = runs.filter((r) =>
+    r.title.toLowerCase().includes(filter.trim().toLowerCase()),
+  );
   return (
     <div className={`app-shell ${!selected ? 'home-active' : ''}`}>
       <aside className="sidebar">
@@ -358,28 +361,31 @@ export default function App() {
           研究会话<span>{runs.length}</span>
         </div>
         <div className="run-list">
-          {runs
-            .filter((r) => r.title.toLowerCase().includes(filter.toLowerCase()))
-            .map((r) => (
-              <button
-                className={`run-item ${selected === r.id ? 'active' : ''}`}
-                key={r.id}
-                onClick={() => selectRun(r)}
-              >
-                <BookOpen size={15} />
-                <div>
-                  <strong>{r.title}</strong>
-                  <small>
-                    <i
-                      className={`status-dot ${r.status === 'complete' ? 'done' : r.status === 'failed' ? 'warning' : ''}`}
-                    />
-                    {r.mode === 'sample' ? '研究快照' : statusText[r.status]} ·{' '}
-                    {r.created_at.slice(5, 10)}
-                  </small>
-                </div>
-              </button>
-            ))}
+          {filteredRuns.map((r) => (
+            <button
+              className={`run-item ${selected === r.id ? 'active' : ''}`}
+              key={r.id}
+              onClick={() => selectRun(r)}
+            >
+              <BookOpen size={15} />
+              <div>
+                <strong>{r.title}</strong>
+                <small>
+                  <i
+                    className={`status-dot ${r.status === 'complete' ? 'done' : r.status === 'failed' ? 'warning' : ''}`}
+                  />
+                  {r.mode === 'sample' ? '研究快照' : statusText[r.status]} ·{' '}
+                  {r.created_at.slice(5, 10)}
+                </small>
+              </div>
+            </button>
+          ))}
           {!runs.length && <p className="sidebar-empty">发送第一个问题后，会话会保存在这里。</p>}
+          {!!runs.length && !filteredRuns.length && (
+            <p className="sidebar-empty" role="status">
+              没有匹配的研究，请调整搜索词。
+            </p>
+          )}
         </div>
       </aside>
       <div className="main-shell">

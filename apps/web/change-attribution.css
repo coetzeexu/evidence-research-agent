@@ -1,0 +1,105 @@
+.change-attribution {
+  margin-top: 28px;
+}
+.change-attribution-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.change-attribution-heading h3 {
+  margin: 0;
+  font-size: 15px;
+}
+.change-attribution-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.change-attribution-filter button {
+  border: 1px solid #d8dcd5;
+  background: #fff;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.change-attribution-filter button[aria-pressed='true'] {
+  background: #1f2a24;
+  border-color: #1f2a24;
+  color: #fff;
+}
+.change-attribution-filter span {
+  margin-left: 6px;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+.change-attribution td {
+  vertical-align: top;
+  font-variant-numeric: tabular-nums;
+}
+.attribution-tag {
+  display: inline-block;
+  white-space: nowrap;
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 12px;
+}
+.attribution-tag.linked {
+  background: #e3f1e8;
+  color: #1d6b3d;
+}
+.attribution-tag.investigated_unexplained {
+  background: #eceeea;
+  color: #4d544e;
+}
+.attribution-tag.not_investigated {
+  background: #fff4dd;
+  color: #85580a;
+}
+.attribution-event {
+  display: block;
+  border: 0;
+  background: none;
+  padding: 0 0 4px;
+  color: inherit;
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.change-attribution details ul {
+  margin: 4px 0 0;
+  padding-left: 16px;
+  font-size: 12px;
+}
+
+.change-attribution .attribution-method {
+  display: inline-block;
+  margin-left: 6px;
+  color: var(--muted, #6b7280);
+  font-size: 11px;
+}
+.change-attribution .attribution-leads a {
+  overflow-wrap: anywhere;
+}
+/* Text columns wrap; the report table default (nowrap, right-aligned) clipped long event titles. */
+.change-attribution th:nth-child(2),
+.change-attribution td:nth-child(2),
+.change-attribution th:nth-child(6),
+.change-attribution td:nth-child(6) {
+  text-align: left;
+  white-space: normal;
+}
+.change-attribution td:nth-child(2) {
+  min-width: 96px;
+  max-width: 220px;
+}
+.change-attribution td:nth-child(6) {
+  min-width: 260px;
+}
+.change-attribution td:nth-child(2) small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+}

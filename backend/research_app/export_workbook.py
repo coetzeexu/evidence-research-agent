@@ -411,6 +411,50 @@ def export_workbook(bundle: ResearchBundle, target: Path):
     for item in bundle.quality.get("repair_actions", []):
         quality.write_row(r, 0, [item["query"], "尚有缺口", item["reason"]], fmt["text"])
         r += 1
+    if bundle.changes:
+        moves = sheet(
+            "Changes",
+            [
+                "变化日期",
+                "资产",
+                "类型",
+                "幅度",
+                "成交量倍数",
+                "归因状态",
+                "候选事件 ID",
+                "窄窗检索",
+                "说明",
+                "数据集",
+                "检索方",
+                "候选线索（未核验）",
+            ],
+            {5: 18, 6: 40, 7: 60, 8: 70, 9: 30, 10: 12, 11: 80},
+        )
+        labels = {
+            "linked": "已关联事件",
+            "investigated_unexplained": "已检索未发现",
+            "not_investigated": "未专项检索",
+        }
+        for r, change in enumerate(bundle.changes, start=1):
+            attribution = change.get("attribution") or {}
+            moves.write_row(r, 0, [change["date"], change["symbol"], change["type"]], fmt["text"])
+            moves.write_number(r, 3, change["return"], fmt["pct"])
+            if change.get("volume_ratio") is not None:
+                moves.write_number(r, 4, change["volume_ratio"], fmt["number"])
+            moves.write_row(
+                r,
+                5,
+                [
+                    labels.get(attribution.get("status"), "未记录"),
+                    ", ".join(change.get("event_ids", [])),
+                    "; ".join(attribution.get("queries", [])),
+                    attribution.get("note", change.get("note", "")),
+                    change.get("dataset_id", ""),
+                    {"researcher": "研究 Agent", "sweep": "代码自动补查"}.get(attribution.get("method"), "—"),
+                    "\n".join(lead["url"] for lead in attribution.get("leads", [])),
+                ],
+                fmt["text"],
+            )
     links = sheet(
         "Associations",
         ["异动日期", "资产", "事件 ID", "滞后日线数", "关联类型", "依据", "来源 ID"],

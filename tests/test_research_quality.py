@@ -80,6 +80,40 @@ def test_major_move_can_be_investigated_without_inventing_an_event(bundle):
     assert not assess_quality(bundle)["major_moves"][0]["investigated"]
 
 
+def test_every_marked_move_has_distinct_attribution_state(bundle):
+    bundle.spec.intent = "event_study"
+    bundle.changes = [
+        {
+            "id": "linked",
+            "date": "2023-06-15",
+            "symbol": "GLD",
+            "strength": 4,
+            "event_ids": ["e"],
+            "associations": [{"event_id": "e", "lag_bars": 0}],
+        },
+        {"id": "searched", "date": "2023-08-15", "symbol": "GLD", "strength": 3, "event_ids": []},
+        {"id": "blank", "date": "2023-10-16", "symbol": "GLD", "strength": 2, "event_ids": []},
+    ]
+    bundle.coverage = [
+        {
+            "query": "gold price",
+            "change_id": "searched",
+            "start": "2023-08-10",
+            "end": "2023-08-20",
+            "status": "success",
+            "hits": 0,
+        },
+        # Failed or overly wide searches never count as investigating the move.
+        {"query": "GLD", "start": "2023-10-01", "end": "2023-10-31", "status": "failed"},
+        {"query": "GLD", "start": "2023-01-01", "end": "2023-12-31", "status": "success"},
+    ]
+    quality = assess_quality(bundle)
+    states = {c["id"]: c["attribution"]["status"] for c in bundle.changes}
+    assert states == {"linked": "linked", "searched": "investigated_unexplained", "blank": "not_investigated"}
+    assert bundle.changes[1]["attribution"]["queries"] == ["gold price"]
+    assert quality["attribution"] == {"linked": 1, "investigated_unexplained": 1, "not_investigated": 1}
+
+
 def test_long_uncovered_period_is_a_gap(bundle):
     bundle.spec.intent = "event_study"
     quality = assess_quality(bundle)

@@ -1,6 +1,6 @@
 # 当前交付状态
 
-截至 2026-09-29，Evidence 已提供本地 WebUI、CLI/API、SDK 研究流程、证据与指标核验，以及按用户请求选择的 HTML / Excel / PPT / Word 导出。阅读顺序：[README](../README.md) → [WebUI 图文指南](webui.md) → [设计说明](design.md)。
+截至 2026-09-30，Evidence 已提供本地 WebUI、CLI/API、SDK 研究流程、证据与指标核验，以及按用户请求选择的 HTML / Excel / PPT / Word 导出。阅读顺序：[README](../README.md) → [WebUI 图文指南](webui.md) → [设计说明](design.md)。
 
 ## 已交付能力
 
@@ -15,14 +15,14 @@
 | PPT        | operating-review 源 skill 提取、可编辑表格/图表、列对齐与长文字分页修复      |
 | 工程交付   | 锁文件、一键脚本、CI、样例、开发记录、白名单 ZIP、逐文件 SHA-256 和凭据检查  |
 
-当前计算方法 `2026.09.4`、正文核验协议 `1.4`。原题样例：NVDA 仅 HTML，黄金/比特币仅 Excel/PPT/Word。样例原行情和历史方法不改写，正文状态仍为 `unassessed`。
+当前计算方法 `2026.09.4`、正文核验协议 `1.5`。原题样例：NVDA 仅 HTML，黄金/比特币仅 Excel/PPT/Word。NVDA 样例已替换为 2026-09-30 真实运行（`partial`，唯一缺口 B100），每个 K 线变化点都有可追溯的归因状态，见 [归因覆盖说明](attribution-20260930.md)。
 
 ## 最近验证与已知边界
 
 | 范围                 | 最近证据                                                                                            |
 | -------------------- | --------------------------------------------------------------------------------------------------- |
-| 后端                 | [308 项回归及 PPT 检查](../evals/ppt-layout-fix-20260929.json)                                      |
-| 前端、构建与静态检查 | [31 项前端及导出工程检查](../evals/export-engineering-20260929.json)                                |
+| 后端                 | 340 项（2026-09-30，归因覆盖）；[308 项回归及 PPT 检查](../evals/ppt-layout-fix-20260929.json)      |
+| 前端、构建与静态检查 | 32 项（2026-09-30）；[31 项前端及导出工程检查](../evals/export-engineering-20260929.json)           |
 | 格式解析             | [13 个真实 planner 案例](../evals/output-selection-20260929.json)                                   |
 | 样例及产物一致性     | [sample-validation](../evals/sample-validation.json)                                                |
 | 真实研究             | [历史八次运行](final-evaluation.md)、[P0 两次及内容复核](../evals/p0-live-validation-20260929.json) |

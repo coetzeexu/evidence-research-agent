@@ -207,15 +207,34 @@ export function candleOption(bundle, symbol, options = {}) {
         z: 5,
         data: bundle.changes
           .filter((c) => c.symbol === symbol && c.event_ids.length === 0)
-          .map((c) => ({
-            value: [c.date, bars.find((b) => b.date === c.date)?.close],
-            name: c.type,
-          })),
+          .map((c) => {
+            const searched = c.attribution?.status === 'investigated_unexplained';
+            return {
+              value: [c.date, bars.find((b) => b.date === c.date)?.close],
+              name: c.type,
+              move: c.return,
+              searched,
+              queries: c.attribution?.queries?.length || 0,
+              itemStyle: searched
+                ? { color: '#8a8f86' }
+                : { color: '#fff', borderColor: '#9aa096', borderWidth: 1 },
+            };
+          }),
         itemStyle: { color: '#b5b7af' },
         tooltip: {
           trigger: 'item',
           renderMode: 'richText',
-          formatter: (p) => p.data.name + ' · 暂无匹配事件',
+          confine: true,
+          formatter: (p) => {
+            const move =
+              p.data.move == null
+                ? ''
+                : ` ${p.data.move >= 0 ? '+' : ''}${(p.data.move * 100).toFixed(1)}%`;
+            const state = p.data.searched
+              ? `已做 ${p.data.queries} 次窄窗检索，未取得可核实的同期事件`
+              : '本轮未专项检索，不能判断有无同期事件';
+            return `${p.data.value[0]} · ${p.data.name}${move}\n${state}`;
+          },
         },
       },
     ],

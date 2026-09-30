@@ -1,5 +1,6 @@
 """Typed, auditable text research. These contracts contain no hidden model reasoning."""
 
+import json
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -9,8 +10,25 @@ class Record(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+def decode_json_container(value):
+    """Undo transport double-encoding: a string holding one whole JSON array/object.
+
+    Some gateways serialize nested tool arguments twice. Only a complete JSON
+    container is decoded; prose or partial JSON remains a string and fails validation.
+    """
+    if isinstance(value, str) and value.strip()[:1] in {"[", "{"}:
+        try:
+            decoded = json.loads(value)
+        except ValueError:
+            return value
+        if isinstance(decoded, (list, dict)):
+            return decoded
+    return value
+
+
 def review_rows(value, identifier):
     """Normalize only unambiguous singleton/keyed records; item validation stays strict."""
+    value = decode_json_container(value)
     if not isinstance(value, dict):
         return value
     if identifier in value:
@@ -249,11 +267,18 @@ class GapResolution(Record):
     reason: str = Field(min_length=10, description="说明依据如何补齐原缺口，不能仅因 answered 为真而关闭")
 
 
+class RequirementCoverage(Record):
+    requirement_id: str
+    finding_id: str
+    quote: str = Field(min_length=1, description="逐字引用已接受结论 text 中回答该子要求的连续正文")
+
+
 class QuestionVerdict(Record):
     question_id: str
     reason: str
     answered: bool
     resolved_gaps: list[GapResolution] = Field(default_factory=list)
+    coverage: list[RequirementCoverage] = Field(default_factory=list)
 
 
 class NarrativeReview(Record):

@@ -469,6 +469,28 @@ def test_drawdown_magnitude_assertion_is_executed_after_schema_validation(bundle
     assert ("f" in errors) is not expected
 
 
+@pytest.mark.parametrize(
+    "sentence, flagged",
+    [
+        ("DeepSeek 冲击当日相对基准收益为负，方向与叙事一致。", False),
+        ("价格方向与公司报道一致。", False),
+        ("1 日与 5 日方向一致为正。", True),
+        ("NVDA 方向与基准一致。", True),
+        ("The Verge 报道 B200 提供最高 20 petaflops FP4 算力。", False),
+        ("B200 推理性能最高可达 30 倍。", False),
+        ("DeepSeek 事件强度在本次事件中最高。", True),
+    ],
+)
+def test_only_numeric_direction_claims_require_executable_assertions(bundle, sentence, flagged):
+    draft = NarrativeDraft(findings=[draft_finding().model_copy(update={"text": sentence})])
+    review = NarrativeReview(
+        claims=[ClaimVerdict(finding_id="f", verdict="supported", reason="定性方向由含义核验判断")],
+        questions=[],
+    )
+    errors, _ = verify_relationships(draft, review, metric_catalog(bundle))
+    assert any("尚未转成可执行断言" in e for e in errors.get("f", [])) is flagged
+
+
 async def test_question_coverage_uses_only_accepted_findings_and_its_own_verdict(bundle, tmp_path):
     bundle.quality = {"passed": True}
     q = ResearchQuestion(id="q", question="比较收益", acceptance="确定性数值", kind="market")
@@ -503,6 +525,8 @@ async def test_question_coverage_uses_only_accepted_findings_and_its_own_verdict
             "accepted_findings",
             "open_gaps",
             "available_metric_ids",
+            "coverage_requirements",
+            "sensitivity_scenarios",
         }
         assert context["request"] == "比较收益"
         assert context["questions"][0]["acceptance"] == "确定性数值"

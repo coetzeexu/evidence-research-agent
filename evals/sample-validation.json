@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-09-29T13:43:48.106373+00:00",
+  "checked_at": "2026-09-30T08:38:03.758010+00:00",
   "checks": [
     {
       "sample": "gold-bitcoin",
@@ -25,11 +25,11 @@
     {
       "sample": "nvda",
       "passed": true,
-      "method_version": "2026.09.3",
+      "method_version": "2026.09.4",
       "schema_version": "1.1",
-      "research_status": "unassessed",
-      "events": 7,
-      "sources": 17,
+      "research_status": "partial",
+      "events": 10,
+      "sources": 16,
       "manifest_files": 2,
       "workbook_errors": [],
       "structures": {}

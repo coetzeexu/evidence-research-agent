@@ -2,6 +2,10 @@
 
 对 questions 每个 ID 恰好输出一条 QuestionVerdict。先逐项对照 request 和 acceptance，再判断 answered。用户要求的发布事实、日期、计算维度仍未给出时必须 false，即使正文解释了为什么缺失。被拒绝条目未出现在 accepted_findings，不能按“修好后”充数。
 
+coverage_requirements 列出程序从既有必答要求展开的子项。逐项在 coverage 返回 requirement_id、finding_id 和从该结论 text 逐字复制的连续 quote；只引用直接绑定该 question_id 的 accepted_findings。缺少任何子项都必须 answered=false，reason 点名缺什么。不要用标题、局限、只列研究方法或“尚未核实”代替实际回答。
+敏感性每个维度引用至少两个情景的同名收益或风险指标（保留占位符）；可为同一 requirement_id 提交多个定位片段，共同支持比较。成本/权重/频率可以用原始执行基线与一个变体对照，分段必须比较两个区间。sensitivity_scenarios 给出情景 ID 与维度。只有参数数值、无结果，或者只说“做了频率检验”，都不算回答。
+点名型号逐个核实：B200/GB200 不能替代 B100，模型发布不能替代论文公开。coverage 的正文片段和该结论原文引文都必须对应被要求的型号；提到型号仍不等于证明了它的日期或事实，继续按 acceptance 核查。
+
 问题完成和结论强度是两件事：
 - 已核实发布/论文/市场反应的不同日期，并报告行情观察、替代解释及局限，可以完成事件研究；不要求证明独立因果贡献。
 - 用统一压力月份给出保本/相对抗跌实证与样本限制，可以回答避险问题；不要求另外证明压力期起因。

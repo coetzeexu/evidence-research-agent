@@ -11,6 +11,7 @@ import {
   X,
 } from 'lucide-react';
 import { Chart } from './ChartLoader';
+import { ChangeAttributionTable } from './ChangeAttribution';
 import { SensitivityPanel } from './SensitivityPanel';
 import type { Bundle, Event, Spec } from './types';
 import { pct, safeUrl } from './types';
@@ -854,7 +855,7 @@ export function ResearchView({
               <div className="chart-caption">
                 <span>橙色「高」 · 蓝色「中」 · 灰色「低」 · 「?」不可评估</span>
                 <span>
-                  <i className="legend-diamond" /> 待解释变化
+                  <i className="legend-diamond" /> 实心：已检索未发现 · 空心：未专项检索
                 </span>
                 <span>K 线绿涨红跌 · 标记颜色表示反应强度</span>
                 <span>滚轮缩放 · 点击标记查看证据 · OHLC 为拆股调整口径</span>
@@ -867,6 +868,7 @@ export function ResearchView({
                   日窗口，否则使用首个完整窗口；缺少基准或波动率时标为不可评估。反应强度、涨跌方向和证据可信度是三个独立维度，不代表因果概率。
                 </p>
               </details>
+              <ChangeAttributionTable bundle={bundle} symbol={symbol} onSelect={onSelect} />
             </section>
             <EventsTable
               events={bundle.events.filter(

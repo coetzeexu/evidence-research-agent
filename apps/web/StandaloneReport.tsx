@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import { Chart } from './ChartLoader';
 import { DataView, EvidencePanel } from './ResearchView';
 import { SensitivityPanel } from './SensitivityPanel';
+import { ChangeAttributionTable } from './ChangeAttribution';
 import { candleOption, comparisonOption, portfolioOption } from '../../packages/charts/options.mjs';
 import type { Bundle } from './types';
 import { linkCitations, pct, safeUrl } from './types';
@@ -88,8 +89,9 @@ function MarketChapter({ bundle, onSelect }: { bundle: Bundle; onSelect: (id: st
       <Chart option={option} height={480} onEvent={onSelect} />
       <p className="figure-note">
         图 1 · 拆股调整 OHLC
-        与成交量。滚轮或底部滑块缩放，点击标记查看原始证据。绿涨红跌；橙、蓝、灰标记分别表示高、中、低反应，菱形表示待解释变化。
+        与成交量。滚轮或底部滑块缩放，点击标记查看原始证据。绿涨红跌；橙、蓝、灰标记分别表示高、中、低反应；实心灰菱形为已检索未发现事件的变化，空心菱形为未专项检索的变化。
       </p>
+      <ChangeAttributionTable bundle={bundle} symbol={symbol} onSelect={onSelect} />
       <div className="report-event-list">
         {events.map((event) => {
           const annotation = bundle.annotations.find(

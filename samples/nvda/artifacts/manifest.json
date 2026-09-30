@@ -1,9 +1,9 @@
 {
-  "run_id": "15412514d7234a05",
-  "generated_at": "2026-09-29T13:29:54.606125+00:00",
+  "run_id": "e8a8611a8d1a42d3",
+  "generated_at": "2026-09-30T08:38:02.547563+00:00",
   "schema_version": "1.1",
-  "method_version": "2026.09.3",
-  "research_status": "unassessed",
+  "method_version": "2026.09.4",
+  "research_status": "partial",
   "requested_outputs": [
     "html"
   ],
@@ -11,21 +11,21 @@
     "passed": true,
     "failures": [],
     "claims": 1,
-    "events": 7,
-    "annotations": 7
+    "events": 10,
+    "annotations": 10
   },
   "data_snapshots": {
-    "NVDA": "e6d1853924e8d11c72555b67da66bdbfcbb59678a268c8f020bafcff2b248577",
-    "SPY": "ba0266b147e1210651f9991e41f1ed135bc89c7cc3faa0088be1865d09d2bbb6"
+    "NVDA": "973d8acd63a8a6fcdf1b3163ba07a03d73818eb59673ee3bd55a9563396d586b",
+    "SPY": "732161c5788b303cab0513ea72276e2da5faea5ba3d507d653571a4a46692d6b"
   },
   "files": {
     "research-data.json": {
-      "sha256": "8e0f3a6df50bd165d5c8a7f11e427a157ea2ade092161cf3660da090e8a0c286",
-      "bytes": 1265846
+      "sha256": "a4838c38030e88d2338ab5e764403727dae6159b08b4753b881f736ddd556e11",
+      "bytes": 1770649
     },
     "report.html": {
-      "sha256": "cc06487d827e56a995bb5eed865494376b0da32cfbc86fe966d1a3510458a412",
-      "bytes": 1893846
+      "sha256": "db0402f906d6f4b202f4364ccb26eb6d15df2f1b19af95dadd714d9979e23534",
+      "bytes": 2277886
     }
   }
 }

@@ -21,9 +21,14 @@ from .research_contract import (
     ResearchQuestion,
     apply_narrative_patch,
 )
+from .research_coverage import coverage_requirements, question_coverage_errors
 from .research_logic import repair_numeric_transcription, verify_relationships
 from .research_metrics import display_metric, metric_catalog
 from .research_semantics import verify_meaning
+
+# Paired reviewers get one extra call used only after a schema-validation failure:
+# a single malformed response must not discard an otherwise reviewable draft.
+REVIEW_CALL_LIMIT = 3
 
 TOKEN = re.compile(r"\{\{([^{}\s]+)\}\}")
 FINANCIAL_NUMBER = re.compile(
@@ -375,7 +380,7 @@ class NarrativeService:
         ]
         metrics = metric_catalog(bundle)
         context = {
-            "verification_version": "1.4",
+            "verification_version": "1.5",
             "verification_prompts": {
                 name: digest(body) for name, body in getattr(runtime, "prompts", {}).items()
             },
@@ -383,6 +388,7 @@ class NarrativeService:
             "spec": bundle.spec.model_dump(mode="json"),
             "selected_id": selected,
             "questions": [q.model_dump(exclude={"status", "gaps", "finding_ids"}) for q in questions],
+            "coverage_requirements": {q.id: coverage_requirements(q) for q in questions},
             "metric_catalog": [m.model_dump() for m in metrics.values()],
             "events": [e.model_dump(mode="json") for e in bundle.events],
             "annotations": bundle.annotations,
@@ -536,7 +542,7 @@ class NarrativeService:
                             "deterministic_findings": errors,
                         },
                         budget=self.budget,
-                        limit=2,
+                        limit=REVIEW_CALL_LIMIT,
                     ),
                     runtime.structured(
                         "meaning-review",
@@ -551,7 +557,7 @@ class NarrativeService:
                             "methods": sorted({m["method"] for m in review_context["metric_catalog"]}),
                         },
                         budget=self.budget,
-                        limit=2,
+                        limit=REVIEW_CALL_LIMIT,
                     ),
                 )
                 # Same source/metric snapshot and exact finding hash permit certificate reuse.
@@ -593,6 +599,8 @@ class NarrativeService:
                     {
                         "request": request,
                         "questions": context["questions"],
+                        "coverage_requirements": context["coverage_requirements"],
+                        "sensitivity_scenarios": context["sensitivity_scenarios"],
                         "accepted_findings": [f.model_dump() for f in eligible],
                         "open_gaps": review_context["open_gaps"],
                         "available_metric_ids": list(metrics),
@@ -625,6 +633,7 @@ class NarrativeService:
                 "accepted_ids": sorted(accepted_ids),
                 "accepted_hashes": {f.id: digest(f.model_dump()) for f in accepted},
                 "reused_certificates": sorted(set(certified) - objections),
+                "coverage_errors": {},
             }
             state["audits"].append(audit)
             runtime.store.save_json(
@@ -641,6 +650,10 @@ class NarrativeService:
                 q.finding_ids = [f.id for f in accepted if q.id in f.question_ids]
                 verdict = verdicts.get(q.id)
                 is_answered = bool(q.finding_ids and verdict and verdict.answered)
+                coverage_errors = question_coverage_errors(q, verdict, accepted, bundle)
+                if coverage_errors:
+                    is_answered = False
+                    audit["coverage_errors"][q.id] = coverage_errors
                 open_for_question = [g for g in declared_gaps if g.question_id == q.id]
                 if open_for_question:
                     is_answered = False
@@ -665,6 +678,7 @@ class NarrativeService:
                     for problem in errors.get(f.id, [])
                 )
                 blocking.extend(g.reason for g in open_for_question)
+                blocking.extend(coverage_errors)
                 q.gaps = (
                     []
                     if is_answered

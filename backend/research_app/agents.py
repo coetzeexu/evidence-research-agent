@@ -14,6 +14,7 @@ from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .budget import BudgetMiddleware, ExecutionBudget
+from .change_sweep import sweep_changes
 from .config import PROJECT_ROOT, Settings
 from .data_providers import load_providers
 from .domain import EventRecord, ResearchBundle, ResearchSpec, SourceRecord, digest
@@ -316,7 +317,8 @@ class AgentRuntime:
             tools=[],
             system_prompt=self.prompts[name]
             + f"\n输出协议：调用 {schema.__name__} 函数提交。不要输出 Markdown 表格或说明。"
-            "若服务只能返回文本，则整个响应必须是一个符合该函数模式的 JSON 对象，不能带其他文字。",
+            "若服务只能返回文本，则整个响应必须是一个符合该函数模式的 JSON 对象，不能带其他文字。"
+            "数组和对象字段直接给 JSON 数组/对象，不要再序列化成字符串；文本中的双引号用中文引号或转义。",
             response_format=ToolStrategy(schema),
             middleware=[
                 BudgetMiddleware(active_budget),
@@ -330,6 +332,34 @@ class AgentRuntime:
             {"recursion_limit": 20, "callbacks": [Diagnostics(self.store, self.run_id, name)]},
         )
         return require_structured(result, schema, name)
+
+    async def sweep_moves(self, changes: list[dict]) -> None:
+        """Code-owned lead search for chart moves the researcher left untargeted."""
+        web_failures = sum(c.get("provider") == "web" and c.get("status") == "failed" for c in self.coverage)
+        provider = "web" if "web" in self.providers.news and web_failures < 2 else "hn"
+        if provider not in self.providers.news:
+            return
+        collection = self.root / "collection.json"
+        names = (
+            {
+                symbol: dataset["instrument"]["name"]
+                for symbol, dataset in json.loads(collection.read_text())["datasets"].items()
+            }
+            if collection.exists()
+            else {}
+        )
+        records = await sweep_changes(
+            changes, self.coverage, self.providers.news[provider].search, provider=provider, names=names
+        )
+        self.persist()
+        if records:
+            self.store.emit(
+                self.run_id,
+                "tool",
+                "未检索行情变化的窄窗线索补查",
+                searched=len(records),
+                with_leads=sum(bool(r.get("hits")) for r in records),
+            )
 
     def persist(self):
         self.store.save_json(
@@ -706,6 +736,8 @@ class AgentRuntime:
                 )
         except TimeoutError:
             self.store.emit(self.run_id, "budget", "调查时限已到，使用已保存证据完成核验")
+        if spec.intent in {"event_study", "combined"} and changes:
+            await self.sweep_moves(changes)
         if spec.intent == "asset_comparison" and not spec.required_events:
             # Product definitions and opposing research stay in the source snapshot
             # for final-text verification; this task has no event extraction target.

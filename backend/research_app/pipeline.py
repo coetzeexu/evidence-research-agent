@@ -206,7 +206,7 @@ class Pipeline:
         changes = []
         for symbol in spec.symbols:
             ds = MarketDataset.model_validate(collection["datasets"][symbol])
-            changes.extend(detect_changes(ds, spec.start, spec.end, maximum=10))
+            changes.extend(detect_changes(ds, spec.start, spec.end))
         self.store.emit(self.run_id, "step", "事件发现与原文核实", phase="research")
         inventory = {
             "datasets": {

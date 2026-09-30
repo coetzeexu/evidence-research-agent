@@ -319,10 +319,17 @@ def test_positive_relative_return_does_not_imply_positive_absolute_return(bundle
     from research_app.domain import ResearchBundle
 
     nvda = ResearchBundle.model_validate_json((PROJECT_ROOT / "samples/nvda/bundle.json").read_text())
-    event = next(e for e in nvda.events if "Blackwell" in e.title)
-    result = event_windows(event, nvda.datasets["NVDA"], nvda.datasets["SPY"], [20], nvda.spec.end)
-    row = result["windows"][0]
-    assert row["relative_return"] > 0 and row["return"] < 0
+    rows = [
+        row
+        for event in nvda.events
+        for row in event_windows(
+            event, nvda.datasets["NVDA"], nvda.datasets["SPY"], [1, 5, 20], nvda.spec.end
+        )["windows"]
+        if row.get("relative_return") is not None and row.get("return") is not None
+    ]
+    # Real sample windows exist in both divergent directions; the two fields are independent.
+    assert any(r["relative_return"] > 0 > r["return"] for r in rows)
+    assert any(r["relative_return"] < 0 < r["return"] for r in rows)
 
 
 def test_parallel_atomic_snapshot_writes_have_no_shared_tempfile(tmp_path):

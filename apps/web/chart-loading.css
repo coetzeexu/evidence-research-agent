@@ -1,0 +1,33 @@
+.chart-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  color: var(--ink-2, #5f6672);
+}
+.chart-loading-area {
+  flex: 1;
+  min-height: 0;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--canvas, #f0f2f5) 25%,
+    var(--surface, #fff) 50%,
+    var(--canvas, #f0f2f5) 75%
+  );
+  background-size: 200% 100%;
+  animation: chart-loading-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes chart-loading-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chart-loading-area {
+    animation: none;
+  }
+}

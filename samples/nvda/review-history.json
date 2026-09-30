@@ -1,157 +1,19 @@
 [
   {
-    "seq": 11246,
-    "run_id": "15412514d7234a05",
-    "kind": "review_adjudication",
-    "label": "复核影响交付的核验争议",
-    "payload": {
-      "initial": {
-        "passed": false,
-        "findings": [
-          {
-            "object_id": "ev-nvda-q1fy24-earnings-2023-05-24",
-            "severity": "critical",
-            "issue": "date_source_id=src-bb4a66fc5d1b12（NVIDIA 官方新闻稿），date_quote 为 \"revenue for the first quarter ended April 30, 2023, of $7.19 billion\"，该句支持的是季度截止日 2023-04-30，而非事件发生日 2023-05-24。按口径，季度截止日不能证明精确发生日，date_quote 未支持所标注日期。事件日期本身正确（新闻稿正文另含 \"May 24, 2023\"，CNBC 来源 published_at=2023-05-24T20:28:58+00:00 亦支持同日），仅引文语义不匹配。",
-            "repair": "将 date_quote 改为新闻稿中 \"May 24, 2023\" 的句子，或把 date_source_id 改指 src-5d57f2e27d95e2（CNBC，发布元数据支持同日）。"
-          },
-          {
-            "object_id": "ev-nvda-deepseek-selloff-2025-01-27",
-            "severity": "critical",
-            "issue": "spec.required_events 含「DeepSeek 相关事件」，但唯一涉及 DeepSeek 的事件 satisfies 仅声明满足「2025-01-27 NVDA 下跌事件」，未覆盖「DeepSeek 相关事件」；其余事件 satisfies 均为空，该 required event 实际未被任何事件满足。warnings 已披露 DeepSeek R1 论文日/模型发布日缺少可确证日期的来源、候选事件未纳入，属已披露的证据不足，非虚假满足声明。",
-            "repair": "在报告中显式标注「DeepSeek 相关事件」为证据不足未覆盖；或补查带明确日期的 DeepSeek R1 发布来源后新增事件并声明满足。"
-          },
-          {
-            "object_id": "ev-nvda-h20-policy-2025-04-09",
-            "severity": "warning",
-            "issue": "date_quote 为空字符串。日期本身有支持（NPR 正文 \"April 9, 2025 11:53 AM ET\" 与 published_at=2025-04-09 同日），且政策转向具体日期未在正文明确、采用报道发布日的不确定性已在 uncertainty 中披露，故不构成事实错误，仅为元数据完整性问题。",
-            "repair": "补填可确证日期的引文（如正文 \"April 9, 2025 11:53 AM ET\"），提升元数据完整性。"
-          },
-          {
-            "object_id": "ev-nvda-q2fy27-earnings-2026-08-26",
-            "severity": "warning",
-            "issue": "date_quote 为空字符串。日期有 published_at=2026-08-26T16:00:01+00:00 与正文 \"Wed, Aug 26 2026\" 多个时间戳双重支持，事件日期正确，仅为元数据完整性问题。",
-            "repair": "补填可确证日期的引文（如正文 \"Wed, Aug 26 2026\" 时间戳），提升元数据完整性。"
-          }
-        ],
-        "summary": "已读 7 个来源（含 ChatGPT 发布、DeepSeek 抛售、H20 政策、FY27 Q2 财报、Q1 FY24 财报与官方新闻稿、Blackwell 报道），逐项核对 satisfies、日期语义、行情窗口对齐与数值换算。核心事实与数值基本成立：所有金额/百分数换算经 compare_numbers 确认正确（71.9亿=$7.19B、110亿=$11B、962.2亿=$96.22B、890亿=$89B、1080亿=$108B、160亿=$16B、1010.53%=10.1053倍、-66.34%回撤）；盘后公告对齐次日、盘中公告窗口包含事件时刻、retrospective 事件未强制顺延，均符合口径；六事件 direction/rating 与 5 日相对收益符号一致，Q2 FY27 的 1 日与 5 日方向不同不构成矛盾；盘中/盘后限定均已保留。发现 2 项 critical 与 1 项低严重度问题：Q1 FY24 事件的 date_quote 引用的是季度截止日而非公告日；required_events 中「DeepSeek 相关事件」无任何事件声明满足（属已披露的证据不足）。未核验范围：src-0b0ee9231d33b5 与 src-35526d9a0fa829 未读取，二者无 published_at，未用于任何事件日期。"
-      },
-      "adjudicated": {
-        "passed": false,
-        "findings": [
-          {
-            "object_id": "ev-nvda-q1fy24-earnings-2023-05-24",
-            "severity": "critical",
-            "issue": "date_source_id=src-bb4a66fc5d1b12（NVIDIA 官方新闻稿），date_quote 为 \"revenue for the first quarter ended April 30, 2023, of $7.19 billion\"，该句支持的是季度截止日 2023-04-30，而非事件发生日 2023-05-24。季度截止日不能证明精确发生日，date_quote 未支持所标注日期。事件日期本身正确（新闻稿正文含 \"May 24, 2023\"，CNBC 来源 published_at=2023-05-24T20:28:58+00:00 亦支持同日），仅引文语义不匹配。",
-            "repair": "将 date_quote 改为新闻稿中 \"May 24, 2023\" 的句子（如 \"NVIDIA Announces Financial Results for First Quarter Fiscal 2024 May 24, 2023\"），或把 date_source_id 改指 src-5d57f2e27d95e2（CNBC，发布元数据支持同日）。"
-          },
-          {
-            "object_id": "ev-nvda-deepseek-selloff-2025-01-27",
-            "severity": "warning",
-            "issue": "前次核验将「required_events 中『DeepSeek 相关事件』无事件声明满足」列为 critical，属误报。该事件标题、摘要与 uncertainty 均以 DeepSeek R1 冲击为归因，且 spec.required_events 中「2025-01-27 NVDA 下跌事件（区分论文日、模型发布日与市场反应日）」本身即要求区分 DeepSeek 论文日/模型发布日/市场反应日，二者为同一事件簇。warnings 已显式披露 DeepSeek R1 论文日与模型发布日缺少可确证日期的来源、候选事件未纳入，属已披露的证据不足，非虚假满足声明，也不构成事实错误。",
-            "repair": "将该项从 critical 降为 warning 或移除；如需强化覆盖，可在报告中显式标注「DeepSeek 论文日/模型发布日」为证据不足未精确区分，而非要求新增 satisfies 声明。"
-          },
-          {
-            "object_id": "ev-nvda-h20-policy-2025-04-09",
-            "severity": "warning",
-            "issue": "date_quote 为空字符串。日期本身有支持（NPR 正文 \"April 9, 2025 11:53 AM ET\" 与 published_at=2025-04-09 同日），且政策转向具体日期未在正文明确、采用报道发布日的不确定性已在 uncertainty 中披露，不构成事实错误，仅为元数据完整性问题。",
-            "repair": "补填可确证日期的引文（如正文 \"April 9, 2025 11:53 AM ET\"），提升元数据完整性。"
-          },
-          {
-            "object_id": "ev-nvda-q2fy27-earnings-2026-08-26",
-            "severity": "warning",
-            "issue": "date_quote 为空字符串。日期有 published_at=2026-08-26T16:00:01+00:00 与正文 \"Wed, Aug 26 2026\" 时间戳双重支持，事件日期正确，仅为元数据完整性问题。",
-            "repair": "补填可确证日期的引文（如正文 \"Wed, Aug 26 2026\" 时间戳），提升元数据完整性。"
-          }
-        ],
-        "summary": "仅复核 prior_review 已列四项，未扩展新问题。保留 1 项 critical：ev-nvda-q1fy24-earnings-2023-05-24 的 date_quote 引用季度截止日 2023-04-30 而非公告日 2023-05-24，日期证据链语义不匹配（事件日期本身正确）。纠正 1 项误报：ev-nvda-deepseek-selloff-2025-01-27 的「DeepSeek 相关事件未覆盖」不应列为 critical——该事件本身即以 DeepSeek R1 冲击为归因，且 spec 的下跌事件要求即含区分 DeepSeek 论文日/模型发布日/市场反应日，warnings 已披露相关日期证据不足，属已披露不确定性，降为 warning。保留 2 项 warning：H20 政策与 FY27 Q2 财报事件 date_quote 为空，日期均有 published_at 与正文时间戳支持，仅为元数据完整性问题。数值方面，71.9 亿=7.19 billion、110 亿=11 billion 经 compare_numbers 确认相等，无量级错误。未复核范围：src-0b0ee9231d33b5、src-35526d9a0fa829 未读取且无 published_at，未用于任何事件日期；其余事件的行情窗口对齐与 direction/rating 符号一致性沿用前次已确认结论，本次未发现新问题。"
-      }
-    },
-    "at": "2026-09-29T06:26:05.978313+00:00"
-  },
-  {
-    "seq": 11247,
-    "run_id": "15412514d7234a05",
+    "seq": 13628,
+    "run_id": "e8a8611a8d1a42d3",
     "kind": "quality",
     "label": "研究要求覆盖检查",
     "payload": {
       "passed": false,
-      "missing": 1,
+      "missing": 3,
       "repair_round": 0
     },
-    "at": "2026-09-29T06:26:06.094052+00:00"
+    "at": "2026-09-30T07:34:21.272899+00:00"
   },
   {
-    "seq": 11557,
-    "run_id": "15412514d7234a05",
-    "kind": "review_adjudication",
-    "label": "复核影响交付的核验争议",
-    "payload": {
-      "initial": {
-        "passed": false,
-        "findings": [
-          {
-            "object_id": "ev-nvda-h20-policy-2025-04-09",
-            "severity": "critical",
-            "issue": "date_source_id 指向 src-b3f5e5db326593，但 date_quote 为空。NPR 原文只给出相对时间（'last week' 的海湖庄园晚宴、'as soon as this week'），没有任何句子支持政策转向发生在 4 月 9 日；事件日期实际取自 URL 路径 2025/04/09 与页面发布日，属程序无法验证的日期语义。事件 uncertainty 亦自承'政策转向的具体日期未在正文明确，采用报道发布日'，即该日期是报道日而非事件发生日。",
-            "repair": "补查可确证政策转向发生日的原始来源（白宫/商务部声明或带明确日期的报道）；若无法确证，将事件日期明确标注为报道日而非事件发生日，或从 required_events 覆盖中降级。"
-          },
-          {
-            "object_id": "ev-deepseek-r1-paper-2025-01-22",
-            "severity": "critical",
-            "issue": "satisfies 声明为 ['DeepSeek 相关事件']，但 spec.required_events 明确要求'2025-01-27 NVDA 下跌事件（区分论文日、模型发布日与市场反应日）'。论文 v1 提交日（2025-01-22）只是三个待区分日期之一，不能单独满足该条要求。且 spec.warnings 已记录模型/权重与 API 的对外发布日缺少带明确日期的原始来源——src-35526d9a0fa829（API Docs）与 src-0b0ee9231d33b5（GitHub）均无正文日期或发布元数据，日期仅由 URL 路径 news250120 弱推断，'模型发布日'子项实际未被任何已读来源覆盖。",
-            "repair": "将 satisfies 收窄为仅覆盖'论文日'子项；补查带明确日期的模型/API 发布来源以覆盖'模型发布日'；在报告中显式说明该子项证据不足。"
-          },
-          {
-            "object_id": "ev-nvda-q1fy24-earnings-2023-05-24",
-            "severity": "critical",
-            "issue": "date_source_id 为 src-bb4a66fc5d1b12（investor.nvidia.com，published_at 为 null），而事件 published_at 为 2023-05-24T20:28:58+00:00，该时刻实际来自 src-5d57f2e27d95e2（CNBC，published_at 2023-05-24T20:28:58+00:00）。事件级 published_at 与 date_source_id 指向不同来源，时间戳归属错位。",
-            "repair": "将 date_source_id 改为 src-5d57f2e27d95e2（其 published_at 精确匹配事件时间戳），或把事件 published_at 置空并仅保留日期精度。"
-          },
-          {
-            "object_id": "ev-nvda-q2fy27-earnings-2026-08-26",
-            "severity": "warning",
-            "issue": "事件 published_at 为 2026-08-26T16:00:01+00:00（美东 12:00，盘中），但来源 src-095b03880c506c 为实时博客，正文含 16:00 至 19:42 EDT 的盘后更新段，财报数据（EPS 2.22、营收 962.2 亿）实际在收盘后发布。关联 1 日窗口为 2026-08-25 → 2026-08-26 收盘，收益 -1.59%，未包含盘后反应；5 日窗口（+2.06%）才捕捉到财报后上涨。uncertainty 已披露'日线包含公告前交易'，但未指出 1 日窗口实际不含公告后反应。",
-            "repair": "在 uncertainty 中明确'1 日窗口结束于公告发布前，未反映盘后反应；盘后反应体现在 5 日窗口'；或按盘后公告规则将 1 日窗口对齐至 2026-08-27。"
-          },
-          {
-            "object_id": "ev-nvda-deepseek-selloff-2025-01-27",
-            "severity": "warning",
-            "issue": "摘要称'当日下跌 17%'，来源原文为 'plunge 17% on Monday'，未区分盘中/收盘，摘要已如实保留该不确定性，不构成事实错误。但关联 1 日窗口（2025-01-24 收盘 → 2025-01-27 收盘）实际收益为 -16.97%，与 17% 高度一致，说明该 17% 实为收盘口径；uncertainty 称'未区分盘中与收盘口径'属过度保守。该报道发布于美东 1 月 27 日 15:28（收盘前），事件 timing_basis=retrospective，按原文支持的发生日展示、不顺延至次日，此处处理正确。",
-            "repair": "可将 uncertainty 更新为'17% 与当日收盘跌幅（-16.97%）一致，报道未明示口径'，无需改动日期或窗口。"
-          },
-          {
-            "object_id": "ev-chatgpt-release-2022-11-30",
-            "severity": "warning",
-            "issue": "uncertainty 中'事后报道按原文支持的事件日期展示，不代表当时已公开或可交易的信号。'重复出现两次（ev-nvda-deepseek-selloff-2025-01-27 同样重复）。属文本冗余，非事实错误。",
-            "repair": "去重，保留一次即可。"
-          }
-        ],
-        "summary": "已读全部 8 个事件来源，并对 4 个高影响标注（CNBC DeepSeek 抛售、arXiv R1 论文、HISTORY ChatGPT、NPR H20）抽查原文，另核对 8 组中英文量级换算（71.9亿=7.19B、42.8亿=4.28B、110亿=11B、160亿=16B、962.2亿=96.22B、890亿=89B、1080亿=108B、2080亿=208B，全部 equal=true，无单位错误）。核心事实与日期大体成立：ChatGPT 2022-11-30 由 HISTORY 正文明确支持；Blackwell 2024-03-18 由 NVIDIA 官方新闻稿与 The Verge 支持，2080 亿晶体管/20 petaflops FP4/GB200 30 倍 H100 推理性能/NVL72 均与原文一致；FY2024 Q1 的 71.9 亿营收、42.8 亿数据中心、110 亿指引、26% 盘后涨幅与 CNBC 及官方新闻稿一致且已标注盘后口径；H20 事件的 160 亿美元采购、海湖庄园晚宴、匿名信源、白宫与商务部未回应均与 NPR 原文一致；各事件行情窗口的 start_closed_at/end_closed_at 与公告 UTC 时刻对齐规则正确，1 日窗口跨两个日期标签属正常口径。发现 3 项 critical（H20 事件日期无来源支持、R1 论文事件 satisfies 声明与 spec 口径不符、FY2024 Q1 事件 published_at 与 date_source_id 归属错位）及 3 项 warning。仍未核验：spec.warnings 所列 FY2025/FY2026 各季度财报、2026 GTC、2021-2022 期间事件等未纳入项的来源可得性；claim-performance-NVDA 的累计收益与最大回撤未与原始价格序列独立重算。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。"
-      },
-      "adjudicated": {
-        "passed": false,
-        "findings": [
-          {
-            "object_id": "ev-nvda-h20-policy-2025-04-09",
-            "severity": "critical",
-            "issue": "date_source_id 指向 src-b3f5e5db326593，但 date_quote 为空。NPR 原文仅给出相对时间（'last week' 的海湖庄园晚宴、'as soon as this week' 的实施计划），无任何句子支持政策转向发生在 2025-04-09；该日期实际来自 URL 路径与页面 published_at，只能证明报道发布日，不能证明事件发生日。事件 uncertainty 亦自承'政策转向的具体日期未在正文明确，采用报道发布日'。",
-            "repair": "补查可确证政策转向发生日的原始来源（白宫/商务部声明或带明确日期的报道）；若无法确证，将事件日期明确标注为报道日而非事件发生日，或从 required_events 覆盖中降级。"
-          },
-          {
-            "object_id": "ev-nvda-q1fy24-earnings-2023-05-24",
-            "severity": "warning",
-            "issue": "事件 published_at=2023-05-24T20:28:58+00:00 与 src-5d57f2e27d95e2（CNBC）published_at 完全一致，而 date_source_id 指向 src-bb4a66fc5d1b12（investor.nvidia.com，published_at=null）。两来源日期同为 5 月 24 日，事件日期本身正确，仅精确时刻的归属来源不一致，属元数据归属瑕疵。",
-            "repair": "将 date_source_id 改为 src-5d57f2e27d95e2（其 published_at 精确匹配事件时间戳），或把事件 published_at 置空并仅保留日期精度。"
-          }
-        ],
-        "summary": "复核 prior_review 全部 6 项，仅 1 项 critical 成立。已读原文：NPR H20 报道（src-b3f5e5db326593）全文无政策转向发生日，date_quote 为空，published_at 仅支撑页面发布日，事件日期实为报道日——critical 成立。arXiv 页面（src-92838b9f7ab276）明确 [v1] 22 Jan 2025，日期有据；该事件 satisfies=[\"DeepSeek 相关事件\"] 对应 spec 中同名条目，prior_review 将其错配到\"区分论文日/模型发布日/市场反应日\"那条要求，属对象错位，critical 不成立。FY2024 Q1 事件 published_at 与 CNBC 来源时刻一致、date_source_id 指向的官方新闻稿日期同为 5 月 24 日，仅精确时刻归属来源不同，降级为 warning。FY2027 Q2 事件公告时刻 16:00:01 UTC 早于 1 日窗口收盘 20:00 UTC，窗口实际包含公告后交易，prior_review 的\"1 日窗口不含公告后反应\"与窗口时刻不符，warning 不成立。DeepSeek 抛售 17% 与 ChatGPT uncertainty 重复两项均属已披露不确定性或文本冗余，不构成事实错误。量级复核：71.9 亿=7.19 billion、160 亿=16 billion，compare_numbers 均 equal=true，无单位错误。仍未核验：claim-performance-NVDA 的累计收益与最大回撤未独立重算；spec.warnings 所列未纳入事件的来源可得性。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。"
-      }
-    },
-    "at": "2026-09-29T06:28:36.721627+00:00"
-  },
-  {
-    "seq": 11558,
-    "run_id": "15412514d7234a05",
+    "seq": 13806,
+    "run_id": "e8a8611a8d1a42d3",
     "kind": "quality",
     "label": "研究要求覆盖检查",
     "payload": {
@@ -159,56 +21,6 @@
       "missing": 0,
       "repair_round": 1
     },
-    "at": "2026-09-29T06:28:36.772737+00:00"
-  },
-  {
-    "seq": 11932,
-    "run_id": "15412514d7234a05",
-    "kind": "review_adjudication",
-    "label": "复核影响交付的核验争议",
-    "payload": {
-      "initial": {
-        "passed": false,
-        "findings": [
-          {
-            "object_id": "ev-nvda-h20-policy-2025-04-09",
-            "severity": "critical",
-            "issue": "date_quote 为空，date_source_id 指向的 NPR 页面正文仅含相对时间（“last week”的海湖庄园晚宴、“as soon as this week”的实施计划），无任何句子支持“白宫暂缓 H20 加码限制”这一政策转向发生在 2025-04-09；该日期仅为报道发布日（URL 路径与 published_at），不能证明事件发生日。事件 date 字段仍以 2025-04-09 作为事件日，若下游按事件日对齐行情会误读。",
-            "repair": "将事件 date 置为 null 或明确标注为“报道日，非事件发生日”；补查白宫/商务部原始声明或带明确日期的官方文件以确证政策转向日；在事件对象层面同步禁止用该日期解释当日或次日行情。"
-          },
-          {
-            "object_id": "ev-nvda-deepseek-selloff-2025-01-27",
-            "severity": "warning",
-            "issue": "摘要称“当日下跌 17%”，来源原文为“plunge 17% on Monday”，未区分盘中与收盘口径；行情窗口 1 日收益为 -16.97%，与 17% 报道值接近但非同一口径。摘要未把 17% 误称为收盘值，故不构成事实错误，但读者可能将两者等同。",
-            "repair": "在摘要中补注“17% 为报道所述当日跌幅，未区分盘中/收盘；行情窗口 1 日收益约 -17.0%”，明确区分报道口径与计算口径。"
-          },
-          {
-            "object_id": "ev-deepseek-r1-paper-2025-01-22",
-            "severity": "warning",
-            "issue": "spec.required_events 要求“区分论文日、模型发布日与市场反应日”，但 DeepSeek-R1 模型权重/API 的对外发布日在已读来源中无带明确日期的原始来源（src-35526d9a0fa829 与 src-0b0ee9231d33b5 均无 published_at，仅 URL 路径 news250120 弱推断）。论文日（2025-01-22）与市场反应日（2025-01-27）证据充分，模型发布日证据不足。",
-            "repair": "在输出中明确标注“模型发布日证据不足，未纳入”，不得虚构该日期；如需覆盖，补查带明确日期的官方发布公告或同日发布元数据。"
-          }
-        ],
-        "summary": "已读证据覆盖 8 个事件中的 7 个，并抽查了 ChatGPT 发布、DeepSeek-R1 论文、Blackwell 发布、FY2024Q1 与 FY2027Q2 财报、2025-01-27 抛售、H20 政策等原文。数值换算经 compare_numbers 全部相等（71.9 亿=7.19 billion、42.8 亿=4.28 billion、962.2 亿=96.22 billion、890 亿=89 billion、1080 亿=108 billion、160 亿=16 billion），未发现量级或百分数换算错误。多数事件日期由正文或元数据明确支持：ChatGPT 发布（HISTORY 正文明确 2022-11-30）、DeepSeek-R1 论文（arXiv submission history v1 2025-01-22）、Blackwell（NVIDIA 新闻稿 2024-03-18）、FY2024Q1 财报（新闻稿正文 May 24, 2023）、FY2027Q2 财报（CNBC 实时博客 2026-08-26）、2025-01-27 抛售（CNBC 正文 Monday 17%）。唯一 critical 为 ev-nvda-h20-policy-2025-04-09：date_quote 为空，NPR 正文仅有相对时间，无任何句子支持政策转向发生在 2025-04-09，该日期仅为报道发布日。其余为口径提示（17% 未区分盘中/收盘、模型发布日证据不足），事件 uncertainty 与 warnings 已披露，不重复列为问题。未核验：未纳入事件的若干来源（src-431b1d44e86f37、src-c69b5f299f1e39、src-9b28aba03660aa、src-d0227a32317df01、src-d0bf840fd453a8）未逐字核对；performance-NVDA 指标未独立复算底层价格序列。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。"
-      },
-      "adjudicated": {
-        "passed": true,
-        "findings": [],
-        "summary": "复核 prior_review 的三个问题，均不成立，已纠正。ev-nvda-h20-policy-2025-04-09：NPR 原文确实只给相对时间（last week 晚宴、as soon as this week 实施），但事件标题已标注“（报道日）”、uncertainty 与 warnings 三处均明确说明 2025-04-09 仅为报道发布日、不能证明政策转向发生日、不用于解释当日或次日行情，且 timing_basis=retrospective、confidence=low，属已明确披露的不确定性，不构成实际写错或不支持的断言，prior 的 critical 撤销。ev-nvda-deepseek-selloff-2025-01-27：摘要写“当日下跌 17%”并保留“未区分盘中与收盘口径”的限定，未把 17% 误称为收盘值，也未与行情窗口 -16.97% 混同，prior 自认不构成事实错误却仍列 warning，属非必要修复任务，撤销。ev-deepseek-r1-paper-2025-01-22：标题明确为论文 v1 提交，date_quote 直接支持 2025-01-22，uncertainty 已写明不等同模型/API 发布日，模型发布日缺口已在 warnings 中披露，属已披露证据缺口而非表述错误，撤销。数值经 compare_numbers 确认 71.9 亿=7.19 billion、160 亿=16 billion 相等，无量级或百分数换算错误。未核验：未纳入事件的若干来源未逐字核对，performance-NVDA 未独立复算。通过仅表示给定证据支持所呈现表述，不代表因果成立或数据完备。"
-      }
-    },
-    "at": "2026-09-29T06:30:46.557816+00:00"
-  },
-  {
-    "seq": 11933,
-    "run_id": "15412514d7234a05",
-    "kind": "quality",
-    "label": "研究要求覆盖检查",
-    "payload": {
-      "passed": true,
-      "missing": 0,
-      "repair_round": 2
-    },
-    "at": "2026-09-29T06:30:46.621480+00:00"
+    "at": "2026-09-30T07:36:04.719630+00:00"
   }
 ]

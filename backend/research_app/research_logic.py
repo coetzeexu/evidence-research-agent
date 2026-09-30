@@ -114,6 +114,18 @@ def verify_relationships(draft, review, metrics):
             ):
                 if re.search(r"(?:可信度|置信度|证据强度|证据评级)[^，、]{0,5}$", sentence[: match.start()]):
                     continue
+                # "最高 20 petaflops" transcribes a vendor's "up to" specification, not a ranking.
+                if match[0] in {"最高", "最低"} and re.match(
+                    r"(?:可达|约|达)?\s*[\d０-９]", sentence[match.end() :]
+                ):
+                    continue
+                # "direction matches the reported narrative" compares prices with prose, not
+                # two numbers; meaning-review judges it. Numeric comparands still need assertions.
+                if re.fullmatch(
+                    r"方向与(?:[^，。；]{0,6})(?:叙事|报道|新闻|消息|事件性质|事件描述|来源描述)一致",
+                    match[0],
+                ):
+                    continue
                 if not any(match[0] in a.quote and a.quote in full_text for a in verdict.numeric_assertions):
                     errors.setdefault(finding.id, []).append(
                         f"数值关系尚未转成可执行断言：{match[0]}；应按收益/风险分别核对"

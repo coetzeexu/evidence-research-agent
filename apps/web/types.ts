@@ -141,6 +141,8 @@ export interface Bundle {
     event_ids: string[];
     confirmed_at: string;
     note?: string;
+    volume_ratio?: number | null;
+    attribution?: ChangeAttribution;
     associations?: Array<{
       event_id: string;
       lag_bars: number;
@@ -183,6 +185,34 @@ export interface Bundle {
     changes: number;
     associated_changes: number;
     note: string;
+  };
+}
+
+export type ChangeAttributionStatus = 'linked' | 'investigated_unexplained' | 'not_investigated';
+export type ChangeAttribution = {
+  status: ChangeAttributionStatus;
+  queries: string[];
+  note: string;
+  /** Who searched: the research agent, the code-owned sweep, or nobody. */
+  method?: 'researcher' | 'sweep' | 'none';
+  /** Unread candidate leads from the sweep; never evidence. */
+  leads?: { title: string; url: string }[];
+};
+
+export const attributionLabel: Record<ChangeAttributionStatus, string> = {
+  linked: '已关联事件',
+  investigated_unexplained: '已检索未发现',
+  not_investigated: '未专项检索',
+};
+
+/** Older bundles predate attribution; derive only what can be proven from their links. */
+export function changeAttribution(change: Bundle['changes'][number]): ChangeAttribution {
+  if (change.attribution) return change.attribution;
+  const linked = !!change.associations?.length || change.event_ids.length > 0;
+  return {
+    status: linked ? 'linked' : 'not_investigated',
+    queries: [],
+    note: linked ? '已有来源支持的候选关联，不证明因果。' : '旧版快照未记录该点的专项检索。',
   };
 }
 

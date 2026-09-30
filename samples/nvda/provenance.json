@@ -1,47 +1,38 @@
 {
   "kind": "real-run-replay",
-  "run_id": "15412514d7234a05",
-  "promoted_at": "2026-09-29T06:31:47.677607+00:00",
+  "run_id": "e8a8611a8d1a42d3",
+  "promoted_at": "2026-09-30T07:45:32.951669+00:00",
   "model_requested": "self-evo-glm-atl-260826",
   "models_observed": [
-    "/workspace/model",
-    "deepseek-flash"
+    "/workspace/model"
   ],
   "model_configuration_history": [
     {
-      "requested_model": "self-evo-glm-atl-260826",
-      "provider": "1688openai.alibaba-inc.com",
-      "platform": "maas",
-      "identity_basis": "user-confirmed; gateway returns /workspace/model"
-    },
-    {
       "prompt_hashes": {
-        "planner": "c2a6b79d3464127f3b8cf2d75f01ec18e03a1c2487321da508fc29d52303e658",
-        "researcher": "f6e2b80cf02abfded77df4eab516731a3091ca43db937785e12ea4ea5476bd56",
-        "extractor": "f986e16039ee40f5c78461ca4ebc7043f587a54e953e2e4626aafa8d50522f99",
-        "reviewer": "8f8eb6fe2154f5ae6ab8dfed1c7bc8f4fd6127eacaec89930c1334579bb8af0b"
-      },
-      "requested_model": "self-evo-glm-atl-260826",
-      "platform": "maas"
-    },
-    {
-      "prompt_hashes": {
-        "planner": "c2a6b79d3464127f3b8cf2d75f01ec18e03a1c2487321da508fc29d52303e658",
-        "researcher": "f6e2b80cf02abfded77df4eab516731a3091ca43db937785e12ea4ea5476bd56",
-        "extractor": "f986e16039ee40f5c78461ca4ebc7043f587a54e953e2e4626aafa8d50522f99",
-        "reviewer": "8f8eb6fe2154f5ae6ab8dfed1c7bc8f4fd6127eacaec89930c1334579bb8af0b"
+        "planner": "91fc15ed7d26cc3210701d744489a0d88b8153b593d4b981790a3d0d3a5abf9e",
+        "researcher": "b230884e5673c6fd34dc211bb8952cdb9db79eb519e2dd659d2b667d087a4d9c",
+        "extractor": "ee8ce638a95b38e043bcd84551e364b3c8cb4f6627908dc85143486e0af1ddb2",
+        "reviewer": "51cdc5aae99069b1a4728a7538e11690733c200d9b794917ad15db6907785e0d",
+        "review-format": "99a008d391022883402e0f110511941358636284e13614269fb5547aacff25ef",
+        "synthesis": "1ff77bfe34d20ff6b7031e9511ff91cb9a49cb482951c6c0ea6910ceebbd0d04",
+        "text-reviewer": "e08c4277f6a6d5b3663e400a189b3aeb89719af64aad47bd1eaabd398e5ba10a",
+        "question-review": "5ac066252bb9b15a00bbf1a048b44763e428ef9b32316f301cb4369ea20fcf4e",
+        "numeric-review": "1b43a8bc083ab43ab11ea78480c91121af3713c08664f9c22a066fd5db7b578f",
+        "meaning-review": "8b779bed6f9c2040504bb43acd05a8f8983a395ddee91f38fae0e007787a3db6",
+        "text-repair": "1ec3e40a5d53e85ae554e2e0d6f16c18a8af7132784203dc4336d19a98b10992"
       },
       "requested_model": "self-evo-glm-atl-260826",
       "platform": "maas"
     }
   ],
-  "original_bundle_sha256": "e9031ea0e617938806f5fc87c2f29e20c79f835d5de213fc171be68e549aa2dc",
+  "original_bundle_sha256": "a6eb17b067b0af5519ed2ef36478a1e18bb1c6909611c79d47de7e73a9fd4d96",
   "manual_event_edits": false,
   "transformations": [
-    "mode: live -> sample; event facts, coverage and review unchanged"
+    "mode: live -> sample; event facts, coverage and review unchanged",
+    "change.attribution.method recomputed with current attribute_changes (label-only; status, events, coverage and review unchanged)"
   ],
-  "completion_status": "complete",
-  "events": 7,
-  "sources": 17,
+  "completion_status": "partial",
+  "events": 10,
+  "sources": 16,
   "review_passed": true
 }

@@ -35,3 +35,4 @@ quote 只复制最短的连续比较短句，如“两个相关系数均为负�
 关系协议支持 abs_gt/abs_lt/abs_increasing/abs_decreasing：仅用于原文明确比较“绝对值/幅度/回撤深度”。例如回撤 -20% 的绝对幅度大于收益 +5%，用 abs_gt，不能用带符号 gt。不要更改关系去迁就计算结果。
 纯行情或计算结论的来源是 metric_catalog.dataset_ids 对应 datasets 中的行情/宏观记录；无需外部新闻重复证明。冗余且不相关的新闻引文应要求 rewrite 去掉，不应要求 retrieve 才能证明已采集的数值。
 最终问题完成度由单独 question-review 阶段对 accepted_findings 与原请求核对。这里 questions 可以为空，集中完成逐条 claims 核验，不把未承诺的额外方法作为事实拒绝理由。
+来源原文中的规格上限（如“最高 20 petaflops”“最高可达 30 倍”）是引用事实而非指标排序，不转录为数值断言；由原文引用检查负责。

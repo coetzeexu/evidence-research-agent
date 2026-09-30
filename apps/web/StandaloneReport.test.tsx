@@ -71,6 +71,57 @@ it('filters events and opens evidence directly from the report timeline', () => 
   expect(host.querySelectorAll('.report-event-list article')).toHaveLength(expected);
 });
 
+it('lists every marked move with an attribution state and links to its evidence', () => {
+  const bundle = snapshot('nvda');
+  const [linked, searched, blank] = bundle.changes.filter((c: any) => c.symbol === 'NVDA');
+  linked.associations = [
+    { event_id: bundle.events[0].id, lag_bars: 0, reason: 'r', source_ids: [] },
+  ];
+  linked.event_ids = [bundle.events[0].id];
+  linked.attribution = { status: 'linked', queries: [], note: 'n' };
+  searched.associations = [];
+  searched.event_ids = [];
+  searched.attribution = {
+    status: 'investigated_unexplained',
+    queries: ['NVDA q'],
+    note: 'n',
+    method: 'sweep',
+    leads: [
+      { title: 'Lead', url: 'https://example.com/lead' },
+      { title: 'Bad', url: 'javascript:alert(1)' },
+    ],
+  };
+  blank.associations = [];
+  blank.event_ids = [];
+  blank.attribution = { status: 'not_investigated', queries: [], note: 'n' };
+  mount(bundle);
+  const rows = host.querySelectorAll('.change-attribution tbody tr');
+  expect(rows).toHaveLength(bundle.changes.filter((c: any) => c.symbol === 'NVDA').length);
+  expect(host.querySelector('tr[data-status="investigated_unexplained"]')!.textContent).toContain(
+    '已检索未发现',
+  );
+  const swept = host.querySelector('tr[data-status="investigated_unexplained"]')!;
+  expect(swept.textContent).toContain('自动补查');
+  expect(swept.textContent).toContain('未读取核验');
+  const leads = [...swept.querySelectorAll('.attribution-leads a')] as HTMLAnchorElement[];
+  expect(leads.map((a) => a.getAttribute('href'))).toEqual(['https://example.com/lead', null]);
+  expect(host.querySelector('tr[data-status="not_investigated"]')!.textContent).toContain(
+    '未专项检索',
+  );
+  const filter = [...host.querySelectorAll('.change-attribution-filter button')].find((b) =>
+    b.textContent!.startsWith('已检索未发现'),
+  ) as HTMLButtonElement;
+  act(() => filter.click());
+  expect(host.querySelectorAll('.change-attribution tbody tr')).toHaveLength(
+    bundle.changes.filter(
+      (c: any) => c.symbol === 'NVDA' && c.attribution?.status === 'investigated_unexplained',
+    ).length,
+  );
+  act(() => (host.querySelector('.change-attribution-filter button') as HTMLButtonElement).click());
+  act(() => (host.querySelector('.attribution-event') as HTMLButtonElement).click());
+  expect(host.querySelector('[role="dialog"]')).not.toBeNull();
+});
+
 it('shows comparison chapters together without controls that pretend to rerun offline', () => {
   mount(snapshot('gold-bitcoin'));
   for (const label of ['组合执行与风险代价', '压力月份与抗跌表现', '通胀关联', '配置敏感性'])

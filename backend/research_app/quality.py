@@ -1,8 +1,8 @@
 """Auditable coverage gates and directed event associations, not causal attribution."""
 
-import re
 from datetime import date, datetime
 
+from .change_sweep import SWEEP_ORIGIN, instrument_aliases, mentions, sweep_leads
 from .domain import ResearchBundle
 
 
@@ -56,7 +56,11 @@ def associate_changes(changes, annotations, events, datasets):
 
 
 def assess_quality(bundle: ResearchBundle) -> dict:
-    """No opaque aggregate score: each unsatisfied condition is explicit and repairable."""
+    """No opaque aggregate score: each unsatisfied condition is explicit and repairable.
+
+    Refreshes each change's attribution state first so counts and markers never diverge.
+    """
+    attribute_changes(bundle)
     spec = bundle.spec
     sources = {s.id: s for s in bundle.sources if s.status == "retrieved"}
     supported = [e for e in bundle.events if e.source_ids and all(s in sources for s in e.source_ids)]
@@ -118,22 +122,7 @@ def assess_quality(bundle: ResearchBundle) -> dict:
     )
     for change in sorted(candidates, key=lambda c: c.get("strength", 0), reverse=True)[:5]:
         day = date.fromisoformat(change["date"])
-        searches = []
-        for query in bundle.coverage:
-            try:
-                lo, hi = date.fromisoformat(query["start"]), date.fromisoformat(query["end"])
-            except (ValueError, KeyError):
-                continue
-            if (
-                lo <= day <= hi
-                and (hi - lo).days <= 31
-                and query.get("status") == "success"
-                and (
-                    query.get("change_id") == change["id"]
-                    or query_mentions_instrument(bundle, change["symbol"], query.get("query", ""))
-                )
-            ):
-                searches.append(query["query"])
+        searches = change_searches(bundle, change)
         checked = bool(change["event_ids"] or searches)
         investigated.append(
             {
@@ -183,14 +172,99 @@ def assess_quality(bundle: ResearchBundle) -> dict:
         "source_count": len(sources),
         "changes": len(bundle.changes),
         "associated_changes": sum(bool(c["event_ids"]) for c in bundle.changes),
+        "attribution": {
+            status: sum(c.get("attribution", {}).get("status") == status for c in bundle.changes)
+            for status in ATTRIBUTION_STATUSES
+        },
         "note": "关联数量不代表归因准确率；未找到事件不等于研究失败，未调查用户要求需披露。",
     }
 
 
+ATTRIBUTION_STATUSES = ("linked", "investigated_unexplained", "not_investigated")
+ATTRIBUTION_NOTES = {
+    "linked": "已有来源支持的事件在变化前后 0-5 根日线内公开；仅为候选关联，不证明因果。",
+    "investigated_unexplained": "已按该日窄时间窗检索，未取得可核实的同期公开事件；保留为未解释变化。",
+    "not_investigated": "本轮预算内未对该日做专项检索；不能据此判断是否存在同期事件。",
+}
+
+
+def change_searches(bundle, change, include_sweep: bool = True) -> list[str]:
+    """Successful narrow-window searches that targeted this move or its instrument."""
+    day = date.fromisoformat(change["date"])
+    searches = []
+    for query in bundle.coverage:
+        if not include_sweep and query.get("origin") == SWEEP_ORIGIN:
+            continue
+        try:
+            lo, hi = date.fromisoformat(query["start"]), date.fromisoformat(query["end"])
+        except (ValueError, KeyError):
+            continue
+        if (
+            lo <= day <= hi
+            and (hi - lo).days <= 31
+            and query.get("status") == "success"
+            and (
+                query.get("change_id") == change["id"]
+                or query_mentions_instrument(bundle, change["symbol"], query.get("query", ""))
+            )
+        ):
+            searches.append(query["query"])
+    return searches
+
+
+SWEEP_NOTE = (
+    "研究 Agent 预算内未专项调查，由代码按该日前 5 天至后 3 天自动检索一次；"
+    "列出的候选线索未读取核验，不构成事件证据，也不证明该日无同期事件。"
+)
+
+
+def researcher_searched(bundle, change) -> bool:
+    return bool(change_searches(bundle, change, include_sweep=False))
+
+
+def attribute_changes(bundle: ResearchBundle) -> None:
+    """Give every displayed move an explicit, auditable attribution state.
+
+    Absence of a linked event is split into "searched and found nothing" versus
+    "never searched", so a reader can tell a research gap from a genuine blank.
+    """
+    for change in bundle.changes:
+        queries = change_searches(bundle, change)
+        status = (
+            "linked"
+            if change.get("associations")
+            else "investigated_unexplained"
+            if queries
+            else "not_investigated"
+        )
+        # Sweep records are tagged per move; a linked event always comes from sources the
+        # research agent read, so only unlinked moves can be "sweep only".
+        swept = any(
+            q.get("origin") == SWEEP_ORIGIN and q.get("change_id") == change["id"] for q in bundle.coverage
+        )
+        method = (
+            "researcher"
+            if status == "linked"
+            else "none"
+            if not queries
+            else "sweep"
+            if swept and not researcher_searched(bundle, change)
+            else "researcher"
+        )
+        note = (
+            SWEEP_NOTE
+            if status == "investigated_unexplained" and method == "sweep"
+            else ATTRIBUTION_NOTES[status]
+        )
+        change["attribution"] = {
+            "status": status,
+            "queries": queries,
+            "note": note,
+            "method": method,
+            "leads": sweep_leads(change, bundle.coverage) if status != "linked" else [],
+        }
+
+
 def query_mentions_instrument(bundle, symbol, query):
-    tokens = set(re.findall(r"[a-z0-9]+", query.lower()))
-    name = bundle.datasets[symbol].instrument.name.lower()
-    ignored = {"corporation", "inc", "shares", "trust", "fund", "etf", "usd", "the", "and"}
-    aliases = {t for t in re.findall(r"[a-z0-9]+", name) if len(t) >= 3 and t not in ignored}
-    aliases.add(symbol.lower())
-    return bool(aliases.intersection(tokens)) or symbol.lower() in query.lower()
+    aliases = instrument_aliases(symbol, bundle.datasets[symbol].instrument.name)
+    return mentions(query, aliases) or symbol.lower() in query.lower()
